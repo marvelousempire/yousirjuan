@@ -70,10 +70,65 @@ case "${ID:-}" in
 esac
 
 FREE_GB="$(df -kP "$HOME" | tail -1 | awk '{print int($4/1024/1024)}')"
-note "Free disk in \$HOME: ${FREE_GB} GB (need at least ${MIN_FREE_GB})"
+RAM_GB="$(awk '/MemTotal/ {print int($2/1024/1024)}' /proc/meminfo)"
+HAS_NVIDIA=$(have nvidia-smi && echo 1 || echo 0)
+note "Disk: ${FREE_GB} GB free. RAM: ${RAM_GB} GB. NVIDIA GPU: $([[ $HAS_NVIDIA -eq 1 ]] && echo yes || echo no)"
 (( FREE_GB >= MIN_FREE_GB )) || die "Need at least ${MIN_FREE_GB} GB free."
 
 require_sudo
+
+# Hardware-aware default profile
+DEFAULT_PROFILE=1
+WARN_OPENCLAW=""
+if (( HAS_NVIDIA == 1 && RAM_GB >= 16 )); then
+  DEFAULT_PROFILE=2
+elif (( RAM_GB < 8 )); then
+  WARN_OPENCLAW="${RAM_GB} GB RAM — too tight for OpenClaw + LLM. Recommend chat-only."
+elif (( RAM_GB < 16 )); then
+  WARN_OPENCLAW="${RAM_GB} GB RAM (no GPU) — OpenClaw inference will be slow. Recommend chat-only."
+fi
+
+step "Install profile"
+[[ -n "$WARN_OPENCLAW" ]] && warn "$WARN_OPENCLAW"
+echo
+cat <<'PROFILES'
+    What do you want to install?
+
+      1) Chat only       Ollama + Open WebUI (browser chat)
+                         → works on any machine; CPU-only is fine
+      2) Full stack      above + OpenClaw agent (Jarvis-style)
+                         → needs GPU (NVIDIA / Apple Silicon) for stability
+      3) Public-facing   above + nginx + Let's Encrypt cert + iptables lockdown
+                         → for VPS with public IP + DNS A record (see vps/apply-vps-config.sh)
+      4) Custom          pick each component (advanced)
+
+PROFILES
+
+read -r -p "    Choice [1/2/3/4] (default $DEFAULT_PROFILE): " PROFILE
+PROFILE="${PROFILE:-$DEFAULT_PROFILE}"
+
+case "$PROFILE" in
+  1) INSTALL_OLLAMA=1; INSTALL_WEBUI=1; INSTALL_OPENCLAW=0; INSTALL_PUBLIC=0 ;;
+  2)
+    if (( HAS_NVIDIA == 0 )); then
+      warn "Full stack on CPU-only — OpenClaw inference will likely time out (multi-minute per turn)."
+      read -r -p "    Continue anyway? [y/N] " yn
+      [[ "$yn" =~ ^[Yy]$ ]] || die "Aborted — re-run and pick option 1."
+    fi
+    INSTALL_OLLAMA=1; INSTALL_WEBUI=1; INSTALL_OPENCLAW=1; INSTALL_PUBLIC=0
+    ;;
+  3) INSTALL_OLLAMA=1; INSTALL_WEBUI=1; INSTALL_OPENCLAW=1; INSTALL_PUBLIC=1
+     note "Public-facing: also run \`sudo DOMAIN=... EMAIL=... bash vps/apply-vps-config.sh\` after this finishes."
+     ;;
+  4)
+    read -r -p "    Install Ollama (LLM runtime)? [Y/n] " a; [[ "$a" =~ ^[Nn] ]] && INSTALL_OLLAMA=0 || INSTALL_OLLAMA=1
+    read -r -p "    Install Open WebUI (browser chat UI)? [Y/n] " a; [[ "$a" =~ ^[Nn] ]] && INSTALL_WEBUI=0 || INSTALL_WEBUI=1
+    read -r -p "    Install OpenClaw (agent)? [y/N] " a; [[ "$a" =~ ^[Yy] ]] && INSTALL_OPENCLAW=1 || INSTALL_OPENCLAW=0
+    INSTALL_PUBLIC=0
+    ;;
+  *) die "Invalid choice." ;;
+esac
+ok "Will install: ollama=$INSTALL_OLLAMA, open-webui=$INSTALL_WEBUI, openclaw=$INSTALL_OPENCLAW"
 
 # ---- 2. base packages ------------------------------------------------------
 
@@ -120,6 +175,10 @@ fi
 
 # ---- 4. Ollama -------------------------------------------------------------
 
+if (( INSTALL_OLLAMA == 0 )); then
+  note "Skipping Ollama (not in profile)"
+else
+
 step "Ollama"
 if ! have ollama; then
   note "Installing Ollama via official installer (creates systemd unit)"
@@ -149,7 +208,13 @@ sleep 3
 ss -tlnp 2>/dev/null | grep ':11434 ' | head -1 || warn "Ollama not listening yet — check: journalctl -u ollama"
 ok "Ollama bound to 0.0.0.0:11434, models at $MODELS_DIR"
 
+fi  # end INSTALL_OLLAMA
+
 # ---- 5. Pull models with RAM-aware picker ---------------------------------
+
+if (( INSTALL_OLLAMA == 0 )); then
+  note "Skipping models (no Ollama)"
+else
 
 step "Model selection wizard"
 RAM_GB="$(awk '/MemTotal/ {print int($2/1024/1024)}' /proc/meminfo)"
@@ -220,7 +285,13 @@ for m in "${MODELS_TO_PULL[@]}"; do
   fi
 done
 
+fi  # end INSTALL_OLLAMA models
+
 # ---- 6. Docker -------------------------------------------------------------
+
+if (( INSTALL_WEBUI == 0 )); then
+  note "Skipping Docker (Open WebUI not in profile)"
+else
 
 step "Docker (Engine + Compose plugin)"
 if ! have docker; then
@@ -243,6 +314,7 @@ fi
 ok "$(docker --version)"
 
 # ---- 7. Open WebUI ---------------------------------------------------------
+# (still inside INSTALL_WEBUI block from section 6)
 
 step "Open WebUI on :$WEBUI_PORT"
 if docker ps -a --format '{{.Names}}' | grep -qx open-webui; then
@@ -268,7 +340,13 @@ done
 [[ "$code" == "200" ]] && ok "Open WebUI ready on :$WEBUI_PORT" \
   || warn "Open WebUI not yet ready — docker logs open-webui"
 
+fi  # end INSTALL_WEBUI
+
 # ---- 8. OpenClaw -----------------------------------------------------------
+
+if (( INSTALL_OPENCLAW == 0 )); then
+  note "Skipping OpenClaw (not in profile)"
+else
 
 step "OpenClaw (personal AI agent)"
 if ! have openclaw; then
@@ -355,7 +433,13 @@ for i in {1..60}; do
 done
 (( gateway_up == 1 )) && ok "gateway listening" || warn "gateway didn't start — see $OPENCLAW_HOME/logs/gateway.err.log"
 
+fi  # end INSTALL_OPENCLAW
+
 # ---- 10. End-to-end test --------------------------------------------------
+
+if (( INSTALL_OPENCLAW == 0 )); then
+  note "Skipping end-to-end agent test (no OpenClaw)"
+else
 
 step "End-to-end test (sending a real prompt to llama3.2:3b via OpenClaw)"
 TEST_OUT="$(mktemp)"
@@ -376,6 +460,8 @@ else
   tail -5 "$TEST_OUT" | sed 's/^/      /'
 fi
 rm -f "$TEST_OUT"
+
+fi  # end INSTALL_OPENCLAW e2e test
 
 # ---- 11. Summary ----------------------------------------------------------
 

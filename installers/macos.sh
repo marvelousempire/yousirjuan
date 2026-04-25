@@ -43,21 +43,62 @@ warn()  { printf "    \033[0;33m!\033[0m %s\n" "$*"; }
 die()   { printf "\n\033[0;31m✗ %s\033[0m\n" "$*"; exit 1; }
 have()  { command -v "$1" >/dev/null 2>&1; }
 
-# ---- 1. preflight ----------------------------------------------------------
+# ---- 1. preflight + install profile picker --------------------------------
 
 step "Preflight"
 
 [[ "$(uname)" == "Darwin" ]] || die "macOS only."
 
 ARCH="$(uname -m)"
-note "macOS $(sw_vers -productVersion) on $ARCH"
+RAM_GB="$(sysctl -n hw.memsize | awk '{print int($1/1024/1024/1024)}')"
+note "macOS $(sw_vers -productVersion) on $ARCH, ${RAM_GB} GB RAM"
 
-if [[ "$ARCH" != "arm64" ]]; then
-  warn "Intel Mac detected. Open WebUI works fine, but the OpenClaw agent will"
-  warn "time out because CPU-only LLM inference is too slow for its prompts."
-  read -r -p "    Continue anyway? [y/N] " yn
-  [[ "$yn" =~ ^[Yy]$ ]] || die "Aborted."
+# Hardware-aware default profile
+DEFAULT_PROFILE=1
+WARN_OPENCLAW=""
+if [[ "$ARCH" == "arm64" && $RAM_GB -ge 16 ]]; then
+  DEFAULT_PROFILE=2
+elif [[ "$ARCH" != "arm64" ]]; then
+  WARN_OPENCLAW="Intel Mac (no Metal GPU) — OpenClaw agent will be unstable on this hardware. Recommend chat-only."
+elif (( RAM_GB < 16 )); then
+  WARN_OPENCLAW="${RAM_GB} GB RAM — tight for OpenClaw + 8B models. Recommend chat-only on this hardware."
 fi
+
+step "Install profile"
+[[ -n "$WARN_OPENCLAW" ]] && warn "$WARN_OPENCLAW"
+echo
+cat <<'PROFILES'
+    What do you want to install?
+
+      1) Chat only    Ollama + Open WebUI (browser chat)
+                      → works on any Mac, fast even on CPU
+      2) Full stack   above + OpenClaw agent (Jarvis-style)
+                      → needs Apple Silicon (Metal GPU) for stability
+      3) Custom       pick each component (advanced)
+
+PROFILES
+
+read -r -p "    Choice [1/2/3] (default $DEFAULT_PROFILE): " PROFILE
+PROFILE="${PROFILE:-$DEFAULT_PROFILE}"
+
+case "$PROFILE" in
+  1) INSTALL_OLLAMA=1; INSTALL_WEBUI=1; INSTALL_OPENCLAW=0 ;;
+  2)
+    if [[ "$ARCH" != "arm64" ]]; then
+      warn "You picked Full stack on Intel — OpenClaw inference will likely time out."
+      read -r -p "    Continue anyway? [y/N] " yn
+      [[ "$yn" =~ ^[Yy]$ ]] || die "Aborted — re-run and pick option 1."
+    fi
+    INSTALL_OLLAMA=1; INSTALL_WEBUI=1; INSTALL_OPENCLAW=1
+    ;;
+  3)
+    read -r -p "    Install Ollama (LLM runtime)? [Y/n] " a; [[ "$a" =~ ^[Nn] ]] && INSTALL_OLLAMA=0 || INSTALL_OLLAMA=1
+    read -r -p "    Install Open WebUI (browser chat UI)? [Y/n] " a; [[ "$a" =~ ^[Nn] ]] && INSTALL_WEBUI=0 || INSTALL_WEBUI=1
+    read -r -p "    Install OpenClaw (agent)? [y/N] " a; [[ "$a" =~ ^[Yy] ]] && INSTALL_OPENCLAW=1 || INSTALL_OPENCLAW=0
+    ;;
+  *) die "Invalid choice." ;;
+esac
+ok "Will install: ollama=$INSTALL_OLLAMA, open-webui=$INSTALL_WEBUI, openclaw=$INSTALL_OPENCLAW"
 
 if ! xcode-select -p >/dev/null 2>&1; then
   step "Installing Xcode Command Line Tools"
@@ -231,6 +272,10 @@ fi
 
 # ---- 4. Ollama -------------------------------------------------------------
 
+if (( INSTALL_OLLAMA == 0 )); then
+  note "Skipping Ollama (not in profile)"
+else
+
 step "Ollama"
 if ! have ollama; then
   if [[ "$ARCH" == "arm64" ]]; then
@@ -279,7 +324,13 @@ done
 curl -fsS http://localhost:11434/ >/dev/null 2>&1 || die "Ollama not responding on :11434"
 ok "Ollama listening on :11434"
 
+fi  # end INSTALL_OLLAMA
+
 # ---- 5. Models -------------------------------------------------------------
+
+if (( INSTALL_OLLAMA == 0 )); then
+  note "Skipping model pull (no Ollama)"
+else
 
 step "Pulling models: ${MODELS_TO_PULL[*]}"
 have_model() { ollama list 2>/dev/null | awk 'NR>1 {print $1}' | grep -qx "$1"; }
@@ -292,7 +343,13 @@ for m in "${MODELS_TO_PULL[@]}"; do
   fi
 done
 
+fi  # end INSTALL_OLLAMA models block
+
 # ---- 6. Colima + Docker ----------------------------------------------------
+
+if (( INSTALL_WEBUI == 0 )); then
+  note "Skipping Docker/Colima (Open WebUI not in profile)"
+else
 
 step "Colima + Docker CLI"
 have colima || brew install colima
@@ -304,6 +361,7 @@ fi
 ok "Docker via Colima ready"
 
 # ---- 7. Open WebUI ---------------------------------------------------------
+# (still inside INSTALL_WEBUI block from section 6)
 
 step "Open WebUI on :$WEBUI_PORT"
 if docker ps -a --format '{{.Names}}' | grep -qx open-webui; then
@@ -332,7 +390,13 @@ else
   warn "Open WebUI not responding (HTTP $code) — check 'docker logs open-webui'"
 fi
 
+fi  # end INSTALL_WEBUI
+
 # ---- 8. OpenClaw via direct npm install ------------------------------------
+
+if (( INSTALL_OPENCLAW == 0 )); then
+  note "Skipping OpenClaw (not in profile)"
+else
 
 step "OpenClaw"
 if ! have openclaw; then
@@ -475,7 +539,13 @@ else
   warn "skipping pairing (gateway not up)"
 fi
 
+fi  # end INSTALL_OPENCLAW
+
 # ---- 13. End-to-end test ---------------------------------------------------
+
+if (( INSTALL_OPENCLAW == 0 )); then
+  note "Skipping end-to-end agent test (no OpenClaw)"
+else
 
 step "End-to-end test (sending a real prompt to llama3.2:3b via OpenClaw)"
 TEST_TIMEOUT=$([[ "$ARCH" == "arm64" ]] && echo 120 || echo 300)
@@ -508,6 +578,8 @@ else
   warn "Open WebUI should still work at http://localhost:$WEBUI_PORT"
 fi
 rm -f "$TEST_OUT"
+
+fi  # end INSTALL_OPENCLAW e2e test
 
 # ---- 14. Summary -----------------------------------------------------------
 

@@ -9,13 +9,26 @@ A reproducible deployment of:
 
 - **[Ollama](https://ollama.com/)** — runs LLMs locally (Llama 3, Qwen 3, GPT-OSS, Gemma, etc.)
 - **[Open WebUI](https://github.com/open-webui/open-webui)** — ChatGPT-style multi-user web app
-- **[OpenClaw](https://openclaw.ai)** — personal AI agent with messaging-platform integrations (optional)
+- **[OpenClaw](https://openclaw.ai)** — personal AI agent with messaging-platform integrations (optional, GPU recommended)
 - **[Tailscale](https://tailscale.com)** — encrypted private mesh between all your devices
 - **nginx + Let's Encrypt** — public HTTPS endpoint with auto-renewing certs (when needed)
 - **fail2ban + iptables** — defense-in-depth firewall
 - **Caddy / Traefik** alternatives for the reverse proxy (optional, see `docker/`)
 
 Deployable on macOS or Linux from a single bootstrap script. Idempotent — safe to re-run.
+
+## Install profiles (the wizard picks for you)
+
+The installer detects your hardware and recommends a profile, but you can override:
+
+| Profile | What you get | Recommended for |
+|---|---|---|
+| **1 — Chat only** | Ollama + Open WebUI | Any machine — even CPU-only / low-RAM. Fast, stable. |
+| **2 — Full stack** | above + OpenClaw agent | Apple Silicon Mac OR Linux box with NVIDIA GPU + 16+ GB RAM |
+| **3 — Public-facing** *(Linux only)* | above + nginx + Let's Encrypt + iptables lockdown | A VPS with a public IP and a DNS A record you control |
+| **4 — Custom** | Pick each component | Power users |
+
+The wizard will **warn** if you pick a profile your hardware can't sustain (e.g. OpenClaw on Intel/CPU = unstable). You can override with eyes open.
 
 ## Quick start
 
