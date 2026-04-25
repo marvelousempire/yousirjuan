@@ -1,0 +1,43 @@
+# Logs
+*.log
+yousirjuan-install.log
+private-ai-install.log
+/tmp/
+
+# Local env
+.env
+.env.*
+!.env.example
+*.bak
+*.bak.*
+*~
+
+# macOS
+.DS_Store
+._*
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Secrets — never commit
+*.key
+*.pem
+htpasswd
+.htpasswd*
+**/google_oauth
+**/anthropic_key
+**/openai_key
+*_credentials.json
+*-secrets.json
+
+# Backups (these are HUGE and personal)
+backups/
+*.tgz
+*.tar.gz
+
+# Personal copies of generated configs (regenerated per-deploy)
+local/
+state/

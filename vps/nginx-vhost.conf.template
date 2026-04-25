@@ -1,0 +1,59 @@
+# Open WebUI behind HTTPS reverse proxy
+#
+# Substitute __DOMAIN__ with your subdomain (e.g. hello.yousirjuan.ai) before installing:
+#   sed "s|__DOMAIN__|hello.yousirjuan.ai|g" nginx-vhost.conf.template \
+#     | sudo tee /etc/nginx/sites-available/__DOMAIN__
+#   sudo ln -sf /etc/nginx/sites-available/__DOMAIN__ /etc/nginx/sites-enabled/
+#   sudo certbot --nginx -d __DOMAIN__ --non-interactive --agree-tos -m hello@yourdomain.tld
+#   sudo systemctl reload nginx
+#
+# Open WebUI's own login (bcrypt + JWT) is the auth gate — no nginx-level basic auth,
+# because Open WebUI's frontend uses Bearer tokens for API calls which conflict with
+# Authorization: Basic. App-layer auth + signups disabled is the safe pattern.
+
+# HTTP → HTTPS redirect (also serves ACME challenges)
+server {
+    listen 80;
+    listen [::]:80;
+    server_name __DOMAIN__;
+
+    location /.well-known/acme-challenge/ { root /var/www/html; }
+    location / { return 301 https://$host$request_uri; }
+}
+
+# HTTPS — reverse proxy to Open WebUI on localhost:3000
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name __DOMAIN__;
+
+    ssl_certificate     /etc/letsencrypt/live/__DOMAIN__/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/__DOMAIN__/privkey.pem;
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+    # Generous timeouts — LLM streaming responses can be slow
+    proxy_read_timeout 600s;
+    proxy_send_timeout 600s;
+    client_max_body_size 50m;  # for file uploads to Open WebUI (RAG knowledge bases)
+
+    # WebSocket support — Open WebUI streams responses + uses WS for live updates
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+
+    # Standard proxy headers
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+
+    # Security headers
+    add_header Strict-Transport-Security "max-age=63072000; includeSubDomains" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-Frame-Options "SAMEORIGIN" always;
+
+    location / {
+        proxy_pass http://127.0.0.1:3000;
+    }
+}

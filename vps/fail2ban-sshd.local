@@ -1,0 +1,20 @@
+# /etc/fail2ban/jail.d/sshd.local
+#
+# fail2ban policy for SSH brute-force protection.
+# After 5 failed attempts in 10 minutes, the source IP is banned for 24 hours.
+#
+# Install:
+#   sudo cp fail2ban-sshd.local /etc/fail2ban/jail.d/sshd.local
+#   sudo systemctl enable --now fail2ban
+#   sudo fail2ban-client status sshd
+
+[sshd]
+enabled = true
+port = 22
+filter = sshd
+logpath = %(sshd_log)s
+backend = %(sshd_backend)s
+maxretry = 5
+findtime = 10m
+bantime = 24h
+ignoreip = 127.0.0.1/8 ::1
