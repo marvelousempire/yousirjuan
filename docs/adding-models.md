@@ -23,7 +23,9 @@ Once pulled, the model **automatically appears** in Open WebUI's model dropdown 
 | **llama3:8b** | `ollama pull llama3:8b` | 4.7 GB | 16 GB | Meta's general-purpose 8B; great everyday quality |
 | **qwen3:8b** | `ollama pull qwen3:8b` | 5.0 GB | 16 GB | Alibaba's latest; strong code + reasoning |
 | **gpt-oss:20b** | `ollama pull gpt-oss:20b` | 13 GB | 32 GB | OpenAI's open-weights; flagship-class quality |
+| **gemma4:26b** | `ollama pull gemma4:26b` | 16 GB | 32 GB | Google's latest flagship; very strong general reasoning |
 | **qwen3:14b** | `ollama pull qwen3:14b` | 9 GB | 32 GB | Better reasoning, mid-size |
+| **gemma4:31b** | `ollama pull gemma4:31b` | 19 GB | 40 GB | Bigger gemma4 variant |
 | **gpt-oss:120b** | `ollama pull gpt-oss:120b` | 65 GB | 96 GB | Top-tier — needs serious hardware |
 | **llama3.1:70b** | `ollama pull llama3.1:70b` | 40 GB | 64 GB | Meta's flagship — needs M1 Max/Ultra or NVIDIA GPU |
 | **deepseek-coder:6.7b** | `ollama pull deepseek-coder:6.7b` | 3.8 GB | 8 GB | Code-specialized |

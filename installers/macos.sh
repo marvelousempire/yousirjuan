@@ -208,15 +208,17 @@ ask_yn() {
 case "$PRESET" in
   1) MODELS_TO_PULL=("gemma2:2b") ;;
   2) MODELS_TO_PULL=("gemma2:2b" "llama3.2:3b" "llama3:8b" "qwen3:8b") ;;
-  3) MODELS_TO_PULL=("gemma2:2b" "llama3.2:3b" "llama3:8b" "qwen3:8b" "gpt-oss:20b") ;;
-  4) MODELS_TO_PULL=("gemma2:2b" "llama3.2:3b" "llama3:8b" "qwen3:8b" "gpt-oss:20b" "qwen3:14b") ;;
+  3) MODELS_TO_PULL=("gemma2:2b" "llama3.2:3b" "llama3:8b" "qwen3:8b" "gpt-oss:20b" "gemma4:26b") ;;
+  4) MODELS_TO_PULL=("gemma2:2b" "llama3.2:3b" "llama3:8b" "qwen3:8b" "gpt-oss:20b" "gemma4:26b" "qwen3:14b") ;;
   5)
     MODELS_TO_PULL=("gemma2:2b")
     ask_yn "llama3.2:3b (~2 GB) — fast, fits anywhere?" "y" && MODELS_TO_PULL+=("llama3.2:3b")
     ask_yn "llama3:8b (~4.7 GB) — Meta's general-purpose, needs 16+ GB RAM?" "y" && MODELS_TO_PULL+=("llama3:8b")
     ask_yn "qwen3:8b (~5 GB) — Alibaba's latest, strong code+reasoning?" "y" && MODELS_TO_PULL+=("qwen3:8b")
     ask_yn "gpt-oss:20b (~13 GB) — OpenAI's open-weights, needs 32 GB RAM?" "n" && MODELS_TO_PULL+=("gpt-oss:20b")
+    ask_yn "gemma4:26b (~16 GB) — Google's latest flagship-class, needs 32 GB RAM?" "n" && MODELS_TO_PULL+=("gemma4:26b")
     ask_yn "qwen3:14b (~9 GB) — needs 32 GB RAM?" "n" && MODELS_TO_PULL+=("qwen3:14b")
+    ask_yn "gemma4:31b (~19 GB) — needs 40 GB RAM?" "n" && MODELS_TO_PULL+=("gemma4:31b")
     ask_yn "gpt-oss:120b (~65 GB) — top-tier, needs 96+ GB RAM?" "n" && MODELS_TO_PULL+=("gpt-oss:120b")
     ask_yn "llama3.1:70b (~40 GB) — top-tier, needs 64+ GB RAM (M1 Max+ recommended)?" "n" && MODELS_TO_PULL+=("llama3.1:70b")
     ;;
