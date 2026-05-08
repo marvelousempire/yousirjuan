@@ -1,48 +1,149 @@
-# You-Sir Juan — Private AI Stack
+# You-Sir Juan — Private Trainable AI Assistants
 
-Self-hosted AI infrastructure for the Marvelous Empire family office.
-**Your data, your models, your infrastructure** — nothing leaves your machines.
+You-Sir Juan is a private AI infrastructure and service platform for building **trainable AI assistants** for families, family offices, PMAs, portfolio companies, and service teams.
 
-## What this is
+The core idea is simple:
+
+> Give each client a private AI helper they can teach — a nanny assistant, coach, trainer, family office aide, operations helper, or business agent — without requiring the client to understand RAG, models, vector databases, or agent orchestration.
+
+Under the hood, You-Sir Juan keeps the existing private AI stack: local inference, private memory, secure networking, RAG, backups, and agent tooling. The new face of the repo is the business layer built on top of that stack.
+
+**Your data, your memory, your assistant, your infrastructure.**
+
+---
+
+## What This Becomes
+
+This repo is no longer just a self-hosted AI lab. It is the operating blueprint for a private AI service business:
+
+1. **Families** can train AI helpers for house rules, nanny handbooks, routines, schedules, preferences, medical notes, meal rules, school details, travel routines, and household standards.
+2. **Personal service teams** can train assistants for coaches, personal trainers, chefs, drivers, house managers, tutors, and care providers.
+3. **Family offices** can train private agents for document intelligence, estate workflows, investment research, governance records, and advisor coordination.
+4. **PMA operations** can train assistants for member onboarding, education, communications, retention, and internal playbooks.
+5. **Portfolio businesses** can train marketing, sales, support, operations, and content agents using shared playbooks while keeping sensitive domains separate.
+
+The customer should experience this as:
+
+> “Teach your own private AI support staff.”
+
+The system handles the technical parts: memory, storage, retrieval, access control, model routing, backups, and agent workflows.
+
+---
+
+## Service Vision
+
+Each client gets a secure workspace where they can create one or more AI assistant roles:
+
+| Assistant Type | What It Learns | Example Use |
+|---|---|---|
+| **Nanny Assistant** | Household rules, child routines, allergies, school pickup notes, screen-time rules | “What should the nanny do after school?” |
+| **House Manager Assistant** | Vendor lists, maintenance schedules, home systems, recurring tasks | “Who fixes the pool pump and what is our process?” |
+| **Personal Trainer / Coach** | Goals, training history, diet preferences, injuries, weekly plans | “Build this week’s workout plan.” |
+| **Family Office Assistant** | Trust-domain documents, entity records, advisor notes, policies | “Find the current estate planning checklist.” |
+| **PMA Assistant** | Member onboarding, agreements, events, communications | “Draft a member welcome sequence.” |
+| **Portfolio Marketing Agent** | Brand voice, offers, customer research, campaigns, wins, failures | “Write a landing page using our proven hooks.” |
+
+The client teaches the assistant by uploading or entering:
+
+- handbooks
+- rules
+- checklists
+- contracts
+- SOPs
+- schedules
+- preferences
+- playbooks
+- transcripts
+- onboarding guides
+- family or business context files
+
+The platform turns those into private searchable memory.
+
+---
+
+## What This Is Technically
 
 A reproducible deployment of:
 
-- **[Ollama](https://ollama.com/)** — runs LLMs locally (Llama 3, Qwen 3, GPT-OSS, Gemma, etc.)
-- **[Open WebUI](https://github.com/open-webui/open-webui)** — ChatGPT-style multi-user web app
-- **[OpenClaw](https://openclaw.ai)** — personal AI agent with messaging-platform integrations (optional, GPU recommended)
-- **[Tailscale](https://tailscale.com)** — encrypted private mesh between all your devices
-- **nginx + Let's Encrypt** — public HTTPS endpoint with auto-renewing certs (when needed)
+- **Ollama** — local LLM inference for private utility models
+- **Open WebUI** — ChatGPT-style multi-user web app
+- **OpenClaw** — optional messaging-app assistant layer
+- **Ruflo** — agent orchestration, memory, RAG, observability, and workflows
+- **marketingskills** — marketing and growth skill pack for portfolio businesses
+- **Tailscale / WireGuard** — encrypted private mesh between approved devices
+- **nginx + Let’s Encrypt** — public HTTPS endpoint when needed
 - **fail2ban + iptables** — defense-in-depth firewall
-- **Caddy / Traefik** alternatives for the reverse proxy (optional, see `docker/`)
+- **NAS / DAS / NVMe storage** — private memory, documents, backups, and model files
+- **Jetson Thor / Mac / VPS nodes** — local compute roles for inference, orchestration, and always-on services
 
 Deployable on macOS or Linux from a single bootstrap script. Idempotent — safe to re-run.
 
-## Install profiles (the wizard picks for you)
+---
 
-The installer detects your hardware and recommends a profile, but you can override:
+## Business Model
+
+You-Sir Juan can be packaged as a private AI assistant service:
+
+| Layer | What The Client Pays For |
+|---|---|
+| **Workspace setup** | Secure client workspace, assistant roles, onboarding session |
+| **Private memory storage** | Stored documents, transcripts, profiles, handbooks, vector indexes |
+| **Assistant roles** | Nanny, coach, trainer, house manager, FO aide, marketing agent, etc. |
+| **Managed AI hosting** | Compute, uptime, model serving, backups, maintenance |
+| **Premium workflows** | Document intelligence, content generation, task automation, reporting |
+| **Compliance / privacy tier** | Stricter data separation, audit logs, offline/local-only mode |
+
+Core pricing concept:
+
+- charge per workspace
+- charge per assistant role
+- charge for storage used
+- charge for managed hosting and support
+- charge for custom workflows and integrations
+
+See:
+
+- `docs/ai-assistant-business-model.md`
+- `docs/customer-ai-memory-architecture.md`
+- `docs/private-ai-network-handoff.md`
+
+---
+
+## Trust-Domain Design
+
+The system is built around strict separation:
+
+| Domain | Use | Memory Rule |
+|---|---|---|
+| **Family / Household** | nanny, home, care, routines | never mixed with other clients |
+| **Family Office** | wealth, estate, tax, governance | highest sensitivity; local-first only |
+| **PMA** | members, education, communications | separate from FO |
+| **Portfolio Business** | marketing, operations, sales | can use shared business playbooks |
+| **Shared Learning Layer** | wins, failures, vendor lists, templates | never receives FO/private household data |
+
+Critical rule:
+
+> No `fo:*`, household, nanny, child, legal, tax, medical, or private family data flows into shared business memory.
+
+---
+
+## Install Profiles
+
+The installer detects hardware and recommends a profile, but you can override:
 
 | Profile | What you get | Recommended for |
 |---|---|---|
-| **1 — Chat only** | Ollama + Open WebUI | Any machine — even CPU-only / low-RAM. Fast, stable. |
-| **2 — Full stack** | above + OpenClaw agent | Apple Silicon Mac OR Linux box with NVIDIA GPU + 16+ GB RAM |
-| **3 — Public-facing** *(Linux only)* | above + nginx + Let's Encrypt + iptables lockdown | A VPS with a public IP and a DNS A record you control |
+| **1 — Chat only** | Ollama + Open WebUI | Any machine, even CPU-only / low-RAM |
+| **2 — Full stack** | Chat stack + OpenClaw | Apple Silicon Mac or Linux GPU box |
+| **3 — Public-facing** | Stack + nginx + Let’s Encrypt + firewall | VPS with public IP and DNS |
 | **4 — Custom** | Pick each component | Power users |
+| **5 — Client assistant platform** | workspace templates, memory docs, assistant roles, service model | You-Sir Juan business build |
 
-The wizard will **warn** if you pick a profile your hardware can't sustain (e.g. OpenClaw on Intel/CPU = unstable). You can override with eyes open.
+---
 
-## Quick start
+## Quick Start
 
-### macOS (laptops, family Macs)
-
-```bash
-git clone https://github.com/marvelousempire/yousirjuan.git
-cd yousirjuan
-bash bootstrap.sh
-```
-
-Or **double-click** `command-launchers/Install Private AI.command` if you cloned with a GUI git client. (First time, **right-click → Open** to bypass macOS Gatekeeper.)
-
-### Linux (the VPS, home server, family-office workstation)
+### macOS
 
 ```bash
 git clone https://github.com/marvelousempire/yousirjuan.git
@@ -50,47 +151,64 @@ cd yousirjuan
 bash bootstrap.sh
 ```
 
-Tested on Ubuntu 22.04 + 24.04 + Debian 12.
+Or double-click:
 
-### VPS public-endpoint setup (separate, after the install above)
+```text
+command-launchers/Install Private AI.command
+```
+
+### Linux / VPS
+
+```bash
+git clone https://github.com/marvelousempire/yousirjuan.git
+cd yousirjuan
+bash bootstrap.sh
+```
+
+Tested target family: Ubuntu / Debian style hosts.
+
+### VPS public endpoint
 
 ```bash
 sudo DOMAIN=hello.yousirjuan.ai EMAIL=hello@yousirjuan.ai \
   bash vps/apply-vps-config.sh
 ```
 
-This stands up nginx + Let's Encrypt + fail2ban + iptables lockdown. Pre-condition: a DNS A record for `hello.yousirjuan.ai` already points at this VPS's public IP.
+This stands up nginx + Let’s Encrypt + fail2ban + iptables lockdown.
 
-## Repository layout
+---
 
-```
+## Repository Layout
+
+```text
 yousirjuan/
-├── README.md                       this file
-├── LICENSE                         all rights reserved (internal use)
-├── .env.example                    copy to .env, fill in secrets
-├── .gitignore                      excludes secrets, logs, backups
-│
-├── bootstrap.sh                    universal entrypoint — detects OS, dispatches
+├── README.md
+├── LICENSE
+├── .env.example
+├── .gitignore
+├── bootstrap.sh
 │
 ├── installers/
-│   ├── macos.sh                    full macOS install with wizard
-│   └── linux.sh                    full Linux install (Ubuntu/Debian)
+│   ├── macos.sh
+│   └── linux.sh
 │
-├── vps/                            for any Linux box that hosts the public endpoint
-│   ├── apply-vps-config.sh         orchestrator: nginx + cert + fail2ban + iptables
-│   ├── nginx-vhost.conf.template   reverse-proxy config (templated for any domain)
-│   ├── fail2ban-sshd.local         SSH brute-force jail
-│   ├── ollama-systemd-override.conf bind Ollama to 0.0.0.0
-│   └── iptables-public-lockdown.sh blocks sensitive ports from public NIC
+├── vps/
+│   ├── apply-vps-config.sh
+│   ├── nginx-vhost.conf.template
+│   ├── fail2ban-sshd.local
+│   ├── ollama-systemd-override.conf
+│   └── iptables-public-lockdown.sh
 │
-├── tools/                          run anytime
-│   ├── health.sh                   status check (Ollama, Docker, Open WebUI, OpenClaw)
-│   ├── backup.sh                   tarball of OpenWebUI volume + OpenClaw config
-│   ├── restore.sh                  inverse of backup.sh
-│   ├── uninstall.sh                interactive teardown
-│   └── glinet-router-setup.sh      configure GL.iNet routers (Flint 2, Slate AX, etc.)
+├── tools/
+│   ├── health.sh
+│   ├── backup.sh
+│   ├── restore.sh
+│   ├── uninstall.sh
+│   ├── glinet-router-setup.sh
+│   ├── init-portfolio-business.sh
+│   └── init-client-assistant.sh
 │
-├── command-launchers/              double-clickable .command files for macOS Finder
+├── command-launchers/
 │   ├── Install Private AI.command
 │   ├── Check Health.command
 │   ├── Backup.command
@@ -99,109 +217,181 @@ yousirjuan/
 │   └── Configure Router.command
 │
 ├── config/
-│   └── openclaw.json.template      OpenClaw config — substituted at install time
+│   └── openclaw.json.template
 │
-├── docker/                         (future) docker-compose stack
+├── docker/
 │
 └── docs/
-    ├── architecture.md             how the pieces fit together
-    ├── adding-models.md            ollama pull etc., privacy notes
-    ├── multi-user.md               adding family members + family-office colleagues
-    ├── rag-and-knowledge.md        upload PDFs, attach to a model
-    ├── modelfile-customization.md  custom system prompts, temperatures, contexts
-    ├── oauth-google.md             "Sign in with Google" setup
-    ├── backup-restore.md           backup + restore walkthrough
-    └── troubleshooting.md          common issues + fixes
+    ├── architecture.md
+    ├── ai-assistant-business-model.md
+    ├── customer-ai-memory-architecture.md
+    ├── private-ai-network-handoff.md
+    ├── adding-models.md
+    ├── multi-user.md
+    ├── rag-and-knowledge.md
+    ├── modelfile-customization.md
+    ├── oauth-google.md
+    ├── backup-restore.md
+    └── troubleshooting.md
 ```
 
-## What you get out of the box
+---
+
+## What You Get Out Of The Box
 
 | Capability | Status |
 |---|---|
-| Local LLM inference (Ollama) | ✅ Multiple models, GPU-accelerated on Apple Silicon |
-| ChatGPT-style web UI (Open WebUI) | ✅ Multi-user, polished |
-| Per-user chat history | ✅ Each user's chats are isolated |
-| Per-user uploaded knowledge (RAG) | ✅ Upload PDFs / docs, attach to chats |
-| Custom system prompts per model | ✅ Workspace → Models in Open WebUI |
-| Cloud model fallback (OpenAI / Claude) | ✅ Add API keys in Settings → Connections |
-| Public HTTPS endpoint with TLS | ✅ via nginx + Let's Encrypt |
-| Encrypted private mesh (Tailscale) | ✅ Reach your AI from any device |
-| SSH brute-force protection | ✅ fail2ban |
-| Public-internet attack-surface lockdown | ✅ iptables INPUT + DOCKER-USER chains |
-| Voice / WhatsApp / iMessage agent (OpenClaw) | ✅ Optional, requires capable hardware |
-| Backup + restore | ✅ tarball script |
-| Auto-start on reboot | ✅ launchd (macOS) / systemd (Linux) |
+| Local LLM inference | Ollama and local model support |
+| Multi-user chat UI | Open WebUI |
+| Private assistant roles | nanny, coach, trainer, FO aide, PMA aide, marketing agent |
+| Per-client memory | isolated RAG namespaces and workspace folders |
+| Per-user uploaded knowledge | documents, PDFs, notes, SOPs, handbooks |
+| Agent orchestration | Ruflo / MCP-driven workflow layer |
+| Marketing skill layer | marketingskills for portfolio companies |
+| Cloud fallback | allowed only by policy and never for FO/private household data |
+| Public HTTPS endpoint | nginx + Let’s Encrypt |
+| Private mesh | Tailscale / WireGuard |
+| Attack-surface lockdown | iptables and fail2ban |
+| Backup + restore | tarball scripts and planned NAS/B2 workflows |
+| Always-on assistant option | OpenClaw on Mac mini / VPS / dedicated node |
 
-## Security posture
+---
 
-This is **internal infrastructure**, not a public SaaS. Defaults assume:
+## Customer Workspace Pattern
 
-- A small set of known users (family + family office)
-- Devices on a trusted Tailscale mesh
-- Public surface limited to one nginx vhost on 80/443
+Each customer should get a folder or tenant namespace like:
 
-What's hardened:
+```text
+clients/
+└── smith-family/
+    ├── client-profile.md
+    ├── assistants/
+    │   ├── nanny/
+    │   │   ├── assistant-profile.md
+    │   │   ├── house-rules.md
+    │   │   ├── child-routines.md
+    │   │   └── safety-notes.md
+    │   ├── house-manager/
+    │   └── coach/
+    ├── documents/
+    ├── memory-policy.md
+    └── CLAUDE.md
+```
 
-- SSH key-only auth (after you add keys for all your devices)
-- fail2ban bans brute-force IPs after 5 failures for 24h
-- Docker port publishing is firewalled at iptables (UFW alone isn't enough)
-- Open WebUI signups are disabled after admin claims account
-- WEBUI_SECRET_KEY rotated to 64-char hex
-- HTTPS-only public endpoint (HTTP → 301)
-- HSTS + X-Content-Type-Options + X-Frame-Options headers
-- MySQL / Postgres / Redis / Ollama API bound to loopback (or tailnet)
-- Non-default ports (3000, 11434, 8081–8113, etc.) blocked from public NIC
+Each assistant gets:
 
-What's NOT yet hardened (roadmap):
+- a role
+- memory boundaries
+- allowed documents
+- prohibited topics
+- escalation rules
+- storage policy
+- optional cloud policy
 
-- Encrypted-at-rest disk (LUKS)
-- Audit logs (who did what when)
-- Off-site automated backup
-- Multi-tenant isolation (separate Open WebUI instances per family)
-- HSM-backed secrets
+---
 
-## Privacy
+## Example Memory Namespaces
 
-| Data | Stays on... |
+```text
+client:smith-family:household:rules
+client:smith-family:household:routines
+client:smith-family:nanny:handbook
+client:smith-family:children:school
+client:smith-family:coach:fitness
+client:smith-family:vendors:approved
+```
+
+Family office examples:
+
+```text
+fo:legal:trusts
+fo:tax:current-year
+fo:investments:active
+fo:advisors
+```
+
+Portfolio examples:
+
+```text
+pma:members:active
+shared:playbooks:wins
+shared:vendors:approved
+business-name:campaigns
+business-name:customers
+```
+
+---
+
+## Security Posture
+
+This is private infrastructure, not an open public chatbot.
+
+Defaults assume:
+
+- known users
+- isolated client workspaces
+- approved devices
+- encrypted private mesh
+- strict public-port exposure
+- private memory boundaries
+
+Hardened or planned controls:
+
+- SSH key-only auth
+- fail2ban brute-force defense
+- Docker port lockdown
+- Open WebUI signup closure after admin claim
+- rotated `WEBUI_SECRET_KEY`
+- HTTPS-only endpoint
+- security headers
+- per-client namespace isolation
+- no cloud use for FO/private household data
+- audit logs through Ruflo observability
+- off-site backup roadmap
+- encrypted-at-rest storage roadmap
+
+---
+
+## Privacy Model
+
+| Data | Default Location |
 |---|---|
-| Conversations, prompts, uploads | Your VPS / Mac — Docker volume on disk |
-| Local model inference | Your machine — never sent anywhere |
-| Tailscale tunnel between devices | Encrypted point-to-point (WireGuard); even Tailscale Inc. cannot decrypt |
-| HTTPS cert | Issued by Let's Encrypt — they know your domain exists, see zero data |
-| Model downloads from ollama.com | Their CDN sees you downloaded model X (one time per model) |
-| Cloud-API conversations (if you add OpenAI/Claude keys) | Sent to that provider — only when YOU explicitly route to that model |
+| Client prompts and uploads | private workspace storage |
+| Assistant memory | isolated vector namespace |
+| Local model inference | trusted hardware |
+| Family office data | local-only, no cloud APIs |
+| Portfolio marketing data | may use allowed cloud APIs if policy permits |
+| Shared business playbooks | portfolio shared layer only |
+| Backups | NAS, offline drive, encrypted off-site bucket |
 
-## Models
+---
 
-Run `ollama list` anytime to see installed models. Add more:
+## Development Flow
 
-```bash
-ollama pull qwen3:14b
-ollama pull gpt-oss:20b
-ollama pull llama3:8b
+```text
+edit on laptop -> git commit -> git push -> pull on server -> re-run bootstrap.sh
 ```
 
-See `docs/adding-models.md` for the catalog at https://ollama.com/library and recommendations by RAM.
+Every script should remain idempotent.
 
-## Development / iteration
+---
 
-This repo is the source of truth. Changes flow:
+## Product Direction
 
-```
-edit on your laptop → git commit → git push → ssh into VPS / Mac → git pull → re-run bootstrap.sh
-```
+The repo should grow toward these deliverables:
 
-Every script is idempotent — re-running is safe.
+1. Client workspace generator.
+2. Assistant role templates.
+3. RAG namespace manager.
+4. Storage usage meter.
+5. Client billing hooks.
+6. Private upload portal.
+7. Assistant training wizard.
+8. Audit log viewer.
+9. Backup and recovery dashboard.
+10. FO/PMA/portfolio separation policy engine.
 
-## Contributing (you, future-you, and family-office hires)
-
-```bash
-git checkout -b feature/<name>
-# edit
-git commit -m "..."
-git push -u origin feature/<name>
-gh pr create
-```
+---
 
 ## License
 
