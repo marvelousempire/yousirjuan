@@ -1,398 +1,538 @@
-# You-Sir Juan — Private Trainable AI Assistants
+# You-Sir Juan — Trainable AI Relationship Memory Platform
 
-You-Sir Juan is a private AI infrastructure and service platform for building **trainable AI assistants** for families, family offices, PMAs, portfolio companies, and service teams.
+> Build private AI assistants that learn families, households, PMAs, and businesses.
 
-The core idea is simple:
+You-Sir Juan is a private AI infrastructure and service platform for building:
 
-> Give each client a private AI helper they can teach — a nanny assistant, coach, trainer, family office aide, operations helper, or business agent — without requiring the client to understand RAG, models, vector databases, or agent orchestration.
+- trainable AI assistants
+- persistent relationship memory systems
+- household intelligence platforms
+- family-office intelligence systems
+- PMA operational assistants
+- portfolio business AI agents
+- sovereign AI workspaces
 
-Under the hood, You-Sir Juan keeps the existing private AI stack: local inference, private memory, secure networking, RAG, backups, and agent tooling. The new face of the repo is the business layer built on top of that stack.
+The customer experience is intentionally simple:
 
-**Your data, your memory, your assistant, your infrastructure.**
+> “Teach your own AI support staff.”
+
+The infrastructure underneath is advanced.
+
+The customer should never need to understand:
+
+- RAG
+- vector databases
+- embeddings
+- MCP
+- model routing
+- orchestration
+- GPU inference
+- namespace isolation
+- agent workflows
+
+The platform hides complexity and exposes only:
+
+- memory
+- continuity
+- personalization
+- workflow
+- trust
+- relationship intelligence
 
 ---
 
-## What This Becomes
+# The Main Idea
 
-This repo is no longer just a self-hosted AI lab. It is the operating blueprint for a private AI service business:
+Most AI products today are temporary.
 
-1. **Families** can train AI helpers for house rules, nanny handbooks, routines, schedules, preferences, medical notes, meal rules, school details, travel routines, and household standards.
-2. **Personal service teams** can train assistants for coaches, personal trainers, chefs, drivers, house managers, tutors, and care providers.
-3. **Family offices** can train private agents for document intelligence, estate workflows, investment research, governance records, and advisor coordination.
-4. **PMA operations** can train assistants for member onboarding, education, communications, retention, and internal playbooks.
-5. **Portfolio businesses** can train marketing, sales, support, operations, and content agents using shared playbooks while keeping sensitive domains separate.
+They answer a question.
+Then they forget.
 
-The customer should experience this as:
+You-Sir Juan is built around the opposite philosophy:
 
-> “Teach your own private AI support staff.”
+> persistent relationship memory.
 
-The system handles the technical parts: memory, storage, retrieval, access control, model routing, backups, and agent workflows.
+This platform allows people to create AI assistants that:
+
+- remember
+- adapt
+- learn routines
+- learn preferences
+- learn standards
+- learn workflows
+- learn operations
+- preserve continuity
+
+The more the assistant is taught:
+
+> the more valuable it becomes.
 
 ---
 
-## Service Vision
+# What This Platform Can Become
 
-Each client gets a secure workspace where they can create one or more AI assistant roles:
+## Families
 
-| Assistant Type | What It Learns | Example Use |
-|---|---|---|
-| **Nanny Assistant** | Household rules, child routines, allergies, school pickup notes, screen-time rules | “What should the nanny do after school?” |
-| **House Manager Assistant** | Vendor lists, maintenance schedules, home systems, recurring tasks | “Who fixes the pool pump and what is our process?” |
-| **Personal Trainer / Coach** | Goals, training history, diet preferences, injuries, weekly plans | “Build this week’s workout plan.” |
-| **Family Office Assistant** | Trust-domain documents, entity records, advisor notes, policies | “Find the current estate planning checklist.” |
-| **PMA Assistant** | Member onboarding, agreements, events, communications | “Draft a member welcome sequence.” |
-| **Portfolio Marketing Agent** | Brand voice, offers, customer research, campaigns, wins, failures | “Write a landing page using our proven hooks.” |
+Families can create:
 
-The client teaches the assistant by uploading or entering:
+- nanny assistants
+- household assistants
+- tutor assistants
+- chef assistants
+- driver assistants
+- caregiver assistants
+- family scheduling assistants
+- family memory assistants
 
-- handbooks
-- rules
-- checklists
-- contracts
-- SOPs
+The assistant learns:
+
+- house rules
+- allergies
 - schedules
-- preferences
-- playbooks
-- transcripts
-- onboarding guides
-- family or business context files
-
-The platform turns those into private searchable memory.
-
----
-
-## What This Is Technically
-
-A reproducible deployment of:
-
-- **Ollama** — local LLM inference for private utility models
-- **Open WebUI** — ChatGPT-style multi-user web app
-- **OpenClaw** — optional messaging-app assistant layer
-- **Ruflo** — agent orchestration, memory, RAG, observability, and workflows
-- **marketingskills** — marketing and growth skill pack for portfolio businesses
-- **Tailscale / WireGuard** — encrypted private mesh between approved devices
-- **nginx + Let’s Encrypt** — public HTTPS endpoint when needed
-- **fail2ban + iptables** — defense-in-depth firewall
-- **NAS / DAS / NVMe storage** — private memory, documents, backups, and model files
-- **Jetson Thor / Mac / VPS nodes** — local compute roles for inference, orchestration, and always-on services
-
-Deployable on macOS or Linux from a single bootstrap script. Idempotent — safe to re-run.
+- routines
+- emergency contacts
+- school procedures
+- values
+- expectations
+- meal preferences
+- activity preferences
+- communication standards
 
 ---
 
-## Business Model
+## Family Offices
 
-You-Sir Juan can be packaged as a private AI assistant service:
+Family offices can create:
 
-| Layer | What The Client Pays For |
+- trust assistants
+- reporting assistants
+- governance assistants
+- advisor coordination assistants
+- investment research assistants
+- document intelligence assistants
+- operations assistants
+
+The assistant can learn:
+
+- entity structures
+- governance documents
+- advisor procedures
+- reporting standards
+- workflows
+- policies
+- historical decisions
+- institutional memory
+
+---
+
+## PMAs
+
+PMAs can create:
+
+- onboarding assistants
+- member support assistants
+- communications assistants
+- educational assistants
+- operations assistants
+- retention assistants
+
+The assistant can:
+
+- answer member questions
+- teach procedures
+- surface documents
+- maintain continuity
+- assist operations
+- preserve institutional knowledge
+
+---
+
+## Portfolio Businesses
+
+Portfolio businesses can create:
+
+- marketing agents
+- sales agents
+- support agents
+- operations agents
+- content agents
+- onboarding agents
+- analytics agents
+
+The platform stores:
+
+- wins
+- failures
+- campaigns
+- hooks
+- copy
+- customer insights
+- vendors
+- pricing lessons
+- retention lessons
+
+inside shared learning layers.
+
+This allows the portfolio to:
+
+> compound intelligence across businesses.
+
+---
+
+# Why This Is Different
+
+Most AI systems are:
+
+- generic
+- cloud-dependent
+- stateless
+- disconnected
+- temporary
+
+You-Sir Juan is:
+
+- memory-driven
+- relationship-driven
+- local-first
+- sovereign
+- privacy-oriented
+- continuity-focused
+- deeply personalized
+
+The real product is NOT:
+
+- Ollama
+- Open WebUI
+- Ruflo
+- OpenClaw
+- Jetson Thor
+- vector databases
+
+Those are infrastructure.
+
+The real product is:
+
+> relationship continuity powered by AI memory.
+
+---
+
+# Example Customer Story — Nanny Assistant
+
+A family hires a nanny.
+
+Normally:
+
+- routines must be retrained repeatedly
+- allergies get forgotten
+- standards drift
+- turnover resets continuity
+- instructions become fragmented
+
+With You-Sir Juan:
+
+The family trains a Nanny Assistant.
+
+The assistant learns:
+
+- wake-up routines
+- meal standards
+- allergy rules
+- school schedules
+- bedtime routines
+- discipline philosophy
+- preferred activities
+- communication standards
+- emergency procedures
+
+Every future nanny inherits the same memory.
+
+The continuity persists.
+
+---
+
+# Example Customer Story — Personal Trainer Assistant
+
+A personal trainer assistant can learn:
+
+- injuries
+- limitations
+- food restrictions
+- goals
+- progress history
+- preferred routines
+- schedule constraints
+- supplements
+- coaching style
+
+The assistant becomes:
+
+> a persistent health and coaching memory system.
+
+---
+
+# Example Customer Story — Family Office Assistant
+
+A family office assistant can:
+
+- surface trust documents
+- summarize advisor communications
+- preserve institutional memory
+- coordinate workflows
+- organize reporting
+- manage operational procedures
+- assist governance continuity
+
+The family office stops losing context between:
+
+- staff changes
+- advisor turnover
+- years of operations
+- scattered documents
+- disconnected systems
+
+---
+
+# The Emotional Layer
+
+The emotional value is critical.
+
+This is not just:
+
+> “AI.”
+
+This is:
+
+- continuity
+- memory
+- standards
+- personalization
+- preserved knowledge
+- trusted operational intelligence
+
+The assistant should feel:
+
+- warm
+- personal
+- intelligent
+- trustworthy
+- persistent
+- familiar
+
+---
+
+# Infrastructure Overview
+
+Underneath the platform is a sovereign AI infrastructure stack.
+
+## Core Components
+
+| Layer | Purpose |
 |---|---|
-| **Workspace setup** | Secure client workspace, assistant roles, onboarding session |
-| **Private memory storage** | Stored documents, transcripts, profiles, handbooks, vector indexes |
-| **Assistant roles** | Nanny, coach, trainer, house manager, FO aide, marketing agent, etc. |
-| **Managed AI hosting** | Compute, uptime, model serving, backups, maintenance |
-| **Premium workflows** | Document intelligence, content generation, task automation, reporting |
-| **Compliance / privacy tier** | Stricter data separation, audit logs, offline/local-only mode |
-
-Core pricing concept:
-
-- charge per workspace
-- charge per assistant role
-- charge for storage used
-- charge for managed hosting and support
-- charge for custom workflows and integrations
-
-See:
-
-- `docs/ai-assistant-business-model.md`
-- `docs/customer-ai-memory-architecture.md`
-- `docs/private-ai-network-handoff.md`
+| Ollama | local inference |
+| Ruflo | orchestration, memory, agents, workflows |
+| Open WebUI | customer-facing interface |
+| OpenClaw | messaging assistant layer |
+| marketingskills | portfolio marketing intelligence |
+| Jetson Thor | heavy AI inference and vector workloads |
+| MacBook Pro / Mac Studio | orchestration, development, creative workflows |
+| Mac mini | always-on infrastructure node |
+| NAS / DAS / NVMe | memory, models, backups, storage |
+| Tailscale / WireGuard | encrypted private mesh |
 
 ---
 
-## Trust-Domain Design
+# Hardware Philosophy
 
-The system is built around strict separation:
+The platform intentionally separates:
+
+| System | Role |
+|---|---|
+| MacBook Pro / Studio | creative workstation and orchestration |
+| Mac mini | always-on infrastructure and assistant services |
+| Jetson Thor | AI inference and memory workloads |
+| NAS / DAS | persistent storage and backups |
+
+This avoids:
+
+- thermal overload
+- laptop abuse
+- infrastructure instability
+- mixed trust domains
+- memory bottlenecks
+
+---
+
+# Trust-Domain Separation
+
+The system is designed around strict separation.
 
 | Domain | Use | Memory Rule |
 |---|---|---|
-| **Family / Household** | nanny, home, care, routines | never mixed with other clients |
-| **Family Office** | wealth, estate, tax, governance | highest sensitivity; local-first only |
-| **PMA** | members, education, communications | separate from FO |
-| **Portfolio Business** | marketing, operations, sales | can use shared business playbooks |
-| **Shared Learning Layer** | wins, failures, vendor lists, templates | never receives FO/private household data |
+| Family / Household | nanny, routines, caregivers | isolated |
+| Family Office | legal, trust, tax, governance | highest sensitivity |
+| PMA | member operations | separated from FO |
+| Portfolio Businesses | marketing and operations | may use shared playbooks |
+| Shared Learning Layer | wins, failures, vendor knowledge | never receives FO/private family data |
 
 Critical rule:
 
-> No `fo:*`, household, nanny, child, legal, tax, medical, or private family data flows into shared business memory.
+> Family office and private household memory never flows into shared portfolio memory.
 
 ---
 
-## Install Profiles
+# The Shared Intelligence Layer
 
-The installer detects hardware and recommends a profile, but you can override:
+The platform compounds intelligence.
 
-| Profile | What you get | Recommended for |
-|---|---|---|
-| **1 — Chat only** | Ollama + Open WebUI | Any machine, even CPU-only / low-RAM |
-| **2 — Full stack** | Chat stack + OpenClaw | Apple Silicon Mac or Linux GPU box |
-| **3 — Public-facing** | Stack + nginx + Let’s Encrypt + firewall | VPS with public IP and DNS |
-| **4 — Custom** | Pick each component | Power users |
-| **5 — Client assistant platform** | workspace templates, memory docs, assistant roles, service model | You-Sir Juan business build |
-
----
-
-## Quick Start
-
-### macOS
-
-```bash
-git clone https://github.com/marvelousempire/yousirjuan.git
-cd yousirjuan
-bash bootstrap.sh
-```
-
-Or double-click:
+Example namespaces:
 
 ```text
-command-launchers/Install Private AI.command
+shared:playbooks:wins
+shared:playbooks:failures
+shared:vendors:approved
 ```
 
-### Linux / VPS
+This allows:
 
-```bash
-git clone https://github.com/marvelousempire/yousirjuan.git
-cd yousirjuan
-bash bootstrap.sh
-```
+- one business’s success
+- one campaign insight
+- one retention strategy
+- one operational lesson
 
-Tested target family: Ubuntu / Debian style hosts.
+…to improve future businesses.
 
-### VPS public endpoint
-
-```bash
-sudo DOMAIN=hello.yousirjuan.ai EMAIL=hello@yousirjuan.ai \
-  bash vps/apply-vps-config.sh
-```
-
-This stands up nginx + Let’s Encrypt + fail2ban + iptables lockdown.
+The intelligence compounds over time.
 
 ---
 
-## Repository Layout
+# Customer Workspace Structure
 
-```text
-yousirjuan/
-├── README.md
-├── LICENSE
-├── .env.example
-├── .gitignore
-├── bootstrap.sh
-│
-├── installers/
-│   ├── macos.sh
-│   └── linux.sh
-│
-├── vps/
-│   ├── apply-vps-config.sh
-│   ├── nginx-vhost.conf.template
-│   ├── fail2ban-sshd.local
-│   ├── ollama-systemd-override.conf
-│   └── iptables-public-lockdown.sh
-│
-├── tools/
-│   ├── health.sh
-│   ├── backup.sh
-│   ├── restore.sh
-│   ├── uninstall.sh
-│   ├── glinet-router-setup.sh
-│   ├── init-portfolio-business.sh
-│   └── init-client-assistant.sh
-│
-├── command-launchers/
-│   ├── Install Private AI.command
-│   ├── Check Health.command
-│   ├── Backup.command
-│   ├── Restore.command
-│   ├── Uninstall.command
-│   └── Configure Router.command
-│
-├── config/
-│   └── openclaw.json.template
-│
-├── docker/
-│
-└── docs/
-    ├── architecture.md
-    ├── ai-assistant-business-model.md
-    ├── customer-ai-memory-architecture.md
-    ├── private-ai-network-handoff.md
-    ├── adding-models.md
-    ├── multi-user.md
-    ├── rag-and-knowledge.md
-    ├── modelfile-customization.md
-    ├── oauth-google.md
-    ├── backup-restore.md
-    └── troubleshooting.md
-```
-
----
-
-## What You Get Out Of The Box
-
-| Capability | Status |
-|---|---|
-| Local LLM inference | Ollama and local model support |
-| Multi-user chat UI | Open WebUI |
-| Private assistant roles | nanny, coach, trainer, FO aide, PMA aide, marketing agent |
-| Per-client memory | isolated RAG namespaces and workspace folders |
-| Per-user uploaded knowledge | documents, PDFs, notes, SOPs, handbooks |
-| Agent orchestration | Ruflo / MCP-driven workflow layer |
-| Marketing skill layer | marketingskills for portfolio companies |
-| Cloud fallback | allowed only by policy and never for FO/private household data |
-| Public HTTPS endpoint | nginx + Let’s Encrypt |
-| Private mesh | Tailscale / WireGuard |
-| Attack-surface lockdown | iptables and fail2ban |
-| Backup + restore | tarball scripts and planned NAS/B2 workflows |
-| Always-on assistant option | OpenClaw on Mac mini / VPS / dedicated node |
-
----
-
-## Customer Workspace Pattern
-
-Each customer should get a folder or tenant namespace like:
+Each customer can receive:
 
 ```text
 clients/
 └── smith-family/
-    ├── client-profile.md
     ├── assistants/
     │   ├── nanny/
-    │   │   ├── assistant-profile.md
-    │   │   ├── house-rules.md
-    │   │   ├── child-routines.md
-    │   │   └── safety-notes.md
-    │   ├── house-manager/
-    │   └── coach/
+    │   ├── coach/
+    │   ├── chef/
+    │   └── house-manager/
     ├── documents/
-    ├── memory-policy.md
+    ├── memory/
+    ├── policies/
     └── CLAUDE.md
 ```
 
-Each assistant gets:
+Each assistant receives:
 
-- a role
+- role instructions
 - memory boundaries
-- allowed documents
-- prohibited topics
-- escalation rules
+- uploaded knowledge
 - storage policy
-- optional cloud policy
+- escalation rules
+- cloud permissions
+- interaction style
 
 ---
 
-## Example Memory Namespaces
+# The AI Hosting Business Opportunity
 
-```text
-client:smith-family:household:rules
-client:smith-family:household:routines
-client:smith-family:nanny:handbook
-client:smith-family:children:school
-client:smith-family:coach:fitness
-client:smith-family:vendors:approved
-```
+This repository can evolve into:
 
-Family office examples:
+- a hosted AI assistant business
+- a sovereign AI cloud
+- a private AI operating system
+- a relationship-memory platform
+- a PMA operations platform
+- a family-office intelligence system
+- an AI continuity infrastructure company
 
-```text
-fo:legal:trusts
-fo:tax:current-year
-fo:investments:active
-fo:advisors
-```
+Potential revenue layers:
 
-Portfolio examples:
-
-```text
-pma:members:active
-shared:playbooks:wins
-shared:vendors:approved
-business-name:campaigns
-business-name:customers
-```
+| Layer | Revenue Model |
+|---|---|
+| Workspace creation | setup fee |
+| AI assistants | monthly recurring |
+| Storage | usage-based |
+| Hosting | managed infrastructure |
+| Premium memory | higher-capacity plans |
+| Compliance/privacy | premium tier |
+| White-glove onboarding | consulting |
+| Custom workflows | implementation services |
 
 ---
 
-## Security Posture
+# Security Posture
 
-This is private infrastructure, not an open public chatbot.
+This is NOT intended to be:
+
+- a public chatbot
+- an ad-driven SaaS
+- a surveillance platform
 
 Defaults assume:
 
-- known users
-- isolated client workspaces
-- approved devices
-- encrypted private mesh
-- strict public-port exposure
-- private memory boundaries
+- approved users
+- private infrastructure
+- encrypted networking
+- isolated memory
+- strong trust boundaries
 
-Hardened or planned controls:
+Security controls include:
 
 - SSH key-only auth
-- fail2ban brute-force defense
-- Docker port lockdown
-- Open WebUI signup closure after admin claim
-- rotated `WEBUI_SECRET_KEY`
-- HTTPS-only endpoint
-- security headers
-- per-client namespace isolation
-- no cloud use for FO/private household data
-- audit logs through Ruflo observability
-- off-site backup roadmap
-- encrypted-at-rest storage roadmap
+- fail2ban
+- iptables lockdown
+- private mesh networking
+- namespace isolation
+- local-first inference
+- restricted cloud policies
+- audit logging roadmap
+- encrypted storage roadmap
 
 ---
 
-## Privacy Model
+# Product Direction
 
-| Data | Default Location |
-|---|---|
-| Client prompts and uploads | private workspace storage |
-| Assistant memory | isolated vector namespace |
-| Local model inference | trusted hardware |
-| Family office data | local-only, no cloud APIs |
-| Portfolio marketing data | may use allowed cloud APIs if policy permits |
-| Shared business playbooks | portfolio shared layer only |
-| Backups | NAS, offline drive, encrypted off-site bucket |
+The roadmap includes:
 
----
-
-## Development Flow
-
-```text
-edit on laptop -> git commit -> git push -> pull on server -> re-run bootstrap.sh
-```
-
-Every script should remain idempotent.
+1. Client workspace generator
+2. Assistant role templates
+3. AI training wizard
+4. Memory upload portal
+5. Namespace manager
+6. Storage meter
+7. Billing integrations
+8. Backup dashboard
+9. Audit log viewer
+10. FO/PMA/portfolio policy engine
+11. Assistant marketplace
+12. Household operations dashboard
+13. PMA onboarding dashboard
+14. Family-office workflow dashboard
+15. Persistent relationship-memory engine
 
 ---
 
-## Product Direction
+# Documentation
 
-The repo should grow toward these deliverables:
+Additional documents:
 
-1. Client workspace generator.
-2. Assistant role templates.
-3. RAG namespace manager.
-4. Storage usage meter.
-5. Client billing hooks.
-6. Private upload portal.
-7. Assistant training wizard.
-8. Audit log viewer.
-9. Backup and recovery dashboard.
-10. FO/PMA/portfolio separation policy engine.
+- `docs/private-ai-network-handoff.md`
+- `docs/vision-trainable-ai-assistants-platform.md`
+- `docs/customer-ai-memory-architecture.md`
+- `docs/ai-assistant-business-model.md`
 
 ---
 
-## License
+# Philosophy
 
-Internal use only. See `LICENSE`.
+The future of AI is not simply:
+
+> bigger models.
+
+The future is:
+
+> persistent relationship memory.
+
+That is the direction of You-Sir Juan.
