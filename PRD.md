@@ -380,16 +380,30 @@ Layered summary:
 - [ ] Off-site backup automation (daily encrypted tarball to S3 / NAS)
 - [ ] Tailnet renamed to something memorable (`nivram` or operator's choice)
 
-### Phase 3: Hardware upgrade + advanced models (Q3 2026)
+### Phase 3: Hardware upgrade + advanced models (target: ~2 weeks from 2026-04-26)
 
-**Goal:** Run flagship-class models on dedicated brain hardware.
+**Goal:** Run flagship-class models on dedicated brain hardware. Move inference off the shared VPS so resource contention with operator's other apps becomes a non-issue.
 
-- [ ] Decide on brain hardware (Mac mini M4 Pro, Jetson AGX Orin 64, Jetson AGX Thor 128)
-- [ ] Procure + install
-- [ ] Migrate Ollama brain from VPS to brain box
-- [ ] Pull `gpt-oss:20b`, `qwen3:14b`, possibly `gpt-oss:120b` on Thor
-- [ ] OpenClaw brought back online with brain box (real Jarvis architecture)
-- [ ] Voice / wake word on personal devices
+**Procurement plan (decided 2026-04-26):**
+- [ ] **NVIDIA Jetson AGX Thor 128 GB** — primary brain box for frontier models (gpt-oss:120b, qwen3:32b, llama3.1:70b at high quality). 2070 TFLOPS, 128 GB unified memory.
+- [ ] **Mac mini M5** (or M4 Pro 48 GB if M5 mini hasn't shipped) — secondary brain for Apple-ecosystem-friendly workflows + redundancy. Metal GPU.
+
+**Network topology after install:**
+- Both boxes join the tailnet (`*.yousirjuan.ts.net`).
+- Open WebUI on the VPS reconfigures `OLLAMA_BASE_URL` to point at the Thor (primary) — over tailnet, encrypted, low-latency.
+- OpenClaw on every device points at the brain box for inference; runs local-action plugins (browser, files, voice) on its own device.
+- VPS Ollama either kept as a fallback (small models only) or stopped entirely.
+
+**Tasks:**
+- [ ] Procure both boxes (~1-2 weeks)
+- [ ] Add to tailnet, verify reachability
+- [ ] Install bootstrap.sh on each (Linux profile on Thor, macOS profile on Mac mini)
+- [ ] Pull `gpt-oss:20b`, `gpt-oss:120b`, `qwen3:14b`, `qwen3:32b`, `llama3.1:70b` on Thor
+- [ ] Pull mid-size models on the Mac mini for Metal-optimized variants
+- [ ] Reconfigure Open WebUI to use Thor's Ollama as primary
+- [ ] OpenClaw on each operator device → brain via tailnet (real Jarvis architecture)
+- [ ] Voice / wake word on personal devices via OpenClaw `talk-voice` plugin
+- [ ] Reassess Q6 (VPS sharing) after migration — should be moot once Ollama is off the VPS
 
 ### Phase 4: Productize (2027+)
 
@@ -418,12 +432,12 @@ Captured on 2026-04-26. Each needs operator decision before progressing the rele
 
 | # | Question | Status | Blocks |
 |---|---|---|---|
-| Q1 | Brain hardware: Mac mini M4 Pro (~$2.2K) vs Jetson AGX Orin 64 (~$2.5K) vs Jetson AGX Thor 128 (~$3K+)? | Open | Phase 3 procurement |
-| Q2 | Tailnet name — keep `tailaa31dd.ts.net` (free, ugly) or rename to `nivram` / `yousirjuan` / other? | Open — operator wants explanation | Cosmetic — TLS via Tailscale uses this |
+| Q1 | Brain hardware: Mac mini M4 Pro (~$2.2K) vs Jetson AGX Orin 64 (~$2.5K) vs Jetson AGX Thor 128 (~$3K+)? | **DECIDED 2026-04-26: Both.** Procurement plan: **Jetson AGX Thor 128 GB** (frontier-model brain — gpt-oss:120b capable) + **Mac mini M5 (or M4 Pro if M5 mini hasn't shipped yet)** (macOS-native brain for Apple-ecosystem workflows; failover to Thor). Procurement target: **1-2 weeks**. Both join the tailnet; devices route to whichever is best for the task. | Phase 3 procurement — IN PROGRESS |
+| Q2 | Tailnet name — keep `tailaa31dd.ts.net` (free, ugly) or rename to `nivram` / `yousirjuan` / other? | **DECIDED 2026-04-26: Rename to `yousirjuan`.** Tailnet becomes `yousirjuan.ts.net`; devices become `vps-godaddy.yousirjuan.ts.net`, `imac-avery.yousirjuan.ts.net`, etc. Operator action: click "Rename tailnet" in Tailscale admin. | Cosmetic — TLS via Tailscale uses this |
 | Q3 | Is You-Sir Juan a family-only project, or eventually a product to license to others? | **DECIDED 2026-04-26: Hybrid.** Used in family-only mode today, but architectural decisions should preserve the option to license it to others later. → preserve generalizability in installer paths, secret handling, branding-templating, multi-tenant separation. Avoid hard-coded "yousirjuan" assumptions in code; use env vars / templates. | Architecture decisions, branding |
 | Q4 | Disaster recovery RTO/RPO target — how fast must we recover, how much data loss acceptable? | Open | Backup strategy |
 | Q5 | Encrypt-at-rest on VPS — required, deferred, never? | Open | Hardening posture |
-| Q6 | Will operator allow `pm2-abrownsanta` apps to share the VPS with You-Sir Juan long-term, or will You-Sir Juan move to dedicated infra? | Open — operator wants explanation | Resource planning |
+| Q6 | Will operator allow `pm2-abrownsanta` apps to share the VPS with You-Sir Juan long-term, or will You-Sir Juan move to dedicated infra? | **DECIDED 2026-04-26: Keep sharing for now.** No infra split right now. Once Jetson Thor + Mac arrive (~1-2 weeks), Ollama brain moves off the VPS to those boxes; the VPS becomes lighter-weight (just nginx + Open WebUI shell + tailnet endpoint), which alleviates contention naturally. Reassess after that migration. | Resource planning |
 | Q7 | Cloud API fallback (OpenAI, Anthropic) — per-user opt-in only, or admin-toggled globally? | Open | UX + privacy posture |
 | Q8 | Voice — priority for Phase 3 or Phase 4? | Open | Roadmap order |
 | Q9 | Family member 2FA — required or opt-in? | **DECIDED 2026-04-26: Required.** All family members and family-office users must have 2FA enabled to use You-Sir Juan. Implementation: enforce via Open WebUI's TOTP setting + Google OAuth's account-level 2FA enforcement (org-level setting in Google Workspace if used) + add a UI gate that refuses to allow first-login until 2FA is enrolled. | Login flow design |
