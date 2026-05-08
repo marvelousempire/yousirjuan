@@ -188,6 +188,8 @@ These are the tie-breakers when requirements conflict.
 - [ ] **S-6.** Tailscale subnet routing so devices outside the tailnet can be reached via tailnet (optional)
 - [ ] **S-7.** Modelfile bundle in repo (`config/modelfiles/`) — version-controlled custom models that deploy via `ollama create`
 - [ ] **S-8.** Auto-detect VPS environment vs laptop — installer picks profile 3 vs 1 by default
+- [ ] **S-9.** **2FA enforcement for all users** (per Q9 decision 2026-04-26). Enforce TOTP via Open WebUI; gate first-login until enrolled.
+- [ ] **S-10.** **Generalizability pass for licensing-readiness** (per Q3 decision 2026-04-26). Audit codebase for hard-coded `yousirjuan` references; replace with `.env` vars (BRAND_NAME, BRAND_DOMAIN, BRAND_EMAIL, BRAND_LOGO_PATH). Verify every script works against a different brand without code changes.
 
 ### Could have (Phase 3 — Q3 2026 or later)
 
@@ -412,19 +414,20 @@ Layered summary:
 ## 13. Open questions / decisions needed
 
 Captured on 2026-04-26. Each needs operator decision before progressing the relevant work.
+**Status updated 2026-04-26** — operator decisions on Q3 and Q9 captured below.
 
-| # | Question | Blocks |
-|---|---|---|
-| Q1 | Brain hardware: Mac mini M4 Pro (~$2.2K) vs Jetson AGX Orin 64 (~$2.5K) vs Jetson AGX Thor 128 (~$3K+)? | Phase 3 procurement |
-| Q2 | Tailnet name — keep `tailaa31dd.ts.net` (free, ugly) or rename to `nivram` / `yousirjuan` / other? | Cosmetic — TLS via Tailscale uses this |
-| Q3 | Is You-Sir Juan a family-only project, or eventually a product to license to others? | Affects architecture decisions (multi-tenant isolation, branding, etc.) |
-| Q4 | Disaster recovery RTO/RPO target — how fast must we recover, how much data loss acceptable? | Affects backup strategy |
-| Q5 | Encrypt-at-rest on VPS — required, deferred, never? | Hardening posture |
-| Q6 | Will operator allow `pm2-abrownsanta` apps to share the VPS with You-Sir Juan long-term, or will You-Sir Juan move to dedicated infra? | Resource planning |
-| Q7 | Cloud API fallback (OpenAI, Anthropic) — per-user opt-in only, or admin-toggled globally? | UX + privacy posture |
-| Q8 | Voice — priority for Phase 3 or Phase 4? | Roadmap order |
-| Q9 | Family member 2FA — required or opt-in? | Login flow design |
-| Q10 | License — keep "all rights reserved", switch to BSL, or open-source? | Strategic positioning |
+| # | Question | Status | Blocks |
+|---|---|---|---|
+| Q1 | Brain hardware: Mac mini M4 Pro (~$2.2K) vs Jetson AGX Orin 64 (~$2.5K) vs Jetson AGX Thor 128 (~$3K+)? | Open | Phase 3 procurement |
+| Q2 | Tailnet name — keep `tailaa31dd.ts.net` (free, ugly) or rename to `nivram` / `yousirjuan` / other? | Open — operator wants explanation | Cosmetic — TLS via Tailscale uses this |
+| Q3 | Is You-Sir Juan a family-only project, or eventually a product to license to others? | **DECIDED 2026-04-26: Hybrid.** Used in family-only mode today, but architectural decisions should preserve the option to license it to others later. → preserve generalizability in installer paths, secret handling, branding-templating, multi-tenant separation. Avoid hard-coded "yousirjuan" assumptions in code; use env vars / templates. | Architecture decisions, branding |
+| Q4 | Disaster recovery RTO/RPO target — how fast must we recover, how much data loss acceptable? | Open | Backup strategy |
+| Q5 | Encrypt-at-rest on VPS — required, deferred, never? | Open | Hardening posture |
+| Q6 | Will operator allow `pm2-abrownsanta` apps to share the VPS with You-Sir Juan long-term, or will You-Sir Juan move to dedicated infra? | Open — operator wants explanation | Resource planning |
+| Q7 | Cloud API fallback (OpenAI, Anthropic) — per-user opt-in only, or admin-toggled globally? | Open | UX + privacy posture |
+| Q8 | Voice — priority for Phase 3 or Phase 4? | Open | Roadmap order |
+| Q9 | Family member 2FA — required or opt-in? | **DECIDED 2026-04-26: Required.** All family members and family-office users must have 2FA enabled to use You-Sir Juan. Implementation: enforce via Open WebUI's TOTP setting + Google OAuth's account-level 2FA enforcement (org-level setting in Google Workspace if used) + add a UI gate that refuses to allow first-login until 2FA is enrolled. | Login flow design |
+| Q10 | License — keep "all rights reserved", switch to BSL, or open-source? | Open — but Q3 hybrid answer suggests BSL or proprietary-with-source-available may be the right shape | Strategic positioning |
 
 ---
 
