@@ -107,6 +107,7 @@ PROFILES
 read -r -p "    Choice [1/2/3/4] (default $DEFAULT_PROFILE): " PROFILE
 PROFILE="${PROFILE:-$DEFAULT_PROFILE}"
 
+OPENCLAW_MODE=""
 case "$PROFILE" in
   1) INSTALL_OLLAMA=1; INSTALL_WEBUI=1; INSTALL_OPENCLAW=0; INSTALL_PUBLIC=0 ;;
   2)
@@ -118,7 +119,10 @@ case "$PROFILE" in
     INSTALL_OLLAMA=1; INSTALL_WEBUI=1; INSTALL_OPENCLAW=1; INSTALL_PUBLIC=0
     ;;
   3) INSTALL_OLLAMA=1; INSTALL_WEBUI=1; INSTALL_OPENCLAW=1; INSTALL_PUBLIC=1
-     note "Public-facing: also run \`sudo DOMAIN=... EMAIL=... bash vps/apply-vps-config.sh\` after this finishes."
+     # On a public VPS, default OpenClaw to Docker-router mode (safer, headless)
+     OPENCLAW_MODE="docker"
+     note "Public-facing: OpenClaw will install in Docker-router mode (headless, sandboxed)."
+     note "Also run \`sudo DOMAIN=... EMAIL=... bash vps/apply-vps-config.sh\` after this finishes."
      ;;
   4)
     read -r -p "    Install Ollama (LLM runtime)? [Y/n] " a; [[ "$a" =~ ^[Nn] ]] && INSTALL_OLLAMA=0 || INSTALL_OLLAMA=1
@@ -128,7 +132,33 @@ case "$PROFILE" in
     ;;
   *) die "Invalid choice." ;;
 esac
-ok "Will install: ollama=$INSTALL_OLLAMA, open-webui=$INSTALL_WEBUI, openclaw=$INSTALL_OPENCLAW"
+
+# OpenClaw mode picker for profiles 2 + 4 (profile 3 already set above)
+if (( INSTALL_OPENCLAW == 1 )) && [[ -z "$OPENCLAW_MODE" ]]; then
+  echo
+  cat <<'OCMODE'
+    OpenClaw deployment mode:
+
+      a) Native    Full feature set: browser control, voice, screenshots,
+                   file ops. Less isolation.
+                   → Best for personal workstations
+      b) Docker    Headless / messaging-router only. Strong isolation
+                   (cap-drop, no host filesystem, broker pattern for any
+                   host action). No browser/voice from inside.
+                   → Best for VPS or always-on server
+      c) Skip      Don't install OpenClaw on this machine
+
+OCMODE
+  read -r -p "    OpenClaw mode [a/b/c] (default a): " OC_PICK
+  case "${OC_PICK:-a}" in
+    a|A) OPENCLAW_MODE="native" ;;
+    b|B) OPENCLAW_MODE="docker"; warn "Docker mode requires the broker setup (see broker/README.md)" ;;
+    c|C) OPENCLAW_MODE=""; INSTALL_OPENCLAW=0; ok "Skipping OpenClaw" ;;
+    *)   OPENCLAW_MODE="native" ;;
+  esac
+fi
+
+ok "Will install: ollama=$INSTALL_OLLAMA, open-webui=$INSTALL_WEBUI, openclaw=$INSTALL_OPENCLAW${OPENCLAW_MODE:+ ($OPENCLAW_MODE)}"
 
 # ---- 2. base packages ------------------------------------------------------
 
@@ -318,7 +348,7 @@ ok "$(docker --version)"
 # ---- 7. Open WebUI ---------------------------------------------------------
 # (still inside INSTALL_WEBUI block from section 6)
 
-step "Open WebUI on :$WEBUI_PORT"
+step "Open WebUI on :$WEBUI_PORT (hardened container)"
 if docker ps -a --format '{{.Names}}' | grep -qx open-webui; then
   docker start open-webui >/dev/null 2>&1 || true
   ok "open-webui container exists, ensured running"
@@ -326,11 +356,18 @@ else
   note "Pulling Open WebUI image"
   docker run -d --name open-webui -p $WEBUI_PORT:8080 \
     --add-host=host.docker.internal:host-gateway \
+    --cap-drop=ALL \
+    --cap-add=CHOWN --cap-add=DAC_OVERRIDE --cap-add=SETUID --cap-add=SETGID \
+    --security-opt=no-new-privileges:true \
+    --memory=4g --memory-swap=4g \
+    --pids-limit=512 \
+    --tmpfs /tmp:rw,nosuid,nodev,noexec,size=512m \
     -v open-webui:/app/backend/data \
     -e USE_OLLAMA_DOCKER=false \
     -e OLLAMA_BASE_URL=http://host.docker.internal:11434 \
     --restart always \
     ghcr.io/open-webui/open-webui:main
+  ok "Container hardening: cap-drop=ALL (4 readded), no-new-privileges, mem 4G, pids 512, tmpfs /tmp"
 fi
 note "Waiting for Open WebUI HTTP 200 (first run = DB migrations + HF models, 2-4 min)"
 code=000

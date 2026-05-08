@@ -1,6 +1,7 @@
 # You-Sir Juan — Session Handoff
 
-**Session window:** 2026-04-24 → 2026-04-26
+**Session window:** 2026-04-24 → 2026-05-08 (multi-day)
+**Latest update:** 2026-05-08 — added marketing website (public repo `yousirjuan-ai`), signed-installer pipeline, Docker hardening, OpenClaw-router container, capability-based agent broker scaffold.
 **Operator on this Mac:** averygoodman (human is "Avery Brown")
 **Identity for Git/AI:** "You-Sir Juan Agent" — hello@yousirjuan.ai
 **GitHub account:** `marvelousempire`

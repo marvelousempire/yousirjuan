@@ -1,0 +1,46 @@
+# yousirjuan-broker policy
+# Copy to policy.yaml on the host. Hot-reload not yet implemented; restart broker (or just sshd) after edits.
+
+# Per-verb settings — verb name must match a script under verbs/<verb>.sh.
+verbs:
+  open-url:
+    enabled: true
+    rate_limit_per_minute: 30
+    # URL allowlist regex — anything not matching is rejected.
+    url_allowlist:
+      - '^https://(www\.)?yousirjuan\.ai(/.*)?$'
+      - '^https://github\.com/marvelousempire/.*$'
+      - '^https://(www\.)?google\.com/search\?.*$'
+
+  screenshot:
+    enabled: true
+    rate_limit_per_minute: 6
+
+  type-text:
+    enabled: true
+    rate_limit_per_minute: 30
+    max_length: 1000
+
+  read-file:
+    enabled: true
+    rate_limit_per_minute: 60
+    # Allowlist globs — defaults if not set:
+    path_allowlist:
+      - '/Users/*/Documents/yousirjuan-shared/*'
+      - '/Users/*/Public/*'
+      - '/home/*/yousirjuan-shared/*'
+    max_bytes: 1048576   # 1 MB
+
+  # Verbs you haven't enabled here are auto-disabled. Comment out to disable.
+  # keystroke: { enabled: false }
+  # clipboard-write: { enabled: false }
+  # clipboard-read: { enabled: false }
+
+# Logging
+log:
+  path: /var/log/yousirjuan-broker.log
+  rotate_size_mb: 100
+  retain_days: 30
+
+# Audit notifications — optional macOS notification on every action
+notify_on_action: false

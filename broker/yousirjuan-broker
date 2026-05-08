@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+# yousirjuan-broker — the food door.
+#
+# This script is the ForceCommand for the yousirjuan-agent SSH user.
+# It receives the requested verb via $SSH_ORIGINAL_COMMAND, dispatches
+# to a verb script under verbs/, and logs everything.
+#
+# sshd_config / authorized_keys must include:
+#   command="/usr/local/bin/yousirjuan-broker",no-port-forwarding,no-agent-forwarding,no-X11-forwarding,no-pty <key>
+#
+# The container only ever sends:
+#   ssh yousirjuan-agent@host "<verb> <args>"
+# and we either run the verb or reject + log.
+
+set -euo pipefail
+
+BROKER_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+VERBS_DIR="${YOUSIRJUAN_BROKER_VERBS:-$BROKER_DIR/verbs}"
+LOG="${YOUSIRJUAN_BROKER_LOG:-/var/log/yousirjuan-broker.log}"
+POLICY="${YOUSIRJUAN_BROKER_POLICY:-$BROKER_DIR/policy.yaml}"
+
+log() {
+  printf '%s | %s | %s\n' "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" "${SSH_CONNECTION:-local}" "$*" >> "$LOG" 2>/dev/null || true
+}
+
+reject() {
+  log "REJECT $*"
+  echo "broker: not authorized: $*" >&2
+  exit 1
+}
+
+# Pull the requested command. SSH ForceCommand puts it in SSH_ORIGINAL_COMMAND.
+CMD="${SSH_ORIGINAL_COMMAND:-${1:-}}"
+[[ -z "$CMD" ]] && reject "empty command"
+
+# Parse: first whitespace-separated token = verb, rest = args (preserved as-is)
+VERB="${CMD%% *}"
+ARGS="${CMD#"$VERB"}"; ARGS="${ARGS# }"
+
+# Verb whitelist — must exist as a file under verbs/
+VERB_SCRIPT="$VERBS_DIR/${VERB}.sh"
+if [[ ! -f "$VERB_SCRIPT" || ! -x "$VERB_SCRIPT" ]]; then
+  reject "unknown verb: $VERB"
+fi
+
+log "ALLOW $VERB $ARGS"
+
+# Dispatch. Each verb script is responsible for further argument validation,
+# allowlist checks, rate limiting, etc. We just hand the args over.
+exec "$VERB_SCRIPT" $ARGS

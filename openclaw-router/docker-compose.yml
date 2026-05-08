@@ -1,0 +1,64 @@
+# OpenClaw Router — headless containerized deployment
+#
+# Usage:
+#   cd openclaw-router/
+#   cp .env.example .env   # edit OLLAMA_URL etc.
+#   docker compose up -d
+#
+# To enable host actions, also stand up the broker:
+#   See ../broker/README.md
+
+services:
+  openclaw-router:
+    build: .
+    image: yousirjuan/openclaw-router:latest
+    container_name: openclaw-router
+    restart: unless-stopped
+
+    # Strong isolation —
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+    tmpfs:
+      - /tmp:rw,nosuid,nodev,noexec,size=256m
+      - /home/claw/.cache:rw,nosuid,nodev,size=256m
+
+    # Resource ceilings
+    mem_limit: 1g
+    pids_limit: 256
+
+    # Only one mount: the OpenClaw state volume (writable)
+    volumes:
+      - openclaw-state:/home/claw/.openclaw
+      # Optional: SSH key for broker access (must be generated separately)
+      - ${BROKER_SSH_KEY:-./.ssh-broker-key}:/home/claw/.ssh/id_ed25519:ro
+
+    # Tailnet network only — service joins host's tailnet via tailscale serve
+    # (or use the official Tailscale sidecar pattern — see docs)
+    network_mode: bridge
+    ports:
+      - "127.0.0.1:18789:18789"   # gateway only on loopback; expose via SSH/tailnet
+
+    environment:
+      # Where to find Ollama (set in .env)
+      OLLAMA_BASE_URL: ${OLLAMA_URL:-http://host.docker.internal:11434}
+      # Optional channel credentials (Telegram, etc.) — never bake secrets into image
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:-}
+      DISCORD_BOT_TOKEN: ${DISCORD_BOT_TOKEN:-}
+      # Broker target (ssh user@host) — empty = no host actions allowed
+      YOUSIRJUAN_BROKER_HOST: ${BROKER_HOST:-}
+      YOUSIRJUAN_BROKER_USER: ${BROKER_USER:-yousirjuan-agent}
+
+    # Health check — gateway should respond on the local socket
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:18789/health", "-o", "/dev/null"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 60s
+
+volumes:
+  openclaw-state:
+    driver: local

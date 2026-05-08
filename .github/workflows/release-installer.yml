@@ -1,0 +1,126 @@
+# release-installer.yml — Build + sign + notarize macOS .pkg, publish to public Releases.
+#
+# Trigger: pushing a tag like `v0.1.0` (semver)
+# Output: signed + notarized .pkg uploaded to PUBLIC GitHub Release on
+#         marvelousempire/yousirjuan-ai (the website repo). Source stays in
+#         this private repo; binaries are shipped from the public repo so
+#         the website's Download buttons work without leaking source.
+#
+# Required GitHub Secrets (set in this repo's Settings → Secrets → Actions):
+#   APPLE_TEAM_ID                      e.g. ABC1234XYZ
+#   APPLE_DEVELOPER_ID_INSTALLER       full cert name e.g.
+#                                      "Developer ID Installer: Your Name (ABC1234XYZ)"
+#   APPLE_DEVELOPER_ID_APPLICATION     full cert name e.g.
+#                                      "Developer ID Application: Your Name (ABC1234XYZ)"
+#   APPLE_ID                           Apple ID email
+#   APPLE_APP_PASSWORD                 app-specific password from appleid.apple.com
+#   APPLE_DEVELOPER_CERT_P12           base64 of your .p12 export (cert + private key)
+#   APPLE_DEVELOPER_CERT_PASSWORD      passphrase you used when exporting the .p12
+#   PUBLIC_REPO_TOKEN                  a fine-grained PAT with contents:write on
+#                                      marvelousempire/yousirjuan-ai
+
+name: Release installer (macOS .pkg)
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version (e.g. 0.1.0). Leave empty to use git tag."
+        required: false
+        default: ""
+
+jobs:
+  build-and-release:
+    name: Build, sign, notarize, publish
+    runs-on: macos-14   # ARM-based runner; matches Apple Silicon target
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Determine version
+        id: version
+        run: |
+          if [ -n "${{ github.event.inputs.version }}" ]; then
+            VERSION="${{ github.event.inputs.version }}"
+          else
+            VERSION="${GITHUB_REF_NAME#v}"
+          fi
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "Version: $VERSION"
+
+      - name: Import signing certificate
+        env:
+          P12_BASE64: ${{ secrets.APPLE_DEVELOPER_CERT_P12 }}
+          P12_PASSWORD: ${{ secrets.APPLE_DEVELOPER_CERT_PASSWORD }}
+        run: |
+          # Decode + import .p12 into a temporary keychain
+          KEYCHAIN_PATH="$RUNNER_TEMP/build.keychain-db"
+          KEYCHAIN_PASSWORD="$(openssl rand -hex 16)"
+          security create-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
+          security set-keychain-settings -lut 21600 "$KEYCHAIN_PATH"
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
+          # Import the cert
+          echo "$P12_BASE64" | base64 --decode > "$RUNNER_TEMP/cert.p12"
+          security import "$RUNNER_TEMP/cert.p12" \
+            -P "$P12_PASSWORD" \
+            -A -t cert -f pkcs12 -k "$KEYCHAIN_PATH"
+          security list-keychain -d user -s "$KEYCHAIN_PATH" \
+            "$(security default-keychain -d user | xargs)"
+          # Allow codesign to use the key without prompting
+          security set-key-partition-list -S apple-tool:,apple:,codesign: \
+            -s -k "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
+          rm -f "$RUNNER_TEMP/cert.p12"
+          echo "Imported certificate(s):"
+          security find-identity -v -p basic "$KEYCHAIN_PATH"
+
+      - name: Build, sign, notarize the .pkg
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+          ARCH: arm64
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          APPLE_DEVELOPER_ID_INSTALLER: ${{ secrets.APPLE_DEVELOPER_ID_INSTALLER }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_APP_PASSWORD: ${{ secrets.APPLE_APP_PASSWORD }}
+        run: bash installer-build/build-macos-pkg.sh
+
+      - name: Build x64 variant (Rosetta-friendly)
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+          ARCH: x64
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          APPLE_DEVELOPER_ID_INSTALLER: ${{ secrets.APPLE_DEVELOPER_ID_INSTALLER }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_APP_PASSWORD: ${{ secrets.APPLE_APP_PASSWORD }}
+        run: bash installer-build/build-macos-pkg.sh
+
+      - name: List artifacts
+        run: ls -lh dist/
+
+      - name: Publish to public Releases on marvelousempire/yousirjuan-ai
+        env:
+          GH_TOKEN: ${{ secrets.PUBLIC_REPO_TOKEN }}
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          # Upload to public repo so website's download URLs resolve
+          gh release create "v$VERSION" \
+            --repo marvelousempire/yousirjuan-ai \
+            --title "v$VERSION" \
+            --notes "Signed + notarized installer for You-Sir Juan v$VERSION." \
+            --target main \
+            dist/*.pkg dist/*.sha256 || \
+          gh release upload "v$VERSION" \
+            --repo marvelousempire/yousirjuan-ai \
+            --clobber \
+            dist/*.pkg dist/*.sha256
+
+      - name: Summary
+        run: |
+          echo "### Released v${{ steps.version.outputs.version }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "Public release: https://github.com/marvelousempire/yousirjuan-ai/releases/tag/v${{ steps.version.outputs.version }}" >> "$GITHUB_STEP_SUMMARY"
+          ls -lh dist/ >> "$GITHUB_STEP_SUMMARY"

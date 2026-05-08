@@ -190,6 +190,12 @@ These are the tie-breakers when requirements conflict.
 - [ ] **S-8.** Auto-detect VPS environment vs laptop — installer picks profile 3 vs 1 by default
 - [ ] **S-9.** **2FA enforcement for all users** (per Q9 decision 2026-04-26). Enforce TOTP via Open WebUI; gate first-login until enrolled.
 - [ ] **S-10.** **Generalizability pass for licensing-readiness** (per Q3 decision 2026-04-26). Audit codebase for hard-coded `yousirjuan` references; replace with `.env` vars (BRAND_NAME, BRAND_DOMAIN, BRAND_EMAIL, BRAND_LOGO_PATH). Verify every script works against a different brand without code changes.
+- [x] **S-11.** **Public marketing website** at https://github.com/marvelousempire/yousirjuan-ai (Next.js 16 + Tailwind 4 + TS, Cursor-style polish, chip-detected download button, all routes static). Published 2026-05-08. Pending operator action: Vercel deploy + DNS for yousirjuan.ai.
+- [x] **S-12.** **Signed macOS .pkg installer build pipeline** (`installer-build/build-macos-pkg.sh` + `.github/workflows/release-installer.yml`). Uses operator's Apple Developer Team ID + Developer ID Installer cert + notary credentials (configured as GitHub Secrets). Tag-triggered: `git tag v0.1.0 && git push origin v0.1.0` → CI builds + signs + notarizes + publishes to public Releases on `marvelousempire/yousirjuan-ai`. Published 2026-05-08.
+- [x] **S-13.** **Docker hardening for Open WebUI**: `--cap-drop=ALL` (only 4 readded for app boot), `--security-opt=no-new-privileges:true`, memory + pids limits, tmpfs for /tmp. Applied in both installers. Published 2026-05-08.
+- [x] **S-14.** **OpenClaw mode picker** (Native / Docker-router / Skip) when Full stack profile chosen. Public-facing profile auto-defaults to Docker mode. Published 2026-05-08.
+- [x] **S-15.** **OpenClaw-router container** at `openclaw-router/` — headless OpenClaw with strong isolation (no host mounts, capability drops, read-only rootfs, tmpfs). For VPS / always-on server use. Published 2026-05-08.
+- [x] **S-16.** **Capability-based agent broker** at `broker/` — SSH ForceCommand-based "prison with food door" pattern. Container can ONLY take host actions via narrow verb vocabulary: open-url, screenshot, type-text, read-file (allowlist-checked). Every action logged. Scaffolded 2026-05-08; verb wiring + install.sh remain.
 
 ### Could have (Phase 3 — Q3 2026 or later)
 

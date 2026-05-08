@@ -82,7 +82,7 @@ read -r -p "    Choice [1/2/3] (default $DEFAULT_PROFILE): " PROFILE
 PROFILE="${PROFILE:-$DEFAULT_PROFILE}"
 
 case "$PROFILE" in
-  1) INSTALL_OLLAMA=1; INSTALL_WEBUI=1; INSTALL_OPENCLAW=0 ;;
+  1) INSTALL_OLLAMA=1; INSTALL_WEBUI=1; INSTALL_OPENCLAW=0; OPENCLAW_MODE="" ;;
   2)
     if [[ "$ARCH" != "arm64" ]]; then
       warn "You picked Full stack on Intel — OpenClaw inference will likely time out."
@@ -90,6 +90,30 @@ case "$PROFILE" in
       [[ "$yn" =~ ^[Yy]$ ]] || die "Aborted — re-run and pick option 1."
     fi
     INSTALL_OLLAMA=1; INSTALL_WEBUI=1; INSTALL_OPENCLAW=1
+    # OpenClaw mode picker — security tradeoff
+    echo
+    cat <<'OCMODE'
+    OpenClaw deployment mode:
+
+      a) Native    Full feature set: browser control, voice, screenshots,
+                   file ops. Less isolation (process runs as your user).
+                   → Best for personal devices (Mac mini, M1, etc.)
+      b) Docker    Headless / messaging-router only. Strong isolation
+                   (cap-drop, no host filesystem, broker pattern for any
+                   host action). No browser/voice/screenshot from inside
+                   the container — only via the broker (jail-with-door).
+                   → Best for VPS or always-on server use
+      c) Skip      Don't install OpenClaw on this machine
+
+OCMODE
+    read -r -p "    OpenClaw mode [a/b/c] (default a): " OC_PICK
+    case "${OC_PICK:-a}" in
+      a|A) OPENCLAW_MODE="native" ;;
+      b|B) OPENCLAW_MODE="docker"; warn "Docker mode requires the broker setup (see broker/README.md after install)" ;;
+      c|C) OPENCLAW_MODE=""; INSTALL_OPENCLAW=0; ok "Skipping OpenClaw" ;;
+      *)   OPENCLAW_MODE="native" ;;
+    esac
+    [[ -n "$OPENCLAW_MODE" ]] && ok "OpenClaw mode: $OPENCLAW_MODE"
     ;;
   3)
     read -r -p "    Install Ollama (LLM runtime)? [Y/n] " a; [[ "$a" =~ ^[Nn] ]] && INSTALL_OLLAMA=0 || INSTALL_OLLAMA=1
@@ -365,18 +389,29 @@ ok "Docker via Colima ready"
 # ---- 7. Open WebUI ---------------------------------------------------------
 # (still inside INSTALL_WEBUI block from section 6)
 
-step "Open WebUI on :$WEBUI_PORT"
+step "Open WebUI on :$WEBUI_PORT (hardened container)"
 if docker ps -a --format '{{.Names}}' | grep -qx open-webui; then
   docker start open-webui >/dev/null 2>&1 || true
   ok "open-webui container exists, ensured running"
 else
   note "Pulling Open WebUI image (~5 GB)"
+  # Hardened container: dropped capabilities, no-new-privileges, resource caps,
+  # tmpfs for /tmp + writable HF cache, only the data volume is rw.
+  # Run as root inside container (Open WebUI's image expects this) but escape
+  # blocked via no-new-privileges + cap-drop.
   docker run -d --name open-webui -p $WEBUI_PORT:8080 \
     --add-host=host.docker.internal:host-gateway \
+    --cap-drop=ALL \
+    --cap-add=CHOWN --cap-add=DAC_OVERRIDE --cap-add=SETUID --cap-add=SETGID \
+    --security-opt=no-new-privileges:true \
+    --memory=4g --memory-swap=4g \
+    --pids-limit=512 \
+    --tmpfs /tmp:rw,nosuid,nodev,noexec,size=512m \
     -v open-webui:/app/backend/data \
     -e OLLAMA_BASE_URL=http://host.docker.internal:11434 \
     --restart always \
     ghcr.io/open-webui/open-webui:main
+  ok "Container hardening: cap-drop=ALL (4 readded for app boot), no-new-privileges, mem 4G, pids 512, tmpfs /tmp"
 fi
 
 note "Waiting for Open WebUI to finish first-run setup (DB migrations + HF embedding model downloads, 2-4 min)"
