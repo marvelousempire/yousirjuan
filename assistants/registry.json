@@ -1,0 +1,54 @@
+{
+  "platform": "You-Sir Juan",
+  "registry_version": "0.1.0",
+  "assistants": [
+    {
+      "id": "nanny",
+      "name": "Nanny Assistant",
+      "purpose": "Household continuity, child routines, safety notes, family standards, and caregiver support.",
+      "default_namespaces": ["client:{client}:nanny", "client:{client}:household"],
+      "blocked_namespaces": ["fo:*", "shared:*", "client:*:restricted"],
+      "template_path": "assistants/nanny"
+    },
+    {
+      "id": "house-manager",
+      "name": "House Manager Assistant",
+      "purpose": "Vendors, home maintenance, household operations, recurring tasks, and property routines.",
+      "default_namespaces": ["client:{client}:household", "client:{client}:vendors", "client:{client}:property"],
+      "blocked_namespaces": ["fo:*", "client:*:medical", "client:*:children:restricted"],
+      "template_path": "assistants/house-manager"
+    },
+    {
+      "id": "trainer",
+      "name": "Trainer / Coach Assistant",
+      "purpose": "Fitness goals, coaching routines, injuries, progress history, schedules, and wellness planning.",
+      "default_namespaces": ["client:{client}:coach", "client:{client}:fitness"],
+      "blocked_namespaces": ["fo:*", "shared:*", "client:*:legal"],
+      "template_path": "assistants/trainer"
+    },
+    {
+      "id": "family-office",
+      "name": "Family Office Assistant",
+      "purpose": "Governance, document intelligence, advisor coordination, reporting workflows, and institutional continuity.",
+      "default_namespaces": ["fo:legal:*", "fo:tax:*", "fo:governance:*", "fo:advisors:*"],
+      "blocked_namespaces": ["shared:*", "pma:*", "client:*:household"],
+      "template_path": "assistants/family-office"
+    },
+    {
+      "id": "pma",
+      "name": "PMA Assistant",
+      "purpose": "Member onboarding, education, communications, procedures, events, and internal operations.",
+      "default_namespaces": ["pma:members:*", "pma:operations:*", "pma:content:*"],
+      "blocked_namespaces": ["fo:*", "client:*:household"],
+      "template_path": "assistants/pma"
+    },
+    {
+      "id": "marketing",
+      "name": "Portfolio Marketing Agent",
+      "purpose": "Campaigns, copy, offers, funnels, customer research, positioning, and growth playbooks.",
+      "default_namespaces": ["{business}:campaigns", "{business}:customers", "shared:playbooks:wins", "shared:playbooks:failures", "shared:vendors:approved"],
+      "blocked_namespaces": ["fo:*", "client:*:household", "client:*:medical"],
+      "template_path": "assistants/marketing"
+    }
+  ]
+}
