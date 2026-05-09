@@ -1,0 +1,48 @@
+version: '3.9'
+
+services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ysj-ollama
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: ysj-open-webui
+    restart: unless-stopped
+    depends_on:
+      - ollama
+    ports:
+      - "3000:8080"
+    environment:
+      - OLLAMA_BASE_URL=http://ollama:11434
+    volumes:
+      - openwebui_data:/app/backend/data
+
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: ysj-qdrant
+    restart: unless-stopped
+    ports:
+      - "6333:6333"
+    volumes:
+      - qdrant_data:/qdrant/storage
+
+  nginx:
+    image: nginx:latest
+    container_name: ysj-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./docker/nginx:/etc/nginx/conf.d
+
+volumes:
+  ollama_data:
+  openwebui_data:
+  qdrant_data:
