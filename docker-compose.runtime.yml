@@ -1,0 +1,41 @@
+version: '3.9'
+
+services:
+  api:
+    build: .
+    command: npm run dev:api
+    ports:
+      - '4000:4000'
+    volumes:
+      - ./:/app
+    depends_on:
+      - postgres
+      - redis
+      - qdrant
+
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: sovereign
+      POSTGRES_PASSWORD: sovereign
+      POSTGRES_DB: yousirjuan
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7
+    ports:
+      - '6379:6379'
+
+  qdrant:
+    image: qdrant/qdrant
+    ports:
+      - '6333:6333'
+    volumes:
+      - qdrant_data:/qdrant/storage
+
+volumes:
+  postgres_data:
+  qdrant_data:
