@@ -2,6 +2,15 @@
 
 This document is the **in-repo source of truth** for copy and claims that appear on the public marketing site ([yousirjuan.ai](https://yousirjuan.ai)), implemented in [`marvelousempire/yousirjuan-ai`](https://github.com/marvelousempire/yousirjuan-ai). When you change positioning, **update this file and the Next.js site together** so installers, docs, and the website stay consistent.
 
+### Public vs private GitHub repos
+
+| Repo | Visibility | Purpose |
+|------|------------|--------|
+| **`yousirjuan`** | **Private** | Full product source, scripts, infra templates, handoff docs, and anything that should not be public. |
+| **`yousirjuan-ai`** | **Public** | Website, short-form marketing, download UX, and GitHub Releases for signed installers / checksums. |
+
+Only material that is safe to ship to strangers belongs in **`-ai`**. The release workflow in this repo uploads **binaries** to the public Releases on **`yousirjuan-ai`**; it does not make this repo public.
+
 ---
 
 ## Positioning
@@ -74,9 +83,9 @@ Principles repeated on-site: **no telemetry**, **no third-party-required**, **no
 
 ## Releases & signed installers
 
-- **Source + scripts:** this repository (`yousirjuan`).
+- **Private source + scripts:** this repository (`yousirjuan`).
 - **Public downloads + checksums:** [`marvelousempire/yousirjuan-ai` Releases](https://github.com/marvelousempire/yousirjuan-ai/releases).
-- **Build pipeline:** [.github/workflows/release-installer.yml](../.github/workflows/release-installer.yml) — tag `v*.*.*` (or `workflow_dispatch`) builds and signs macOS `.pkg`, uploads to the **public** `yousirjuan-ai` repo so the website’s Download buttons work without exposing optional private forks.
+- **Build pipeline:** [.github/workflows/release-installer.yml](../.github/workflows/release-installer.yml) — tag `v*.*.*` (or `workflow_dispatch`) builds and signs macOS `.pkg`, uploads to the **public** `yousirjuan-ai` repo so the Download page works while the **private** source repo stays closed.
 
 ---
 

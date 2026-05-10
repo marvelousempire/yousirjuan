@@ -6,7 +6,7 @@
 
 > **Your AI lives on your hardware.** Self-hosted private AI for individuals, families, and family offices — your conversations, models, and infrastructure stay on machines you control unless you explicitly use a cloud API.
 
-This repository is the **source stack** (`git clone` + [`bootstrap.sh`](bootstrap.sh)). The marketing site, short-form feature copy, privacy table, and release binaries are published from **`yousirjuan-ai`**; keep wording aligned with [`docs/customer-facing-messaging.md`](docs/customer-facing-messaging.md).
+This repository is the **private** canonical source — installers, VPS templates, broker, internal runbooks, and anything operator-specific stay here. **[`yousirjuan-ai`](https://github.com/marvelousempire/yousirjuan-ai)** is the **public** repo: marketing site, customer copy, and Release assets only. Run `git clone` + [`bootstrap.sh`](bootstrap.sh) from this repo when you have access; keep public wording aligned with [`docs/customer-facing-messaging.md`](docs/customer-facing-messaging.md).
 
 You-Sir Juan is a private AI infrastructure and service platform for building:
 

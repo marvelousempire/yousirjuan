@@ -2,9 +2,9 @@
 #
 # Trigger: pushing a tag like `v0.1.0` (semver)
 # Output: signed + notarized .pkg uploaded to PUBLIC GitHub Release on
-#         marvelousempire/yousirjuan-ai (the website repo). Source lives in
-#         this repo; binaries are shipped from yousirjuan-ai so the Download
-#         page and checksums stay on the public marketing repo.
+#         marvelousempire/yousirjuan-ai (public marketing repo). Source stays
+#         in this PRIVATE repo; only binaries land on -ai so downloads work
+#         without opening the canonical source.
 #
 # Required GitHub Secrets (set in this repo's Settings → Secrets → Actions):
 #   APPLE_TEAM_ID                      e.g. ABC1234XYZ

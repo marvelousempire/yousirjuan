@@ -53,8 +53,8 @@ Implementation:
 
 | Thing | Where |
 |---|---|
-| Source stack (this repo) | https://github.com/marvelousempire/yousirjuan — product scripts, VPS templates, broker scaffold, internal docs |
-| Marketing + Downloads | https://github.com/marvelousempire/yousirjuan-ai — Next.js site ([yousirjuan.ai](https://yousirjuan.ai)), Release assets for signed `.pkg` / install commands |
+| **Private** source (`yousirjuan`) | https://github.com/marvelousempire/yousirjuan — full stack, scripts, VPS templates, broker, internal/handoff docs; keep non-public material here only |
+| **Public** marketing + downloads (`yousirjuan-ai`) | https://github.com/marvelousempire/yousirjuan-ai — Next.js site ([yousirjuan.ai](https://yousirjuan.ai)), customer copy, Release assets for signed `.pkg` / install commands |
 | Messaging alignment | [docs/customer-facing-messaging.md](docs/customer-facing-messaging.md) — keep in sync when changing hero, features, privacy table, or installer URLs |
 | Local clone | `/Users/averygoodman/Developer/yousirjuan/` (operator Mac); any path on other machines |
 | Default branch | `main` |

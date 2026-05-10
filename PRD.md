@@ -12,7 +12,7 @@
 
 ## 1. Executive summary
 
-**You-Sir Juan is a turnkey, self-hosted private AI platform for individuals, families, and small organizations** (especially family offices) that need enterprise-grade AI capability **without** sending their data to OpenAI, Anthropic, Google, or Microsoft. Customer-facing shorthand: **“Your AI lives on your hardware.”** Public narrative, feature grid, privacy table, and download flows are maintained in sync with [docs/customer-facing-messaging.md](docs/customer-facing-messaging.md) and the [yousirjuan-ai](https://github.com/marvelousempire/yousirjuan-ai) marketing site.
+**You-Sir Juan is a turnkey, self-hosted private AI platform for individuals, families, and small organizations** (especially family offices) that need enterprise-grade AI capability **without** sending their data to OpenAI, Anthropic, Google, or Microsoft. Customer-facing shorthand: **“Your AI lives on your hardware.”** Public narrative, feature grid, privacy table, and download flows live in the **public** [yousirjuan-ai](https://github.com/marvelousempire/yousirjuan-ai) repo and site; this **private** source repo stays aligned via [docs/customer-facing-messaging.md](docs/customer-facing-messaging.md).
 
 It packages best-in-class open-source pieces — **Ollama** for local model inference, **Open WebUI** for multi-user chat + RAG, **OpenClaw** for messaging-platform agents, **Tailscale** for the device mesh, and **nginx + Let's Encrypt** for the public endpoint — into a single repo that any technically-comfortable user can `git clone` and stand up on any Mac or Linux box in **under 30 minutes**.
 
