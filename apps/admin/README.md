@@ -1,6 +1,6 @@
-# Ready Play Administrative Dashboard
+# You-Sir Juan™ Admin Console
 
-The Ready Play Administrative Dashboard is the operator-facing control surface for You-Sir Juan™.
+The You-Sir Juan™ Admin Console is the operator-facing control surface for the sovereign AI infrastructure platform.
 
 It is designed to manage:
 
@@ -8,7 +8,7 @@ It is designed to manage:
 - model status
 - RAG ingestion
 - memory systems
-- skill library operations
+- Skill Library operations
 - automation workflows
 - device signal permissions
 - evaluation results
@@ -17,13 +17,48 @@ It is designed to manage:
 
 ---
 
+## Current Access Status
+
+The admin console currently runs in local development mode.
+
+Current behavior:
+
+- no production login screen yet
+- no hosted cloud account yet
+- no external public access yet
+- local access only through `localhost`
+
+Current access URL:
+
+```text
+http://localhost:3000
+```
+
+Future production access will add:
+
+- local-first authentication
+- operator accounts
+- role-based access
+- trusted-device login
+- emergency lockout controls
+- audit logging
+
+---
+
 ## Purpose
 
-The dashboard is not a marketing page.
+The admin console is not a marketing page.
 
-It is the administrative cockpit for the sovereign AI infrastructure platform.
+It is the administrative cockpit for the You-Sir Juan™ sovereign AI infrastructure platform.
 
-It should make the system visible, controllable, measurable, and safe.
+It should make the system:
+
+- visible
+- controllable
+- measurable
+- safe
+- explainable
+- locally owned
 
 ---
 
@@ -42,7 +77,7 @@ It should make the system visible, controllable, measurable, and safe.
 | Charts | Recharts / Tremor-compatible patterns |
 | Graphs | React Flow |
 | Forms | React Hook Form + Zod |
-| Auth | Auth.js or local-first auth adapter |
+| Auth | Local-first auth adapter planned |
 | API | REST first, tRPC optional later |
 | Live Updates | WebSocket / Server-Sent Events |
 | Terminal UI | xterm.js |
@@ -51,7 +86,7 @@ It should make the system visible, controllable, measurable, and safe.
 
 ---
 
-## Dashboard Modules
+## Console Modules
 
 | Module | Purpose |
 |---|---|
@@ -75,6 +110,9 @@ It should make the system visible, controllable, measurable, and safe.
 ```text
 apps/admin/
   README.md
+  ACCESS.md
+  USAGE.md
+  LOGIN.md
   package.json
   next.config.ts
   tsconfig.json
@@ -103,14 +141,14 @@ The first working version should show:
 - model registry
 - system health cards
 - logs panel
-- skill library index
+- Skill Library index
 - placeholder device permissions panel
 
 ---
 
 ## Run Target
 
-The dashboard should eventually run through:
+Run locally with:
 
 ```bash
 cd apps/admin
@@ -118,7 +156,13 @@ npm install
 npm run dev
 ```
 
-and later be launched by:
+Then open:
+
+```text
+http://localhost:3000
+```
+
+The broader platform can be prepared with:
 
 ```bash
 bash bootstrap.sh
@@ -126,9 +170,28 @@ bash bootstrap.sh
 
 ---
 
+## White-Label Rule
+
+This admin console belongs to You-Sir Juan™.
+
+Avoid legacy names such as:
+
+- Ready Play Administrative Dashboard
+- Red-E Play dashboard
+- generic admin template
+
+Use:
+
+- You-Sir Juan™ Admin Console
+- You-Sir Juan™ sovereign AI infrastructure
+- Skill Library
+- Sovereign Cognitive Forge™
+
+---
+
 ## Design Standard
 
-The dashboard should feel like:
+The admin console should feel like:
 
 - command center
 - private AI cockpit
