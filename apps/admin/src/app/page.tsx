@@ -3,9 +3,10 @@ export default function HomePage() {
     <main className="min-h-screen bg-black text-white p-8">
       <div className="max-w-7xl mx-auto space-y-8">
         <header className="space-y-2">
-          <h1 className="text-4xl font-bold">You-Sir Juan™</h1>
+          <p className="text-sm uppercase tracking-[0.35em] text-zinc-500">Sovereign AI Infrastructure</p>
+          <h1 className="text-4xl font-bold">You-Sir Juan™ Admin Console</h1>
           <p className="text-zinc-400">
-            Ready Play Administrative Dashboard
+            Operator control center for local inference, memory, skills, devices, and orchestration.
           </p>
         </header>
 
@@ -35,10 +36,10 @@ export default function HomePage() {
           <h2 className="text-xl font-semibold">Platform Status</h2>
 
           <div className="mt-6 space-y-3 text-zinc-300">
-            <p>• Local-first sovereign AI infrastructure</p>
+            <p>• You-Sir Juan™ sovereign AI infrastructure runtime</p>
             <p>• Hardware-aware deployment profiles</p>
-            <p>• Ready Play administrative runtime scaffold</p>
-            <p>• Skill library integration in progress</p>
+            <p>• Admin console runtime scaffold</p>
+            <p>• Skill Library integration in progress</p>
             <p>• Ethics and device sensor doctrine enabled</p>
           </div>
         </section>
