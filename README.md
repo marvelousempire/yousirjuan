@@ -1,51 +1,89 @@
 # You-Sir Juan™
 
-# Sovereign Cognitive Operating System
+# Sovereign AI Infrastructure Platform
 
-Private AI infrastructure for:
+Private AI infrastructure focused on:
 
-- relationship memory
-- operational continuity
+- local inference
 - sovereign orchestration
 - multimodal retrieval
-- autonomous workflows
-- assistant ecosystems
-- institutional intelligence
-- enterprise cognition
+- private memory systems
+- coding workflows
+- autonomous tooling
+- organizational continuity
+- AI-assisted operations
 
 ---
 
 # Executive Summary
 
-You-Sir Juan™ is not merely:
+You-Sir Juan™ is evolving into:
 
-- a chatbot
-- an Ollama wrapper
-- a local AI UI
-- a coding assistant
-- a simple RAG application
+> a sovereign AI infrastructure and orchestration platform.
 
-It is evolving into:
+The project combines:
 
-> a sovereign cognitive operating system.
-
-The platform combines:
-
-- sovereign AI infrastructure
-- persistent relationship memory
-- multimodal retrieval
-- autonomous browser execution
-- enterprise orchestration
-- local inference
+- local AI infrastructure
+- retrieval systems
 - coding intelligence
-- assistant lifecycle systems
-- workflow automation
-- namespace-based memory isolation
+- orchestration workflows
+- memory systems
 - evaluation pipelines
-- sovereign networking
-- operational continuity systems
+- autonomous tooling
+- secure networking
+- operational continuity architecture
 
 into one coordinated ecosystem.
+
+---
+
+# Current Development Status
+
+The repository currently consists of:
+
+- infrastructure planning
+- runtime scaffolding
+- orchestration concepts
+- deployment architecture
+- sovereign AI research
+- local inference experiments
+- workflow prototyping
+
+Many systems described in this repository are currently:
+
+- experimental
+- partially implemented
+- prototype-stage
+- conceptual
+- roadmap targets
+
+rather than fully production-complete systems.
+
+---
+
+# Technical Positioning
+
+The project does not attempt to:
+
+- reproduce proprietary frontier models
+- claim equivalence with OpenAI or Anthropic internal systems
+- replicate Claude, GPT, or Codex training datasets
+- compete with hyperscale training infrastructure
+
+Instead, the project focuses on:
+
+- orchestrating strong open models
+- private inference
+- local memory systems
+- retrieval augmentation
+- coding workflows
+- evaluation pipelines
+- autonomous tooling
+- infrastructure ownership
+
+The intended outcome is:
+
+> frontier-inspired private AI operations.
 
 ---
 
@@ -60,174 +98,62 @@ into one coordinated ecosystem.
 | UI | Next.js |
 | Containerization | Docker |
 | Networking | Tailscale / WireGuard |
+| Local Inference | Ollama / vLLM |
+| Coding Workflows | Continue.dev / Aider |
+| Browser Automation | Playwright |
+| Retrieval | Qdrant / LanceDB |
 | Edge AI | NVIDIA Jetson Thor |
-| Sovereign Workstation | 16-inch MacBook Pro M5 Max |
-| Persistent Orchestration | Mac mini M4 Pro |
 
 ---
 
 # Actual Sovereign AI Machine Specs
 
-These are the verified Apple configurations currently planned for the You-Sir Juan™ sovereign AI infrastructure.
-
-| Node | Machine | Exact Configuration | Primary Role |
+| Node | Machine | Exact Configuration | Intended Purpose |
 |---|---|---|---|
-| Node A | 16-inch MacBook Pro M5 Max | 18-core CPU, 40-core GPU, 16-core Neural Engine, 128GB unified memory, 4TB SSD storage, nano-texture display | Main sovereign AI workstation for large-model inference, coding intelligence, fine-tuning experiments, private RAG interaction, autonomous development, and mobile AI operations |
-| Node B | Mac mini M4 Pro | 14-core CPU, 20-core GPU, 16-core Neural Engine, 48GB unified memory, 1TB SSD storage, 10 Gigabit Ethernet | Persistent orchestration server for Ollama, Open WebUI, vector databases, RAG indexing, local APIs, queues, embeddings, and always-on AI infrastructure |
-| Node C | NVIDIA Jetson Thor | Edge AI acceleration node | Robotics, voice systems, camera intelligence, local sensor inference, automation endpoints, edge AI execution, and distributed inference experimentation |
+| Node A | 16-inch MacBook Pro M5 Max | 18-core CPU, 40-core GPU, 16-core Neural Engine, 128GB unified memory, 4TB SSD, nano-texture display | Main sovereign AI workstation for local inference, coding workflows, orchestration testing, and private development |
+| Node B | Mac mini M4 Pro | 14-core CPU, 20-core GPU, 16-core Neural Engine, 48GB unified memory, 1TB SSD, 10 Gigabit Ethernet | Persistent orchestration server for Open WebUI, Ollama, embeddings, vector databases, APIs, queues, and local AI services |
+| Node C | NVIDIA Jetson Thor | Edge AI acceleration node | Robotics, voice systems, vision pipelines, local automation, edge inference, and distributed experimentation |
 
 ---
 
-# Machine Role Split
+# Hardware Reality
 
-| System Duty | Primary Node | Secondary Node |
-|---|---|---|
-| Large local model inference | MacBook Pro M5 Max | Mac mini M4 Pro |
-| Persistent AI services | Mac mini M4 Pro | MacBook Pro M5 Max |
-| Vector memory and embeddings | Mac mini M4 Pro | MacBook Pro M5 Max |
-| Autonomous coding workflows | MacBook Pro M5 Max | Mac mini M4 Pro |
-| Open WebUI hosting | Mac mini M4 Pro | MacBook Pro M5 Max |
-| Ollama runtime services | Mac mini M4 Pro | MacBook Pro M5 Max |
-| Fine-tuning experiments | MacBook Pro M5 Max | Future GPU expansion nodes |
-| Edge robotics and voice systems | NVIDIA Jetson Thor | Mac mini M4 Pro |
-| Mobile sovereign operations | MacBook Pro M5 Max | N/A |
+The current hardware is extremely capable for private AI operations, local inference, orchestration, retrieval systems, coding workflows, and experimentation.
 
----
+However, the platform is not positioned as:
 
-# Hardware Interpretation
+- hyperscale AI infrastructure
+- frontier-model training infrastructure
+- a replacement for enterprise GPU clusters
+- a direct OpenAI or Anthropic competitor
 
-## MacBook Pro M5 Max
+The focus is:
 
-The MacBook Pro serves as:
-
-- the primary sovereign AI workstation
-- the main coding intelligence node
-- the high-memory inference machine
-- the mobile operational command center
-- the local development and testing environment
-
-The 128GB unified memory configuration enables:
-
-- larger quantized models
-- expanded context windows
-- multi-model orchestration experiments
-- local coding agents
-- private retrieval workflows
-- memory-heavy inference operations
-
-The 40-core GPU target significantly improves:
-
-- token throughput
-- embedding generation
-- inference parallelization
-- local agent responsiveness
-
----
-
-## Mac mini M4 Pro
-
-The Mac mini serves as:
-
-- the persistent infrastructure node
-- the home-lab orchestration server
-- the always-on RAG and retrieval machine
-- the local network AI gateway
-- the Open WebUI host
-- the embeddings and vector-memory node
-
-The 10 Gigabit Ethernet configuration supports:
-
-- high-speed local AI networking
-- distributed inference experiments
-- future NAS integration
-- fast dataset movement
-- low-latency local AI services
-
-The 48GB unified memory configuration is optimized for:
-
-- embeddings
+- private AI infrastructure
+- sovereign deployment
+- retrieval systems
 - orchestration
-- RAG pipelines
-- medium-sized coding models
-- background inference services
+- coding workflows
+- operational continuity
+- infrastructure ownership
+
+---
+
+# Strategic Positioning
+
+The platform’s differentiation is based on:
+
+- orchestration
+- infrastructure ownership
+- private retrieval
+- local memory systems
+- coding workflows
+- operational continuity
+- sovereign deployment
 - evaluation systems
+- secure infrastructure
 
----
-
-## NVIDIA Jetson Thor
-
-The Jetson Thor node is intended for:
-
-- edge AI systems
-- robotics infrastructure
-- local automation endpoints
-- camera and vision systems
-- voice agents
-- distributed inference nodes
-- low-latency physical-world AI interaction
-
-This creates a three-node sovereign AI mesh architecture.
-
----
-
-# Recommended Deployment Structure
-
-```text
-MacBook Pro M5 Max
-    ↓
-Primary Operator + Development + Heavy Inference
-
-Mac mini M4 Pro
-    ↓
-Persistent Infrastructure + Open WebUI + RAG + APIs
-
-NVIDIA Jetson Thor
-    ↓
-Edge AI + Robotics + Voice + Physical Automation
-```
-
----
-
-# Recommended Hardware
-
-| Device | Purpose |
-|---|---|
-| 16-inch MacBook Pro M5 Max, 18-core CPU, 40-core GPU, 128GB unified memory, 4TB SSD | sovereign AI workstation and heavy local inference |
-| Mac mini M4 Pro, 14-core CPU, 20-core GPU, 48GB unified memory, 1TB SSD, 10Gb Ethernet | persistent orchestration server and local AI infrastructure |
-| NVIDIA Jetson Thor | edge AI, robotics, automation, voice, and distributed inference |
-| Flint 2 | infrastructure gateway |
-| Slate AX | secure travel networking |
-
----
-
-# Deployment Modes
-
-Supports:
-
-- local desktop deployments
-- home labs
-- PMA deployments
-- family-office deployments
-- enterprise deployments
-- air-gapped deployments
-- edge AI deployments
-- hybrid sovereign deployments
-
----
-
-# Ecosystem Stack
-
-| Layer | Preferred Systems |
-|---|---|
-| Local Inference | Ollama, vLLM |
-| Coding Intelligence | Claude Code, Continue.dev, Aider |
-| Retrieval Systems | Qdrant, LanceDB, RAG pipelines |
-| Browser Automation | Playwright CLI |
-| Web Intelligence | Firecrawl |
-| UI Layer | Open WebUI, Next.js |
-| Containerization | Docker |
-| Networking | Tailscale, WireGuard |
-| Edge AI | NVIDIA Jetson Thor |
+rather than claims of AGI or frontier-model equivalence.
 
 ---
 
@@ -235,6 +161,4 @@ Supports:
 
 You-Sir Juan™ is evolving into:
 
-> a unified sovereign cognitive operating ecosystem.
-
-An owned intelligence infrastructure where memory, retrieval, reasoning, workflows, orchestration, automation, and continuity remain permanently under organizational control.
+> a private AI infrastructure ecosystem focused on orchestration, retrieval, coding workflows, operational continuity, and sovereign deployment.
