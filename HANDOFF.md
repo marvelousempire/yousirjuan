@@ -53,10 +53,11 @@ Implementation:
 
 | Thing | Where |
 |---|---|
-| GitHub repo | https://github.com/marvelousempire/yousirjuan (private) |
-| Local clone | `/Users/averygoodman/Developer/yousirjuan/` |
+| Source stack (this repo) | https://github.com/marvelousempire/yousirjuan — product scripts, VPS templates, broker scaffold, internal docs |
+| Marketing + Downloads | https://github.com/marvelousempire/yousirjuan-ai — Next.js site ([yousirjuan.ai](https://yousirjuan.ai)), Release assets for signed `.pkg` / install commands |
+| Messaging alignment | [docs/customer-facing-messaging.md](docs/customer-facing-messaging.md) — keep in sync when changing hero, features, privacy table, or installer URLs |
+| Local clone | `/Users/averygoodman/Developer/yousirjuan/` (operator Mac); any path on other machines |
 | Default branch | `main` |
-| Commits so far | `af9f1c1` initial · `031d565` docs · `5e71ac3` install profiles |
 | Auto-renew + clone-anywhere ready | Yes — `git clone … && bash bootstrap.sh` |
 
 ---

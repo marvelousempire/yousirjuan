@@ -2,9 +2,9 @@
 #
 # Trigger: pushing a tag like `v0.1.0` (semver)
 # Output: signed + notarized .pkg uploaded to PUBLIC GitHub Release on
-#         marvelousempire/yousirjuan-ai (the website repo). Source stays in
-#         this private repo; binaries are shipped from the public repo so
-#         the website's Download buttons work without leaking source.
+#         marvelousempire/yousirjuan-ai (the website repo). Source lives in
+#         this repo; binaries are shipped from yousirjuan-ai so the Download
+#         page and checksums stay on the public marketing repo.
 #
 # Required GitHub Secrets (set in this repo's Settings → Secrets → Actions):
 #   APPLE_TEAM_ID                      e.g. ABC1234XYZ
@@ -17,7 +17,7 @@
 #   APPLE_DEVELOPER_CERT_P12           base64 of your .p12 export (cert + private key)
 #   APPLE_DEVELOPER_CERT_PASSWORD      passphrase you used when exporting the .p12
 #   PUBLIC_REPO_TOKEN                  a fine-grained PAT with contents:write on
-#                                      marvelousempire/yousirjuan-ai
+#                                      marvelousempire/yousirjuan-ai (Releases)
 
 name: Release installer (macOS .pkg)
 

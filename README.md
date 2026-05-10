@@ -2,6 +2,12 @@
 
 > Build private AI assistants that learn families, households, PMAs, and businesses.
 
+**Public site:** [yousirjuan.ai](https://yousirjuan.ai) · **Download page + signed installers (Releases):** [marvelousempire/yousirjuan-ai](https://github.com/marvelousempire/yousirjuan-ai)
+
+> **Your AI lives on your hardware.** Self-hosted private AI for individuals, families, and family offices — your conversations, models, and infrastructure stay on machines you control unless you explicitly use a cloud API.
+
+This repository is the **source stack** (`git clone` + [`bootstrap.sh`](bootstrap.sh)). The marketing site, short-form feature copy, privacy table, and release binaries are published from **`yousirjuan-ai`**; keep wording aligned with [`docs/customer-facing-messaging.md`](docs/customer-facing-messaging.md).
+
 You-Sir Juan is a private AI infrastructure and service platform for building:
 
 - trainable AI assistants
@@ -518,6 +524,7 @@ The roadmap includes:
 
 Additional documents:
 
+- `docs/customer-facing-messaging.md` — hero, features, privacy claims, download/installer alignment with [yousirjuan.ai](https://yousirjuan.ai)
 - `docs/private-ai-network-handoff.md`
 - `docs/vision-trainable-ai-assistants-platform.md`
 - `docs/customer-ai-memory-architecture.md`

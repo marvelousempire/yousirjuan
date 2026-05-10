@@ -5,14 +5,16 @@
 | **Document version** | 0.1.0 |
 | **Status** | Draft |
 | **Owner** | Avery Brown / You-Sir Juan Agent (`hello@yousirjuan.ai`) |
-| **Last updated** | 2026-04-26 |
-| **Related docs** | [README.md](README.md) · [HANDOFF.md](HANDOFF.md) · [docs/architecture.md](docs/architecture.md) |
+| **Last updated** | 2026-05-10 |
+| **Related docs** | [README.md](README.md) · [HANDOFF.md](HANDOFF.md) · [docs/architecture.md](docs/architecture.md) · [docs/customer-facing-messaging.md](docs/customer-facing-messaging.md) (public site copy + installer alignment) |
 
 ---
 
 ## 1. Executive summary
 
-**You-Sir Juan is a turnkey, self-hosted private AI platform for individuals, families, and small organizations** (especially family offices) that need enterprise-grade AI capability **without** sending their data to OpenAI, Anthropic, Google, or Microsoft. It packages best-in-class open-source pieces — **Ollama** for local model inference, **Open WebUI** for multi-user chat + RAG, **OpenClaw** for messaging-platform agents, **Tailscale** for the device mesh, and **nginx + Let's Encrypt** for the public endpoint — into a single repo that any technically-comfortable user can `git clone` and stand up on any Mac or Linux box in **under 30 minutes**.
+**You-Sir Juan is a turnkey, self-hosted private AI platform for individuals, families, and small organizations** (especially family offices) that need enterprise-grade AI capability **without** sending their data to OpenAI, Anthropic, Google, or Microsoft. Customer-facing shorthand: **“Your AI lives on your hardware.”** Public narrative, feature grid, privacy table, and download flows are maintained in sync with [docs/customer-facing-messaging.md](docs/customer-facing-messaging.md) and the [yousirjuan-ai](https://github.com/marvelousempire/yousirjuan-ai) marketing site.
+
+It packages best-in-class open-source pieces — **Ollama** for local model inference, **Open WebUI** for multi-user chat + RAG, **OpenClaw** for messaging-platform agents, **Tailscale** for the device mesh, and **nginx + Let's Encrypt** for the public endpoint — into a single repo that any technically-comfortable user can `git clone` and stand up on any Mac or Linux box in **under 30 minutes**.
 
 It is **opinionated** about defaults (security-hardened by default, reproducible-by-default, privacy-by-default) and **flexible** where it matters (model choice, hardware tier, install profile, deployment topology).
 
