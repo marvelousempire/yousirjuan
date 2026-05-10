@@ -49,269 +49,6 @@ into one coordinated ecosystem.
 
 ---
 
-# Core Philosophy
-
-Do not build one god-model.
-
-Build:
-
-- coordinated intelligence
-- specialized assistants
-- sovereign infrastructure
-- institutional memory
-- orchestration systems
-- multimodal cognition
-- operational continuity
-- workflow automation
-- secure private ecosystems
-
-The system treats AI as:
-
-- departments
-- operators
-- memory keepers
-- evaluators
-- advisors
-- orchestrators
-- continuity systems
-
-rather than:
-
-> one generalized chatbot.
-
----
-
-# Vision
-
-Create a permanently owned sovereign AI ecosystem where:
-
-- memory remains private
-- workflows remain owned
-- retrieval remains sovereign
-- assistants evolve over time
-- organizations preserve operational continuity
-- intelligence compounds permanently
-
-without dependence on centralized AI providers.
-
----
-
-# Platform Layers
-
-| Layer | Purpose |
-|---|---|
-| Sovereign Cognitive Forge™ | orchestration and inference infrastructure |
-| You-Sir Juan™ | relationship memory and continuity |
-| Runtime Layer | assistant execution and routing |
-| Namespace Layer | memory isolation and permissions |
-| RAG Layer | retrieval and contextual intelligence |
-| Automation Layer | browser execution and workflows |
-| Evaluation Layer | scoring and hallucination prevention |
-| Admin Layer | operational command center |
-| Marketing Layer | feature-to-selling-point conversion |
-| Infrastructure Layer | Docker, persistence, networking |
-
----
-
-# Core Capabilities
-
-## Persistent Relationship Memory
-
-Supports:
-
-- family continuity
-- household intelligence
-- PMA operations
-- family-office continuity
-- institutional memory
-- assistant-specific memory
-- namespace-bound retrieval
-
-Assistants may learn:
-
-- routines
-- workflows
-- policies
-- operational standards
-- onboarding systems
-- household rules
-- training protocols
-- institutional procedures
-
----
-
-# Sovereign Local AI
-
-Run local AI models using:
-
-- Ollama
-- vLLM
-- sovereign orchestration
-- local inference infrastructure
-
-Supported models include:
-
-- Llama
-- DeepSeek
-- Qwen
-- Gemma
-- Mistral
-- coding-specialized models
-
----
-
-# Sovereign RAG Infrastructure
-
-Supports:
-
-- PDFs
-- scanned records
-- images
-- transcripts
-- Git repositories
-- markdown
-- enterprise records
-- multimodal ingestion
-
-Preferred stack:
-
-- RAG Anything
-- Qdrant
-- LanceDB
-- OCR pipelines
-- embedding workers
-
----
-
-# Autonomous Browser Execution
-
-Supports:
-
-- Playwright CLI
-- onboarding automation
-- screenshot systems
-- UI testing
-- browser workflows
-- autonomous QA
-
-This transforms assistants from:
-
-- passive chat systems
-
-into:
-
-- active operational agents.
-
----
-
-# Sovereign Web Intelligence
-
-Supports:
-
-- structured web ingestion
-- market intelligence
-- competitive research
-- retrieval augmentation
-- AI-native crawling
-
-Preferred stack:
-
-- Firecrawl
-- ingestion workers
-- structured extraction pipelines
-
----
-
-# Coding Intelligence
-
-Supports:
-
-- Claude Code
-- Continue.dev
-- Aider
-- repo-aware workflows
-- autonomous code editing
-- AI-assisted development
-- evaluation pipelines
-
----
-
-# Design Intelligence
-
-Supports:
-
-- AwesomeDesign.md
-- Framer Motion
-- Tailwind CSS
-- shadcn/ui
-- cinematic interaction systems
-- operational dashboard aesthetics
-
----
-
-# Enterprise Productivity Integrations
-
-Supports:
-
-- Gmail
-- Calendar
-- Docs
-- Sheets
-- operational synchronization
-- enterprise continuity
-
-via:
-
-- GWS integrations
-- workspace synchronization layers
-
----
-
-# Runtime Infrastructure
-
-The runtime layer includes:
-
-- assistant runtime manager
-- namespace resolver
-- model router
-- orchestration queues
-- workflow execution
-- audit emitters
-- policy enforcement
-
----
-
-# Namespace Architecture
-
-Namespaces isolate:
-
-- households
-- PMAs
-- organizations
-- assistants
-- memory
-- family offices
-- enterprise tenants
-
-This creates:
-
-> sovereign cognitive boundaries.
-
----
-
-# Evaluation Infrastructure
-
-The evaluation layer validates:
-
-- retrieval accuracy
-- hallucination rates
-- formatting compliance
-- workflow execution
-- operational safety
-- benchmark performance
-
----
-
 # Infrastructure Stack
 
 | Layer | Preferred Systems |
@@ -324,44 +61,130 @@ The evaluation layer validates:
 | Containerization | Docker |
 | Networking | Tailscale / WireGuard |
 | Edge AI | NVIDIA Jetson Thor |
-| Sovereign Workstation | MacBook Pro M5 Max, 128GB unified memory, 40-core class GPU target, 4TB SSD |
-| Persistent Orchestration | Mac mini M4 Max, 40-core class GPU target, 2TB SSD |
+| Sovereign Workstation | 16-inch MacBook Pro M5 Max |
+| Persistent Orchestration | Mac mini M4 Pro |
 
 ---
 
 # Actual Sovereign AI Machine Specs
 
-These are the current user-stated machines for the You-Sir Juan™ sovereign AI deployment plan.
+These are the verified Apple configurations currently planned for the You-Sir Juan™ sovereign AI infrastructure.
 
-| Node | Machine | Actual Specs From Planning Chat | Primary Role |
+| Node | Machine | Exact Configuration | Primary Role |
 |---|---|---|---|
-| Node A | MacBook Pro M5 Max | 128GB unified memory, maxed-out 40-core class configuration target, 4TB SSD | Main sovereign AI workstation for large local models, private coding, local inference, fine-tuning experiments, and operator-facing development |
-| Node B | Mac mini M4 Max | maxed-out 40-core class configuration target, 2TB SSD | Always-on orchestration server for Open WebUI, Ollama/vLLM, Qdrant, RAG indexing, model routing, API services, queues, and local network AI access |
-| Node C | NVIDIA Jetson Thor | Jetson Thor edge AI node | Edge inference, robotics, camera/voice intelligence, local sensor agents, automation endpoints, and distributed AI node experiments |
+| Node A | 16-inch MacBook Pro M5 Max | 18-core CPU, 40-core GPU, 16-core Neural Engine, 128GB unified memory, 4TB SSD storage, nano-texture display | Main sovereign AI workstation for large-model inference, coding intelligence, fine-tuning experiments, private RAG interaction, autonomous development, and mobile AI operations |
+| Node B | Mac mini M4 Pro | 14-core CPU, 20-core GPU, 16-core Neural Engine, 48GB unified memory, 1TB SSD storage, 10 Gigabit Ethernet | Persistent orchestration server for Ollama, Open WebUI, vector databases, RAG indexing, local APIs, queues, embeddings, and always-on AI infrastructure |
+| Node C | NVIDIA Jetson Thor | Edge AI acceleration node | Robotics, voice systems, camera intelligence, local sensor inference, automation endpoints, edge AI execution, and distributed inference experimentation |
 
-## Machine Role Split
+---
 
-| System Duty | Primary Node | Backup / Companion Node |
+# Machine Role Split
+
+| System Duty | Primary Node | Secondary Node |
 |---|---|---|
-| Heavy local inference | MacBook Pro M5 Max | Mac mini M4 Max |
-| Always-on AI services | Mac mini M4 Max | MacBook Pro M5 Max |
-| RAG indexing and vector memory | Mac mini M4 Max | MacBook Pro M5 Max |
-| Private coding workflows | MacBook Pro M5 Max | Mac mini M4 Max |
-| Local agent execution | Mac mini M4 Max | Jetson Thor |
-| Edge vision / robotics / voice | Jetson Thor | Mac mini M4 Max |
-| Dataset preparation | MacBook Pro M5 Max | Mac mini M4 Max |
-| Evaluation pipeline | Mac mini M4 Max | MacBook Pro M5 Max |
-| Travel / mobile sovereign workstation | MacBook Pro M5 Max | N/A |
+| Large local model inference | MacBook Pro M5 Max | Mac mini M4 Pro |
+| Persistent AI services | Mac mini M4 Pro | MacBook Pro M5 Max |
+| Vector memory and embeddings | Mac mini M4 Pro | MacBook Pro M5 Max |
+| Autonomous coding workflows | MacBook Pro M5 Max | Mac mini M4 Pro |
+| Open WebUI hosting | Mac mini M4 Pro | MacBook Pro M5 Max |
+| Ollama runtime services | Mac mini M4 Pro | MacBook Pro M5 Max |
+| Fine-tuning experiments | MacBook Pro M5 Max | Future GPU expansion nodes |
+| Edge robotics and voice systems | NVIDIA Jetson Thor | Mac mini M4 Pro |
+| Mobile sovereign operations | MacBook Pro M5 Max | N/A |
 
-## Deployment Interpretation
+---
 
-The deployment is designed as a three-node private AI mesh:
+# Hardware Interpretation
 
-1. MacBook Pro M5 Max as the mobile high-memory sovereign workstation.
-2. Mac mini M4 Max as the persistent home-lab orchestration and RAG server.
-3. NVIDIA Jetson Thor as the edge AI and physical-world intelligence node.
+## MacBook Pro M5 Max
 
-This hardware profile supports the product direction of owning private inference, local memory, retrieval, orchestration, coding intelligence, and edge automation without depending entirely on rented cloud intelligence.
+The MacBook Pro serves as:
+
+- the primary sovereign AI workstation
+- the main coding intelligence node
+- the high-memory inference machine
+- the mobile operational command center
+- the local development and testing environment
+
+The 128GB unified memory configuration enables:
+
+- larger quantized models
+- expanded context windows
+- multi-model orchestration experiments
+- local coding agents
+- private retrieval workflows
+- memory-heavy inference operations
+
+The 40-core GPU target significantly improves:
+
+- token throughput
+- embedding generation
+- inference parallelization
+- local agent responsiveness
+
+---
+
+## Mac mini M4 Pro
+
+The Mac mini serves as:
+
+- the persistent infrastructure node
+- the home-lab orchestration server
+- the always-on RAG and retrieval machine
+- the local network AI gateway
+- the Open WebUI host
+- the embeddings and vector-memory node
+
+The 10 Gigabit Ethernet configuration supports:
+
+- high-speed local AI networking
+- distributed inference experiments
+- future NAS integration
+- fast dataset movement
+- low-latency local AI services
+
+The 48GB unified memory configuration is optimized for:
+
+- embeddings
+- orchestration
+- RAG pipelines
+- medium-sized coding models
+- background inference services
+- evaluation systems
+
+---
+
+## NVIDIA Jetson Thor
+
+The Jetson Thor node is intended for:
+
+- edge AI systems
+- robotics infrastructure
+- local automation endpoints
+- camera and vision systems
+- voice agents
+- distributed inference nodes
+- low-latency physical-world AI interaction
+
+This creates a three-node sovereign AI mesh architecture.
+
+---
+
+# Recommended Deployment Structure
+
+```text
+MacBook Pro M5 Max
+    ↓
+Primary Operator + Development + Heavy Inference
+
+Mac mini M4 Pro
+    ↓
+Persistent Infrastructure + Open WebUI + RAG + APIs
+
+NVIDIA Jetson Thor
+    ↓
+Edge AI + Robotics + Voice + Physical Automation
+```
 
 ---
 
@@ -369,9 +192,9 @@ This hardware profile supports the product direction of owning private inference
 
 | Device | Purpose |
 |---|---|
-| MacBook Pro M5 Max, 128GB unified memory, 4TB SSD | sovereign workstation and large-model local AI development |
-| Mac mini M4 Max, 40-core class configuration target, 2TB SSD | persistent orchestration server and local AI service host |
-| NVIDIA Jetson Thor | edge inference, robotics, camera/voice AI, and automation node |
+| 16-inch MacBook Pro M5 Max, 18-core CPU, 40-core GPU, 128GB unified memory, 4TB SSD | sovereign AI workstation and heavy local inference |
+| Mac mini M4 Pro, 14-core CPU, 20-core GPU, 48GB unified memory, 1TB SSD, 10Gb Ethernet | persistent orchestration server and local AI infrastructure |
+| NVIDIA Jetson Thor | edge AI, robotics, automation, voice, and distributed inference |
 | Flint 2 | infrastructure gateway |
 | Slate AX | secure travel networking |
 
@@ -398,157 +221,13 @@ Supports:
 |---|---|
 | Local Inference | Ollama, vLLM |
 | Coding Intelligence | Claude Code, Continue.dev, Aider |
-| Retrieval Systems | RAG Anything, Qdrant, LanceDB |
+| Retrieval Systems | Qdrant, LanceDB, RAG pipelines |
 | Browser Automation | Playwright CLI |
 | Web Intelligence | Firecrawl |
-| Design Intelligence | AwesomeDesign.md |
-| Productivity Integration | GWS |
 | UI Layer | Open WebUI, Next.js |
-| Motion Systems | Framer Motion |
 | Containerization | Docker |
-| Edge AI | NVIDIA Jetson Thor |
 | Networking | Tailscale, WireGuard |
-
----
-
-# Folder Architecture
-
-```text
-/platform
-/runtime
-/api
-/backend
-/ecosystem
-/features
-/marketing
-/admin
-/ingestion
-/evaluations
-/identity
-/observability
-/design-system
-/pain-journal
-/docs
-```
-
----
-
-# Feature Operating System
-
-Every feature becomes:
-
-- a PRD
-- a product unit
-- a selling point
-- a roadmap item
-- a marketing asset
-- a monetization opportunity
-
-The platform includes:
-
-- feature ledgers
-- PRD schemas
-- marketing translation systems
-- pain journals
-- ecosystem doctrine
-- strategic positioning
-
----
-
-# Pain Journal System
-
-The platform tracks:
-
-- onboarding friction
-- continuity failures
-- operational bottlenecks
-- memory failures
-- trust failures
-- enterprise inefficiencies
-
-Every major feature should map back to:
-
-> a real operational pain.
-
----
-
-# Sovereign Cognitive Forge™
-
-Sovereign Cognitive Forge™ is the orchestration and infrastructure core.
-
-It provides:
-
-- multi-model orchestration
-- evaluation systems
-- retrieval infrastructure
-- autonomous coding systems
-- local inference infrastructure
-- workflow routing
-- namespace-aware execution
-- sovereign runtime coordination
-
----
-
-# Runtime Reality Layer
-
-The repo now includes:
-
-- runtime infrastructure
-- namespace middleware
-- orchestration endpoints
-- ingestion endpoints
-- evaluation endpoints
-- queue architecture
-- PostgreSQL schemas
-- Redis queue planning
-- Docker runtime stacks
-- observability scaffolding
-
-This transitions the platform from:
-
-> conceptual architecture
-
-into:
-
-> operational runtime infrastructure.
-
----
-
-# Long-Term Product Direction
-
-The long-term direction includes:
-
-- autonomous coding swarms
-- sovereign mobile assistants
-- edge AI systems
-- robotics infrastructure
-- multimodal cognition
-- distributed inference meshes
-- institutional continuity systems
-- private enterprise cognition
-- AI-powered operational memory
-
----
-
-# Strategic Positioning
-
-The moat is not merely:
-
-- model size
-- parameter count
-- chatbot quality
-
-The moat becomes:
-
-- orchestration
-- memory
-- continuity
-- infrastructure ownership
-- retrieval systems
-- workflow automation
-- sovereign deployment
-- assistant specialization
-- institutional intelligence
+| Edge AI | NVIDIA Jetson Thor |
 
 ---
 
