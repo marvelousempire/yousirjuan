@@ -323,9 +323,45 @@ The evaluation layer validates:
 | UI | Next.js |
 | Containerization | Docker |
 | Networking | Tailscale / WireGuard |
-| Edge AI | Jetson Thor |
-| Sovereign Workstation | MacBook Pro M5 Max |
-| Persistent Orchestration | Mac mini M4 Max |
+| Edge AI | NVIDIA Jetson Thor |
+| Sovereign Workstation | MacBook Pro M5 Max, 128GB unified memory, 40-core class GPU target, 4TB SSD |
+| Persistent Orchestration | Mac mini M4 Max, 40-core class GPU target, 2TB SSD |
+
+---
+
+# Actual Sovereign AI Machine Specs
+
+These are the current user-stated machines for the You-Sir Juan™ sovereign AI deployment plan.
+
+| Node | Machine | Actual Specs From Planning Chat | Primary Role |
+|---|---|---|---|
+| Node A | MacBook Pro M5 Max | 128GB unified memory, maxed-out 40-core class configuration target, 4TB SSD | Main sovereign AI workstation for large local models, private coding, local inference, fine-tuning experiments, and operator-facing development |
+| Node B | Mac mini M4 Max | maxed-out 40-core class configuration target, 2TB SSD | Always-on orchestration server for Open WebUI, Ollama/vLLM, Qdrant, RAG indexing, model routing, API services, queues, and local network AI access |
+| Node C | NVIDIA Jetson Thor | Jetson Thor edge AI node | Edge inference, robotics, camera/voice intelligence, local sensor agents, automation endpoints, and distributed AI node experiments |
+
+## Machine Role Split
+
+| System Duty | Primary Node | Backup / Companion Node |
+|---|---|---|
+| Heavy local inference | MacBook Pro M5 Max | Mac mini M4 Max |
+| Always-on AI services | Mac mini M4 Max | MacBook Pro M5 Max |
+| RAG indexing and vector memory | Mac mini M4 Max | MacBook Pro M5 Max |
+| Private coding workflows | MacBook Pro M5 Max | Mac mini M4 Max |
+| Local agent execution | Mac mini M4 Max | Jetson Thor |
+| Edge vision / robotics / voice | Jetson Thor | Mac mini M4 Max |
+| Dataset preparation | MacBook Pro M5 Max | Mac mini M4 Max |
+| Evaluation pipeline | Mac mini M4 Max | MacBook Pro M5 Max |
+| Travel / mobile sovereign workstation | MacBook Pro M5 Max | N/A |
+
+## Deployment Interpretation
+
+The deployment is designed as a three-node private AI mesh:
+
+1. MacBook Pro M5 Max as the mobile high-memory sovereign workstation.
+2. Mac mini M4 Max as the persistent home-lab orchestration and RAG server.
+3. NVIDIA Jetson Thor as the edge AI and physical-world intelligence node.
+
+This hardware profile supports the product direction of owning private inference, local memory, retrieval, orchestration, coding intelligence, and edge automation without depending entirely on rented cloud intelligence.
 
 ---
 
@@ -333,9 +369,9 @@ The evaluation layer validates:
 
 | Device | Purpose |
 |---|---|
-| MacBook Pro M5 Max | sovereign workstation |
-| Mac mini M4 Max | orchestration server |
-| Jetson Thor | edge inference and robotics |
+| MacBook Pro M5 Max, 128GB unified memory, 4TB SSD | sovereign workstation and large-model local AI development |
+| Mac mini M4 Max, 40-core class configuration target, 2TB SSD | persistent orchestration server and local AI service host |
+| NVIDIA Jetson Thor | edge inference, robotics, camera/voice AI, and automation node |
 | Flint 2 | infrastructure gateway |
 | Slate AX | secure travel networking |
 
@@ -370,7 +406,7 @@ Supports:
 | UI Layer | Open WebUI, Next.js |
 | Motion Systems | Framer Motion |
 | Containerization | Docker |
-| Edge AI | Jetson Thor |
+| Edge AI | NVIDIA Jetson Thor |
 | Networking | Tailscale, WireGuard |
 
 ---
