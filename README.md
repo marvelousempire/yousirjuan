@@ -522,6 +522,7 @@ Additional documents:
 - `docs/vision-trainable-ai-assistants-platform.md`
 - `docs/customer-ai-memory-architecture.md`
 - `docs/ai-assistant-business-model.md`
+- `docs/ai-skills-library.md` — private agent skills + rules library (git submodule under `vendor/ai-skills-library/`)
 
 ---
 

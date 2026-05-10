@@ -1,0 +1,3 @@
+[submodule "vendor/ai-skills-library"]
+	path = vendor/ai-skills-library
+	url = https://github.com/marvelousempire/ai-skills-library.git
