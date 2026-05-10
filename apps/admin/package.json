@@ -10,20 +10,27 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@tanstack/react-query": "latest",
+    "@tanstack/react-table": "latest",
+    "framer-motion": "latest",
+    "lucide-react": "latest",
     "next": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "typescript": "latest",
-    "tailwindcss": "latest",
-    "framer-motion": "latest",
-    "zustand": "latest",
-    "@tanstack/react-query": "latest",
-    "@tanstack/react-table": "latest",
     "react-hook-form": "latest",
-    "zod": "latest",
-    "lucide-react": "latest",
     "reactflow": "latest",
+    "recharts": "latest",
     "xterm": "latest",
-    "recharts": "latest"
+    "zod": "latest",
+    "zustand": "latest"
+  },
+  "devDependencies": {
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "autoprefixer": "latest",
+    "postcss": "latest",
+    "tailwindcss": "^3.4.17",
+    "typescript": "latest"
   }
 }
