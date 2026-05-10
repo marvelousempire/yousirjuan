@@ -87,6 +87,22 @@ The intended outcome is:
 
 ---
 
+# Current Technical Constraints
+
+Current platform constraints include:
+
+- limited local GPU scale compared to hyperscalers
+- evolving multi-agent reliability
+- experimental long-term memory approaches
+- open-model reasoning limitations compared to frontier cloud models
+- context-window limitations on some local models
+- orchestration maturity still in development
+- dependency on community open-source ecosystems
+
+These constraints are considered part of the active engineering roadmap.
+
+---
+
 # Infrastructure Stack
 
 | Layer | Preferred Systems |
@@ -116,6 +132,29 @@ The intended outcome is:
 
 ---
 
+# Security Positioning
+
+The platform is designed around:
+
+- local-first inference
+- encrypted infrastructure
+- private retrieval systems
+- infrastructure ownership
+- self-hosted deployment options
+- sovereign networking
+- controlled operational boundaries
+
+Potential future security goals include:
+
+- role-based access controls
+- audit logging
+- encrypted vector stores
+- isolated deployment profiles
+- air-gapped deployment options
+- sandboxed agent execution
+
+---
+
 # Hardware Reality
 
 The current hardware is extremely capable for private AI operations, local inference, orchestration, retrieval systems, coding workflows, and experimentation.
@@ -136,6 +175,71 @@ The focus is:
 - coding workflows
 - operational continuity
 - infrastructure ownership
+
+---
+
+# Roadmap Direction
+
+## Phase 1
+
+Foundation:
+
+- local inference
+- Open WebUI integration
+- Docker infrastructure
+- retrieval experiments
+- local coding workflows
+
+## Phase 2
+
+Operational orchestration:
+
+- model routing
+- queue systems
+- embeddings pipelines
+- persistent retrieval
+- namespace-aware infrastructure
+
+## Phase 3
+
+Evaluation and automation:
+
+- benchmark systems
+- hallucination evaluation
+- automated retrieval testing
+- workflow validation
+- agent execution tooling
+
+## Phase 4
+
+Distributed sovereign infrastructure:
+
+- edge AI integration
+- Jetson orchestration
+- local network AI services
+- distributed inference experimentation
+- secure synchronization
+
+---
+
+# Engineering Philosophy
+
+The platform favors:
+
+- modular systems
+- open infrastructure
+- composable tooling
+- realistic technical positioning
+- iterative deployment
+- measurable evaluation
+- infrastructure ownership
+
+over:
+
+- inflated AGI claims
+- speculative capability marketing
+- unsupported performance claims
+- black-box infrastructure dependency
 
 ---
 
@@ -162,3 +266,5 @@ rather than claims of AGI or frontier-model equivalence.
 You-Sir Juan™ is evolving into:
 
 > a private AI infrastructure ecosystem focused on orchestration, retrieval, coding workflows, operational continuity, and sovereign deployment.
+
+The long-term goal is to create owned intelligence infrastructure where memory, retrieval, workflows, automation, and operational systems remain under direct organizational control.
