@@ -1,0 +1,23 @@
+{
+  "name": "yousirjuan-platform",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Sovereign AI relationship-memory platform runtime scaffold.",
+  "scripts": {
+    "dev:api": "node api/server.js",
+    "start:api": "node api/server.js",
+    "health": "node scripts/health-check.js",
+    "features:export": "node scripts/export-feature-ledger.js",
+    "provision:demo": "bash tools/init-client-assistant.sh smith-family"
+  },
+  "dependencies": {
+    "@qdrant/js-client-rest": "^1.13.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "helmet": "^8.0.0",
+    "morgan": "^1.10.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {}
+}
