@@ -128,28 +128,40 @@ Recommended role split:
 
 ---
 
-# Planned Community Integrations (Phase 2.5+)
+# Community Integrations — vendored under `vendor/`
 
-You-Sir Juan will fork these upstream projects under `marvelousempire/<name>` with **upstream-sync GitHub Actions** (daily auto-pull from upstream `main`), a **lightweight rebrand** layer, and **legally-required attribution preserved** (LICENSE + copyright headers untouched, plus `NOTICE` and `CREDITS.md` in each fork). Each becomes an opt-in install profile flag in `bootstrap.sh`.
+These upstream projects are **forked under `marvelousempire/<name>` (private)** and **vendored as git submodules** in this repo at `vendor/<name>`. Each fork has an `upstream-sync` GitHub Action that daily pulls the latest upstream `main` into our `main`; our customizations live on a long-lived `marvelous-main` branch tracked by the submodule reference. `NOTICE` + `CREDITS.md` files in each fork preserve the legally-required attribution (LICENSE + copyright headers untouched).
 
-| Project | Upstream | License | Stars | What it adds | Install flag |
+| Project | Upstream | Our fork | License | Stars | Install flag (planned) |
 |---|---|---|---|---|---|
-| **claude-mem** | [thedotmack/claude-mem](https://github.com/thedotmack/claude-mem) | Apache 2.0 | 73.7k | Persistent memory + context for Claude Code across sessions. Useful for operators who maintain the platform with Claude Code — saves you from re-explaining the project every session. SQLite + Chroma vector search, 5 lifecycle hooks, HTTP API on port 37777. | `INSTALL_CLAUDE_MEM=1` |
-| **marketingskills** | [coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills) | MIT | 27.3k | Pre-built marketing-domain skills (copywriting, SEO, conversion optimization, analytics, growth engineering). Bundled into Open WebUI as Knowledge + shared Models so any user can ask "draft a Q4 marketing brief" and get expert-quality output. | `INSTALL_MARKETING_SKILLS=1` |
-| **ruflo** | [ruvnet/ruflo](https://github.com/ruvnet/ruflo) | MIT | 46.7k | Multi-agent orchestration via MCP — coordinates 100+ specialized agents with shared context, persistent memory across sessions, and secure federation. Possible alternative or complement to OpenClaw for advanced agent workflows. | `INSTALL_RUFLO=1` |
+| **claude-mem** | [thedotmack/claude-mem](https://github.com/thedotmack/claude-mem) | [marvelousempire/claude-mem](https://github.com/marvelousempire/claude-mem) (private) → `vendor/claude-mem` | Apache 2.0 | 73.7k | `INSTALL_CLAUDE_MEM=1` |
+| **marketingskills** | [coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills) | [marvelousempire/marketingskills](https://github.com/marvelousempire/marketingskills) (private) → `vendor/marketingskills` | MIT | 27.3k | `INSTALL_MARKETING_SKILLS=1` |
+| **ruflo** | [ruvnet/ruflo](https://github.com/ruvnet/ruflo) | [marvelousempire/ruflo](https://github.com/marvelousempire/ruflo) (private) → `vendor/ruflo` | MIT | 46.7k | `INSTALL_RUFLO=1` |
+| **ai-skills-library** | (operator's own) | [marvelousempire/ai-skills-library](https://github.com/marvelousempire/ai-skills-library) (private) → `vendor/ai-skills-library` | proprietary | — | (curated catalog) |
 
-**Fork-and-maintain pattern (per upstream):**
+**What it adds:**
+- `claude-mem` — persistent memory + context for Claude Code across sessions (for operators maintaining the platform). SQLite + Chroma vector search, 5 lifecycle hooks, HTTP API on port 37777.
+- `marketingskills` — pre-built marketing-domain skills (copywriting, SEO, conversion, analytics, growth engineering). Bundled into Open WebUI as Knowledge + shared Models.
+- `ruflo` — multi-agent orchestration via MCP. Coordinates 100+ specialized agents with shared context, persistent memory, and secure federation. Possible alternative or complement to OpenClaw.
+- `ai-skills-library` — operator's curated catalog for Cursor + Claude Code skills (already vendored before this PR).
+
+**Working with submodules:**
 
 ```bash
-# 1. Fork via gh CLI
-gh repo fork <upstream-owner>/<repo> --org marvelousempire --clone
+# After cloning yousirjuan, hydrate the submodules:
+git submodule update --init --recursive
 
-# 2. Add upstream remote + create our branch
-git remote add upstream https://github.com/<upstream-owner>/<repo>.git
-git checkout -b marvelous-main
+# Pull latest from each fork's marvelous-main:
+git submodule update --remote --merge
 
-# 3. Daily auto-sync via .github/workflows/sync-upstream.yml
-#    Pulls upstream/main into our main; rebases marvelous-main on top.
+# When upstream releases a new version (auto-sync workflow already pulled into our main):
+cd vendor/<name>
+git checkout marvelous-main
+git rebase main
+git push --force-with-lease origin marvelous-main
+cd ../..
+git add vendor/<name>
+git commit -m "chore(vendor): bump <name> to latest upstream"
 ```
 
-**Status:** ❌ not yet forked. Tracked in [PRD.md §13](PRD.md) as Phase 2.5 work. Currently sequenced after the marketing website + signed `.pkg` installer pipeline (which are already shipped).
+**Status:** ✅ forked + vendored. Installer-flag wiring (`bash bootstrap.sh` flags actually configuring each integration into Open WebUI / OpenClaw / Claude Code) tracked in [PRD.md §13](PRD.md) as remaining Phase 2.5 work.

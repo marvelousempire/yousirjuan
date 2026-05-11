@@ -1,3 +1,15 @@
 [submodule "vendor/ai-skills-library"]
 	path = vendor/ai-skills-library
 	url = https://github.com/marvelousempire/ai-skills-library.git
+[submodule "vendor/claude-mem"]
+	path = vendor/claude-mem
+	url = https://github.com/marvelousempire/claude-mem.git
+	branch = marvelous-main
+[submodule "vendor/marketingskills"]
+	path = vendor/marketingskills
+	url = https://github.com/marvelousempire/marketingskills.git
+	branch = marvelous-main
+[submodule "vendor/ruflo"]
+	path = vendor/ruflo
+	url = https://github.com/marvelousempire/ruflo.git
+	branch = marvelous-main
