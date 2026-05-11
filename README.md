@@ -1,11 +1,11 @@
 # You-Sir Juan™
 
-# Sovereign AI Infrastructure Platform
+# Private AI Infrastructure Platform
 
 Private AI infrastructure focused on:
 
 - local inference
-- sovereign orchestration
+- intelligent orchestration
 - multimodal retrieval
 - private memory systems
 - coding workflows
@@ -19,7 +19,7 @@ Private AI infrastructure focused on:
 
 You-Sir Juan™ is evolving into:
 
-> a sovereign AI infrastructure and orchestration platform.
+> a private AI infrastructure and orchestration platform.
 
 The project combines:
 
@@ -45,7 +45,7 @@ The repository currently consists of:
 - runtime scaffolding
 - orchestration concepts
 - deployment architecture
-- sovereign AI research
+- private AI research
 - local inference experiments
 - workflow prototyping
 
@@ -87,22 +87,6 @@ The intended outcome is:
 
 ---
 
-# Current Technical Constraints
-
-Current platform constraints include:
-
-- limited local GPU scale compared to hyperscalers
-- evolving multi-agent reliability
-- experimental long-term memory approaches
-- open-model reasoning limitations compared to frontier cloud models
-- context-window limitations on some local models
-- orchestration maturity still in development
-- dependency on community open-source ecosystems
-
-These constraints are considered part of the active engineering roadmap.
-
----
-
 # Infrastructure Stack
 
 | Layer | Preferred Systems |
@@ -120,21 +104,22 @@ These constraints are considered part of the active engineering roadmap.
 | Retrieval | Qdrant / LanceDB |
 | Edge AI | NVIDIA Jetson Thor |
 | Frontier Inference | NVIDIA DGX Spark |
+| Governance | GitLab CE |
 
 ---
 
-# Actual Sovereign AI Machine Specs
+# AI Machine Specs
 
 | Node | Machine | Exact Configuration | Intended Purpose |
 |---|---|---|---|
-| Node A | 16-inch MacBook Pro M5 Max | 18-core CPU, 40-core GPU, 16-core Neural Engine, 128GB unified memory, 4TB SSD, nano-texture display | Main sovereign AI workstation for local inference, coding workflows, orchestration testing, and private development |
+| Node A | 16-inch MacBook Pro M5 Max | 18-core CPU, 40-core GPU, 16-core Neural Engine, 128GB unified memory, 4TB SSD, nano-texture display | Main AI workstation for local inference, coding workflows, orchestration testing, and private development |
 | Node B | Mac mini M4 Max | Maxed configuration, 4TB SSD | Persistent orchestration server for Open WebUI, Ollama, embeddings, vector databases, APIs, queues, and local AI services |
 | Node C | NVIDIA Jetson Thor | Edge AI acceleration node | Robotics, voice systems, vision pipelines, local automation, edge inference, and distributed experimentation |
-| Node D | NVIDIA DGX Spark | Compact Grace Blackwell AI workstation | Frontier inference, CUDA-native AI workloads, TensorRT acceleration, fine-tuning, large-model serving |
+| Node D | NVIDIA DGX Spark | Compact Grace Blackwell AI workstation | Frontier inference, CUDA-native AI workloads, TensorRT acceleration, fine-tuning, and large-model serving |
 
 ---
 
-# Recommended Sovereign Model Stack
+# Recommended Model Stack
 
 | Category | Models |
 |---|---|
@@ -148,9 +133,9 @@ These constraints are considered part of the active engineering roadmap.
 
 ---
 
-# Sovereign Hardware Architectures
+# Hardware Architectures
 
-## Architecture A — Sovereign Creator Stack
+## Architecture A — Creator Stack
 
 ### Best For
 
@@ -186,13 +171,9 @@ Vision + Voice + Robotics + Edge AI
 | DAS / NAS / NVMe | ~$500–$2,000 |
 | Total | ~$12K–$17K |
 
-### Strategic Identity
-
-> Sovereign embodied AI stack.
-
 ---
 
-## Architecture B — Sovereign Frontier Stack
+## Architecture B — Frontier Stack
 
 ### Best For
 
@@ -228,20 +209,16 @@ CUDA + Fine-Tuning + Frontier Inference
 | DAS / NAS / NVMe | ~$500–$2,000 |
 | Total | ~$15K–$20K |
 
-### Strategic Identity
-
-> Sovereign frontier inference stack.
-
 ---
 
-## Architecture C — Sovereign Megatron Stack
+## Architecture C — Distributed AI Stack
 
 ### Best For
 
 - distributed AI infrastructure
 - robotics
 - multimodal orchestration
-- sovereign hosting
+- private hosting
 - autonomous agents
 - enterprise cognition
 
@@ -264,7 +241,7 @@ Edge Multimodal AI + Robotics + Voice + Vision
 
 Flint 2 + Tailscale Mesh
         ↓
-Sovereign Secure Infrastructure
+Secure Infrastructure
 ```
 
 ### Approximate Pricing
@@ -279,10 +256,6 @@ Sovereign Secure Infrastructure
 | DAS / NAS / NVMe | ~$1,000–$4,000 |
 | Total | ~$18K–$27K |
 
-### Strategic Identity
-
-> Sovereign distributed AI compute mesh.
-
 ---
 
 # Security Positioning
@@ -294,130 +267,8 @@ The platform is designed around:
 - private retrieval systems
 - infrastructure ownership
 - self-hosted deployment options
-- sovereign networking
+- secure networking
 - controlled operational boundaries
-
-Potential future security goals include:
-
-- role-based access controls
-- audit logging
-- encrypted vector stores
-- isolated deployment profiles
-- air-gapped deployment options
-- sandboxed agent execution
-
----
-
-# Hardware Reality
-
-The current hardware is extremely capable for:
-
-- private AI operations
-- local inference
-- orchestration
-- retrieval systems
-- coding workflows
-- multimodal AI
-- autonomous coding
-- edge AI experimentation
-- sovereign infrastructure
-
-However, the platform is not positioned as:
-
-- hyperscale AI infrastructure
-- frontier-model training infrastructure
-- a replacement for enterprise GPU clusters
-- a direct OpenAI or Anthropic competitor
-
-The focus is:
-
-- private AI infrastructure
-- sovereign deployment
-- retrieval systems
-- orchestration
-- coding workflows
-- operational continuity
-- infrastructure ownership
-
----
-
-# Roadmap Direction
-
-## Phase 1
-
-Foundation:
-
-- local inference
-- Open WebUI integration
-- Docker infrastructure
-- retrieval experiments
-- local coding workflows
-
-## Phase 2
-
-Operational orchestration:
-
-- model routing
-- queue systems
-- embeddings pipelines
-- persistent retrieval
-- namespace-aware infrastructure
-
-## Phase 3
-
-Evaluation and automation:
-
-- benchmark systems
-- hallucination evaluation
-- automated retrieval testing
-- workflow validation
-- agent execution tooling
-
-## Phase 4
-
-Distributed sovereign infrastructure:
-
-- edge AI integration
-- Jetson orchestration
-- DGX Spark experimentation
-- local network AI services
-- distributed inference experimentation
-- secure synchronization
-
----
-
-# Documentation
-
-Additional documents:
-
-- `docs/private-ai-network-handoff.md`
-- `docs/vision-trainable-ai-assistants-platform.md`
-- `docs/customer-ai-memory-architecture.md`
-- `docs/ai-assistant-business-model.md`
-- `docs/realitymotion-premium-cinematic-3d-ios-prd.md`
-- `docs/ai-skills-library.md`
-- `OPERATING-SYSTEM-LEAD-SHEET.md`
-
----
-
-# Engineering Philosophy
-
-The platform favors:
-
-- modular systems
-- open infrastructure
-- composable tooling
-- realistic technical positioning
-- iterative deployment
-- measurable evaluation
-- infrastructure ownership
-
-rather than:
-
-- inflated AGI claims
-- speculative capability marketing
-- unsupported performance claims
-- black-box infrastructure dependency
 
 ---
 
@@ -431,9 +282,9 @@ The platform’s differentiation is based on:
 - local memory systems
 - coding workflows
 - operational continuity
-- sovereign deployment
 - evaluation systems
 - secure infrastructure
+- distributed AI workflows
 
 rather than claims of AGI or frontier-model equivalence.
 
@@ -443,6 +294,6 @@ rather than claims of AGI or frontier-model equivalence.
 
 You-Sir Juan™ is evolving into:
 
-> a private sovereign AI infrastructure ecosystem focused on orchestration, retrieval, coding workflows, operational continuity, multimodal AI, distributed inference, and sovereign deployment.
+> a private AI infrastructure ecosystem focused on orchestration, retrieval, coding workflows, operational continuity, multimodal AI, distributed inference, and secure deployment.
 
 The long-term goal is to create owned intelligence infrastructure where memory, retrieval, workflows, automation, orchestration, and operational systems remain under direct organizational control.
