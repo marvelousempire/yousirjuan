@@ -125,3 +125,31 @@ Recommended role split:
 | Node B | Mac mini with M4 Pro chip | 14-core CPU, 20-core GPU, 16-core Neural Engine, 48GB unified memory, 1TB SSD storage, 10 Gigabit Ethernet, Thunderbolt 5 connectivity | Persistent orchestration server for Open WebUI, Ollama, embeddings, vector databases, APIs, queues, local AI services, and infrastructure routing |
 | Node C | NVIDIA Jetson Thor | Edge AI acceleration node | Robotics, voice systems, vision pipelines, local automation, edge inference, and distributed experimentation |
 | Node D | NVIDIA DGX Spark | Compact Grace Blackwell AI workstation | Frontier inference, CUDA-native AI workloads, TensorRT acceleration, fine-tuning, and large-model serving |
+
+---
+
+# Planned Community Integrations (Phase 2.5+)
+
+You-Sir Juan will fork these upstream projects under `marvelousempire/<name>` with **upstream-sync GitHub Actions** (daily auto-pull from upstream `main`), a **lightweight rebrand** layer, and **legally-required attribution preserved** (LICENSE + copyright headers untouched, plus `NOTICE` and `CREDITS.md` in each fork). Each becomes an opt-in install profile flag in `bootstrap.sh`.
+
+| Project | Upstream | License | Stars | What it adds | Install flag |
+|---|---|---|---|---|---|
+| **claude-mem** | [thedotmack/claude-mem](https://github.com/thedotmack/claude-mem) | Apache 2.0 | 73.7k | Persistent memory + context for Claude Code across sessions. Useful for operators who maintain the platform with Claude Code — saves you from re-explaining the project every session. SQLite + Chroma vector search, 5 lifecycle hooks, HTTP API on port 37777. | `INSTALL_CLAUDE_MEM=1` |
+| **marketingskills** | [coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills) | MIT | 27.3k | Pre-built marketing-domain skills (copywriting, SEO, conversion optimization, analytics, growth engineering). Bundled into Open WebUI as Knowledge + shared Models so any user can ask "draft a Q4 marketing brief" and get expert-quality output. | `INSTALL_MARKETING_SKILLS=1` |
+| **ruflo** | [ruvnet/ruflo](https://github.com/ruvnet/ruflo) | MIT | 46.7k | Multi-agent orchestration via MCP — coordinates 100+ specialized agents with shared context, persistent memory across sessions, and secure federation. Possible alternative or complement to OpenClaw for advanced agent workflows. | `INSTALL_RUFLO=1` |
+
+**Fork-and-maintain pattern (per upstream):**
+
+```bash
+# 1. Fork via gh CLI
+gh repo fork <upstream-owner>/<repo> --org marvelousempire --clone
+
+# 2. Add upstream remote + create our branch
+git remote add upstream https://github.com/<upstream-owner>/<repo>.git
+git checkout -b marvelous-main
+
+# 3. Daily auto-sync via .github/workflows/sync-upstream.yml
+#    Pulls upstream/main into our main; rebases marvelous-main on top.
+```
+
+**Status:** ❌ not yet forked. Tracked in [PRD.md §13](PRD.md) as Phase 2.5 work. Currently sequenced after the marketing website + signed `.pkg` installer pipeline (which are already shipped).
