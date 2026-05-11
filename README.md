@@ -30,60 +30,10 @@ The project combines:
 - memory systems
 - evaluation pipelines
 - autonomous tooling
-- secure networking
+- secure WireGuard networking
 - operational continuity architecture
 
 into one coordinated ecosystem.
-
----
-
-# Current Development Status
-
-The repository currently consists of:
-
-- infrastructure planning
-- runtime scaffolding
-- orchestration concepts
-- deployment architecture
-- private AI research
-- local inference experiments
-- workflow prototyping
-
-Many systems described in this repository are currently:
-
-- experimental
-- partially implemented
-- prototype-stage
-- conceptual
-- roadmap targets
-
-rather than fully production-complete systems.
-
----
-
-# Technical Positioning
-
-The project does not attempt to:
-
-- reproduce proprietary frontier models
-- claim equivalence with OpenAI or Anthropic internal systems
-- replicate Claude, GPT, or Codex training datasets
-- compete with hyperscale training infrastructure
-
-Instead, the project focuses on:
-
-- orchestrating strong open models
-- private inference
-- local memory systems
-- retrieval augmentation
-- coding workflows
-- evaluation pipelines
-- autonomous tooling
-- infrastructure ownership
-
-The intended outcome is:
-
-> frontier-inspired private AI operations.
 
 ---
 
@@ -97,7 +47,8 @@ The intended outcome is:
 | Vector Database | Qdrant |
 | UI | Next.js |
 | Containerization | Docker |
-| Networking | Tailscale / WireGuard |
+| Networking | WireGuard |
+| Infrastructure Routers | Flint 2 / Slate AX |
 | Local Inference | Ollama / vLLM |
 | Coding Workflows | Continue.dev / Aider |
 | Browser Automation | Playwright |
@@ -105,6 +56,64 @@ The intended outcome is:
 | Edge AI | NVIDIA Jetson Thor |
 | Frontier Inference | NVIDIA DGX Spark |
 | Governance | GitLab CE |
+
+---
+
+# Network Infrastructure Hardware
+
+| Hardware | Purpose |
+|---|---|
+| Flint 2 | Primary WireGuard gateway, home infrastructure router, VPN hub, private AI network backbone |
+| Slate AX | Portable WireGuard travel router for encrypted mobile access into home infrastructure |
+
+---
+
+# WireGuard Infrastructure Topology
+
+```text
+Laptop / iPad / Phone
+        ↓
+Slate AX Travel Router
+        ↓
+Encrypted WireGuard Tunnel
+        ↓
+Flint 2 Infrastructure Gateway
+        ↓
+Mac mini Runtime Server
+        ↓
+DGX Spark / Jetson Thor / Storage Nodes
+```
+
+---
+
+# WireGuard Network Layer
+
+WireGuard is the preferred secure network layer for the platform.
+
+It provides:
+
+- encrypted private tunnels
+- direct device-to-device connectivity
+- lower dependency on third-party coordination services
+- strong fit for self-hosted infrastructure
+- clean routing between workstation, Mac mini, DGX Spark, Jetson Thor, VPS, and storage nodes
+
+The WireGuard layer is primarily hosted through:
+
+- Flint 2 as the central infrastructure gateway
+- Slate AX as the portable encrypted travel node
+
+Recommended role split:
+
+| Network Role | Hardware / Service |
+|---|---|
+| Home gateway | Flint 2 running WireGuard server |
+| Travel tunnel | Slate AX running WireGuard client |
+| Persistent runtime node | Mac mini connected through WireGuard |
+| Workstation node | MacBook Pro connected through WireGuard |
+| Edge node | Jetson Thor connected through WireGuard |
+| Frontier node | DGX Spark connected through WireGuard |
+| Public/server node | VPS connected through WireGuard |
 
 ---
 
@@ -116,184 +125,3 @@ The intended outcome is:
 | Node B | Mac mini M4 Max | Maxed configuration, 4TB SSD | Persistent orchestration server for Open WebUI, Ollama, embeddings, vector databases, APIs, queues, and local AI services |
 | Node C | NVIDIA Jetson Thor | Edge AI acceleration node | Robotics, voice systems, vision pipelines, local automation, edge inference, and distributed experimentation |
 | Node D | NVIDIA DGX Spark | Compact Grace Blackwell AI workstation | Frontier inference, CUDA-native AI workloads, TensorRT acceleration, fine-tuning, and large-model serving |
-
----
-
-# Recommended Model Stack
-
-| Category | Models |
-|---|---|
-| Coding Intelligence | Qwen Coder, DeepSeek Coder, Devstral, Codestral |
-| Frontier Reasoning | DeepSeek R1, Llama 3.x, Qwen 3 |
-| Lightweight Models | Gemma, Phi, Mistral |
-| Multimodal | Qwen-VL, LLaVA, Florence |
-| Embeddings | bge-large, nomic-embed, e5-large |
-| Voice | Whisper, Piper, Kokoro |
-| Agentic Systems | OpenHands, OpenClaw, CrewAI |
-
----
-
-# Hardware Architectures
-
-## Architecture A — Creator Stack
-
-### Best For
-
-- multimodal AI
-- robotics
-- voice systems
-- edge AI
-- family-office assistants
-- local automation
-
-```text
-MacBook Pro M5 Max
-        ↓
-Creative + Orchestration Layer
-        ↓
-Mac mini M4 Max
-        ↓
-Persistent Runtime + APIs + Memory + Queues
-        ↓
-Jetson Thor
-        ↓
-Vision + Voice + Robotics + Edge AI
-```
-
-### Approximate Pricing
-
-| Hardware | Approx Price |
-|---|---|
-| MacBook Pro M5 Max • 128GB • 4TB | ~$6,500–$7,000 |
-| Mac mini M4 Max • 4TB | ~$3,000–$4,000 |
-| Jetson Thor | ~$2,000–$4,000+ |
-| Flint 2 + Slate AX | ~$250 |
-| DAS / NAS / NVMe | ~$500–$2,000 |
-| Total | ~$12K–$17K |
-
----
-
-## Architecture B — Frontier Stack
-
-### Best For
-
-- large local models
-- CUDA-native AI
-- fine-tuning
-- enterprise AI
-- autonomous coding
-- frontier inference
-
-```text
-MacBook Pro M5 Max
-        ↓
-Creative + Orchestration Layer
-        ↓
-Mac mini M4 Max
-        ↓
-Persistent Runtime + APIs + Memory + Queues
-        ↓
-NVIDIA DGX Spark
-        ↓
-CUDA + Fine-Tuning + Frontier Inference
-```
-
-### Approximate Pricing
-
-| Hardware | Approx Price |
-|---|---|
-| MacBook Pro M5 Max • 128GB • 4TB | ~$6,500–$7,000 |
-| Mac mini M4 Max • 4TB | ~$3,000–$4,000 |
-| NVIDIA DGX Spark | ~$4,700 |
-| Flint 2 + Slate AX | ~$250 |
-| DAS / NAS / NVMe | ~$500–$2,000 |
-| Total | ~$15K–$20K |
-
----
-
-## Architecture C — Distributed AI Stack
-
-### Best For
-
-- distributed AI infrastructure
-- robotics
-- multimodal orchestration
-- private hosting
-- autonomous agents
-- enterprise cognition
-
-```text
-MacBook Pro M5 Max
-        ↓
-Creative Orchestration Layer
-
-Mac mini M4 Max
-        ↓
-Persistent Runtime + APIs + Ingestion + Queues
-
-NVIDIA DGX Spark
-        ↓
-Frontier Inference + CUDA + Fine-Tuning
-
-Jetson Thor
-        ↓
-Edge Multimodal AI + Robotics + Voice + Vision
-
-Flint 2 + Tailscale Mesh
-        ↓
-Secure Infrastructure
-```
-
-### Approximate Pricing
-
-| Hardware | Approx Price |
-|---|---|
-| MacBook Pro M5 Max • 128GB • 4TB | ~$6,500–$7,000 |
-| Mac mini M4 Max • 4TB | ~$3,000–$4,000 |
-| NVIDIA DGX Spark | ~$4,700 |
-| Jetson Thor | ~$2,000–$4,000+ |
-| Flint 2 + Slate AX | ~$250 |
-| DAS / NAS / NVMe | ~$1,000–$4,000 |
-| Total | ~$18K–$27K |
-
----
-
-# Security Positioning
-
-The platform is designed around:
-
-- local-first inference
-- encrypted infrastructure
-- private retrieval systems
-- infrastructure ownership
-- self-hosted deployment options
-- secure networking
-- controlled operational boundaries
-
----
-
-# Strategic Positioning
-
-The platform’s differentiation is based on:
-
-- orchestration
-- infrastructure ownership
-- private retrieval
-- local memory systems
-- coding workflows
-- operational continuity
-- evaluation systems
-- secure infrastructure
-- distributed AI workflows
-
-rather than claims of AGI or frontier-model equivalence.
-
----
-
-# Final Positioning
-
-You-Sir Juan™ is evolving into:
-
-> a private AI infrastructure ecosystem focused on orchestration, retrieval, coding workflows, operational continuity, multimodal AI, distributed inference, and secure deployment.
-
-The long-term goal is to create owned intelligence infrastructure where memory, retrieval, workflows, automation, orchestration, and operational systems remain under direct organizational control.
