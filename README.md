@@ -222,6 +222,19 @@ Distributed sovereign infrastructure:
 
 ---
 
+# Documentation
+
+Additional documents:
+
+- `docs/private-ai-network-handoff.md`
+- `docs/vision-trainable-ai-assistants-platform.md`
+- `docs/customer-ai-memory-architecture.md`
+- `docs/ai-assistant-business-model.md`
+- `docs/realitymotion-premium-cinematic-3d-ios-prd.md` — **RealityMotion** PRD: premium cinematic 3D iOS UI/UX (SwiftUI + RealityKit, AI handoff prompts, scope/roadmap/QA/appendices)
+- `docs/ai-skills-library.md` — private agent skills + rules library (git submodule under `vendor/ai-skills-library/`)
+
+---
+
 # Engineering Philosophy
 
 The platform favors:

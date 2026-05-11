@@ -44,3 +44,9 @@ To emit shared **rules** into this repo (optional; Red-E Play–style packs by d
 ```
 
 Full detail: upstream doc [`consuming-from-other-private-repos`](https://github.com/marvelousempire/ai-skills-library/blob/main/docs/consuming-from-other-private-repos.md).
+
+## Related: native iOS cinematic / 3D PRD (this repo)
+
+For a **product-level spec** that pairs AI-assisted UI work (including UI/UX Pro Max–style prompts) with **SwiftUI + RealityKit** “RealityMotion” language, see:
+
+- [`realitymotion-premium-cinematic-3d-ios-prd.md`](realitymotion-premium-cinematic-3d-ios-prd.md)
