@@ -1,6 +1,6 @@
 # Product Requirements Document (PRD)
 
-## Premium Cinematic 3D UI/UX Design System for iOS Apps
+## Cinematic 3D UI/UX Design System for iOS Apps
 
 ## “RealityMotion” – Interconnected, Game-Like, Hyper-Realistic Interfaces
 
