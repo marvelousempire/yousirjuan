@@ -158,7 +158,22 @@ OCMODE
   esac
 fi
 
-ok "Will install: ollama=$INSTALL_OLLAMA, open-webui=$INSTALL_WEBUI, openclaw=$INSTALL_OPENCLAW${OPENCLAW_MODE:+ ($OPENCLAW_MODE)}"
+# Vendor community integrations picker (Full stack + Public + Custom)
+INSTALL_CLAUDE_MEM=0
+INSTALL_MARKETING_SKILLS=0
+INSTALL_RUFLO=0
+if [[ "$PROFILE" == "2" || "$PROFILE" == "3" || "$PROFILE" == "4" ]]; then
+  echo
+  step "Community integrations (vendor/, optional)"
+  ask_yn "Install claude-mem? (persistent memory for Claude Code; ~196 MB; recommended for operators using Claude Code)" "n" \
+    && INSTALL_CLAUDE_MEM=1 || INSTALL_CLAUDE_MEM=0
+  ask_yn "Install marketing-skills? (pre-built marketing-domain skills, symlinked to ~/.claude/skills/; ~4 MB)" "n" \
+    && INSTALL_MARKETING_SKILLS=1 || INSTALL_MARKETING_SKILLS=0
+  ask_yn "Install ruflo? (multi-agent orchestration via MCP; ~579 MB; alternative/complement to OpenClaw)" "n" \
+    && INSTALL_RUFLO=1 || INSTALL_RUFLO=0
+fi
+
+ok "Will install: ollama=$INSTALL_OLLAMA, open-webui=$INSTALL_WEBUI, openclaw=$INSTALL_OPENCLAW${OPENCLAW_MODE:+ ($OPENCLAW_MODE)}, claude-mem=$INSTALL_CLAUDE_MEM, marketing-skills=$INSTALL_MARKETING_SKILLS, ruflo=$INSTALL_RUFLO"
 
 # ---- 2. base packages ------------------------------------------------------
 
@@ -501,6 +516,19 @@ fi
 rm -f "$TEST_OUT"
 
 fi  # end INSTALL_OPENCLAW e2e test
+
+# ---- 10b. Vendor community integrations -----------------------------------
+
+if (( INSTALL_CLAUDE_MEM == 1 || INSTALL_MARKETING_SKILLS == 1 || INSTALL_RUFLO == 1 )); then
+  step "Vendor community integrations"
+  if [[ -f "$REPO_DIR/vendor/install-integrations.sh" ]]; then
+    # shellcheck disable=SC1091
+    source "$REPO_DIR/vendor/install-integrations.sh"
+    install_all_selected_integrations
+  else
+    warn "vendor/install-integrations.sh not found — skipping"
+  fi
+fi
 
 # ---- 11. Summary ----------------------------------------------------------
 

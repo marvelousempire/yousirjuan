@@ -35,5 +35,15 @@ note "Platform: $PLATFORM"
 INSTALLER="$REPO_DIR/installers/$PLATFORM.sh"
 [[ -f "$INSTALLER" ]] || die "Installer not found at $INSTALLER"
 
+# Hydrate git submodules (vendor/ community integrations) if needed
+if [[ -f "$REPO_DIR/.gitmodules" ]] && command -v git >/dev/null 2>&1; then
+  if ! git -C "$REPO_DIR" submodule status 2>/dev/null | grep -qE '^[ +-]'; then
+    : # not a git repo or no submodules — fine
+  elif git -C "$REPO_DIR" submodule status 2>/dev/null | grep -qE '^-'; then
+    note "Hydrating git submodules (one-time, may take a few min)..."
+    git -C "$REPO_DIR" submodule update --init --recursive 2>&1 | tail -3 || true
+  fi
+fi
+
 note "Dispatching to $INSTALLER"
 exec bash "$INSTALLER" "$@"
