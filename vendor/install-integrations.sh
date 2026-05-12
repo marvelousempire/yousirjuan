@@ -107,12 +107,38 @@ install_ruflo() {
   fi
 }
 
+# ---- ai-skills-library ----
+# Operator's curated catalog of AI skills, Claude/Cursor rules, marketing
+# + design + project skills. Has its own link script that symlinks
+# external skills into ~/.claude/skills and ~/.cursor/skills.
+install_ai_skills_library() {
+  step "ai-skills-library (curated AI skills catalog: skills + rules + Cursor/Claude bridges)"
+  local DIR="$REPO_DIR/vendor/ai-skills-library"
+  if [[ ! -d "$DIR" ]]; then
+    warn "vendor/ai-skills-library not hydrated. Run: git submodule update --init --recursive"
+    return 1
+  fi
+  if [[ ! -x "$DIR/scripts/link-external-skills-to-claude.sh" ]]; then
+    warn "ai-skills-library: link script not found. Skipping."
+    return 1
+  fi
+
+  note "Running ai-skills-library's own link-external-skills-to-claude.sh..."
+  # Honor operator's env var; default to also linking to Cursor.
+  LINK_EXTERNAL_TO_CURSOR="${LINK_EXTERNAL_TO_CURSOR:-1}" \
+    bash "$DIR/scripts/link-external-skills-to-claude.sh" 2>&1 | sed 's/^/    /' | tail -20
+
+  ok "ai-skills-library skills linked into ~/.claude/skills/ (and ~/.cursor/skills/ unless suppressed)"
+  note "See $DIR/SKILL-INDEX.md for the full catalog"
+}
+
 # Convenience: dispatcher
 install_all_selected_integrations() {
   local any=0
-  if (( ${INSTALL_CLAUDE_MEM:-0} == 1 ));        then install_claude_mem        && any=1; fi
-  if (( ${INSTALL_MARKETING_SKILLS:-0} == 1 ));  then install_marketing_skills  && any=1; fi
-  if (( ${INSTALL_RUFLO:-0} == 1 ));             then install_ruflo             && any=1; fi
+  if (( ${INSTALL_CLAUDE_MEM:-0} == 1 ));         then install_claude_mem         && any=1; fi
+  if (( ${INSTALL_MARKETING_SKILLS:-0} == 1 ));   then install_marketing_skills   && any=1; fi
+  if (( ${INSTALL_RUFLO:-0} == 1 ));              then install_ruflo              && any=1; fi
+  if (( ${INSTALL_AI_SKILLS_LIBRARY:-0} == 1 ));  then install_ai_skills_library  && any=1; fi
   (( any == 0 )) && note "No vendor integrations selected"
   return 0
 }

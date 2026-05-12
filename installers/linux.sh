@@ -162,10 +162,13 @@ fi
 INSTALL_CLAUDE_MEM=0
 INSTALL_MARKETING_SKILLS=0
 INSTALL_RUFLO=0
+INSTALL_AI_SKILLS_LIBRARY=0
 if [[ "$PROFILE" == "2" || "$PROFILE" == "3" || "$PROFILE" == "4" ]]; then
   echo
   step "Community integrations (vendor/, optional)"
-  ask_yn "Install claude-mem? (persistent memory for Claude Code; ~196 MB; recommended for operators using Claude Code)" "n" \
+  ask_yn "Install ai-skills-library? (operator's curated catalog: marketing/ide/project/visual skills + Claude/Cursor rules)" "y" \
+    && INSTALL_AI_SKILLS_LIBRARY=1 || INSTALL_AI_SKILLS_LIBRARY=0
+  ask_yn "Install claude-mem? (persistent memory for Claude Code; ~196 MB)" "n" \
     && INSTALL_CLAUDE_MEM=1 || INSTALL_CLAUDE_MEM=0
   ask_yn "Install marketing-skills? (pre-built marketing-domain skills, symlinked to ~/.claude/skills/; ~4 MB)" "n" \
     && INSTALL_MARKETING_SKILLS=1 || INSTALL_MARKETING_SKILLS=0
@@ -173,7 +176,7 @@ if [[ "$PROFILE" == "2" || "$PROFILE" == "3" || "$PROFILE" == "4" ]]; then
     && INSTALL_RUFLO=1 || INSTALL_RUFLO=0
 fi
 
-ok "Will install: ollama=$INSTALL_OLLAMA, open-webui=$INSTALL_WEBUI, openclaw=$INSTALL_OPENCLAW${OPENCLAW_MODE:+ ($OPENCLAW_MODE)}, claude-mem=$INSTALL_CLAUDE_MEM, marketing-skills=$INSTALL_MARKETING_SKILLS, ruflo=$INSTALL_RUFLO"
+ok "Will install: ollama=$INSTALL_OLLAMA, open-webui=$INSTALL_WEBUI, openclaw=$INSTALL_OPENCLAW${OPENCLAW_MODE:+ ($OPENCLAW_MODE)}, ai-skills-library=$INSTALL_AI_SKILLS_LIBRARY, claude-mem=$INSTALL_CLAUDE_MEM, marketing-skills=$INSTALL_MARKETING_SKILLS, ruflo=$INSTALL_RUFLO"
 
 # ---- 2. base packages ------------------------------------------------------
 
@@ -519,7 +522,7 @@ fi  # end INSTALL_OPENCLAW e2e test
 
 # ---- 10b. Vendor community integrations -----------------------------------
 
-if (( INSTALL_CLAUDE_MEM == 1 || INSTALL_MARKETING_SKILLS == 1 || INSTALL_RUFLO == 1 )); then
+if (( INSTALL_CLAUDE_MEM == 1 || INSTALL_MARKETING_SKILLS == 1 || INSTALL_RUFLO == 1 || INSTALL_AI_SKILLS_LIBRARY == 1 )); then
   step "Vendor community integrations"
   if [[ -f "$REPO_DIR/vendor/install-integrations.sh" ]]; then
     # shellcheck disable=SC1091
