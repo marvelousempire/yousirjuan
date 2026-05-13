@@ -8,7 +8,15 @@
     "start:api": "node api/server.js",
     "health": "node scripts/health-check.js",
     "features:export": "node scripts/export-feature-ledger.js",
-    "provision:demo": "bash tools/init-client-assistant.sh smith-family"
+    "provision:demo": "bash tools/init-client-assistant.sh smith-family",
+    "test": "jest --testPathPatterns=api/tests",
+    "test:watch": "jest --testPathPatterns=api/tests --watch"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testMatch": [
+      "**/api/tests/**/*.test.js"
+    ]
   },
   "dependencies": {
     "@qdrant/js-client-rest": "^1.13.0",
@@ -17,7 +25,10 @@
     "express": "^4.21.2",
     "helmet": "^8.0.0",
     "morgan": "^1.10.0",
+    "ws": "^8.20.1",
     "zod": "^3.24.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "jest": "^30.4.2"
+  }
 }

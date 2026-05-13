@@ -44,3 +44,24 @@ state/
 
 # Agent worktrees (local Claude Code sessions; never committed)
 .claude/worktrees/
+
+# Node
+node_modules/
+pnpm-lock.yaml
+npm-debug.log*
+
+# Next.js
+.next/
+out/
+
+# Runtime memory (file-backed, not source)
+.data/
+
+# iOS / Xcode — generated, do not commit
+apps/yousirjuan-ios/*.xcodeproj/
+apps/yousirjuan-ios/DerivedData/
+apps/yousirjuan-ios/build/
+
+# Playwright results
+apps/yousirjuan-web/playwright-report/
+apps/yousirjuan-web/test-results/

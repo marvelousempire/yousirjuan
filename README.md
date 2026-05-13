@@ -37,6 +37,53 @@ into one coordinated ecosystem.
 
 ---
 
+# Yours to Train
+
+There are voice assistants in millions of homes right now. You know the ones — you say their name and they respond. They are convenient, widely available, and deeply generic. They do not know your family. They cannot. The companies that built them have no interest in learning your customs, your culture, your language, or the names of the people who matter to you. They are designed for everyone, which means they are fully tailored to no one.
+
+You-Sir Juan™ is built on a different premise entirely.
+
+Your family trains it. Your family owns it. No one else touches it. The system learns your names, your preferences, your routines, your priorities — the way your household actually works. It adapts to your culture, not a statistical average of everyone else's. Every interaction makes it more yours. It carries the history of your family's relationship with it, session after session, for as long as you keep it running.
+
+This is what has been missing: an AI that belongs to a family the way a home has always belonged to its people — private, shaped by use, loyal by design, and incapable of being reconfigured by anyone else.
+
+---
+
+# The Interface
+
+You-Sir Juan™ isn't just infrastructure — it's a family-grade operating layer that every member of your family office interacts with directly. The hardware is a large-format touchscreen — iPad Pro-class, wall-mounted or countertop — that any family member can walk up to at any moment.
+
+## Walk-Up Kiosk
+
+No phone. No password. No friction. The interface runs on a dedicated 21-inch touchscreen deployed in the family office. Members approach it the way they approach a concierge — it is always on, always ready, always theirs.
+
+## Frictionless Biometric Authentication
+
+The moment a family member steps in front of the screen, facial recognition fires. The system knows who they are before they touch anything. A fingerprint confirmation serves as silent second-factor authentication — a single touch, no typing, no passwords ever transmitted or stored outside the device. The entire authentication stack runs on-device using native iOS biometrics. Credentials never leave the hardware.
+
+## Your World, Your Lens
+
+Once authenticated, the interface doesn't open a generic dashboard — it becomes that person's world. Every family member has their own UI paradigm: a distinct color palette, layout, information hierarchy, and vocabulary tailored to how they think and what they need. The CFO sees the same underlying data as the principal — but the form is entirely different. Labels, language, and visual mood shift to match each person's mental model. The function is identical. The presentation is personal.
+
+## Your Personal Agent
+
+Every member is paired with a persistent AI agent — a persona they shape from the moment they onboard. Think of it as a private butler: always present, always learning, never forgetting. The agent has a voice the member selects at setup, hosted locally on the platform. It acts as the intelligent intermediary between the member and every system on the platform — querying databases, retrieving documents, executing tasks, surfacing information — and returning results in the member's chosen voice and style. The relationship accumulates over time. Context never resets.
+
+## Voice-First Conversation
+
+The primary mode of interaction is speech-to-speech. The member speaks; the agent listens, processes, and responds aloud in its chosen voice. The experience is conversational — not a command interface, not a search bar, but a dialogue with an AI that knows you. A text-input fallback is available for quiet environments or precision tasks. Either way, the agent is task-oriented, memory-persistent, and always in conversation.
+
+## Onboarding
+
+When a new member is provisioned:
+
+1. Their profile is pre-seeded from family office records
+2. They select a voice for their personal agent from locally-hosted TTS options
+3. The interface adapts its visual paradigm to their preferences
+4. From the first session forward, the relationship begins — and memory accumulates
+
+---
+
 # Infrastructure Stack
 
 | Layer | Preferred Systems |

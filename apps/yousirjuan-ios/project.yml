@@ -1,0 +1,77 @@
+name: YouSirJuan
+options:
+  bundleIdPrefix: com.yousirjuan
+  deploymentTarget:
+    iOS: "18.0"
+    visionOS: "2.0"
+  createIntermediateGroups: true
+
+settings:
+  base:
+    SWIFT_VERSION: "5.10"
+    DEVELOPMENT_TEAM: ""
+    CODE_SIGN_STYLE: Automatic
+    TARGETED_DEVICE_FAMILY: "1,2"
+    SUPPORTS_MACCATALYST: YES
+
+targets:
+  YouSirJuan:
+    type: application
+    platform: iOS
+    sources:
+      - path: Sources
+    info:
+      path: Sources/Info.plist
+      properties:
+        CFBundleDisplayName: You-Sir Juan
+        UILaunchScreen:
+          UIColorName: "LaunchBackground"
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+        UISupportedInterfaceOrientations~ipad:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationPortraitUpsideDown
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+        NSFaceIDUsageDescription: You-Sir Juan uses Face ID to recognize family members at the kiosk.
+        NSMicrophoneUsageDescription: You-Sir Juan uses the microphone so you can speak with your Associate Agent.
+        NSSpeechRecognitionUsageDescription: You-Sir Juan transcribes your speech locally to converse with your Associate.
+        NSCameraUsageDescription: You-Sir Juan uses the camera to enroll your face for kiosk recognition.
+        NSAppTransportSecurity:
+          NSAllowsArbitraryLoads: true
+        ITSAppUsesNonExemptEncryption: false
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.yousirjuan.app
+        GENERATE_INFOPLIST_FILE: NO
+        INFOPLIST_FILE: Sources/Info.plist
+        ENABLE_PREVIEWS: YES
+
+  YouSirJuanVision:
+    type: application
+    platform: visionOS
+    sources:
+      - path: Sources
+    info:
+      path: Sources/Info.plist
+      properties:
+        UILaunchScreen:
+          UIColorName: ""
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.yousirjuan.vision
+        INFOPLIST_FILE: Sources/Info.plist
+        ENABLE_PREVIEWS: YES
+
+  YouSirJuanTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: YouSirJuanTests
+    dependencies:
+      - target: YouSirJuan
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.yousirjuan.tests

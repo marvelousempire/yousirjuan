@@ -32,10 +32,51 @@ services:
     volumes:
       - qdrant_data:/qdrant/storage
 
+  # Queue system — matches docker-compose.runtime.yml
+  redis:
+    image: redis:7-alpine
+    container_name: ysj-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+
+  # Gap 5 / Elevation K — Postgres for persistent memory and personas
+  postgres:
+    image: postgres:16-alpine
+    container_name: ysj-postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: yousirjuan
+      POSTGRES_USER: sovereign
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-sovereign}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./db/migrations:/docker-entrypoint-initdb.d
+
+  # Elevation F — Kokoro TTS: locally-hosted neural TTS for Associate Agent voices
+  # POST http://localhost:8880/v1/audio/speech  { model:"kokoro", voice:"<id>", input:"<text>" }
+  # Voice map: Sterling→af_sky, Blake→am_adam, Cipher→af_nicole, Sovereign→am_michael
+  kokoro:
+    image: ghcr.io/remsky/kokoro-fastapi-cpu:v0.2.4
+    container_name: ysj-kokoro
+    restart: unless-stopped
+    ports:
+      - "8880:8880"
+    volumes:
+      - kokoro_data:/app/api/src/voices
+    environment:
+      - PYTHONUNBUFFERED=1
+
   nginx:
     image: nginx:latest
     container_name: ysj-nginx
     restart: unless-stopped
+    depends_on:
+      - ollama
+      - postgres
+      - kokoro
     ports:
       - "80:80"
       - "443:443"
@@ -46,3 +87,5 @@ volumes:
   ollama_data:
   openwebui_data:
   qdrant_data:
+  postgres_data:
+  kokoro_data:
