@@ -1,0 +1,29 @@
+{
+  "name": "yousirjuan-web",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Family Interface — web client. Runs in any browser, optimized for kiosk and laptop targets.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test:e2e": "playwright test"
+  },
+  "dependencies": {
+    "next": "^15.1.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "framer-motion": "^11.15.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.0",
+    "typescript": "^5.7.2",
+    "@types/node": "^22.10.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "tailwindcss": "^4.0.0-beta.7",
+    "@tailwindcss/postcss": "^4.0.0-beta.7",
+    "postcss": "^8.4.49"
+  }
+}
