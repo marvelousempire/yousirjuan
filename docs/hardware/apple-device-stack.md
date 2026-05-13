@@ -1,5 +1,52 @@
 # Apple Device Stack
 
+## Ecosystem Architecture Diagram
+
+```mermaid
+flowchart TD
+    A[16-inch MacBook Pro M5 Max]\nMobile AI Workstation
+    B[Mac mini M4 Pro]\nDedicated Server Node
+    C[Magic Keyboard]\nControl Input
+    D[Magic Trackpad]\nGesture Control
+    E[Thunderbolt 5 Cable]\nHigh-Speed Backbone
+    F[Apple TV 4K]\nMedia + Presentation Node
+
+    A --> E
+    E --> B
+    C --> B
+    D --> B
+    B --> F
+
+    A --> G[Local LLMs]
+    A --> H[DaVinci Resolve]
+    A --> I[Docker + Virtualization]
+
+    B --> J[Automation Engine]
+    B --> K[AgenticOS Services]
+    B --> L[Reverse Proxy + Hosting]
+    B --> M[Background Rendering]
+
+    F --> N[Studio Display Output]
+    F --> O[Presentation System]
+```
+
+---
+
+## Operational Flow Diagram
+
+```mermaid
+flowchart LR
+    A[Development] --> B[Local AI Processing]
+    B --> C[Automation Systems]
+    C --> D[Docker Services]
+    D --> E[Deployment]
+    E --> F[Media Output]
+    E --> G[Remote Administration]
+    E --> H[Trust Records]
+```
+
+---
+
 ## Primary Mobile Workstation
 
 ### 16-inch MacBook Pro — Space Black — M5 Max
