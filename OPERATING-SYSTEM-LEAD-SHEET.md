@@ -250,3 +250,25 @@ The operating system is complete when a user can run one command and receive:
 The goal is:
 
 > one command to launch a sovereign cognitive operating system.
+
+---
+
+# Engineering rules from `ai-skills-library`
+
+This repo vendors [`marvelousempire/ai-skills-library`](https://github.com/marvelousempire/ai-skills-library) at `vendor/ai-skills-library/`. The library is the canonical source of cross-project engineering rules. Cursor and Claude pick up the generated views automatically:
+
+- [`.cursor/rules/parallel-surfaces-from-day-one.mdc`](.cursor/rules/parallel-surfaces-from-day-one.mdc)
+- [`.cursor/rules/dev-discipline.mdc`](.cursor/rules/dev-discipline.mdc)
+- [`.cursor/rules/changelog-and-versioning.mdc`](.cursor/rules/changelog-and-versioning.mdc)
+- [`.cursor/rules/go-live-path.mdc`](.cursor/rules/go-live-path.mdc)
+- Claude twins live at [`.claude/rules/`](.claude/rules/)
+
+**Most relevant for You-Sir Juan:** [`parallel-surfaces-from-day-one`](vendor/ai-skills-library/rules/library/parallel-surfaces-from-day-one/body.md) — every product app starts with native iOS + user web + marketing site + admin dashboard + backend/API in parallel from day one. You-Sir Juan already follows this pattern (admin/, api/, apps/, backend/, marketing surface) — the rule codifies it for every future surface and every new app spawned out of this OS.
+
+**Updating these rules:** edit the library, push, then in this repo:
+```sh
+git submodule update --remote vendor/ai-skills-library
+bash vendor/ai-skills-library/scripts/sync-rules-into-repo.sh .
+git add vendor/ai-skills-library .cursor/rules/ .claude/rules/
+git commit
+```

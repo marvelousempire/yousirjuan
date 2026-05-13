@@ -41,3 +41,6 @@ backups/
 # Personal copies of generated configs (regenerated per-deploy)
 local/
 state/
+
+# Agent worktrees (local Claude Code sessions; never committed)
+.claude/worktrees/
