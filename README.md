@@ -65,9 +65,18 @@ The moment a family member steps in front of the screen, facial recognition fire
 
 Once authenticated, the interface doesn't open a generic dashboard — it becomes that person's world. Every family member has their own UI paradigm: a distinct color palette, layout, information hierarchy, and vocabulary tailored to how they think and what they need. The CFO sees the same underlying data as the principal — but the form is entirely different. Labels, language, and visual mood shift to match each person's mental model. The function is identical. The presentation is personal.
 
-## Your Personal Agent
+## Your Associate Agent
 
-Every member is paired with a persistent AI agent — a persona they shape from the moment they onboard. Think of it as a private butler: always present, always learning, never forgetting. The agent has a voice the member selects at setup, hosted locally on the platform. It acts as the intelligent intermediary between the member and every system on the platform — querying databases, retrieving documents, executing tasks, surfacing information — and returning results in the member's chosen voice and style. The relationship accumulates over time. Context never resets.
+Every member is paired with a persistent AI agent — a persona they shape from the moment they onboard. Always present, always learning, never forgetting. The agent has a voice the member selects at setup, hosted locally on the platform. It acts as the intelligent intermediary between the member and every system on the platform — querying databases, retrieving documents, executing tasks, surfacing information — and returning results in the member's chosen voice and style. The relationship accumulates over time. Context never resets.
+
+The four founding Associate Agents:
+
+| Member | Associate | Palette | Character |
+|---|---|---|---|
+| Avery Goodman | Sterling | Obsidian `#7C5CFF` | Executive. Precise. Calm authority. |
+| Robert Bobby | Blake | Copper `#FF6B35` | Warm. Direct. Trusted advisor. |
+| NIVRAM | Cipher | Matrix `#00FF88` | Technical. Signal-dense. No fluff. |
+| Yousir Juan | Sovereign | Gold `#FFD700` | Commanding. Strategic. Declarative. |
 
 ## Voice-First Conversation
 
@@ -81,6 +90,30 @@ When a new member is provisioned:
 2. They select a voice for their personal agent from locally-hosted TTS options
 3. The interface adapts its visual paradigm to their preferences
 4. From the first session forward, the relationship begins — and memory accumulates
+
+---
+
+# Hardware SKUs — Floor to Ceiling
+
+You-Sir Juan™ ships on any hardware that runs Docker. Three tiers, one codebase.
+
+| SKU | Interface hardware | AI runtime | Who it's for |
+|---|---|---|---|
+| **Sovereign** | iPad Pro (any M-series) | Mac mini M4 Pro 48GB + optional DGX Spark | Family offices, high-touch households |
+| **Standard** | Raspberry Pi 5 + 8" touchscreen (~$150 BOM) | Mac mini M4 (entry) or existing Mac | Growing families, enthusiast adopters |
+| **BYO** | Any browser on any device | Existing Mac or PC | Households with hardware already in place |
+
+The native iOS app delivers full RealityKit 4 cinematic depth. The web app delivers the same design language and the same agent system in any browser — same backend either way.
+
+## The installation kit
+
+Every Sovereign and Standard unit ships with:
+
+- **GL.iNet Flint 2 router** pre-loaded with WireGuard config — the household's private AI network backbone
+- **Ansible playbook** that provisions the runtime on any Mac mini or MacBook in under 60 minutes
+- **Snapmaker 2.0-printed enclosure** for the Pi-class interface unit (Standard SKU)
+- **Field technician service** — we install, configure, and hand the keys to the family
+
 
 ---
 
@@ -169,7 +202,7 @@ Recommended role split:
 | Node | Machine | Exact Configuration | Intended Purpose |
 |---|---|---|---|
 | Node A | 16-inch MacBook Pro M5 Max | 18-core CPU, 40-core GPU, 16-core Neural Engine, 128GB unified memory, 4TB SSD, nano-texture display | Main AI workstation for local inference, coding workflows, orchestration testing, and private development |
-| Node B | Mac mini with M4 Pro chip | 14-core CPU, 20-core GPU, 16-core Neural Engine, 48GB unified memory, 1TB SSD storage, 10 Gigabit Ethernet, Thunderbolt 5 connectivity | Persistent orchestration server for Open WebUI, Ollama, embeddings, vector databases, APIs, queues, local AI services, and infrastructure routing |
+| Node B | Mac mini with M4 Pro chip | 14-core CPU, 20-core GPU, 16-core Neural Engine, 48GB unified memory, 4TB SSD storage, 10 Gigabit Ethernet, Thunderbolt 5 connectivity | Persistent orchestration server for Open WebUI, Ollama, embeddings, vector databases, APIs, queues, local AI services, and infrastructure routing |
 | Node C | NVIDIA Jetson Thor | Edge AI acceleration node | Robotics, voice systems, vision pipelines, local automation, edge inference, and distributed experimentation |
 | Node D | NVIDIA DGX Spark | Compact Grace Blackwell AI workstation | Frontier inference, CUDA-native AI workloads, TensorRT acceleration, fine-tuning, and large-model serving |
 
