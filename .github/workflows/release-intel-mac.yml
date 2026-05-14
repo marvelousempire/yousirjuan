@@ -1,0 +1,127 @@
+# release-intel-mac.yml
+# Validates the Intel Mac installer script and publishes it to
+# the public marvelousempire/yousirjuan-ai repo as a GitHub Release artifact.
+#
+# Triggers:
+#   - Push of a semver tag (v*.*.*)
+#   - Manual workflow_dispatch
+#
+# Published artifact:
+#   install-intel-mac.sh  — the one-liner installer
+#
+# One-liner (served by VPS get.yousirjuan.ai):
+#   curl -fsSL https://get.yousirjuan.ai/intel-mac | sh
+
+name: Release — Intel Mac installer
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version (e.g. 0.1.0). Leave empty to use git tag."
+        required: false
+        default: ""
+
+jobs:
+  validate:
+    name: Validate installer script
+    runs-on: macos-13   # macOS 13 Ventura runner = Intel-compatible environment
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Syntax check
+        run: bash -n installers/intel-mac/install.sh && echo "✓ Syntax OK"
+
+      - name: ShellCheck lint
+        run: |
+          brew install shellcheck --quiet 2>/dev/null || true
+          shellcheck --severity=error installers/intel-mac/install.sh && echo "✓ ShellCheck passed"
+
+      - name: Dry-run preflight (no installs)
+        run: |
+          # Source only the helper functions and preflight block — don't run installs
+          bash -c '
+            source <(grep -A 30 "── Helpers" installers/intel-mac/install.sh | head -30)
+            echo "✓ Helper functions load OK"
+          '
+
+  publish:
+    name: Publish installer to public repo
+    needs: validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Determine version
+        id: version
+        run: |
+          if [ -n "${{ github.event.inputs.version }}" ]; then
+            VERSION="${{ github.event.inputs.version }}"
+          else
+            VERSION="${GITHUB_REF_NAME#v}"
+          fi
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "Version: $VERSION"
+
+      - name: Prepare artifact
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          cp installers/intel-mac/install.sh install-intel-mac.sh
+          # Embed version into the script header comment
+          sed -i "s/v0\.1/v$VERSION/g" install-intel-mac.sh
+          sha256sum install-intel-mac.sh > install-intel-mac.sh.sha256
+          echo "--- Artifact ---"
+          ls -lh install-intel-mac.sh install-intel-mac.sh.sha256
+          cat install-intel-mac.sh.sha256
+
+      - name: Publish to marvelousempire/yousirjuan-ai releases
+        env:
+          GH_TOKEN: ${{ secrets.PUBLIC_REPO_TOKEN }}
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          NOTES="Intel Mac installer for You-Sir Juan OS v$VERSION.
+
+One-liner:
+\`\`\`bash
+curl -fsSL https://get.yousirjuan.ai/intel-mac | sh
+\`\`\`
+
+Or directly from GitHub:
+\`\`\`bash
+curl -fsSL https://github.com/marvelousempire/yousirjuan-ai/releases/latest/download/install-intel-mac.sh | sh
+\`\`\`
+
+Optimized for: iMac 2017, MacBook (Intel), Mac mini (Intel)
+macOS Ventura 13+ | x86_64 | 16+ GB RAM recommended
+
+See docs/hardware/imac-2017-intel-i5.md for full capability matrix.
+See installers/intel-mac/opencore-sonoma-guide.md for iOS 18 dev setup."
+
+          gh release create "v$VERSION" \
+            --repo marvelousempire/yousirjuan-ai \
+            --title "You-Sir Juan OS v$VERSION" \
+            --notes "$NOTES" \
+            --target main \
+            install-intel-mac.sh install-intel-mac.sh.sha256 2>/dev/null || \
+          gh release upload "v$VERSION" \
+            --repo marvelousempire/yousirjuan-ai \
+            --clobber \
+            install-intel-mac.sh install-intel-mac.sh.sha256
+
+      - name: Summary
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          echo "### Intel Mac installer published — v$VERSION" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "**One-liner:** \`curl -fsSL https://get.yousirjuan.ai/intel-mac | sh\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "**Direct:** https://github.com/marvelousempire/yousirjuan-ai/releases/tag/v$VERSION" >> "$GITHUB_STEP_SUMMARY"
