@@ -213,3 +213,33 @@ The system should evolve toward:
 - persistent storage
 - creative workstation separation
 - sovereign AI architecture
+
+---
+
+# iMac (Retina 4K, 21.5-inch, 2017) — Intel i5 64 GB
+
+## Summary
+
+An unofficial 64 GB RAM upgrade makes this 2017 Intel iMac a capable BYO tier runtime node despite its age. CPU-only Ollama inference limits it to smaller models, but the backend stack runs without constraint.
+
+## Best At
+
+- Always-on backend server (API, Postgres, Redis, Qdrant, nginx)
+- Web interface hosting (Next.js)
+- Light Ollama inference — llama3.2:3b for real-time voice, 8b models for async
+- Docker services (x86_64 native)
+
+## NOT Suitable For
+
+- iOS 18 / visionOS 2 development (Ventura + Xcode 15 cap)
+- Fast LLM inference (no Neural Engine, no CUDA)
+- 70b model real-time voice turns (0.5–1 tok/sec is too slow)
+
+## Recommended Ollama Model
+
+`llama3.2:3b` — loads in ~2 GB, runs at 8–15 tok/sec on the i5, fast enough for 2–4 sec voice turn responses.
+
+## Full Compatibility Doc
+
+`docs/hardware/imac-2017-intel-i5.md`
+
