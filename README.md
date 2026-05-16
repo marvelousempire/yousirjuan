@@ -2,6 +2,8 @@
 
 # Private AI Infrastructure Platform
 
+**You-Sir Juan™ is a private, self-hosted AI infrastructure platform for individuals, families, and small organizations — especially family offices — that need enterprise-grade AI without sending their data to anyone else.** *"Your AI lives on your hardware."*
+
 Private AI infrastructure focused on:
 
 - local inference
@@ -12,6 +14,22 @@ Private AI infrastructure focused on:
 - autonomous tooling
 - organizational continuity
 - AI-assisted operations
+
+---
+
+# The Problem It Solves
+
+The market today forces a painful choice:
+
+| Path | What you get | What you give up |
+|---|---|---|
+| **ChatGPT / Claude / Gemini** | Best-in-class quality, zero setup | Your conversations, uploads, and behavior patterns become training data. Data exfiltration risk for legal, financial, health, and family content. |
+| **Roll-your-own from scratch** | Total privacy, total control | Weeks of engineering work, brittle setup, no clear path, no security hardening |
+| **Enterprise self-hosted** | Privacy + quality | $50K–$1M+ annual contracts, vendor lock-in, still a vendor in the loop |
+
+**The gap:** a self-contained, open-source, drop-in private AI stack that a family office, small-business owner, or technically-curious individual can deploy on their own hardware in an afternoon and trust for years.
+
+You-Sir Juan fills that gap.
 
 ---
 
@@ -34,6 +52,74 @@ The project combines:
 - operational continuity architecture
 
 into one coordinated ecosystem.
+
+---
+
+# Quick Start
+
+Any technically-comfortable user can `git clone` and stand up the full stack in **under 30 minutes**:
+
+```bash
+git clone https://github.com/marvelousempire/yousirjuan
+cd yousirjuan
+git submodule update --init --recursive
+bash tools/init-client-assistant.sh
+```
+
+---
+
+# Core Tech Stack
+
+| Component | Role |
+|---|---|
+| **Ollama** | Local model inference |
+| **Open WebUI** | Multi-user chat + RAG (document retrieval) |
+| **OpenClaw** | Messaging-platform agents |
+| **Tailscale** | Encrypted WireGuard mesh networking |
+| **nginx + Let's Encrypt** | Public endpoint with TLS |
+| **Redis** | Task queue |
+| **PostgreSQL** | Primary database |
+| **Qdrant / LanceDB** | Vector database for retrieval |
+
+---
+
+# Repo Structure
+
+| Directory | Purpose |
+|---|---|
+| `broker/` | Local verb-based action broker (read-file, screenshot, open-url, type-text) |
+| `ecosystem/` | Architecture maps, tool registry, upstream repo ledger |
+| `features/` | PRDs and feature ledger |
+| `ingestion/` | Data ingestion pipelines |
+| `media-intelligence/` | Media AI pipelines |
+| `identity/` | Personal AI context and identity |
+| `assistants/` | Assistant registry and memory systems |
+| `vps/` | Server hardening configs (nginx, fail2ban, iptables, systemd) |
+| `tools/` | Shell scripts for init, backup, restore, health checks |
+| `hardware/` | Hardware-specific configuration notes |
+| `runtime/` | Task queue and Redis architecture |
+| `pain-journal/` | Operational issue tracking |
+
+---
+
+# Strategic Pillars
+
+1. **Privacy-by-default** — Zero telemetry. No phone home. Conversations and uploads never leave operator hardware unless explicitly routed to a cloud API.
+2. **Reproducible** — The repo is the source of truth. Every byte of configuration is in git. Anyone with the repo + a domain can stand up an identical deployment.
+3. **Hardware-honest** — The installer detects hardware and recommends realistic profiles. CPU-only boxes get a "chat only" profile that works; M-series + GPU boxes get the full stack with the agent layer.
+4. **Defense in depth** — TLS at the edge, firewall on the host, app-level auth, rate limits, fail2ban, encrypted mesh between devices, swap-protected against OOM cascades.
+5. **Boring stack** — Off-the-shelf battle-tested pieces (nginx, Ollama, Postgres, systemd). Minimal proprietary glue. If we go away, the stack still works.
+6. **No lock-in** — Operator can swap any component. Operator can take their data and leave anytime — backup tarball is fully portable.
+
+---
+
+# What This Is NOT
+
+- Not a SaaS (today). No central control plane, no shared multi-tenancy.
+- Not a managed service. The operator is responsible for hardware, network, and ongoing security.
+- Not an Anthropic / OpenAI substitute for every use case. Local 8B–30B models are good but not frontier. Cloud providers remain available as opt-in for non-sensitive heavy lifting.
+
+---
 
 ---
 
