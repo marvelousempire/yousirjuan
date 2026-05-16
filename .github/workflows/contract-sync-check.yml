@@ -1,0 +1,71 @@
+name: Contract Sync Check
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'REPOS-CONTRACT.md'
+      - 'README.md'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'REPOS-CONTRACT.md'
+      - 'README.md'
+
+jobs:
+  verify-contract-sync:
+    name: Verify repos contract is in sync
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check REPOS-CONTRACT.md exists
+        run: |
+          if [ ! -f "REPOS-CONTRACT.md" ]; then
+            echo "❌ FAIL: REPOS-CONTRACT.md is missing"
+            echo "Create REPOS-CONTRACT.md to define repo boundaries"
+            exit 1
+          else
+            echo "✅ PASS: REPOS-CONTRACT.md exists"
+          fi
+
+      - name: Verify contract has required sections
+        run: |
+          echo "🔍 Checking contract has required sections..."
+          REQUIRED_SECTIONS=(
+            "Core Identity"
+            "What Lives Where"
+            "Clear Boundaries"
+            "How They Work Together"
+          )
+          
+          for section in "${REQUIRED_SECTIONS[@]}"; do
+            if ! grep -q "$section" REPOS-CONTRACT.md; then
+              echo "❌ FAIL: Contract missing section: $section"
+              exit 1
+            fi
+          done
+          
+          echo "✅ PASS: All required contract sections present"
+
+      - name: Verify README points to contract
+        run: |
+          if [ -f "README.md" ]; then
+            if grep -q "REPOS-CONTRACT" README.md; then
+              echo "✅ PASS: README.md references REPOS-CONTRACT.md"
+            else
+              echo "⚠️  WARNING: README.md should reference REPOS-CONTRACT.md"
+              echo "Add this line to README.md: 'See [REPOS-CONTRACT.md](REPOS-CONTRACT.md) for repo boundaries.'"
+            fi
+          fi
+
+      - name: Summary
+        run: |
+          echo ""
+          echo "📋 Contract Sync Check Summary:"
+          echo "✅ REPOS-CONTRACT.md exists"
+          echo "✅ Contract has required sections"
+          echo "✅ Contract defines repo boundaries"
+          echo ""
+          echo "Contract is properly maintained."
