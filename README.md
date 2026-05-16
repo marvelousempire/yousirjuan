@@ -1,63 +1,37 @@
 # You-Sir Juan™
 
-# Private AI Infrastructure Platform
+## Private AI Infrastructure Platform
 
-**You-Sir Juan™ is a private, self-hosted AI infrastructure platform for individuals, families, and small organizations — especially family offices — that need enterprise-grade AI without sending their data to anyone else.** *"Your AI lives on your hardware."*
+**You-Sir Juan™ is a private, self-hosted AI infrastructure platform for individuals, families, small organizations, and family offices that need useful AI without handing sensitive data to a third party.** Your AI lives on your hardware.
 
-Private AI infrastructure focused on:
+The platform brings local inference, retrieval, private memory, orchestration, coding workflows, autonomous tools, and secure networking into one reproducible stack.
 
-- local inference
-- intelligent orchestration
-- multimodal retrieval
-- private memory systems
-- coding workflows
-- autonomous tooling
-- organizational continuity
-- AI-assisted operations
+## The Problem
 
----
+Most AI infrastructure choices force a tradeoff:
 
-# The Problem It Solves
-
-The market today forces a painful choice:
-
-| Path | What you get | What you give up |
+| Path | What You Get | What You Give Up |
 |---|---|---|
-| **ChatGPT / Claude / Gemini** | Best-in-class quality, zero setup | Your conversations, uploads, and behavior patterns become training data. Data exfiltration risk for legal, financial, health, and family content. |
-| **Roll-your-own from scratch** | Total privacy, total control | Weeks of engineering work, brittle setup, no clear path, no security hardening |
-| **Enterprise self-hosted** | Privacy + quality | $50K–$1M+ annual contracts, vendor lock-in, still a vendor in the loop |
+| Hosted AI apps | Best-in-class quality with almost no setup | Conversations, uploads, workflows, and behavior patterns leave your environment |
+| Roll your own | Total privacy and control | Weeks of engineering, brittle setup, unclear hardening, and long-term maintenance burden |
+| Enterprise self-hosting | Privacy plus mature tooling | High contracts, vendor lock-in, and a vendor still sitting inside the operating model |
 
-**The gap:** a self-contained, open-source, drop-in private AI stack that a family office, small-business owner, or technically-curious individual can deploy on their own hardware in an afternoon and trust for years.
+You-Sir Juan fills the gap: a self-contained private AI stack that a technically comfortable operator can deploy on owned hardware, inspect, back up, and keep running.
 
-You-Sir Juan fills that gap.
+## What It Coordinates
 
----
+- Local model inference
+- Multimodal retrieval and vector search
+- Private memory systems
+- Associate Agent orchestration
+- Coding and automation workflows
+- Secure WireGuard networking
+- Operational continuity, backups, and restore paths
+- Hardware-aware deployment from Mac mini to frontier nodes
 
-# Executive Summary
+## Quick Start
 
-You-Sir Juan™ is evolving into:
-
-> a private AI infrastructure and orchestration platform.
-
-The project combines:
-
-- local AI infrastructure
-- retrieval systems
-- coding intelligence
-- orchestration workflows
-- memory systems
-- evaluation pipelines
-- autonomous tooling
-- secure WireGuard networking
-- operational continuity architecture
-
-into one coordinated ecosystem.
-
----
-
-# Quick Start
-
-Any technically-comfortable user can `git clone` and stand up the full stack in **under 30 minutes**:
+Any technically comfortable user can clone the repo and stand up the stack:
 
 ```bash
 git clone https://github.com/marvelousempire/yousirjuan
@@ -66,128 +40,65 @@ git submodule update --init --recursive
 bash tools/init-client-assistant.sh
 ```
 
----
+For local development across surfaces, see `apps/README.md`.
 
-# Core Tech Stack
+## Core Tech Stack
 
 | Component | Role |
 |---|---|
-| **Ollama** | Local model inference |
-| **Open WebUI** | Multi-user chat + RAG (document retrieval) |
-| **OpenClaw** | Messaging-platform agents |
-| **Tailscale** | Encrypted WireGuard mesh networking |
-| **nginx + Let's Encrypt** | Public endpoint with TLS |
-| **Redis** | Task queue |
-| **PostgreSQL** | Primary database |
-| **Qdrant / LanceDB** | Vector database for retrieval |
+| Ollama | Local model inference |
+| Open WebUI | Multi-user chat and RAG |
+| OpenClaw | Messaging-platform agents |
+| WireGuard / Tailscale | Encrypted private mesh networking |
+| nginx + Let's Encrypt | Public endpoint with TLS |
+| Redis | Task queue and runtime coordination |
+| PostgreSQL | Primary relational database |
+| Qdrant / LanceDB | Vector database and retrieval layer |
 
----
-
-# Repo Structure
-
-| Directory | Purpose |
-|---|---|
-| `broker/` | Local verb-based action broker (read-file, screenshot, open-url, type-text) |
-| `ecosystem/` | Architecture maps, tool registry, upstream repo ledger |
-| `features/` | PRDs and feature ledger |
-| `ingestion/` | Data ingestion pipelines |
-| `media-intelligence/` | Media AI pipelines |
-| `identity/` | Personal AI context and identity |
-| `assistants/` | Assistant registry and memory systems |
-| `vps/` | Server hardening configs (nginx, fail2ban, iptables, systemd) |
-| `tools/` | Shell scripts for init, backup, restore, health checks |
-| `hardware/` | Hardware-specific configuration notes |
-| `runtime/` | Task queue and Redis architecture |
-| `pain-journal/` | Operational issue tracking |
-
----
-
-# Strategic Pillars
-
-1. **Privacy-by-default** — Zero telemetry. No phone home. Conversations and uploads never leave operator hardware unless explicitly routed to a cloud API.
-2. **Reproducible** — The repo is the source of truth. Every byte of configuration is in git. Anyone with the repo + a domain can stand up an identical deployment.
-3. **Hardware-honest** — The installer detects hardware and recommends realistic profiles. CPU-only boxes get a "chat only" profile that works; M-series + GPU boxes get the full stack with the agent layer.
-4. **Defense in depth** — TLS at the edge, firewall on the host, app-level auth, rate limits, fail2ban, encrypted mesh between devices, swap-protected against OOM cascades.
-5. **Boring stack** — Off-the-shelf battle-tested pieces (nginx, Ollama, Postgres, systemd). Minimal proprietary glue. If we go away, the stack still works.
-6. **No lock-in** — Operator can swap any component. Operator can take their data and leave anytime — backup tarball is fully portable.
-
----
-
-# What This Is NOT
-
-- Not a SaaS (today). No central control plane, no shared multi-tenancy.
-- Not a managed service. The operator is responsible for hardware, network, and ongoing security.
-- Not an Anthropic / OpenAI substitute for every use case. Local 8B–30B models are good but not frontier. Cloud providers remain available as opt-in for non-sensitive heavy lifting.
-
----
-
----
-
-# Infrastructure Stack
+## Infrastructure Stack
 
 | Layer | Preferred Systems |
 |---|---|
 | Runtime | Node.js / Express |
+| User and admin web | Next.js |
+| Native app | SwiftUI / RealityKit |
 | Database | PostgreSQL |
-| Queue System | Redis |
-| Vector Database | Qdrant |
-| UI | Next.js |
-| Containerization | Docker |
+| Queue system | Redis |
+| Vector database | Qdrant |
+| Containerization | Docker / Docker Compose |
 | Networking | WireGuard |
-| Infrastructure Routers | Flint 2 / Slate AX |
-| Local Inference | Ollama / vLLM |
-| Coding Workflows | Continue.dev / Aider |
-| Browser Automation | Playwright |
-| Retrieval | Qdrant / LanceDB |
+| Infrastructure routers | Flint 2 / Slate AX |
+| Local inference | Ollama / vLLM |
+| Coding workflows | Cursor / Claude Code / Continue.dev / Aider |
+| Browser automation | Playwright |
 | Edge AI | NVIDIA Jetson Thor |
-| Frontier Inference | NVIDIA DGX Spark |
+| Frontier inference | NVIDIA DGX Spark |
 | Governance | GitLab CE |
 
----
-
-# Network Infrastructure Hardware
+## Network Infrastructure Hardware
 
 | Hardware | Purpose |
 |---|---|
-| Flint 2 | Primary WireGuard gateway, home infrastructure router, VPN hub, private AI network backbone |
+| Flint 2 | Primary WireGuard gateway, home infrastructure router, VPN hub, and private AI network backbone |
 | Slate AX | Portable WireGuard travel router for encrypted mobile access into home infrastructure |
 
----
-
-# WireGuard Infrastructure Topology
+## WireGuard Topology
 
 ```text
 Laptop / iPad / Phone
-        ↓
+        |
 Slate AX Travel Router
-        ↓
+        |
 Encrypted WireGuard Tunnel
-        ↓
+        |
 Flint 2 Infrastructure Gateway
-        ↓
+        |
 Mac mini Runtime Server
-        ↓
+        |
 DGX Spark / Jetson Thor / Storage Nodes
 ```
 
----
-
-# WireGuard Network Layer
-
-WireGuard is the preferred secure network layer for the platform.
-
-It provides:
-
-- encrypted private tunnels
-- direct device-to-device connectivity
-- lower dependency on third-party coordination services
-- strong fit for self-hosted infrastructure
-- clean routing between workstation, Mac mini, DGX Spark, Jetson Thor, VPS, and storage nodes
-
-The WireGuard layer is primarily hosted through:
-
-- Flint 2 as the central infrastructure gateway
-- Slate AX as the portable encrypted travel node
+WireGuard is the preferred secure network layer because it provides encrypted private tunnels, direct device-to-device connectivity, minimal third-party dependency, and clean routing between workstation, Mac mini, DGX Spark, Jetson Thor, VPS, and storage nodes.
 
 Recommended role split:
 
@@ -201,9 +112,7 @@ Recommended role split:
 | Frontier node | DGX Spark connected through WireGuard |
 | Public/server node | VPS connected through WireGuard |
 
----
-
-# AI Machine Specs
+## AI Machine Specs
 
 | Node | Machine | Exact Configuration | Intended Purpose |
 |---|---|---|---|
@@ -212,35 +121,70 @@ Recommended role split:
 | Node C | NVIDIA Jetson Thor | Edge AI acceleration node | Robotics, voice systems, vision pipelines, local automation, edge inference, and distributed experimentation |
 | Node D | NVIDIA DGX Spark | Compact Grace Blackwell AI workstation | Frontier inference, CUDA-native AI workloads, TensorRT acceleration, fine-tuning, and large-model serving |
 
----
+## Repo Structure
 
-# Community Integrations — vendored under `vendor/`
+| Directory | Purpose |
+|---|---|
+| `api/` | Backend API, Associate Agent routing, personas, and runtime services |
+| `apps/` | Native iOS and web application surfaces |
+| `assistants/` | Assistant registry and memory systems |
+| `broker/` | Local verb-based action broker |
+| `docs/` | Architecture, hardware, onboarding, and operating documentation |
+| `ecosystem/` | Architecture maps, tool registry, and upstream repo ledger |
+| `features/` | PRDs and feature ledgers |
+| `hardware/` | Hardware-specific configuration notes |
+| `identity/` | Personal AI context and identity material |
+| `ingestion/` | Data ingestion pipelines |
+| `media-intelligence/` | Media AI pipelines |
+| `runtime/` | Queue and runtime coordination architecture |
+| `tools/` | Init, backup, restore, and health-check scripts |
+| `vendor/` | Vendored upstream projects and skills library submodules |
+| `vps/` | Server hardening configs for nginx, fail2ban, iptables, and systemd |
 
-These upstream projects are **forked under `marvelousempire/<name>` (private)** and **vendored as git submodules** in this repo at `vendor/<name>`. Each fork has an `upstream-sync` GitHub Action that daily pulls the latest upstream `main` into our `main`; our customizations live on a long-lived `marvelous-main` branch tracked by the submodule reference. `NOTICE` + `CREDITS.md` files in each fork preserve the legally-required attribution (LICENSE + copyright headers untouched).
+## Strategic Pillars
 
-| Project | Upstream | Our fork | License | Stars | Install flag (planned) |
-|---|---|---|---|---|---|
-| **claude-mem** | [thedotmack/claude-mem](https://github.com/thedotmack/claude-mem) | [marvelousempire/claude-mem](https://github.com/marvelousempire/claude-mem) (private) → `vendor/claude-mem` | Apache 2.0 | 73.7k | `INSTALL_CLAUDE_MEM=1` |
-| **marketingskills** | [coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills) | [marvelousempire/marketingskills](https://github.com/marvelousempire/marketingskills) (private) → `vendor/marketingskills` | MIT | 27.3k | `INSTALL_MARKETING_SKILLS=1` |
-| **ruflo** | [ruvnet/ruflo](https://github.com/ruvnet/ruflo) | [marvelousempire/ruflo](https://github.com/marvelousempire/ruflo) (private) → `vendor/ruflo` | MIT | 46.7k | `INSTALL_RUFLO=1` |
-| **ai-skills-library** | (operator's own) | [marvelousempire/ai-skills-library](https://github.com/marvelousempire/ai-skills-library) (private) → `vendor/ai-skills-library` | proprietary | — | (curated catalog) |
+1. **Privacy by default** - zero telemetry, no phone-home behavior, and no sensitive data leaving operator hardware unless explicitly routed to a cloud API.
+2. **Reproducible infrastructure** - the repo is the source of truth, and configuration belongs in git.
+3. **Hardware honesty** - the stack should detect realistic hardware profiles and recommend workloads each machine can actually run.
+4. **Defense in depth** - TLS at the edge, host firewalls, app-level auth, rate limits, fail2ban, encrypted mesh networking, and swap protection against OOM cascades.
+5. **Boring foundations** - battle-tested pieces such as nginx, Ollama, Postgres, Redis, Docker, and systemd carry the platform.
+6. **No lock-in** - operators can swap components, export data, back up state, and leave with a portable system.
 
-**What it adds:**
-- `claude-mem` — persistent memory + context for Claude Code across sessions (for operators maintaining the platform). SQLite + Chroma vector search, 5 lifecycle hooks, HTTP API on port 37777.
-- `marketingskills` — pre-built marketing-domain skills (copywriting, SEO, conversion, analytics, growth engineering). Bundled into Open WebUI as Knowledge + shared Models.
-- `ruflo` — multi-agent orchestration via MCP. Coordinates 100+ specialized agents with shared context, persistent memory, and secure federation. Possible alternative or complement to OpenClaw.
-- `ai-skills-library` — operator's curated catalog for Cursor + Claude Code skills (already vendored before this PR).
+## What This Is Not
 
-**Working with submodules:**
+- Not a hosted SaaS control plane today. There is no central shared multi-tenant service.
+- Not a managed service. The operator remains responsible for hardware, networking, updates, and security posture.
+- Not a universal replacement for frontier hosted models. Local models are useful and private, while cloud models remain opt-in for non-sensitive heavy work.
+- Not a single-device demo. The platform is designed around durable local infrastructure, private networking, and multi-surface access.
+
+## Community Integrations
+
+Community projects are forked under `marvelousempire/<name>` and vendored into this repo as git submodules at `vendor/<name>`. Forks preserve upstream licenses and attribution while allowing long-lived platform customizations.
+
+| Project | Upstream | Our Fork | License | Install Flag |
+|---|---|---|---|---|
+| claude-mem | [thedotmack/claude-mem](https://github.com/thedotmack/claude-mem) | `marvelousempire/claude-mem` -> `vendor/claude-mem` | Apache 2.0 | `INSTALL_CLAUDE_MEM=1` |
+| marketingskills | [coreyhaines31/marketingskills](https://github.com/coreyhaines31/marketingskills) | `marvelousempire/marketingskills` -> `vendor/marketingskills` | MIT | `INSTALL_MARKETING_SKILLS=1` |
+| ruflo | [ruvnet/ruflo](https://github.com/ruvnet/ruflo) | `marvelousempire/ruflo` -> `vendor/ruflo` | MIT | `INSTALL_RUFLO=1` |
+| ai-skills-library | Operator-maintained catalog | `marvelousempire/ai-skills-library` -> `vendor/ai-skills-library` | Proprietary | Curated catalog |
+
+What they add:
+
+- `claude-mem` provides persistent memory and context for Claude Code across operator sessions.
+- `marketingskills` provides marketing-domain skills for copywriting, SEO, conversion, analytics, and growth work.
+- `ruflo` provides multi-agent orchestration via MCP and can complement the platform's agent layer.
+- `ai-skills-library` is the curated Cursor and Claude Code skills catalog used by this repo.
+
+Submodule workflow:
 
 ```bash
-# After cloning yousirjuan, hydrate the submodules:
+# Hydrate submodules after cloning.
 git submodule update --init --recursive
 
-# Pull latest from each fork's marvelous-main:
+# Pull latest from tracked submodule branches.
 git submodule update --remote --merge
 
-# When upstream releases a new version (auto-sync workflow already pulled into our main):
+# Update a customized fork after upstream sync.
 cd vendor/<name>
 git checkout marvelous-main
 git rebase main
@@ -250,4 +194,4 @@ git add vendor/<name>
 git commit -m "chore(vendor): bump <name> to latest upstream"
 ```
 
-**Status:** ✅ forked + vendored. Installer-flag wiring (`bash bootstrap.sh` flags actually configuring each integration into Open WebUI / OpenClaw / Claude Code) tracked in [PRD.md §13](PRD.md) as remaining Phase 2.5 work.
+Installer-flag wiring for these integrations is tracked in `PRD.md` as remaining Phase 2.5 work.
