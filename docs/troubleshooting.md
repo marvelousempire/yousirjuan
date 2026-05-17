@@ -119,6 +119,14 @@ return to the provider Recovery Console and repeat the socket/firewall recovery
 above. If the error is `Permission denied`, repair `authorized_keys` instead of
 changing ports.
 
+If ports `2222` and GitLab SSH `2424` are open but SSH fails with
+`Connection timed out during banner exchange`, the port is not closed and the
+key is not the first issue. Treat it as transient host/service pressure or a
+wedged SSH/GitLab/Docker layer. Check load and restart `ssh.service` or GitLab
+SSH from the provider console only after capturing evidence. If the banner
+timeout clears on retry, resume the blocked GitLab mirror pushes immediately and
+do not change keys or firewall rules.
+
 ### Public site returns HTTP 502 but loopback works
 nginx is up, app is down. Check:
 ```bash
