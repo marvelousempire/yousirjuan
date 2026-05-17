@@ -68,6 +68,42 @@ If SSH times out: **reboot from the hosting provider's panel** (GoDaddy → Serv
 - `/swapfile` 4 GB enabled — see `vm.swappiness=10`
 - Ollama configured `OLLAMA_KEEP_ALIVE=5m`, `OLLAMA_MAX_LOADED_MODELS=1` — releases memory when idle
 
+### VPS SSH says `Connection refused` even though `ssh.service` is active
+
+This means the SSH key is not the first problem. TCP is being refused before
+authentication. On the GoDaddy VPS, the working recovery was to bypass port `22`
+and disable socket activation so `sshd` binds directly to an alternate port.
+
+In the provider Recovery Console:
+
+```bash
+sudo iptables -I INPUT 1 -p tcp --dport 22 -j ACCEPT
+echo Port 2222 | sudo tee /etc/ssh/sshd_config.d/99-alt-port.conf
+sudo systemctl restart ssh
+sudo ss -ltnp | grep 2222
+sudo iptables -I INPUT 1 -p tcp --dport 2222 -j ACCEPT
+sudo systemctl disable --now ssh.socket
+sudo systemctl restart ssh
+sudo ss -ltnp | grep ssh
+```
+
+Proof of recovery:
+
+```text
+0.0.0.0:2222 users:(("sshd",...))
+[::]:2222    users:(("sshd",...))
+```
+
+Then connect from the Mac:
+
+```bash
+ssh -i ~/.ssh/id_ed25519_vps_clinic_2026_05_17 -p 2222 abrownsanta@72.167.151.251
+```
+
+Why this works: `ssh.socket` can keep systemd socket activation in control of
+the listener. Disabling it makes `ssh.service` own the configured `Port 2222`
+listener directly.
+
 ### Public site returns HTTP 502 but loopback works
 nginx is up, app is down. Check:
 ```bash
