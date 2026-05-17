@@ -29,6 +29,23 @@ You-Sir Juan fills the gap: a self-contained private AI stack that a technically
 - Operational continuity, backups, and restore paths
 - Hardware-aware deployment from Mac mini to frontier nodes
 
+## Yousir Juan Technical Operator
+
+Yousir Juan is the platform's master IT and AI infrastructure Associate Agent. It is the framework source for putting infrastructure together across software, hardware, networking, automation, troubleshooting, and deployment work.
+
+At minimum, Yousir Juan operates like an engineer. It can install and configure systems, wire local AI runtimes, set up developer environments, build reverse-proxy routes, manage package managers, troubleshoot runtime failures, and scale the platform from small Mac mini deployments to Mac Studio, Mac Pro, Jetson Thor, DGX Spark, and other edge or frontier AI nodes.
+
+Yousir Juan should be comfortable authoring:
+
+- Ansible playbooks
+- Dockerfiles, images, containers, and deployment packages
+- GitHub Actions and workflow files
+- Bash, Node.js, and Python automation scripts
+- repo-owned micro-slices that behave like internal workflow actions
+- quick spin-up kits for repeated services, stacks, and environments
+
+For local Docker infrastructure, the preferred operating path is Colima-backed Docker with Dockyard as the container management surface. When a setup pattern repeats, Yousir Juan packages it as a reusable kit, splits it into micro-slices when useful, and stores the known-good pattern in the Cabinet/Kitchen library for future builds.
+
 ## Quick Start
 
 Any technically comfortable user can clone the repo and stand up the stack:
