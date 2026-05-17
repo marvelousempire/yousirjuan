@@ -1,0 +1,62 @@
+{
+  "schema_id": "ai-agent-rules.master",
+  "schema_version": "1.0.0",
+  "content_contract_version": "1.0.0",
+  "repo": {
+    "name": "yousirjuan",
+    "role": "payload-contractor"
+  },
+  "parent": {
+    "repo": "nephew",
+    "schema_id": "ai-agent-rules.master",
+    "schema_version": "1.0.0"
+  },
+  "sections": [
+    {
+      "id": "readme",
+      "path": "README.md",
+      "required": true,
+      "content_slot": "source_links"
+    },
+    {
+      "id": "agent_assignments",
+      "path": "AGENT_ASSIGNMENTS.md",
+      "required": true,
+      "content_slot": "assignments"
+    },
+    {
+      "id": "operating_rules",
+      "path": "OPERATING_RULES.md",
+      "required": true,
+      "content_slot": "rules"
+    },
+    {
+      "id": "skills",
+      "path": "SKILLS.md",
+      "required": true,
+      "content_slot": "skills"
+    },
+    {
+      "id": "changelog_context",
+      "path": "CHANGELOG_CONTEXT.md",
+      "required": true,
+      "content_slot": "changelog_context"
+    },
+    {
+      "id": "history",
+      "path": "HISTORY.md",
+      "required": true,
+      "content_slot": "history"
+    }
+  ],
+  "sources": [
+    "CLAUDE.md",
+    "README.md",
+    "PRD.md",
+    "OPERATING-SYSTEM-LEAD-SHEET.md",
+    ".cursor/rules/*.mdc",
+    "plans/*.md"
+  ],
+  "children": [],
+  "generated_by": "nephew:ai-agent-rules-check"
+}
