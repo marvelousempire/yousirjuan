@@ -97,12 +97,27 @@ Proof of recovery:
 Then connect from the Mac:
 
 ```bash
-ssh -i ~/.ssh/id_ed25519_vps_clinic_2026_05_17 -p 2222 abrownsanta@72.167.151.251
+ssh clinic-vps
 ```
 
 Why this works: `ssh.socket` can keep systemd socket activation in control of
 the listener. Disabling it makes `ssh.service` own the configured `Port 2222`
 listener directly.
+
+Self-heal before changing keys:
+
+```bash
+ssh -o BatchMode=yes -o ConnectTimeout=10 clinic-vps true
+nc -vz -w 5 72.167.151.251 2222
+nc -vz -w 5 72.167.151.251 22
+cd /Users/nivram/Developer/nephew && node bin/nephew gitlab status
+```
+
+If `clinic-vps` works and `2222` is open, SSH is healthy. A refused `22` is
+expected and means the caller is using the legacy route. If `2222` is refused,
+return to the provider Recovery Console and repeat the socket/firewall recovery
+above. If the error is `Permission denied`, repair `authorized_keys` instead of
+changing ports.
 
 ### Public site returns HTTP 502 but loopback works
 nginx is up, app is down. Check:
