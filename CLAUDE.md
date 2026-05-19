@@ -29,6 +29,8 @@ vendor/ai-skills-library/
 
 It is a **git submodule** pinned to `marvelousempire/ai-skills-library` on `main`. Never copy files out of it — consume them by reference.
 
+**You-Sir Juan platform skills** (agent-managed, six skills): `vendor/ai-skills-library/skills/yousirjuan/<skill-id>/` — **not** `skills/project/yousirjuan/`. Install into Cursor: `cd vendor/ai-skills-library && ./scripts/install-repo-skills-to-cursor-project.sh "$(cd ../.. && pwd)"`. Rule: `vendor/ai-skills-library/rules/library/yousirjuan-skills-pack-path/body.md`.
+
 ### Where to start
 
 | What you need | Read this first |

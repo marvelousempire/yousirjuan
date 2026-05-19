@@ -1,0 +1,33 @@
+---
+description: You-Sir Juan platform skills live only under skills/yousirjuan/ in ai-skills-library (agent-managed)
+alwaysApply: true
+---
+
+# You-Sir Juan skills pack path
+
+## Canonical paths
+
+| Context | Path |
+|---------|------|
+| **ai-skills-library** (source of truth) | `skills/yousirjuan/<skill-id>/SKILL.md` |
+| **This monorepo** (submodule) | `vendor/ai-skills-library/skills/yousirjuan/<skill-id>/SKILL.md` |
+| **Cursor flat install** | `.cursor/skills/<skill-id>/SKILL.md` (symlink from install script) |
+
+## Retired (never use)
+
+- `skills/project/yousirjuan/`
+- Frontmatter `domain: project/yousirjuan`
+
+## Agent-managed
+
+Edit platform skills only in **marvelousempire/ai-skills-library**, then bump this submodule. Do not copy skill bodies into `yousirjuan/` outside the vendor tree.
+
+Applies to **Nephew**, **Bishop**, **Automata**, **Scene Skout**, and all Cursor/Claude agents on this repo.
+
+Full rule: [`vendor/ai-skills-library/rules/library/yousirjuan-skills-pack-path/body.md`](../../vendor/ai-skills-library/rules/library/yousirjuan-skills-pack-path/body.md) (after submodule sync).
+
+Install:
+
+```bash
+cd vendor/ai-skills-library && ./scripts/install-repo-skills-to-cursor-project.sh "$(cd ../.. && pwd)"
+```
