@@ -39,7 +39,7 @@ Update this file in the same PR as any status change. Reference the [LEDGER entr
 | Feature | Status | Where it lives | Notes |
 |---|---|---|---|
 | `yousirjuan-web` | ✔️ | [`apps/yousirjuan-web/`](../apps/yousirjuan-web/) | Next.js 15 + Tailwind 4. Build / dev / e2e per [`apps/README.md`](../apps/README.md). v0.2.0. |
-| `yousirjuan-ios` | ✔️ | [`apps/yousirjuan-ios/`](../apps/yousirjuan-ios/) | SwiftUI + RealityKit 4 kiosk interface. `xcodegen generate` to refresh. |
+| `yousirjuan-ios` | ✔️ | [`apps/yousirjuan-ios/`](../apps/yousirjuan-ios/) | SwiftUI + RealityKit 4 kiosk interface. `xcodegen generate` to refresh. **Version cycle is independent of the platform** — currently at `CFBundleShortVersionString = 1.0` / `CFBundleVersion = 1` in [`Info.plist`](../apps/yousirjuan-ios/Sources/Info.plist). Bumps follow App Store review cycles, not platform `0.x` cycles. |
 | `admin` dashboard | ✔️ | [`apps/admin/`](../apps/admin/) | v0.2.0. |
 | `homekit-bridge` | ✔️ | [`services/homekit-bridge/`](../services/homekit-bridge/) | HomeKit local control surface. v0.2.0. |
 
