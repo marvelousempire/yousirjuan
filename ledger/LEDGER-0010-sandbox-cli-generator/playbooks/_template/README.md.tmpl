@@ -1,0 +1,43 @@
+# Sandbox: __TOOL__
+
+This sandbox containerizes `__TOOL__` per ADR-0001 (selective Docker for the unruly).
+
+## Why this is sandboxed
+
+(Fill in: untrusted, native-deps hell, or memory-bounded. Cross-reference ADR-0001 criteria.)
+
+## Usage
+
+```bash
+# from ledger/LEDGER-0010-sandbox-cli-generator/playbooks/:
+make build tool=__TOOL__
+make run   tool=__TOOL__
+```
+
+`make run` drops you into a bash shell inside the container at `/workspace`,
+which is mounted from `~/sandbox-workspaces/__TOOL__/` on the host. Anything
+you create at `/workspace` persists. Anything outside `/workspace` is gone
+when the container exits.
+
+## Image layout
+
+- Base: `debian:bookworm-slim`
+- User: `sandbox` (uid 1000), non-root
+- Workspace: `/workspace` (only host path visible)
+- Network: `sandbox-net-__TOOL__` (dedicated, bridge)
+- Memory cap: 2 GB
+- CPU cap: 2.0
+
+## Auth / secrets
+
+If __TOOL__ needs credentials (API keys, OAuth tokens), put them in
+`~/sandbox-workspaces/__TOOL__/.env` on the host and read them inside the
+container at `/workspace/.env`. **Never** bake secrets into the Dockerfile.
+
+## Removing this sandbox
+
+```bash
+make stop tool=__TOOL__
+make rm   tool=__TOOL__
+rm -rf ~/sandbox-workspaces/__TOOL__
+```
