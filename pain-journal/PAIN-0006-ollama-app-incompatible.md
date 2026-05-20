@@ -1,7 +1,7 @@
 # PAIN-0006 — Ollama.app requires macOS Sonoma+, refuses to launch on Ventura
 
 **Logged:** 2026-05-19
-**Surfaced during:** [iMac MCP setup session](../docs/sessions/2026-05-19-mcp-setup/journal.md)
+**Surfaced during:** [iMac MCP setup session](../ledger/LEDGER-0001-imac-mcp-setup/journal.md)
 **Severity:** medium — blocked the "click the menubar tray to start the brain" path, didn't block Ollama entirely.
 
 ## The pain
@@ -28,7 +28,7 @@ The CLI binary at `/usr/local/bin/ollama` still ran fine — only the GUI wrappe
 
 We installed a per-user LaunchAgent at `~/Library/LaunchAgents/com.ollama.server.plist` with `RunAtLoad=true` and `KeepAlive=true`. This restores auto-start at login and auto-restart on crash, without the broken .app.
 
-→ See [runbook 04](../docs/sessions/2026-05-19-mcp-setup/runbooks/04-ollama-launchagent.md).
+→ See [runbook 04](../ledger/LEDGER-0001-imac-mcp-setup/runbooks/04-ollama-launchagent.md).
 
 ## Potential feature
 
@@ -38,6 +38,6 @@ This dovetails with the broader yousirjuan goal of running on hardware the user 
 
 ## Where the fix lives
 
-- Runbook: [04-ollama-launchagent.md](../docs/sessions/2026-05-19-mcp-setup/runbooks/04-ollama-launchagent.md)
-- Canonical plist: [com.ollama.server.plist](../docs/sessions/2026-05-19-mcp-setup/artifacts/com.ollama.server.plist)
-- Reproducible target: `make ollama-agent` in [the session Makefile](../docs/sessions/2026-05-19-mcp-setup/artifacts/Makefile) (installed copy lives at `~/Developer/mcp-setup/Makefile`, outside this repo)
+- Runbook: [04-ollama-launchagent.md](../ledger/LEDGER-0001-imac-mcp-setup/runbooks/04-ollama-launchagent.md)
+- Canonical plist: [com.ollama.server.plist](../ledger/LEDGER-0001-imac-mcp-setup/playbooks/com.ollama.server.plist)
+- Reproducible target: `make ollama-agent` in [the session Makefile](../ledger/LEDGER-0001-imac-mcp-setup/playbooks/Makefile) (installed copy lives at `~/Developer/mcp-setup/Makefile`, outside this repo)

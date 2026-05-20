@@ -1,7 +1,7 @@
 # PAIN-0007 — `code` CLI not on PATH after VS Code install
 
 **Logged:** 2026-05-19
-**Surfaced during:** [iMac MCP setup session](../docs/sessions/2026-05-19-mcp-setup/journal.md)
+**Surfaced during:** [iMac MCP setup session](../ledger/LEDGER-0001-imac-mcp-setup/journal.md)
 **Severity:** low — easily fixed, but breaks automation until fixed.
 
 ## The pain
@@ -35,7 +35,7 @@ ln -s "/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code" /us
 
 `/usr/local/bin` is already on PATH on this iMac and is user-writable (no sudo). On Apple Silicon Macs where Homebrew owns `/opt/homebrew/bin`, that's the more idiomatic target.
 
-→ See [runbook 01](../docs/sessions/2026-05-19-mcp-setup/runbooks/01-install-code-cli.md).
+→ See [runbook 01](../ledger/LEDGER-0001-imac-mcp-setup/runbooks/01-install-code-cli.md).
 
 ## Potential feature
 
@@ -45,5 +45,5 @@ This is the kind of friction that erodes operator trust the first time it happen
 
 ## Where the fix lives
 
-- Runbook: [01-install-code-cli.md](../docs/sessions/2026-05-19-mcp-setup/runbooks/01-install-code-cli.md)
-- Reproducible target: `make code-cli` in [the session Makefile](../docs/sessions/2026-05-19-mcp-setup/artifacts/Makefile)
+- Runbook: [01-install-code-cli.md](../ledger/LEDGER-0001-imac-mcp-setup/runbooks/01-install-code-cli.md)
+- Reproducible target: `make code-cli` in [the session Makefile](../ledger/LEDGER-0001-imac-mcp-setup/playbooks/Makefile)

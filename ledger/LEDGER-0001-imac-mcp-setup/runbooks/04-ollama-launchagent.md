@@ -120,9 +120,9 @@ rm ~/Library/LaunchAgents/com.ollama.server.plist
 - **LaunchAgent vs LaunchDaemon.** LaunchAgents run per-user on login. LaunchDaemons run system-wide before login. For a single-user iMac, the Agent is correct. Don't elevate to Daemon unless multiple users need shared Ollama.
 - **`launchctl bootstrap` is the modern API.** The classic `launchctl load -w` still works on all currently-supported macOS versions. If you ever target a stripped-down macOS where `load` is removed, switch to `launchctl bootstrap gui/$UID <plist>` and `launchctl bootout gui/$UID <plist>`.
 - **`KeepAlive: true` is unconditional.** If Ollama exits cleanly (signal-killed), launchd will restart it. To stop it for real, you must `launchctl unload` the plist, not just `kill` the process.
-- **GPU detection.** The Ollama log line `inference compute id=cpu library=cpu` confirms the runner couldn't find a GPU. On Apple Silicon you'd see `id=metal` instead. CPU inference is markedly slower — see [PAIN-0010](../../../../pain-journal/PAIN-0010-intel-cpu-no-gpu.md).
+- **GPU detection.** The Ollama log line `inference compute id=cpu library=cpu` confirms the runner couldn't find a GPU. On Apple Silicon you'd see `id=metal` instead. CPU inference is markedly slower — see [PAIN-0010](../../../pain-journal/PAIN-0010-intel-cpu-no-gpu.md).
 
 ## Related
 
 - Makefile target: `ollama-agent`, plus `start`/`stop`/`restart`. See [05-makefile-wrapper.md](05-makefile-wrapper.md).
-- Pains that motivated this: [PAIN-0006](../../../../pain-journal/PAIN-0006-ollama-app-incompatible.md), [PAIN-0010](../../../../pain-journal/PAIN-0010-intel-cpu-no-gpu.md).
+- Pains that motivated this: [PAIN-0006](../../../pain-journal/PAIN-0006-ollama-app-incompatible.md), [PAIN-0010](../../../pain-journal/PAIN-0010-intel-cpu-no-gpu.md).

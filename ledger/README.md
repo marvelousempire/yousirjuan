@@ -22,9 +22,9 @@ Counter is the source of truth for the next `LEDGER-NNNN`. Bump it when you open
 
 | ID | Title | Status | Opened | Closed | Replay |
 |---|---|---|---|---|---|
-| `LEDGER-0001` | iMac MCP development stack | _planned-migration_ | 2026-05-19 | _pending_ | `make -C ledger/LEDGER-0001-imac-mcp-setup/playbooks install` |
+| [`LEDGER-0001`](LEDGER-0001-imac-mcp-setup/) | iMac MCP development stack | `shipped` | 2026-05-19 | 2026-05-19 | `make -C ledger/LEDGER-0001-imac-mcp-setup/playbooks install` |
 
-> LEDGER-0001 was originally captured at `docs/sessions/2026-05-19-mcp-setup/` as the embryo of this pattern. It migrates into the ledger in a follow-up PR once that session's PR (#4) merges to main.
+> LEDGER-0001 was originally captured at `docs/sessions/2026-05-19-mcp-setup/` (PR #4) as the embryo of this pattern. It was migrated into the ledger and reshaped (`artifacts/Makefile` → `playbooks/Makefile`, new ticket README, new `install.sh` shell sibling, ticket frontmatter) in the migration PR that landed alongside this row.
 
 ---
 
@@ -167,7 +167,6 @@ Pain entries describe what hurts. Ledger entries describe what was done about it
 
 ## Open follow-ups (not yet committed)
 
-- **Migrate `docs/sessions/2026-05-19-mcp-setup/` → `ledger/LEDGER-0001-imac-mcp-setup/`** — blocked on PR #4 merge.
 - **CI hardening** — after ~5 real entries, add a check that fails PRs touching `runbooks/**` or `playbooks/**` outside a `LEDGER-NNNN/` folder.
 - **PAIN ↔ LEDGER cross-link script** — scan new entries' `related-pains:` frontmatter and add back-pointers in the corresponding PAIN files.
 - **`yousirjuan ledger` CLI** — thin convenience commands (`ledger new <slug>`, `ledger replay <id>`, `ledger list`) once the pattern stabilizes.

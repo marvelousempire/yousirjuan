@@ -1,7 +1,7 @@
 # You-Sir Juan — Session Handoff
 
 **Session window:** 2026-04-24 → 2026-05-19 (multi-day)
-**Latest update:** 2026-05-19 — iMac MCP development stack: VS Code + Cline + workspace/Cline MCP configs + Ollama-as-LaunchAgent, all reproducible via `make install`. See [docs/sessions/2026-05-19-mcp-setup/journal.md](docs/sessions/2026-05-19-mcp-setup/journal.md) and PAIN-0006 → PAIN-0010.
+**Latest update:** 2026-05-19 — iMac MCP development stack: VS Code + Cline + workspace/Cline MCP configs + Ollama-as-LaunchAgent, all reproducible via `make install`. See [ledger/LEDGER-0001-imac-mcp-setup/journal.md](ledger/LEDGER-0001-imac-mcp-setup/journal.md) and PAIN-0006 → PAIN-0010.
 **Previous update:** 2026-05-08 — added marketing website (public repo `yousirjuan-ai`), signed-installer pipeline, Docker hardening, OpenClaw-router container, capability-based agent broker scaffold.
 **Operator on this Mac:** averygoodman (human is "Avery Brown")
 **Identity for Git/AI:** "You-Sir Juan Agent" — hello@yousirjuan.ai
@@ -304,7 +304,7 @@ These existed before we started; flagged for transparency. Operator's call wheth
 
 ### Day 4 (2026-05-19) — iMac MCP development stack
 
-Full session captured at [docs/sessions/2026-05-19-mcp-setup/journal.md](docs/sessions/2026-05-19-mcp-setup/journal.md). Highlights:
+Full session captured at [ledger/LEDGER-0001-imac-mcp-setup/journal.md](ledger/LEDGER-0001-imac-mcp-setup/journal.md). Highlights:
 
 - Installed VS Code `code` CLI shim at `/usr/local/bin/code` (it doesn't get put on PATH by the .dmg install — see [PAIN-0007](pain-journal/PAIN-0007-code-cli-not-on-path.md)).
 - Wrote workspace MCP config at `~/Developer/.vscode/mcp.json` with filesystem (scoped to `~/Developer`) + Playwright servers. Enables native MCP from VS Code's Copilot Chat — though that path requires a paid Copilot subscription ([PAIN-0008](pain-journal/PAIN-0008-copilot-paywall.md)).
@@ -312,7 +312,7 @@ Full session captured at [docs/sessions/2026-05-19-mcp-setup/journal.md](docs/se
 - Wrote Cline's MCP config at `~/Library/Application Support/Code/User/globalStorage/saoudrizwan.claude-dev/settings/cline_mcp_settings.json` with the same two servers. Note: Cline uses the `mcpServers` key vs VS Code's `servers` — same data, different wrapper ([PAIN-0009](pain-journal/PAIN-0009-mcp-config-fragmented.md)).
 - Discovered the Ollama.app refuses to launch on this iMac's macOS Ventura 13.7.8 (Sonoma+ required). The `ollama` CLI binary still works standalone, so installed a per-user **LaunchAgent** at `~/Library/LaunchAgents/com.ollama.server.plist` with `RunAtLoad=true` + `KeepAlive=true`. Ollama now auto-starts on login and auto-restarts on crash, no menubar app required ([PAIN-0006](pain-journal/PAIN-0006-ollama-app-incompatible.md)). Logs at `~/Library/Logs/ollama.log`.
 - Confirmed inference is CPU-only on this hardware (Intel i5-7500, no GPU). Recommendation set as "OpenRouter free tier in Cline as primary, local Ollama as fallback" — see [PAIN-0010](pain-journal/PAIN-0010-intel-cpu-no-gpu.md) for why and what a yousirjuan-shaped fix looks like.
-- Bundled everything into a single Makefile at `~/Developer/mcp-setup/Makefile` (canonical copy archived at [docs/sessions/2026-05-19-mcp-setup/artifacts/Makefile](docs/sessions/2026-05-19-mcp-setup/artifacts/Makefile)). Targets: `install`, `uninstall`, `status`, `start`, `stop`, `restart`, `check-prereqs`, `help`. Idempotent. Replays the whole setup on a fresh machine with `cd ~/Developer/mcp-setup && make install`.
+- Bundled everything into a single Makefile at `~/Developer/mcp-setup/Makefile` (canonical copy archived at [ledger/LEDGER-0001-imac-mcp-setup/playbooks/Makefile](ledger/LEDGER-0001-imac-mcp-setup/playbooks/Makefile)). Targets: `install`, `uninstall`, `status`, `start`, `stop`, `restart`, `check-prereqs`, `help`. Idempotent. Replays the whole setup on a fresh machine with `cd ~/Developer/mcp-setup && make install`.
 - This session itself captured as durable repo knowledge: journal, 6 tickets, 5 runbooks, 5 PAIN entries (`PAIN-0006` → `PAIN-0010`).
 
 **State on the iMac at end of Day 4:**
