@@ -1,0 +1,20 @@
+# Canonical Host stanza for vps-godaddy. Append to ~/.ssh/config.
+#
+# Last verified: 2026-05-20 from /Users/averygoodman/Developer/yousirjuan.
+#   - Port 2222 confirmed open (`nc -z 72.167.151.251 2222`)
+#   - Key SHA256:1LeXcLXaJ+5plIWlFrh9KGB8kswNSoldr7ML3XNnP5U accepted server-side
+#     for user abrownsanta
+#   - macOS Keychain integration (UseKeychain yes) means the id_ed25519 passphrase
+#     is unlocked from Apple Keychain on first interactive use, then cached in
+#     ssh-agent for the rest of the login session.
+
+Host vps-godaddy
+    HostName 72.167.151.251
+    User abrownsanta
+    Port 2222
+    IdentityFile ~/.ssh/id_ed25519
+    IdentitiesOnly yes
+    AddKeysToAgent yes
+    UseKeychain yes
+    ServerAliveInterval 60
+    ServerAliveCountMax 3

@@ -118,6 +118,20 @@ See [`ledger/`](ledger/) for replayable task knowledge. Each entry is one task c
 
 Adding to the ledger is the default closing ritual for any non-trivial task in this repo; see [`.claude/rules/ledger-discipline.md`](.claude/rules/ledger-discipline.md) for the rule and [`ledger/README.md`](ledger/README.md) for the index, schema, and format-choice guide.
 
+### Remote development on the VPS
+
+When you (or the operator) need to open a remote VS Code window on the production VPS (`vps-godaddy` — Ubuntu 24.04 on GoDaddy, SSH on **port 2222**, not 22), the canonical guide is [`ledger/LEDGER-0003-vscode-remote-vps/`](ledger/LEDGER-0003-vscode-remote-vps/). Four runbooks (extension install, SSH alias, connect, troubleshoot) plus an idempotent install playbook. The status check is one line:
+
+```bash
+bash ledger/LEDGER-0003-vscode-remote-vps/playbooks/install.sh status
+```
+
+If the operator reports "refused" or "permission denied," do not iterate auth attempts (fail2ban). Read [`runbooks/04-troubleshoot-refused-connections.md`](ledger/LEDGER-0003-vscode-remote-vps/runbooks/04-troubleshoot-refused-connections.md) first — six patterns; match symptoms to one of them before changing anything.
+
+## Tool-neutral entrypoint for new agents
+
+When an agent that isn't Claude Code lands in this repo (Cursor, Aider, Continue, a future tool), the orientation file is [`AGENTS.md`](AGENTS.md) at repo root. It mirrors what this CLAUDE.md describes but without Claude-specific hooks. Cursor-readable rules live at [`.cursor/rules/`](.cursor/rules/).
+
 ---
 
 ## Hardware targets
