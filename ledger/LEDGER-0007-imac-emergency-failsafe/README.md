@@ -48,6 +48,7 @@ See [runbook 03 — enabling-real-swap](runbooks/03-enabling-real-swap.md) for t
 - [02-watchdog-design.md](runbooks/02-watchdog-design.md) — how the script works: state machine, hysteresis, probe semantics, decision logic.
 - [03-enabling-real-swap.md](runbooks/03-enabling-real-swap.md) — checklist for flipping DRY_RUN=0 and going live.
 - [04-vps-overload-triage.md](runbooks/04-vps-overload-triage.md) — when sshd hangs at banner exchange but the host is up: GoDaddy console + top + most-likely culprits (Cursor remote-server, GitLab Puma, OOM, disk-full).
+- [05-incident-2026-05-20-oom-cascade.md](runbooks/05-incident-2026-05-20-oom-cascade.md) — postmortem of the first real incident the watchdog covered: `npm install n8n` OOM-cascade on a 7.8 GB VPS. Timeline, root cause, six hardening action items.
 
 ## Playbooks
 
