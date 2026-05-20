@@ -112,6 +112,14 @@ cd apps/yousirjuan-web && pnpm test:e2e      # Playwright e2e
 
 ---
 
+## Ledger — codified runbooks & playbooks
+
+See [`ledger/`](ledger/) for replayable task knowledge. Each entry is one task captured as a ticket + runbook(s) + playbook(s). **Before invoking work that already has a ledger entry, replay the playbook directly** — no AI in the loop.
+
+Adding to the ledger is the default closing ritual for any non-trivial task in this repo; see [`.claude/rules/ledger-discipline.md`](.claude/rules/ledger-discipline.md) for the rule and [`ledger/README.md`](ledger/README.md) for the index, schema, and format-choice guide.
+
+---
+
 ## Hardware targets
 
 | Tier | Minimum hardware |
