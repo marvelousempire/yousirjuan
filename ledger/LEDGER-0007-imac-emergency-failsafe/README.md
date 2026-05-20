@@ -47,6 +47,7 @@ See [runbook 03 — enabling-real-swap](runbooks/03-enabling-real-swap.md) for t
 - [01-godaddy-api-credentials.md](runbooks/01-godaddy-api-credentials.md) — operator obtains GoDaddy API key + secret from the GoDaddy Developer portal. Cannot be automated.
 - [02-watchdog-design.md](runbooks/02-watchdog-design.md) — how the script works: state machine, hysteresis, probe semantics, decision logic.
 - [03-enabling-real-swap.md](runbooks/03-enabling-real-swap.md) — checklist for flipping DRY_RUN=0 and going live.
+- [04-vps-overload-triage.md](runbooks/04-vps-overload-triage.md) — when sshd hangs at banner exchange but the host is up: GoDaddy console + top + most-likely culprits (Cursor remote-server, GitLab Puma, OOM, disk-full).
 
 ## Playbooks
 
