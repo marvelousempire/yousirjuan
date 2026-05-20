@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "statusMessage": "Syncing workflow-debugger agent to user scope",
+            "timeout": 30,
+            "command": "INPUT=$(cat); FILE_PATH=$(printf '%s' \"$INPUT\" | python3 -c 'import json,sys; d=json.load(sys.stdin); print(d.get(\"tool_input\",{}).get(\"file_path\",\"\"))' 2>/dev/null); case \"$FILE_PATH\" in *.claude/agents/workflow-debugger.md) cd \"${CLAUDE_PROJECT_DIR:-$HOME/Developer/yousirjuan}\" 2>/dev/null && bash ledger/LEDGER-0002-workflow-debugger-agent/playbooks/install-user-scope.sh install >/dev/null 2>&1 || true ;; esac"
+          }
+        ]
+      }
+    ]
+  }
+}
