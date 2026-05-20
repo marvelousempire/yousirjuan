@@ -24,6 +24,9 @@ Update this file in the same PR as any status change. Reference the [LEDGER entr
 | **Docker runtime stack** | ✅ | [`docker-compose.yml`](../docker-compose.yml), [`docker-compose.runtime.yml`](../docker-compose.runtime.yml) | Ollama / Open WebUI / Postgres / Redis / Qdrant / Kokoro / nginx. |
 | **VPS deployment scripts** | ✅ | [`vps/`](../vps/) | `apply-vps-config.sh`, nginx template, iptables lockdown, fail2ban, ollama systemd override. |
 | **Helper-function set** (`step / ok / warn / die / have`) | ✅ | every shell script in `installers/`, `tools/`, `vps/` | Canonical across the repo. Documented in [`ledger/README.md`](../ledger/README.md). |
+| **VPS remote development (VS Code Remote-SSH on `vps-godaddy`)** | ✅ | [`ledger/LEDGER-0003-vscode-remote-vps/`](../ledger/LEDGER-0003-vscode-remote-vps/) + [`.cursor/rules/vps-remote-development.md`](../.cursor/rules/vps-remote-development.md) + [`AGENTS.md`](../AGENTS.md) | Idempotent install playbook; 4 runbooks including a 6-pattern troubleshoot decision tree for refused connections. Cross-surface (Claude Code + Cursor + tool-neutral AGENTS.md). |
+| **Tool-neutral agent entrypoint** | ✅ | [`AGENTS.md`](../AGENTS.md) at repo root | Any AI agent reading the repo for the first time gets oriented here. Lists ledger / rules / agents / contract-enforcement without tool-specific hooks. |
+| **Cursor-readable rules** | ✅ | [`.cursor/rules/`](../.cursor/rules/) | Repo conventions exposed in Cursor's rule format. Cursor sessions discover the same content as Claude Code sessions via `.claude/`. |
 
 ## Agent layer
 
