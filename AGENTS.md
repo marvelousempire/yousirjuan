@@ -47,6 +47,23 @@ Match the kind of task to the right starting point:
 
 ---
 
+## Operating philosophy — read this FIRST
+
+**Good contracts → good. Careless = stupid. Prudence first; act second.**
+
+Stated by the operator: *"Remember that good contracts are important to maintaining the good, anything else is less than good and we'd want to remain good by being good — prudence is good; careful is opposite careless and careless is equal to stupid and stupid is opposite of good."*
+
+This is the standard against which every action in this codebase is measured. Before any non-trivial action, every agent in this repo runs the pre-action check from [`.claude/rules/contracts-and-prudence.md`](.claude/rules/contracts-and-prudence.md) (mirrored in [`.cursor/rules/contracts-and-prudence.md`](.cursor/rules/contracts-and-prudence.md)):
+
+1. Am I keeping every contract I've stated in this session? If breaking one, re-negotiate first.
+2. Can I articulate why this specific action is careful (not careless)?
+3. Is the action prudent — reversible or with a stated revert path?
+4. If unsure on any of the above: ASK before acting.
+
+Carelessness is, definitionally, stupidity. Stupid is the opposite of good. So we are not careless here.
+
+---
+
 ## Universal rules (apply to every agent in this repo)
 
 1. **The ledger is the canonical place for replayable knowledge.** Don't duplicate content elsewhere — link to the relevant ledger entry. New ledger entries copy [`ledger/_template/`](ledger/_template/) and bump the counter in [`ledger/README.md`](ledger/README.md) in the same commit.
@@ -57,6 +74,7 @@ Match the kind of task to the right starting point:
 6. **Every commitment ("I'll X" / "I won't Y") is a contract.** Re-negotiate before breaking. Quiet breaks are worse than loud breaks.
 7. **State the pipeline stage when reporting "done"** — *committed → pushed → PR'd → merged → deployed* — but inline in the relevant sentence, not as a trailing victory-lap line.
 8. **Contract-enforcement CI blocks PRs** that contain persona / interface-UX / onboarding / meta-library content unless the file is allowlisted in [`.github/workflows/contract-enforcement-no-persona.yml`](.github/workflows/contract-enforcement-no-persona.yml). Adding to that allowlist requires explaining why in the workflow file's header comment.
+9. **Prudence is required.** See the operating philosophy above. If a planned action can't be defended as careful, it doesn't get taken.
 
 ---
 
