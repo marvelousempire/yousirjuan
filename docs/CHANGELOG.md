@@ -48,7 +48,9 @@ Eastern time stamped to the second using `TZ=America/New_York date '+%Y-%m-%d %H
 
 ### Version bumps
 
-Root [`package.json`](../package.json), [`apps/admin/package.json`](../apps/admin/package.json), [`apps/yousirjuan-web/package.json`](../apps/yousirjuan-web/package.json), [`services/homekit-bridge/package.json`](../services/homekit-bridge/package.json) — all 0.1.0 → 0.2.0 in lockstep (monorepo unified-version convention).
+Platform monorepo (Node packages, all in lockstep): root [`package.json`](../package.json), [`apps/admin/package.json`](../apps/admin/package.json), [`apps/yousirjuan-web/package.json`](../apps/yousirjuan-web/package.json), [`services/homekit-bridge/package.json`](../services/homekit-bridge/package.json) — all 0.1.0 → 0.2.0.
+
+**`apps/yousirjuan-ios` is NOT bumped** and intentionally runs on a separate cycle. The iOS app is at `CFBundleShortVersionString = 1.0` / `CFBundleVersion = 1` (see [`Info.plist`](../apps/yousirjuan-ios/Sources/Info.plist)); iOS marketing versions follow App Store review cycles, not the platform's `0.x` semver. Earlier I claimed there was "no discoverable version surface" — that was wrong; the surface exists, it's just on a different cycle.
 
 ---
 
