@@ -1,0 +1,26 @@
+---
+description: "For public site outages, diagnose DNS/TLS/proxy/upstream in order, preserve evidence, and check Nephew/Clinic memory before guessing or restarting services."
+alwaysApply: true
+---
+
+# Live outage proxy diagnosis
+
+When a public site appears down, diagnose from the outside in:
+
+1. DNS resolves the hostname.
+2. HTTP/HTTPS connects.
+3. TLS certificate subject/issuer matches the host.
+4. Reverse proxy has a matching host/router rule.
+5. Upstream app process is listening on the expected local port.
+6. Public URL returns the expected status after the repair.
+
+If HTTPS shows `TRAEFIK DEFAULT CERT` and the page returns Traefik `404`, inspect
+the proxy route config before restarting app services. For the ReadyPlay
+incident, the root cause was missing Traefik file-provider routers in
+`/etc/traefik/dynamic.yml`, not failed PM2 apps.
+
+Related memory:
+
+- Nephew incident: `/opt/nephew/docs/meta-library/incidents/2026-05-17-readyplay-traefik-router-loss.md`
+- Nephew watcher: `/opt/nephew/docs/watchers/readyplay-site-watch.md`
+- Clinic case: `/opt/clinic/cases/0003-readyplay-traefik-router-loss.md`
