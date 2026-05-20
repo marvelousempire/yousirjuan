@@ -147,6 +147,25 @@ sudo certbot renew
 sudo systemctl reload nginx
 ```
 
+### Public HTTPS shows `TRAEFIK DEFAULT CERT` and the site returns 404
+The request is reaching Traefik, but no router matched the hostname. Do not
+restart the app first; check the proxy route layer:
+
+```bash
+getent hosts <host>
+curl -I -L https://<host>
+curl -k -I -L https://<host>
+echo | openssl s_client -servername <host> -connect <host>:443 2>/dev/null \
+  | openssl x509 -noout -subject -issuer -dates -ext subjectAltName
+```
+
+If app processes are alive locally, inspect the Traefik file-provider config,
+usually `/etc/traefik/dynamic.yml`, for a missing `Host(...)` router and service.
+
+ReadyPlay incident memory:
+- Nephew: `/opt/nephew/docs/meta-library/incidents/2026-05-17-readyplay-traefik-router-loss.md`
+- Clinic: `/opt/clinic/cases/0003-readyplay-traefik-router-loss.md`
+
 ### macOS firewall popup never appeared / got dismissed
 Reset and let it re-prompt:
 ```bash
