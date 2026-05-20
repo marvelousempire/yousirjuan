@@ -99,4 +99,4 @@ If `.vscode/` is otherwise empty after that, you can remove it too.
 ## Related
 
 - Makefile target: `workspace-mcp`. See [05-makefile-wrapper.md](05-makefile-wrapper.md).
-- Pain that motivated this: [PAIN-0009](../../../../pain-journal/PAIN-0009-mcp-config-fragmented.md).
+- Pain that motivated this: [PAIN-0009](../../../pain-journal/PAIN-0009-mcp-config-fragmented.md).

@@ -1,7 +1,7 @@
 # PAIN-0010 — Local-model inference on Intel/CPU-only Macs is too slow for tool-calling agents
 
 **Logged:** 2026-05-19
-**Surfaced during:** [iMac MCP setup session](../docs/sessions/2026-05-19-mcp-setup/journal.md)
+**Surfaced during:** [iMac MCP setup session](../ledger/LEDGER-0001-imac-mcp-setup/journal.md)
 **Severity:** medium — doesn't block "use local models" but quietly degrades agent UX to the point of frustration.
 
 ## The pain
@@ -50,4 +50,4 @@ The VPS Ollama (which has 7.8 GB RAM but a real network connection) and the futu
 
 ## Where the partial fix lives
 
-No code fix in this session — just a documented recommendation in [runbook 03](../docs/sessions/2026-05-19-mcp-setup/runbooks/03-cline-install-and-mcp.md) to lead with OpenRouter free tier on this iMac, with Ollama as fallback.
+No code fix in this session — just a documented recommendation in [runbook 03](../ledger/LEDGER-0001-imac-mcp-setup/runbooks/03-cline-install-and-mcp.md) to lead with OpenRouter free tier on this iMac, with Ollama as fallback.

@@ -7,7 +7,7 @@ Work units delivered in this session, plus the pain entries that motivated each.
 ## TICKET-2026-05-19-01 — Wire VS Code workspace for native MCP
 
 **Status:** done
-**Pains addressed:** [PAIN-0008](../../../pain-journal/PAIN-0008-copilot-paywall.md), [PAIN-0009](../../../pain-journal/PAIN-0009-mcp-config-fragmented.md)
+**Pains addressed:** [PAIN-0008](../../pain-journal/PAIN-0008-copilot-paywall.md), [PAIN-0009](../../pain-journal/PAIN-0009-mcp-config-fragmented.md)
 **Runbook:** [02-workspace-mcp-config.md](runbooks/02-workspace-mcp-config.md)
 **Artifact:** `/Users/averygoodman/Developer/.vscode/mcp.json`
 
@@ -20,7 +20,7 @@ Created the workspace MCP config so VS Code's native chat (Copilot Chat in Agent
 ## TICKET-2026-05-19-02 — Install `code` CLI on PATH
 
 **Status:** done
-**Pains addressed:** [PAIN-0007](../../../pain-journal/PAIN-0007-code-cli-not-on-path.md)
+**Pains addressed:** [PAIN-0007](../../pain-journal/PAIN-0007-code-cli-not-on-path.md)
 **Runbook:** [01-install-code-cli.md](runbooks/01-install-code-cli.md)
 **Artifact:** symlink `/usr/local/bin/code` → `/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code`
 
@@ -33,7 +33,7 @@ Without the shim, you can't run `code .` to open a project from the terminal, an
 ## TICKET-2026-05-19-03 — Install Cline + wire its MCP config
 
 **Status:** done
-**Pains addressed:** [PAIN-0008](../../../pain-journal/PAIN-0008-copilot-paywall.md), [PAIN-0009](../../../pain-journal/PAIN-0009-mcp-config-fragmented.md)
+**Pains addressed:** [PAIN-0008](../../pain-journal/PAIN-0008-copilot-paywall.md), [PAIN-0009](../../pain-journal/PAIN-0009-mcp-config-fragmented.md)
 **Runbook:** [03-cline-install-and-mcp.md](runbooks/03-cline-install-and-mcp.md)
 **Artifacts:**
 - Cline extension `saoudrizwan.claude-dev@3.84.0` installed in VS Code
@@ -50,7 +50,7 @@ Cline's MCP config uses the `mcpServers` key (Claude Desktop format), distinct f
 ## TICKET-2026-05-19-04 — Persistent Ollama via LaunchAgent
 
 **Status:** done
-**Pains addressed:** [PAIN-0006](../../../pain-journal/PAIN-0006-ollama-app-incompatible.md), [PAIN-0010](../../../pain-journal/PAIN-0010-intel-cpu-no-gpu.md)
+**Pains addressed:** [PAIN-0006](../../pain-journal/PAIN-0006-ollama-app-incompatible.md), [PAIN-0010](../../pain-journal/PAIN-0010-intel-cpu-no-gpu.md)
 **Runbook:** [04-ollama-launchagent.md](runbooks/04-ollama-launchagent.md)
 **Artifact:** `~/Library/LaunchAgents/com.ollama.server.plist` (loaded)
 
@@ -81,8 +81,8 @@ Targets: `install`, `uninstall`, `status`, `start`, `stop`, `restart`, `check-pr
 - This [journal](journal.md)
 - This file ([tickets.md](tickets.md))
 - Five [runbooks](runbooks/)
-- Five new PAIN entries (`PAIN-0006` … `PAIN-0010`) in [`pain-journal/`](../../../pain-journal/)
-- Day-4 entry appended to [HANDOFF.md](../../../HANDOFF.md) §7
+- Five new PAIN entries (`PAIN-0006` … `PAIN-0010`) in [`pain-journal/`](../../pain-journal/)
+- Day-4 entry appended to [HANDOFF.md](../../HANDOFF.md) §7
 
 Goal: any future agent (or future-Avery) opening the yousirjuan repo can replay any single piece of this session, understand why each decision was made, and find the related operational pain it solved.
 

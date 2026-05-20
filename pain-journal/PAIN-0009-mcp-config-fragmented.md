@@ -1,7 +1,7 @@
 # PAIN-0009 — MCP server definitions live in N different files, one per client
 
 **Logged:** 2026-05-19
-**Surfaced during:** [iMac MCP setup session](../docs/sessions/2026-05-19-mcp-setup/journal.md)
+**Surfaced during:** [iMac MCP setup session](../ledger/LEDGER-0001-imac-mcp-setup/journal.md)
 **Severity:** medium — annoying, error-prone, gets worse as more MCP clients adopt the protocol.
 
 ## The pain
@@ -46,5 +46,5 @@ This is genuinely yousirjuan-shaped because:
 
 ## Where the partial fix lives
 
-- Runbook: [02-workspace-mcp-config.md](../docs/sessions/2026-05-19-mcp-setup/runbooks/02-workspace-mcp-config.md) (VS Code side) + [03-cline-install-and-mcp.md](../docs/sessions/2026-05-19-mcp-setup/runbooks/03-cline-install-and-mcp.md) (Cline side)
-- Reproducible target: `make install` in [the session Makefile](../docs/sessions/2026-05-19-mcp-setup/artifacts/Makefile) writes both files in lockstep.
+- Runbook: [02-workspace-mcp-config.md](../ledger/LEDGER-0001-imac-mcp-setup/runbooks/02-workspace-mcp-config.md) (VS Code side) + [03-cline-install-and-mcp.md](../ledger/LEDGER-0001-imac-mcp-setup/runbooks/03-cline-install-and-mcp.md) (Cline side)
+- Reproducible target: `make install` in [the session Makefile](../ledger/LEDGER-0001-imac-mcp-setup/playbooks/Makefile) writes both files in lockstep.

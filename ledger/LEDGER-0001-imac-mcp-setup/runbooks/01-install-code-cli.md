@@ -57,4 +57,4 @@ rm /usr/local/bin/code
 ## Related
 
 - The Makefile target `code-cli` performs this idempotently. See [05-makefile-wrapper.md](05-makefile-wrapper.md).
-- Pain that motivated this: [PAIN-0007](../../../../pain-journal/PAIN-0007-code-cli-not-on-path.md).
+- Pain that motivated this: [PAIN-0007](../../../pain-journal/PAIN-0007-code-cli-not-on-path.md).

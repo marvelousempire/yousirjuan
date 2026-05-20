@@ -106,4 +106,4 @@ rm -rf ~/Library/Application\ Support/Code/User/globalStorage/saoudrizwan.claude
 ## Related
 
 - Makefile target: `cline-ext` + `cline-mcp`. See [05-makefile-wrapper.md](05-makefile-wrapper.md).
-- Pains that motivated this: [PAIN-0008](../../../../pain-journal/PAIN-0008-copilot-paywall.md), [PAIN-0009](../../../../pain-journal/PAIN-0009-mcp-config-fragmented.md).
+- Pains that motivated this: [PAIN-0008](../../../pain-journal/PAIN-0008-copilot-paywall.md), [PAIN-0009](../../../pain-journal/PAIN-0009-mcp-config-fragmented.md).

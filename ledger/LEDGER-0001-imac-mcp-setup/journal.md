@@ -100,7 +100,7 @@ The current moment. Capturing this session as durable knowledge inside the yousi
 - **Journal:** this file
 - **Tickets:** [tickets.md](tickets.md)
 - **Runbooks:** [runbooks/](runbooks/) — five replayable how-tos
-- **PAIN entries:** PAIN-0006 through PAIN-0010 in [pain-journal/](../../../pain-journal/)
+- **PAIN entries:** PAIN-0006 through PAIN-0010 in [pain-journal/](../../pain-journal/)
 - **HANDOFF.md:** appended a Day-4 entry to §7 + frontmatter update
 
 ---

@@ -52,7 +52,7 @@ If you're rebuilding the file (e.g. on a fresh machine):
    mkdir -p ~/Developer/mcp-setup
    ```
 
-2. Copy the Makefile from this repo into place. It lives at `~/Developer/mcp-setup/Makefile` on the originating iMac. The canonical content is committed in the session folder's parent `Makefile.txt` ... or just re-derive from the runbooks 01–04 above.
+2. Copy the canonical Makefile from this ledger entry: `cp ledger/LEDGER-0001-imac-mcp-setup/playbooks/Makefile ~/Developer/mcp-setup/Makefile`. (Or skip the copy and run `make -C ledger/LEDGER-0001-imac-mcp-setup/playbooks install` directly from a yousirjuan clone.)
 
 3. Test the status target first (it's read-only and won't modify anything):
    ```

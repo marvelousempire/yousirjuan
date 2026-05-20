@@ -1,7 +1,7 @@
 # PAIN-0008 — VS Code's MCP-capable chat is gated behind paid GitHub Copilot
 
 **Logged:** 2026-05-19
-**Surfaced during:** [iMac MCP setup session](../docs/sessions/2026-05-19-mcp-setup/journal.md)
+**Surfaced during:** [iMac MCP setup session](../ledger/LEDGER-0001-imac-mcp-setup/journal.md)
 **Severity:** high — invalidates the default path for any operator unwilling or unable to subscribe.
 
 ## The pain
@@ -26,7 +26,7 @@ Practical free paths inside Cline:
 
 Cline reads its own MCP config (different file, same data shape as VS Code's `mcp.json`), so the same MCP servers (filesystem, Playwright, etc.) work in both clients.
 
-→ See [runbook 03](../docs/sessions/2026-05-19-mcp-setup/runbooks/03-cline-install-and-mcp.md).
+→ See [runbook 03](../ledger/LEDGER-0001-imac-mcp-setup/runbooks/03-cline-install-and-mcp.md).
 
 ## Potential feature
 
@@ -36,5 +36,5 @@ This also serves the broader "operator chooses sovereign defaults" theme.
 
 ## Where the fix lives
 
-- Runbook: [03-cline-install-and-mcp.md](../docs/sessions/2026-05-19-mcp-setup/runbooks/03-cline-install-and-mcp.md)
-- Reproducible target: `make cline-ext` + `make cline-mcp` in [the session Makefile](../docs/sessions/2026-05-19-mcp-setup/artifacts/Makefile)
+- Runbook: [03-cline-install-and-mcp.md](../ledger/LEDGER-0001-imac-mcp-setup/runbooks/03-cline-install-and-mcp.md)
+- Reproducible target: `make cline-ext` + `make cline-mcp` in [the session Makefile](../ledger/LEDGER-0001-imac-mcp-setup/playbooks/Makefile)
