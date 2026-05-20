@@ -1,7 +1,8 @@
 # You-Sir Juan — Session Handoff
 
-**Session window:** 2026-04-24 → 2026-05-08 (multi-day)
-**Latest update:** 2026-05-08 — added marketing website (public repo `yousirjuan-ai`), signed-installer pipeline, Docker hardening, OpenClaw-router container, capability-based agent broker scaffold.
+**Session window:** 2026-04-24 → 2026-05-19 (multi-day)
+**Latest update:** 2026-05-19 — iMac MCP development stack: VS Code + Cline + workspace/Cline MCP configs + Ollama-as-LaunchAgent, all reproducible via `make install`. See [docs/sessions/2026-05-19-mcp-setup/journal.md](docs/sessions/2026-05-19-mcp-setup/journal.md) and PAIN-0006 → PAIN-0010.
+**Previous update:** 2026-05-08 — added marketing website (public repo `yousirjuan-ai`), signed-installer pipeline, Docker hardening, OpenClaw-router container, capability-based agent broker scaffold.
 **Operator on this Mac:** averygoodman (human is "Avery Brown")
 **Identity for Git/AI:** "You-Sir Juan Agent" — hello@yousirjuan.ai
 **GitHub account:** `marvelousempire`
@@ -300,6 +301,38 @@ These existed before we started; flagged for transparency. Operator's call wheth
   - **Operator's leaning:** consider Jetson AGX Orin 64 GB (~$2-2.5K) as the eventual brain box, or Thor (~$3K+, just shipped) for "future-proof" frontier-model use.
   - For a family-office workload, Jetson Orin runs llama3.1:70b, gpt-oss:20b, gemma4:31b comfortably; can handle 5-10 concurrent users.
 - This handoff document written.
+
+### Day 4 (2026-05-19) — iMac MCP development stack
+
+Full session captured at [docs/sessions/2026-05-19-mcp-setup/journal.md](docs/sessions/2026-05-19-mcp-setup/journal.md). Highlights:
+
+- Installed VS Code `code` CLI shim at `/usr/local/bin/code` (it doesn't get put on PATH by the .dmg install — see [PAIN-0007](pain-journal/PAIN-0007-code-cli-not-on-path.md)).
+- Wrote workspace MCP config at `~/Developer/.vscode/mcp.json` with filesystem (scoped to `~/Developer`) + Playwright servers. Enables native MCP from VS Code's Copilot Chat — though that path requires a paid Copilot subscription ([PAIN-0008](pain-journal/PAIN-0008-copilot-paywall.md)).
+- Installed [Cline](https://github.com/cline/cline) (`saoudrizwan.claude-dev` v3.84.0) as the free, BYO-model alternative to Copilot Chat.
+- Wrote Cline's MCP config at `~/Library/Application Support/Code/User/globalStorage/saoudrizwan.claude-dev/settings/cline_mcp_settings.json` with the same two servers. Note: Cline uses the `mcpServers` key vs VS Code's `servers` — same data, different wrapper ([PAIN-0009](pain-journal/PAIN-0009-mcp-config-fragmented.md)).
+- Discovered the Ollama.app refuses to launch on this iMac's macOS Ventura 13.7.8 (Sonoma+ required). The `ollama` CLI binary still works standalone, so installed a per-user **LaunchAgent** at `~/Library/LaunchAgents/com.ollama.server.plist` with `RunAtLoad=true` + `KeepAlive=true`. Ollama now auto-starts on login and auto-restarts on crash, no menubar app required ([PAIN-0006](pain-journal/PAIN-0006-ollama-app-incompatible.md)). Logs at `~/Library/Logs/ollama.log`.
+- Confirmed inference is CPU-only on this hardware (Intel i5-7500, no GPU). Recommendation set as "OpenRouter free tier in Cline as primary, local Ollama as fallback" — see [PAIN-0010](pain-journal/PAIN-0010-intel-cpu-no-gpu.md) for why and what a yousirjuan-shaped fix looks like.
+- Bundled everything into a single Makefile at `~/Developer/mcp-setup/Makefile` (canonical copy archived at [docs/sessions/2026-05-19-mcp-setup/artifacts/Makefile](docs/sessions/2026-05-19-mcp-setup/artifacts/Makefile)). Targets: `install`, `uninstall`, `status`, `start`, `stop`, `restart`, `check-prereqs`, `help`. Idempotent. Replays the whole setup on a fresh machine with `cd ~/Developer/mcp-setup && make install`.
+- This session itself captured as durable repo knowledge: journal, 6 tickets, 5 runbooks, 5 PAIN entries (`PAIN-0006` → `PAIN-0010`).
+
+**State on the iMac at end of Day 4:**
+
+| Component | Where | Inspect with |
+|---|---|---|
+| `code` CLI | `/usr/local/bin/code` → VS Code.app | `code --version` (1.120.0) |
+| Cline extension | VS Code user profile | `code --list-extensions \| grep claude-dev` |
+| Workspace MCP | `~/Developer/.vscode/mcp.json` | open it |
+| Cline MCP | `~/Library/.../cline_mcp_settings.json` | open it |
+| Ollama LaunchAgent | `~/Library/LaunchAgents/com.ollama.server.plist` | `launchctl list \| grep ollama` |
+| Setup Makefile | `~/Developer/mcp-setup/Makefile` | `make -C ~/Developer/mcp-setup status` |
+
+**Models pulled on this iMac via Ollama** (discovered, not pulled this session): `gemma4:latest` (~9.6 GB), `llama3.2:3b`, `gemma2:2b`.
+
+**Open follow-ups from Day 4:**
+
+- Operator hasn't signed up for OpenRouter yet — that's the unautomatable handoff.
+- Cline's first-run MCP trust prompts haven't been clicked.
+- The Makefile assumes `/usr/local/bin` is writable (true on Intel Macs; not on Apple Silicon where Homebrew owns `/opt/homebrew/bin`). Adjust when repurposing for the M1 Macbook.
 
 ---
 
