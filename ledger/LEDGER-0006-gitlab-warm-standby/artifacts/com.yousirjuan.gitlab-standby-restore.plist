@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  com.yousirjuan.gitlab-standby-restore.plist
+  Restores the latest synced VPS backup into the iMac standby container.
+
+  Schedule: nightly at 05:00 Eastern (09:00 UTC EDT / 10:00 UTC EST).
+  Runs after the sync (08:00 UTC) finishes pulling the tar.
+
+  DESTRUCTIVE on the standby — wipes its current state and replaces with the
+  VPS backup. That's the intent: standby is supposed to be a clone of primary,
+  no more than 24 h stale.
+
+  Logs: ~/Library/Logs/gitlab-standby-restore.log
+
+  Install:   launchctl load -w ~/Library/LaunchAgents/com.yousirjuan.gitlab-standby-restore.plist
+-->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.yousirjuan.gitlab-standby-restore</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>-c</string>
+        <string>
+          set -euo pipefail
+          BACKUPS="$HOME/Library/GitLab-Data/data/backups"
+          # find latest *_gitlab_backup.tar — GitLab's naming convention is
+          # &lt;timestamp&gt;_&lt;version&gt;_gitlab_backup.tar
+          LATEST=$(ls -1 "$BACKUPS"/*_gitlab_backup.tar 2&gt;/dev/null | sort | tail -1)
+          if [ -z "$LATEST" ]; then
+              echo "$(date -Iseconds) NO BACKUP AVAILABLE in $BACKUPS — skipping"
+              exit 0
+          fi
+          # gitlab-backup restore expects the BACKUP= arg WITHOUT the trailing _gitlab_backup.tar
+          TIMESTAMP=$(basename "$LATEST" | sed 's/_gitlab_backup\.tar$//')
+          echo "$(date -Iseconds) restoring backup: $TIMESTAMP"
+          docker exec gitlab-standby gitlab-ctl stop unicorn 2&gt;/dev/null || \
+            docker exec gitlab-standby gitlab-ctl stop puma 2&gt;/dev/null || true
+          docker exec gitlab-standby gitlab-ctl stop sidekiq 2&gt;/dev/null || true
+          docker exec gitlab-standby gitlab-backup restore BACKUP="$TIMESTAMP" force=yes
+          docker exec gitlab-standby gitlab-ctl reconfigure
+          docker exec gitlab-standby gitlab-ctl restart
+          echo "$(date -Iseconds) restore complete"
+        </string>
+    </array>
+
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key><integer>9</integer>
+        <key>Minute</key><integer>0</integer>
+    </dict>
+
+    <key>StandardOutPath</key>
+    <string>/Users/averygoodman/Library/Logs/gitlab-standby-restore.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/averygoodman/Library/Logs/gitlab-standby-restore.log</string>
+
+    <key>RunAtLoad</key>
+    <false/>
+</dict>
+</plist>
