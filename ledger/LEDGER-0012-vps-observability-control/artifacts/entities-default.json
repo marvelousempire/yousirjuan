@@ -1,0 +1,100 @@
+{
+  "_comment": "Entity map for the VPS agent's /entities endpoint. Each entity gets grouped by container-name prefix, systemd-unit pattern, and/or process-command pattern. Add/edit entities here; agent reloads on every request. Path: /etc/yousirjuan/vps-agent-entities.json",
+  "_default_path": "/etc/yousirjuan/vps-agent-entities.json",
+  "entities": {
+    "nephew": {
+      "container_prefixes": ["nephew-", "nephew_"],
+      "container_exact": ["nephew"],
+      "systemd_units": ["n8n-nephew.service", "nephew-update.service"],
+      "process_patterns": ["/opt/nephew/", "/home/abrownsanta/nephew", "next-server.*nephew"],
+      "label": "Nephew",
+      "category": "control-tower"
+    },
+    "automata": {
+      "container_prefixes": ["automata-", "automata_"],
+      "process_patterns": ["/opt/automata/"],
+      "label": "Automata",
+      "category": "engine"
+    },
+    "bishop": {
+      "container_prefixes": ["bishop-", "bishop_"],
+      "process_patterns": ["/opt/bishop/"],
+      "label": "Bishop",
+      "category": "engine"
+    },
+    "sunday": {
+      "container_prefixes": ["sunday-", "sunday_"],
+      "process_patterns": ["/opt/sundayapp/", "/home/abrownsanta/sundayapp"],
+      "label": "Sunday",
+      "category": "product"
+    },
+    "gitlab": {
+      "container_prefixes": ["gitlab-", "gitlab_"],
+      "container_exact": ["gitlab", "gitlab-runner"],
+      "process_patterns": ["gitlab-puma", "sidekiq.*gitlab", "/opt/gitlab/", "gitaly"],
+      "label": "GitLab",
+      "category": "infrastructure"
+    },
+    "open-webui": {
+      "container_exact": ["open-webui"],
+      "process_patterns": ["open_webui\\.main"],
+      "label": "Open WebUI",
+      "category": "product"
+    },
+    "clinic": {
+      "container_prefixes": ["clinic-", "clinic_"],
+      "process_patterns": ["/opt/clinic/"],
+      "label": "Clinic",
+      "category": "product"
+    },
+    "ruflo": {
+      "container_prefixes": ["ruflo-", "ruflo_"],
+      "process_patterns": ["/opt/ruflo/"],
+      "label": "Ruflo",
+      "category": "product"
+    },
+    "contribution-network": {
+      "container_prefixes": ["contribution-network-", "cn-"],
+      "process_patterns": ["/opt/ContributionNetwork/", "ContributionNetwork"],
+      "label": "Contribution Network",
+      "category": "product"
+    },
+    "readyplay": {
+      "container_prefixes": ["readyplay-", "redeplay-"],
+      "process_patterns": ["/opt/readyplay/", "Red-E Play"],
+      "label": "Red-E Play",
+      "category": "product"
+    },
+    "yousirjuan": {
+      "container_prefixes": ["yousirjuan-"],
+      "process_patterns": ["/opt/yousirjuan/"],
+      "label": "Yousirjuan",
+      "category": "platform"
+    },
+    "claude-mem": {
+      "process_patterns": ["claude-mem", "/opt/claude-mem/"],
+      "label": "claude-mem",
+      "category": "tooling"
+    },
+    "cursor-server": {
+      "process_patterns": ["\\.cursor-server"],
+      "label": "Cursor Remote",
+      "category": "tooling"
+    },
+    "vscode-server": {
+      "process_patterns": ["\\.vscode-server"],
+      "label": "VS Code Remote",
+      "category": "tooling"
+    },
+    "tailscale": {
+      "process_patterns": ["tailscaled", "tailscale "],
+      "label": "Tailscale",
+      "category": "infrastructure"
+    },
+    "system": {
+      "process_patterns": ["^/usr/sbin/", "^/sbin/", "systemd", "^kthread", "^kworker", "^kswapd", "^migration", "^ksoftirqd", "^/lib/systemd"],
+      "label": "System (kernel + init)",
+      "category": "kernel"
+    }
+  }
+}

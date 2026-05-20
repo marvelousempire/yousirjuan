@@ -42,6 +42,17 @@ action_install() {
   step "  copying agent to $LIB_DIR"
   install -m 0755 "$SRC" "$LIB_DIR/vps-agent-server.sh"
 
+  step "  copying entities config to $ETC_DIR (only if absent — operator edits live there)"
+  ENTITIES_SRC="${REPO_ROOT}/ledger/LEDGER-0012-vps-observability-control/artifacts/entities-default.json"
+  if [[ -f "$ETC_DIR/vps-agent-entities.json" ]]; then
+    ok "$ETC_DIR/vps-agent-entities.json already exists (preserving operator edits)"
+  elif [[ -f "$ENTITIES_SRC" ]]; then
+    install -m 0644 "$ENTITIES_SRC" "$ETC_DIR/vps-agent-entities.json"
+    ok "installed default entity map"
+  else
+    warn "no entities-default.json found at $ENTITIES_SRC — /entities will return empty until populated"
+  fi
+
   # Generate token only if not already present
   if [[ ! -f "$ETC_DIR/vps-agent.env" ]]; then
     token="$(python3 -c "import secrets; print(secrets.token_urlsafe(32))")"
