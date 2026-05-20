@@ -38,7 +38,8 @@ A systemd-managed agent on the VPS exposes process + docker + system state over 
 | GET | `/processes` | none | top 20 by CPU + top 20 by MEM |
 | GET | `/docker` | none | all containers (name, status, ports, image) |
 | GET | `/sites` | none | HTTP code + latency for each yousirjuan.ai subdomain |
-| GET | `/all` | none | bundle of the four above (single-fetch for DustPan) |
+| GET | `/entities` | none | **grouped by entity** (nephew, automata, bishop, sunday, gitlab, etc.) — per-entity CPU sum + RSS sum + top 5 processes + container list |
+| GET | `/all` | none | bundle of the five above (single-fetch for DustPan) |
 | POST | `/kill` | Bearer | `{pid, signal?}` → kill a process (refuses PID < 100) |
 | POST | `/docker/stop` | Bearer | `{name}` → stop a container |
 | POST | `/docker/start` | Bearer | `{name}` → start a container |
@@ -110,6 +111,25 @@ Polls `/all` every 5 seconds when tab is foregrounded; pauses when backgrounded.
 - Tail `/system` from a tiny launchd job on the operator's Mac
 - When `mem_pct_used > 85` or `swap_pct_used > 50` or `load_1m > 4*cpus` or any `/sites` entry has code `000` or `5xx` → `osascript -e 'display notification ...'`
 - Debounced (5 min between same-threshold alerts) to avoid spam
+
+## Entity attribution (the `/entities` endpoint)
+
+Per operator 2026-05-20: *"every one of the entities, including nephew, and everything under nephew, needs to show their processes and what they're sucking out of the system in the control tower and in dust pan."*
+
+The `/entities` endpoint groups every process on the box by which **product entity** it belongs to (nephew, automata, bishop, sunday, gitlab, contribution-network, etc.), so the operator can see at a glance: *"nephew is using 18% of memory and 12% of CPU; gitlab is using 35%; bishop is idle."*
+
+Attribution is driven by `/etc/yousirjuan/vps-agent-entities.json` (seeded from [`artifacts/entities-default.json`](artifacts/entities-default.json) at install time). Each entity declares:
+
+| Field | Example | What it matches |
+|---|---|---|
+| `container_prefixes` | `["nephew-"]` | Containers whose name starts with this (e.g. `nephew-postgres`, `nephew-redis`, `nephew-brain-db-1`) |
+| `container_exact` | `["gitlab", "gitlab-runner"]` | Exact-name containers |
+| `systemd_units` | `["n8n-nephew.service"]` | Processes whose cgroup path contains this unit |
+| `process_patterns` | `["/opt/nephew/", "next-server.*nephew"]` | Regex match on `ps -o command` |
+
+A process is attributed to **the first entity it matches** in declaration order. Anything that matches no entity falls into the `_unattributed` bucket — which is itself a signal worth investigating ("what's this random thing eating 200 MB?").
+
+Operator edits the config live at `/etc/yousirjuan/vps-agent-entities.json` — agent re-reads on each request, no restart needed. The default file ships with 16 entities covering nephew, automata, bishop, sunday, gitlab, open-webui, clinic, ruflo, contribution-network, readyplay, yousirjuan, claude-mem, cursor-server, vscode-server, tailscale, system (kernel + init).
 
 ## Cross-references
 
