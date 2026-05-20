@@ -88,28 +88,34 @@ jobs:
           GH_TOKEN: ${{ secrets.PUBLIC_REPO_TOKEN }}
         run: |
           VERSION="${{ steps.version.outputs.version }}"
-          NOTES="Intel Mac installer for You-Sir Juan OS v$VERSION.
+          # Write release notes to a file. Heredoc content is indented to
+          # 10 spaces (required by YAML's `run: |` literal block); sed
+          # strips that prefix so the rendered notes are left-aligned.
+          # `<<EOF` (unquoted) allows $VERSION expansion; `\`` becomes a
+          # literal backtick under bash double-quoted rules.
+          cat <<EOF | sed 's/^          //' > /tmp/release-notes.md
+          Intel Mac installer for You-Sir Juan OS v$VERSION.
 
-One-liner:
-\`\`\`bash
-curl -fsSL https://get.yousirjuan.ai/intel-mac | sh
-\`\`\`
+          One-liner:
+          \`\`\`bash
+          curl -fsSL https://get.yousirjuan.ai/intel-mac | sh
+          \`\`\`
 
-Or directly from GitHub:
-\`\`\`bash
-curl -fsSL https://github.com/marvelousempire/yousirjuan-ai/releases/latest/download/install-intel-mac.sh | sh
-\`\`\`
+          Or directly from GitHub:
+          \`\`\`bash
+          curl -fsSL https://github.com/marvelousempire/yousirjuan-ai/releases/latest/download/install-intel-mac.sh | sh
+          \`\`\`
 
-Optimized for: iMac 2017, MacBook (Intel), Mac mini (Intel)
-macOS Ventura 13+ | x86_64 | 16+ GB RAM recommended
+          Optimized for: iMac 2017, MacBook (Intel), Mac mini (Intel)
+          macOS Ventura 13+ | x86_64 | 16+ GB RAM recommended
 
-See docs/hardware/imac-2017-intel-i5.md for full capability matrix.
-See installers/intel-mac/opencore-sonoma-guide.md for iOS 18 dev setup."
-
+          See docs/hardware/imac-2017-intel-i5.md for full capability matrix.
+          See installers/intel-mac/opencore-sonoma-guide.md for iOS 18 dev setup.
+          EOF
           gh release create "v$VERSION" \
             --repo marvelousempire/yousirjuan-ai \
             --title "You-Sir Juan OS v$VERSION" \
-            --notes "$NOTES" \
+            --notes-file /tmp/release-notes.md \
             --target main \
             install-intel-mac.sh install-intel-mac.sh.sha256 2>/dev/null || \
           gh release upload "v$VERSION" \
