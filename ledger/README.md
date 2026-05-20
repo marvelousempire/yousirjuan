@@ -18,7 +18,7 @@ For the rule that makes adding to the ledger the default closing ritual, see [`.
 
 Counter is the source of truth for the next `LEDGER-NNNN`. Bump it when you open a new entry.
 
-**Next number:** `LEDGER-0009`
+**Next number:** `LEDGER-0011`
 
 | ID | Title | Status | Opened | Closed | Replay |
 |---|---|---|---|---|---|
@@ -30,6 +30,8 @@ Counter is the source of truth for the next `LEDGER-NNNN`. Bump it when you open
 | [`LEDGER-0006`](LEDGER-0006-gitlab-warm-standby/) | GitLab CE warm-standby on the iMac (VPS-primary, iMac-secondary) | `in-progress` | 2026-05-20 | _pending_ | `bash ledger/LEDGER-0006-gitlab-warm-standby/playbooks/install-standby.sh install` (after operator does OrbStack + Tailscale + Energy Saver prereqs) |
 | [`LEDGER-0007`](LEDGER-0007-imac-emergency-failsafe/) | iMac emergency failsafe for VPS (3-min watchdog + auto DNS swap) | `phase-1-shipped` | 2026-05-20 | _pending_ | `bash ledger/LEDGER-0007-imac-emergency-failsafe/playbooks/install-watchdog.sh install` (dry-run by default; see runbook 03 to go live) |
 | [`LEDGER-0008`](LEDGER-0008-watchdog-control-surface/) | Watchdog control surface — state server (iMac) + Nephew card + DustPan settings | `in-progress` | 2026-05-20 | _pending_ | `bash ledger/LEDGER-0008-watchdog-control-surface/playbooks/install-state-server.sh install` (Phase 1; Nephew + DustPan PRs separate) |
+| [`LEDGER-0009`](LEDGER-0009-watchdog-tamer/) | Watchdog Tamer — Ollama agent that suggests config changes | `planning` | 2026-05-20 | _pending_ | (ticket only; implementation TBD per ADR-0001 — Ollama on iMac, not VPS) |
+| [`LEDGER-0010`](LEDGER-0010-sandbox-cli-generator/) | Sandbox CLI generator — `make sandbox <tool>` for containerizing the unruly | `in-progress` | 2026-05-20 | _pending_ | `make -C ledger/LEDGER-0010-sandbox-cli-generator/playbooks build run tool=grok-cli` (Grok CLI Beta is the first concrete sandbox) |
 
 > LEDGER-0001 was originally captured at `docs/sessions/2026-05-19-mcp-setup/` (PR #4) as the embryo of this pattern. It was migrated into the ledger and reshaped (`artifacts/Makefile` → `playbooks/Makefile`, new ticket README, new `install.sh` shell sibling, ticket frontmatter) in the migration PR that landed alongside this row.
 
