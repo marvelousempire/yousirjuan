@@ -1,16 +1,40 @@
 ---
 ledgerId: LEDGER-0005
 title: GitLab CE on the VPS as sovereign source-of-truth; GitHub becomes a push-mirror
-status: planning
+status: phase-1-shipped
 opened: 2026-05-20
 closed: null
 related-pains: []
 related-tickets: [LEDGER-0004]
 triggers:
-  - manual-cli: `bash ledger/LEDGER-0005-gitlab-as-source-of-truth/playbooks/configure-and-migrate.sh <action>`
+  - manual-cli: `bash ledger/LEDGER-0005-gitlab-as-source-of-truth/playbooks/configure-and-migrate.sh <action>` (TODO — not written yet, Phases 2 + 3)
+phase-1:
+  status: shipped
+  date: 2026-05-20
+  url: https://git.yousirjuan.ai
+  ssh-clone: ssh://git@72.167.151.251:2424/marvelousempire/yousirjuan.git
 ---
 
 # LEDGER-0005 — GitLab CE as sovereign source-of-truth
+
+## Phase 1 — SHIPPED 2026-05-20
+
+Done in the same session as opening this ticket:
+
+- **GitLab admin (root) password rotated** — value at `/root/gitlab-root-password.txt` on the VPS (`sudo cat` to retrieve).
+- **Operator's `~/.ssh/id_ed25519` pubkey registered** on the root user → `ssh -p 2424 git@72.167.151.251` returns `Welcome to GitLab, @root!`.
+- **`marvelousempire` group + `marvelousempire/yousirjuan` project created** in GitLab (id=2 / id=5).
+- **Local yousirjuan main pushed to GitLab** as a second remote (`git remote add gitlab ssh://git@72.167.151.251:2424/marvelousempire/yousirjuan.git`). Verified by a clean clone.
+- **`gitlab.yousirjuan.ai` → `git.yousirjuan.ai`** chosen instead of `gitlab.*` (`workflow.yousirjuan.ai` was already taken by n8n).
+- **DNS A record added** for `git.yousirjuan.ai → 72.167.151.251` (operator did this).
+- **nginx vhost** at `/etc/nginx/sites-available/git.yousirjuan.ai` (proxy to `127.0.0.1:8929`, WebSocket upgrade, 500m max body, 24h proxy timeouts).
+- **GitLab `external_url = https://git.yousirjuan.ai`** + `nginx['listen_port']=8929` + `nginx['listen_https']=false` in `/etc/gitlab/gitlab.rb` inside the container. `gitlab-ctl reconfigure` applied (2m 40s on the loaded VPS).
+- **Let's Encrypt cert** provisioned via `certbot --nginx --redirect` for `git.yousirjuan.ai`. Cert valid until 2026-08-18; auto-renew scheduled.
+- **`https://git.yousirjuan.ai` is LIVE** — verified: HTTP/2 302 redirect to GitLab sign-in.
+
+What's still on the Phase 2 + Phase 3 plan (below): push-mirror config to GitHub per repo, and the fleet migration script. Neither shipped today.
+
+---
 
 ## Ask
 
