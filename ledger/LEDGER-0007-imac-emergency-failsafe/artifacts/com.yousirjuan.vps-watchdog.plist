@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  com.yousirjuan.vps-watchdog.plist
+
+  iMac watchdog that probes the VPS every 3 minutes. After 3 consecutive failed
+  probes on any subdomain, calls the GoDaddy DNS API to repoint that subdomain
+  to the iMac's failover address. After 3 consecutive successful probes
+  (post-swap), reverts the A record.
+
+  Defaults to DRY_RUN=1 — logs what it WOULD do; never calls GoDaddy. Flip to
+  DRY_RUN=0 in vps-watchdog.sh after operator commits to going live (see
+  runbook 03).
+
+  Logs: ~/Library/Logs/yousirjuan-vps-watchdog.log
+  State: ~/Library/yousirjuan-state/vps-watchdog.json
+
+  Install:   launchctl load -w ~/Library/LaunchAgents/com.yousirjuan.vps-watchdog.plist
+  Uninstall: launchctl unload ~/Library/LaunchAgents/com.yousirjuan.vps-watchdog.plist
+-->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.yousirjuan.vps-watchdog</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>/Users/averygoodman/Developer/yousirjuan/ledger/LEDGER-0007-imac-emergency-failsafe/playbooks/vps-watchdog.sh</string>
+    </array>
+
+    <key>StartInterval</key>
+    <integer>180</integer>
+
+    <key>RunAtLoad</key>
+    <true/>
+
+    <key>StandardOutPath</key>
+    <string>/Users/averygoodman/Library/Logs/yousirjuan-vps-watchdog.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/averygoodman/Library/Logs/yousirjuan-vps-watchdog.log</string>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/usr/local/bin:/usr/bin:/bin</string>
+    </dict>
+
+    <key>ProcessType</key>
+    <string>Background</string>
+</dict>
+</plist>
