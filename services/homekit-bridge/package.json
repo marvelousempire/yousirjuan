@@ -1,8 +1,8 @@
 {
   "name": "ysj-homekit-bridge",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
-  "description": "HomeKit bridge service — translates Associate Agent directives into home automation commands.",
+  "description": "HomeKit bridge service \u2014 translates Associate Agent directives into home automation commands.",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",

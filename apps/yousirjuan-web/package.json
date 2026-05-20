@@ -1,8 +1,8 @@
 {
   "name": "yousirjuan-web",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
-  "description": "Family Interface — web client. Runs in any browser, optimized for kiosk and laptop targets.",
+  "description": "Family Interface \u2014 web client. Runs in any browser, optimized for kiosk and laptop targets.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

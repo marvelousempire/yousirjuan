@@ -1,8 +1,10 @@
 # You-Sir Juan — Session Handoff
 
-**Session window:** 2026-04-24 → 2026-05-19 (multi-day)
-**Latest update:** 2026-05-19 — iMac MCP development stack: VS Code + Cline + workspace/Cline MCP configs + Ollama-as-LaunchAgent, all reproducible via `make install`. See [ledger/LEDGER-0001-imac-mcp-setup/journal.md](ledger/LEDGER-0001-imac-mcp-setup/journal.md) and PAIN-0006 → PAIN-0010.
-**Previous update:** 2026-05-08 — added marketing website (public repo `yousirjuan-ai`), signed-installer pipeline, Docker hardening, OpenClaw-router container, capability-based agent broker scaffold.
+**Session window:** 2026-04-24 → 2026-05-20 (multi-day)
+**Current version:** **v0.2.0** — bumped from 0.1.0 on 2026-05-20. All four `package.json` files (root, `apps/admin`, `apps/yousirjuan-web`, `services/homekit-bridge`) move in lockstep. Per-release notes in [`docs/CHANGELOG.md`](docs/CHANGELOG.md). Feature status grid in [`docs/Feature Ledger.md`](docs/Feature%20Ledger.md). Incident/near-miss log in [`docs/Issue-Log.md`](docs/Issue-Log.md).
+**Latest update:** 2026-05-20 — v0.2.0 bump + initialized docs/CHANGELOG/Issue-Log/Feature Ledger. 0.2.0 ships: the [`/ledger/`](ledger/) self-codifying system, [`LEDGER-0001`](ledger/LEDGER-0001-imac-mcp-setup/) (iMac MCP stack), [`LEDGER-0002`](ledger/LEDGER-0002-workflow-debugger-agent/) (workflow-debugger Claude Code agent), the CI contract-allowlist fix, and the `release-intel-mac.yml` YAML parse fix.
+**Previous update:** 2026-05-19 — iMac MCP development stack: VS Code + Cline + workspace/Cline MCP configs + Ollama-as-LaunchAgent, all reproducible via `make install`. See [ledger/LEDGER-0001-imac-mcp-setup/journal.md](ledger/LEDGER-0001-imac-mcp-setup/journal.md) and PAIN-0006 → PAIN-0010.
+**Earlier:** 2026-05-08 — added marketing website (public repo `yousirjuan-ai`), signed-installer pipeline, Docker hardening, OpenClaw-router container, capability-based agent broker scaffold.
 **Operator on this Mac:** averygoodman (human is "Avery Brown")
 **Identity for Git/AI:** "You-Sir Juan Agent" — hello@yousirjuan.ai
 **GitHub account:** `marvelousempire`

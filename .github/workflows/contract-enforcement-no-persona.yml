@@ -34,6 +34,9 @@ on:
 #   docs/marketing/**             — product marketing pages
 #   docs/assistant-role-templates.md — assistant template reference
 #   docs/hardware/**              — hardware specs that reference product capabilities
+#   docs/CHANGELOG.md             — release notes; describes rule-relevant terms when documenting CI changes
+#   docs/Issue-Log.md             — incident/near-miss log; quotes rule grep patterns when describing past failures
+#   docs/Feature Ledger.md        — per-feature status grid; references rule-relevant features by name
 #
 # Adding new files to the allowlist below should require team review.
 # Anything outside the allowlist still gets blocked.
@@ -48,9 +51,9 @@ jobs:
       # filter `grep -rn` output. The leading `(\./)?` tolerates both
       # GNU grep (which prepends `./` to relative paths) and BSD grep
       # (which doesn't) — useful for local dry-runs on macOS.
-      ALLOWLIST_LINE: '^(\./)?(REPOS-CONTRACT|CI-CONTRACT-GUIDE|CLAUDE|README|README2)\.md:|^(\./)?apps/README\.md:|^(\./)?docs/marketing/[^:]*:|^(\./)?docs/hardware/[^:]*:|^(\./)?docs/assistant-role-templates\.md:'
+      ALLOWLIST_LINE: '^(\./)?(REPOS-CONTRACT|CI-CONTRACT-GUIDE|CLAUDE|README|README2)\.md:|^(\./)?apps/README\.md:|^(\./)?docs/marketing/[^:]*:|^(\./)?docs/hardware/[^:]*:|^(\./)?docs/assistant-role-templates\.md:|^(\./)?docs/CHANGELOG\.md:|^(\./)?docs/Issue-Log\.md:|^(\./)?docs/Feature Ledger\.md:'
       # Same allowlist but for full paths (no `:`), for `grep -l` output.
-      ALLOWLIST_PATH: '^(\./)?(REPOS-CONTRACT|CI-CONTRACT-GUIDE|CLAUDE|README|README2)\.md$|^(\./)?apps/README\.md$|^(\./)?docs/marketing/|^(\./)?docs/hardware/|^(\./)?docs/assistant-role-templates\.md$'
+      ALLOWLIST_PATH: '^(\./)?(REPOS-CONTRACT|CI-CONTRACT-GUIDE|CLAUDE|README|README2)\.md$|^(\./)?apps/README\.md$|^(\./)?docs/marketing/|^(\./)?docs/hardware/|^(\./)?docs/assistant-role-templates\.md$|^(\./)?docs/CHANGELOG\.md$|^(\./)?docs/Issue-Log\.md$|^(\./)?docs/Feature Ledger\.md$'
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
