@@ -18,11 +18,12 @@ For the rule that makes adding to the ledger the default closing ritual, see [`.
 
 Counter is the source of truth for the next `LEDGER-NNNN`. Bump it when you open a new entry.
 
-**Next number:** `LEDGER-0002`
+**Next number:** `LEDGER-0003`
 
 | ID | Title | Status | Opened | Closed | Replay |
 |---|---|---|---|---|---|
 | [`LEDGER-0001`](LEDGER-0001-imac-mcp-setup/) | iMac MCP development stack | `shipped` | 2026-05-19 | 2026-05-19 | `make -C ledger/LEDGER-0001-imac-mcp-setup/playbooks install` |
+| [`LEDGER-0002`](LEDGER-0002-workflow-debugger-agent/) | workflow-debugger agent (YAML / Bash / JS / Python / Excel) | `shipped` | 2026-05-20 | 2026-05-20 | already loaded at `.claude/agents/workflow-debugger.md`; promote to user scope via `bash ledger/LEDGER-0002-workflow-debugger-agent/playbooks/install-user-scope.sh` |
 
 > LEDGER-0001 was originally captured at `docs/sessions/2026-05-19-mcp-setup/` (PR #4) as the embryo of this pattern. It was migrated into the ledger and reshaped (`artifacts/Makefile` → `playbooks/Makefile`, new ticket README, new `install.sh` shell sibling, ticket frontmatter) in the migration PR that landed alongside this row.
 
