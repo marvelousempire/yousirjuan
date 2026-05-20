@@ -18,7 +18,7 @@ For the rule that makes adding to the ledger the default closing ritual, see [`.
 
 Counter is the source of truth for the next `LEDGER-NNNN`. Bump it when you open a new entry.
 
-**Next number:** `LEDGER-0008`
+**Next number:** `LEDGER-0009`
 
 | ID | Title | Status | Opened | Closed | Replay |
 |---|---|---|---|---|---|
@@ -29,6 +29,7 @@ Counter is the source of truth for the next `LEDGER-NNNN`. Bump it when you open
 | [`LEDGER-0005`](LEDGER-0005-gitlab-as-source-of-truth/) | GitLab CE sovereign source-of-truth (Phase 1 shipped: https://git.yousirjuan.ai) | `phase-1-shipped` | 2026-05-20 | _pending_ | Phase 1: live; Phase 2 + 3 TODO |
 | [`LEDGER-0006`](LEDGER-0006-gitlab-warm-standby/) | GitLab CE warm-standby on the iMac (VPS-primary, iMac-secondary) | `in-progress` | 2026-05-20 | _pending_ | `bash ledger/LEDGER-0006-gitlab-warm-standby/playbooks/install-standby.sh install` (after operator does OrbStack + Tailscale + Energy Saver prereqs) |
 | [`LEDGER-0007`](LEDGER-0007-imac-emergency-failsafe/) | iMac emergency failsafe for VPS (3-min watchdog + auto DNS swap) | `phase-1-shipped` | 2026-05-20 | _pending_ | `bash ledger/LEDGER-0007-imac-emergency-failsafe/playbooks/install-watchdog.sh install` (dry-run by default; see runbook 03 to go live) |
+| [`LEDGER-0008`](LEDGER-0008-watchdog-control-surface/) | Watchdog control surface — state server (iMac) + Nephew card + DustPan settings | `in-progress` | 2026-05-20 | _pending_ | `bash ledger/LEDGER-0008-watchdog-control-surface/playbooks/install-state-server.sh install` (Phase 1; Nephew + DustPan PRs separate) |
 
 > LEDGER-0001 was originally captured at `docs/sessions/2026-05-19-mcp-setup/` (PR #4) as the embryo of this pattern. It was migrated into the ledger and reshaped (`artifacts/Makefile` → `playbooks/Makefile`, new ticket README, new `install.sh` shell sibling, ticket frontmatter) in the migration PR that landed alongside this row.
 

@@ -56,8 +56,40 @@ PROBE_TIMEOUT=10                               # seconds per HTTPS probe
 
 STATE_DIR="$HOME/Library/yousirjuan-state"
 STATE_FILE="$STATE_DIR/vps-watchdog.json"
+CONF_FILE="$STATE_DIR/vps-watchdog.conf"     # LEDGER-0008: settings sourced here (JSON)
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 GODADDY_HELPER="$SCRIPT_DIR/godaddy-dns.sh"
+
+# ─── LEDGER-0008: load settings from conf file if present, overriding defaults ───
+# DustPan writes to this file via the watchdog-state-server's POST /settings.
+# We re-read on every tick so settings changes apply within 3 min.
+if [[ -f "$CONF_FILE" ]] && command -v jq >/dev/null 2>&1; then
+  _conf_dry_run=$(jq -r '.dry_run // empty' "$CONF_FILE" 2>/dev/null)
+  _conf_domain=$(jq -r '.domain // empty' "$CONF_FILE" 2>/dev/null)
+  _conf_vps_ip=$(jq -r '.vps_ip // empty' "$CONF_FILE" 2>/dev/null)
+  _conf_failover_ip=$(jq -r '.failover_ip // empty' "$CONF_FILE" 2>/dev/null)
+  _conf_strikes_swap=$(jq -r '.strikes_to_swap // empty' "$CONF_FILE" 2>/dev/null)
+  _conf_strikes_revert=$(jq -r '.strikes_to_revert // empty' "$CONF_FILE" 2>/dev/null)
+  _conf_hyst=$(jq -r '.hysteresis_min_seconds // empty' "$CONF_FILE" 2>/dev/null)
+  _conf_timeout=$(jq -r '.probe_timeout_seconds // empty' "$CONF_FILE" 2>/dev/null)
+  # Only override if the conf value is non-empty (preserves env-var precedence too).
+  [[ -n "$_conf_dry_run" ]]      && DRY_RUN=$([[ "$_conf_dry_run" == "true" ]] && echo 1 || echo 0)
+  [[ -n "$_conf_domain" ]]       && DOMAIN="$_conf_domain"
+  [[ -n "$_conf_vps_ip" ]]       && VPS_IP="$_conf_vps_ip"
+  [[ -n "$_conf_failover_ip" ]]  && FAILOVER_IP="$_conf_failover_ip"
+  [[ -n "$_conf_strikes_swap" ]] && STRIKES_TO_SWAP="$_conf_strikes_swap"
+  [[ -n "$_conf_strikes_revert" ]] && STRIKES_TO_REVERT="$_conf_strikes_revert"
+  [[ -n "$_conf_hyst" ]]         && HYSTERESIS_MIN_SECONDS="$_conf_hyst"
+  [[ -n "$_conf_timeout" ]]      && PROBE_TIMEOUT="$_conf_timeout"
+  # Targets: rebuild array from conf if it has any
+  _conf_targets=$(jq -r '.targets[]? | "\(.sub)|\(.url)"' "$CONF_FILE" 2>/dev/null)
+  if [[ -n "$_conf_targets" ]]; then
+    TARGETS=()
+    while IFS= read -r line; do
+      [[ -n "$line" ]] && TARGETS+=("$line")
+    done <<<"$_conf_targets"
+  fi
+fi
 
 mkdir -p "$STATE_DIR"
 
