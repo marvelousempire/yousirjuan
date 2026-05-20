@@ -82,6 +82,28 @@ This ticket is the **brain**. The **UI** ships as separate PRs in two other repo
 
 Same architecture as LEDGER-0008: brain on iMac, surfaces on Nephew + DustPan.
 
+## Performance reality check (empirical, 2026-05-20)
+
+Smoke-tested end-to-end on this Intel iMac. **The wiring is correct** — a minimal "return {ok:true}" prompt completes in 32s (cold start; ~5s warm). **However, the real analysis prompt (~1400 tokens including system + state bundle) times out at 300s on Intel CPU inference.** Math: Intel CPU prompt-eval at ~10 tok/s × 1400 tokens = ~140s of prompt eval alone, plus generation. Cumulatively above the wallclock budget for a 15-min tick cadence.
+
+**Conclusion: Tamer runs correctly but requires Apple Silicon (or GPU) for usable cadence.** Two viable hosts:
+
+1. **Mac mini M4 Pro 48 GB** (per CLAUDE.md routing default) — preferred. Point `OLLAMA_URL` at `http://mac-mini.tailnet:11434` once Mac mini is configured.
+2. **DGX Spark 128 GB** (per CLAUDE.md ceiling) — when acquired.
+
+Intel iMac smoke-test verified:
+
+- ✓ `tamer-tick.sh` correctly resolves model from `OLLAMA_URL/api/tags`
+- ✓ Bundle build reads `vps-watchdog.json` + log tail correctly
+- ✓ Ollama receives the request and starts processing (loads model, allocates CPU)
+- ✓ Minimal 36-token prompt round-trips in 32s with valid JSON
+- ✗ Full 1400-token analysis prompt exceeds 300s timeout on Intel CPU
+- ✗ Same outcome with prompt trimmed to ~700 tokens (CPU is the bottleneck, not the prompt size)
+
+**Defaults in code reflect this finding:** `TAMER_MODEL=llama3.2:3b` (smallest), `MAX_PROMPT_BYTES=4000` (trimmed), `NUM_PREDICT=300` (shortened), `KEEP_ALIVE=1h` (avoid cold-start tax). On Apple Silicon these defaults will round-trip in ~10–20s.
+
+To override at install time on an iMac that IS Apple Silicon: `TAMER_MODEL=gemma4:latest launchctl load -w ~/Library/LaunchAgents/com.yousirjuan.watchdog-tamer.plist`.
+
 ## Open design questions
 
 1. **Ollama model selection.** Start with `qwen2.5:14b` (good reasoning, ~10 GB RSS — fits comfortably on iMac with headroom). Fall back to `llama3.2:3b` for low-RAM iMacs. Configurable via `TAMER_MODEL` env.
