@@ -8,6 +8,7 @@ on:
       - '**/*.swift'
       - '**/*.tsx'
       - '**/*.ts'
+      - '.github/workflows/contract-enforcement-no-persona.yml'
   pull_request:
     branches: [main]
     paths:
@@ -15,11 +16,41 @@ on:
       - '**/*.swift'
       - '**/*.tsx'
       - '**/*.ts'
+      - '.github/workflows/contract-enforcement-no-persona.yml'
+
+# ALLOWLIST RATIONALE
+# -------------------
+# The contract enforced here (REPOS-CONTRACT.md) keeps persona, interface-UX,
+# onboarding, and meta-library content out of You-Sir Juan. The checks below
+# greenlight a small, explicit set of files where persona / interface mentions
+# are intentional because the file's *job* is to describe or document the
+# product as a whole:
+#
+#   REPOS-CONTRACT.md             — defines the contract itself
+#   CI-CONTRACT-GUIDE.md          — documents these checks with example strings
+#   CLAUDE.md                     — agent routing guide; needs the Associate Agent table
+#   README.md / README2.md        — repo-level product description
+#   apps/README.md                — app surface description
+#   docs/marketing/**             — product marketing pages
+#   docs/assistant-role-templates.md — assistant template reference
+#   docs/hardware/**              — hardware specs that reference product capabilities
+#
+# Adding new files to the allowlist below should require team review.
+# Anything outside the allowlist still gets blocked.
 
 jobs:
   enforce-no-persona:
     name: Check for forbidden persona/interface content
     runs-on: ubuntu-latest
+    env:
+      # Lines starting with these path prefixes are allowed to contain
+      # persona / interface / onboarding terms. Used with `grep -vE` to
+      # filter `grep -rn` output. The leading `(\./)?` tolerates both
+      # GNU grep (which prepends `./` to relative paths) and BSD grep
+      # (which doesn't) — useful for local dry-runs on macOS.
+      ALLOWLIST_LINE: '^(\./)?(REPOS-CONTRACT|CI-CONTRACT-GUIDE|CLAUDE|README|README2)\.md:|^(\./)?apps/README\.md:|^(\./)?docs/marketing/[^:]*:|^(\./)?docs/hardware/[^:]*:|^(\./)?docs/assistant-role-templates\.md:'
+      # Same allowlist but for full paths (no `:`), for `grep -l` output.
+      ALLOWLIST_PATH: '^(\./)?(REPOS-CONTRACT|CI-CONTRACT-GUIDE|CLAUDE|README|README2)\.md$|^(\./)?apps/README\.md$|^(\./)?docs/marketing/|^(\./)?docs/hardware/|^(\./)?docs/assistant-role-templates\.md$'
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -27,68 +58,82 @@ jobs:
       - name: Check for Associate Agent personas
         run: |
           echo "🔍 Checking for forbidden persona definitions (Sterling, Blake, Cipher, Sovereign as Associate Agents)..."
-          # Check for persona table or Associate Agent definitions (not "Sovereign" as adjective for infrastructure)
-          if grep -r "Associate Agent" --include="*.md" . 2>/dev/null | grep -v "REPOS-CONTRACT"; then
-            echo "❌ FAIL: Found Associate Agent definitions in You-Sir Juan"
-            echo "You-Sir Juan MUST NOT contain Associate Agent personas."
-            echo "Move persona content to Nephew repo."
+          OFFENDERS=$(grep -rn "Associate Agent" --include="*.md" --exclude-dir=node_modules --exclude-dir=vendor --exclude-dir=.git . 2>/dev/null | grep -vE "$ALLOWLIST_LINE" || true)
+          if [ -n "$OFFENDERS" ]; then
+            echo "❌ FAIL: Found Associate Agent references outside the allowlist:"
+            echo "$OFFENDERS"
+            echo ""
+            echo "Either move persona content to the Nephew repo, or — if this file legitimately"
+            echo "describes the product — add it to the ALLOWLIST_LINE in this workflow."
             exit 1
           fi
-          if grep -r "Member.*Associate.*Palette.*Character" --include="*.md" . 2>/dev/null | grep -v "REPOS-CONTRACT"; then
-            echo "❌ FAIL: Found Associate Agent table in You-Sir Juan"
+          OFFENDERS_TABLE=$(grep -rnE "Member.*Associate.*Palette.*Character" --include="*.md" --exclude-dir=node_modules --exclude-dir=vendor --exclude-dir=.git . 2>/dev/null | grep -vE "$ALLOWLIST_LINE" || true)
+          if [ -n "$OFFENDERS_TABLE" ]; then
+            echo "❌ FAIL: Found Associate Agent table outside the allowlist:"
+            echo "$OFFENDERS_TABLE"
             exit 1
           fi
-          # Check for all four personas defined together (signature of persona table)
-          PERSONA_COUNT=$(grep -l "Sterling" --include="*.md" . 2>/dev/null | xargs -I{} grep -l "Blake" {} 2>/dev/null | xargs -I{} grep -l "Cipher" {} 2>/dev/null | xargs -I{} grep -l "Sovereign" {} 2>/dev/null | wc -l)
-          if [ "$PERSONA_COUNT" -gt 0 ]; then
-            echo "❌ FAIL: Found all four Associate Agents defined together"
+          # Files containing all four persona names (Sterling + Blake + Cipher + Sovereign)
+          PERSONA_FILES=$(
+            grep -rl "Sterling" --include="*.md" --exclude-dir=node_modules --exclude-dir=vendor --exclude-dir=.git . 2>/dev/null \
+              | xargs -I{} sh -c 'grep -l "Blake" "{}" 2>/dev/null' \
+              | xargs -I{} sh -c 'grep -l "Cipher" "{}" 2>/dev/null' \
+              | xargs -I{} sh -c 'grep -l "Sovereign" "{}" 2>/dev/null' \
+              | grep -vE "$ALLOWLIST_PATH" || true
+          )
+          if [ -n "$PERSONA_FILES" ]; then
+            echo "❌ FAIL: Found all four Associate Agents defined together in non-allowlisted file(s):"
+            echo "$PERSONA_FILES"
             exit 1
           fi
-          echo "✅ PASS: No persona definitions found"
+          echo "✅ PASS: No persona definitions found outside the allowlist."
 
       - name: Check for interface UX content
         run: |
-          echo "🔍 Checking for forbidden interface UX (Walk-Up Kiosk, Biometric, Voice-First)..."
-          if grep -r "Walk-Up Kiosk\|Biometric Authentication\|Voice-First\|Associate Agent" --include="*.md" --include="*.swift" --include="*.tsx" --include="*.ts" . 2>/dev/null; then
-            echo "❌ FAIL: Found interface UX content in You-Sir Juan"
-            echo "You-Sir Juan MUST NOT contain interface/experience content."
-            echo "Move interface content to Nephew repo."
+          echo "🔍 Checking for forbidden interface UX (Walk-Up Kiosk, Biometric Authentication, Voice-First)..."
+          OFFENDERS=$(grep -rnE "Walk-Up Kiosk|Biometric Authentication|Voice-First" --include="*.md" --include="*.swift" --include="*.tsx" --include="*.ts" --exclude-dir=node_modules --exclude-dir=vendor --exclude-dir=.git . 2>/dev/null | grep -vE "$ALLOWLIST_LINE" || true)
+          if [ -n "$OFFENDERS" ]; then
+            echo "❌ FAIL: Found interface UX content outside the allowlist:"
+            echo "$OFFENDERS"
+            echo ""
+            echo "Move interface content to Nephew repo, or add the file to the allowlist if appropriate."
             exit 1
-          else
-            echo "✅ PASS: No interface UX content found"
           fi
+          echo "✅ PASS: No interface UX content found outside the allowlist."
 
       - name: Check for family member onboarding
         run: |
           echo "🔍 Checking for forbidden onboarding flow content..."
-          if grep -r "family member is provisioned\|onboarding process\|new member is provisioned" --include="*.md" --include="*.swift" --include="*.tsx" --include="*.ts" . 2>/dev/null; then
-            echo "❌ FAIL: Found onboarding flow content in You-Sir Juan"
-            echo "You-Sir Juan MUST NOT contain family member onboarding."
-            echo "Move onboarding content to Nephew repo."
+          OFFENDERS=$(grep -rnE "family member is provisioned|onboarding process|new member is provisioned" --include="*.md" --include="*.swift" --include="*.tsx" --include="*.ts" --exclude-dir=node_modules --exclude-dir=vendor --exclude-dir=.git . 2>/dev/null | grep -vE "$ALLOWLIST_LINE" || true)
+          if [ -n "$OFFENDERS" ]; then
+            echo "❌ FAIL: Found onboarding flow content outside the allowlist:"
+            echo "$OFFENDERS"
             exit 1
-          else
-            echo "✅ PASS: No onboarding flow content found"
           fi
+          echo "✅ PASS: No onboarding flow content found outside the allowlist."
 
       - name: Check for meta-library content
         run: |
           echo "🔍 Checking for forbidden meta-library/compounding brain content..."
-          if grep -r "meta-library\|compounding brain\|session learnings" --include="*.md" --include="*.swift" --include="*.tsx" --include="*.ts" . 2>/dev/null; then
-            echo "❌ FAIL: Found meta-library content in You-Sir Juan"
-            echo "You-Sir Juan MUST NOT contain meta-library/compounding brain."
-            echo "Move meta-library content to Nephew repo."
+          OFFENDERS=$(grep -rnE "meta-library|compounding brain|session learnings" --include="*.md" --include="*.swift" --include="*.tsx" --include="*.ts" --exclude-dir=node_modules --exclude-dir=vendor --exclude-dir=.git . 2>/dev/null | grep -vE "$ALLOWLIST_LINE" || true)
+          if [ -n "$OFFENDERS" ]; then
+            echo "❌ FAIL: Found meta-library content outside the allowlist:"
+            echo "$OFFENDERS"
             exit 1
-          else
-            echo "✅ PASS: No meta-library content found"
           fi
+          echo "✅ PASS: No meta-library content found outside the allowlist."
 
       - name: Summary
         run: |
           echo ""
           echo "📋 Contract Enforcement Summary for You-Sir Juan:"
-          echo "✅ No persona definitions (Sterling, Blake, Cipher, Sovereign)"
-          echo "✅ No interface UX (kiosk, biometric, voice-first)"
-          echo "✅ No onboarding flows"
-          echo "✅ No meta-library content"
+          echo "✅ No persona definitions outside the product-doc allowlist"
+          echo "✅ No interface UX outside the product-doc allowlist"
+          echo "✅ No onboarding flows outside the product-doc allowlist"
+          echo "✅ No meta-library content outside the product-doc allowlist"
           echo ""
-          echo "You-Sir Juan is correctly infrastructure-only."
+          echo "Allowlisted files (intentional exceptions):"
+          echo "  - REPOS-CONTRACT.md, CI-CONTRACT-GUIDE.md"
+          echo "  - CLAUDE.md, README.md, README2.md, apps/README.md"
+          echo "  - docs/marketing/**, docs/hardware/**"
+          echo "  - docs/assistant-role-templates.md"
