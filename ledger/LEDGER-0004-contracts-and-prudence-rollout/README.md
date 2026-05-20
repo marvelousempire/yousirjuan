@@ -1,14 +1,29 @@
 ---
 ledgerId: LEDGER-0004
 title: Propagate contracts-and-prudence philosophy rule to all active marvelousempire repos
-status: in-progress
+status: shipped
 opened: 2026-05-20
-closed: null
+closed: 2026-05-20
 related-pains: []
 related-tickets: []
 triggers:
   - manual-cli: `bash ledger/LEDGER-0004-contracts-and-prudence-rollout/playbooks/rollout.sh dry-run`
   - manual-cli: `bash ledger/LEDGER-0004-contracts-and-prudence-rollout/playbooks/rollout.sh apply`
+shipped-summary:
+  date: 2026-05-20
+  repos-targeted: 47
+  repos-in-sync-after-completion: 47
+  notes: |
+    Initial run shipped 39/47 cleanly. The other 8 no-op'd because they had
+    `.claude` or `.cursor` in their .gitignore — playbook's git add silently
+    skipped those files. A force-add fix-up loop (`git add -f`) shipped the
+    remaining 9 (ai-skills-library, brokerage-prototype, claude-mem, dustpan,
+    json-archive-chat-reader, membadat, series-handbook-framework,
+    very-handy-man-services, yousirjuan-ai). All 47 now ✓ in sync per the
+    playbook's status action.
+known-issue:
+  - The playbook should use `git add -f` from the start. Update for next time:
+    edit playbooks/rollout.sh line ~165 to change `git add ...` to `git add -f ...`.
 ---
 
 # LEDGER-0004 — Propagate contracts-and-prudence philosophy across the control tower

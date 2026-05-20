@@ -65,3 +65,6 @@ apps/yousirjuan-ios/build/
 # Playwright results
 apps/yousirjuan-web/playwright-report/
 apps/yousirjuan-web/test-results/
+
+# LEDGER-0004 rollout per-run summary files (ephemeral audit logs)
+ledger/LEDGER-0004-contracts-and-prudence-rollout/artifacts/runs/
