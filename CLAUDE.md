@@ -4,6 +4,18 @@ This file is read by Claude Code at the start of every session. It tells the age
 
 ---
 
+## Operating philosophy (read before any task)
+
+**Good contracts → good. Careless = stupid. Prudence first; act second.**
+
+Operator's verbatim: *"Remember that good contracts are important to maintaining the good, anything else is less than good and we'd want to remain good by being good — prudence is good; careful is opposite careless and careless is equal to stupid and stupid is opposite of good."*
+
+Full rule with pre-action checklist: [`.claude/rules/contracts-and-prudence.md`](.claude/rules/contracts-and-prudence.md).
+
+The chain that matters: careless ≡ stupid; stupid is the opposite of good; we are not stupid here. **Therefore: every commitment is a contract, prudence is required before action, and any non-trivial action that can't be defended as careful doesn't get taken.**
+
+---
+
 ## What this repo is
 
 **You-Sir Juan™** is a sovereign private AI infrastructure platform for family offices and households. It is:
