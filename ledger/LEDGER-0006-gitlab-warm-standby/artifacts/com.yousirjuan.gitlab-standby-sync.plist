@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  com.yousirjuan.gitlab-standby-sync.plist
+  Pulls the latest GitLab backup tarball from the VPS to the iMac.
+
+  Schedule: nightly at 04:00 Eastern (08:00 UTC EDT / 09:00 UTC EST).
+  VPS produces backups at 03:00 Eastern via /etc/cron.d/gitlab-nightly-backup;
+  this job runs 60 minutes after to give the VPS time to finish.
+
+  Logs: ~/Library/Logs/gitlab-standby-sync.log
+
+  Install:   launchctl load -w ~/Library/LaunchAgents/com.yousirjuan.gitlab-standby-sync.plist
+  Uninstall: launchctl unload ~/Library/LaunchAgents/com.yousirjuan.gitlab-standby-sync.plist && rm …
+-->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.yousirjuan.gitlab-standby-sync</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>-c</string>
+        <string>
+          set -euo pipefail
+          DEST="$HOME/Library/GitLab-Data/data/backups"
+          mkdir -p "$DEST"
+          # rsync only the newest backup tar from the VPS
+          rsync -avz --partial --inplace \
+              -e "ssh -p 2222 -i $HOME/.ssh/id_ed25519" \
+              "abrownsanta@72.167.151.251:/opt/gitlab/data/backups/" \
+              "$DEST/"
+        </string>
+    </array>
+
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key><integer>8</integer>
+        <key>Minute</key><integer>0</integer>
+    </dict>
+
+    <key>StandardOutPath</key>
+    <string>/Users/averygoodman/Library/Logs/gitlab-standby-sync.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/averygoodman/Library/Logs/gitlab-standby-sync.log</string>
+
+    <key>RunAtLoad</key>
+    <false/>
+</dict>
+</plist>

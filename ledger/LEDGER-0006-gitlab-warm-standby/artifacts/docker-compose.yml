@@ -1,0 +1,58 @@
+# GitLab CE warm-standby on the iMac.
+#
+# Canonical artifact for LEDGER-0006. Deployed copy lives at:
+#   ~/Developer/gitlab-standby/docker-compose.yml
+#
+# Image pinned to the same digest as VPS primary (gitlab/gitlab-ce:latest
+# resolves to sha256:c66669ef8bf1f4d0acae3d9e54eb0e1988ef8b8b17d9ba41e6c8d4d981d14986
+# at 2026-05-20 — GitLab 18.11.3). Keeping the digest pin is important
+# because backup format is version-locked: a standby on a different version
+# can fail to restore from a primary's backup.
+#
+# Ports:
+#   8929 → 8929   GitLab web (tailnet-accessible)
+#   2424 → 22     GitLab git SSH (tailnet-accessible)
+#
+# Volumes:
+#   ~/Library/GitLab-Data/config → /etc/gitlab
+#   ~/Library/GitLab-Data/data   → /var/opt/gitlab   (backups live in data/backups/)
+#   ~/Library/GitLab-Data/logs   → /var/log/gitlab
+#
+# external_url uses tailnet hostname so cert / link generation stays consistent
+# with how the operator reaches it. Replace `imac-avery.tailaa31dd.ts.net` if the
+# tailnet hostname differs after re-auth.
+
+services:
+  gitlab-standby:
+    image: gitlab/gitlab-ce:latest@sha256:c66669ef8bf1f4d0acae3d9e54eb0e1988ef8b8b17d9ba41e6c8d4d981d14986
+    container_name: gitlab-standby
+    restart: unless-stopped
+    hostname: imac-avery.tailaa31dd.ts.net
+
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'http://imac-avery.tailaa31dd.ts.net:8929'
+        # SSH on non-default port (matches primary)
+        gitlab_rails['gitlab_shell_ssh_port'] = 2424
+        # Standby mode hint — also disables some maintenance jobs
+        gitlab_rails['env'] = { 'STANDBY_MODE' => '1' }
+        # Backup keep policy — keep 7 days of backups
+        gitlab_rails['backup_keep_time'] = 604800
+
+    ports:
+      - "8929:8929"
+      - "2424:22"
+
+    volumes:
+      - ${HOME}/Library/GitLab-Data/config:/etc/gitlab
+      - ${HOME}/Library/GitLab-Data/data:/var/opt/gitlab
+      - ${HOME}/Library/GitLab-Data/logs:/var/log/gitlab
+
+    shm_size: 256m
+
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8929/-/health"]
+      interval: 60s
+      timeout: 30s
+      retries: 5
+      start_period: 5m
