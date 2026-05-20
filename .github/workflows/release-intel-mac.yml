@@ -12,7 +12,7 @@
 # One-liner (served by VPS get.yousirjuan.ai):
 #   curl -fsSL https://get.yousirjuan.ai/intel-mac | sh
 
-name: Release — Intel Mac installer
+name: "Release: Intel Mac installer"
 
 on:
   push:
