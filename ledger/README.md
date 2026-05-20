@@ -18,13 +18,14 @@ For the rule that makes adding to the ledger the default closing ritual, see [`.
 
 Counter is the source of truth for the next `LEDGER-NNNN`. Bump it when you open a new entry.
 
-**Next number:** `LEDGER-0004`
+**Next number:** `LEDGER-0005`
 
 | ID | Title | Status | Opened | Closed | Replay |
 |---|---|---|---|---|---|
 | [`LEDGER-0001`](LEDGER-0001-imac-mcp-setup/) | iMac MCP development stack | `shipped` | 2026-05-19 | 2026-05-19 | `make -C ledger/LEDGER-0001-imac-mcp-setup/playbooks install` |
 | [`LEDGER-0002`](LEDGER-0002-workflow-debugger-agent/) | workflow-debugger agent (YAML / Bash / JS / Python / Excel) | `shipped` | 2026-05-20 | 2026-05-20 | already loaded at `.claude/agents/workflow-debugger.md`; promote to user scope via `bash ledger/LEDGER-0002-workflow-debugger-agent/playbooks/install-user-scope.sh` |
 | [`LEDGER-0003`](LEDGER-0003-vscode-remote-vps/) | VS Code Remote-SSH to vps-godaddy (port 2222, abrownsanta) | `shipped` | 2026-05-20 | 2026-05-20 | `bash ledger/LEDGER-0003-vscode-remote-vps/playbooks/install.sh install && code --remote ssh-remote+vps-godaddy /home/abrownsanta` |
+| [`LEDGER-0004`](LEDGER-0004-contracts-and-prudence-rollout/) | contracts-and-prudence philosophy rollout (47 marvelousempire repos) | `in-progress` | 2026-05-20 | _pending_ | `bash ledger/LEDGER-0004-contracts-and-prudence-rollout/playbooks/rollout.sh dry-run && bash …/rollout.sh apply` |
 
 > LEDGER-0001 was originally captured at `docs/sessions/2026-05-19-mcp-setup/` (PR #4) as the embryo of this pattern. It was migrated into the ledger and reshaped (`artifacts/Makefile` → `playbooks/Makefile`, new ticket README, new `install.sh` shell sibling, ticket frontmatter) in the migration PR that landed alongside this row.
 
