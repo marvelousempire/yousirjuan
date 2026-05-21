@@ -409,6 +409,86 @@ git remote add gitlab ssh://git@72.167.151.251:2424/marvelousempire/<repo>.git
 
 ---
 
+## Rule 15: One Tower, One URL — New UI surfaces go INSIDE Nephew Control Tower
+
+<system_reminder>
+When you stand up any new app, dashboard, admin panel, or browser-facing UI for this platform, the default is to **embed it INSIDE the Nephew Control Tower** at `https://nephew.yousirjuan.ai/apps/<id>` via the apps-manifest pattern. Do NOT create a new subdomain by reflex. The Tower is the single operator entrypoint; subdomains are the exception, not the default.
+</system_reminder>
+
+### Why this rule exists
+
+On 2026-05-21, an agent shipped Uptime Kuma as a standalone `uptime.yousirjuan.ai` subdomain. The operator's verbatim correction was unequivocal: *"can we just add that to the Control Tower which is the Nephew UI instead of 'uptime.yousirjuan.ai'? […] we have nephew.yousirjuan.ai — you need to make this as an app that can play inside of nephew."*
+
+The deeper principle: **proliferation of subdomains is operational debt.** Every new subdomain means a new DNS A record to maintain, a new TLS cert to renew, a new auth boundary, a new cookie scope, a new place for the operator to bookmark. After ten apps you have ten URLs the operator has to remember and ten cert renewals to track. The Tower model collapses that into one URL + ten `/apps/<id>` routes that all live under the same auth + cert + nav.
+
+### How to embed a new app in the Tower
+
+1. **Register in the manifest.** Add an entry to `marvelousempire/nephew` → `data/control-tower-apps.manifest.json`:
+
+   ```json
+   {
+     "id": "my-app",
+     "label": "My App",
+     "category": "agents",
+     "subtitle": "What it does in one line",
+     "embed_url": "https://my-app.yousirjuan.ai",
+     "probe_url": "https://my-app.yousirjuan.ai/health",
+     "external": true,
+     "start_hint": "How to install / run / restore it",
+     "route_key": "s-<11-random-chars>"
+   }
+   ```
+
+2. **Strip X-Frame-Options** at the nginx layer for the embedded app's vhost so the iframe doesn't get blocked by `SAMEORIGIN`:
+
+   ```
+   proxy_hide_header X-Frame-Options;
+   add_header Content-Security-Policy "frame-ancestors 'self' https://nephew.yousirjuan.ai https://*.yousirjuan.ai" always;
+   ```
+
+3. **Visit** `https://nephew.yousirjuan.ai/apps/my-app` → the EmbedAppPage renders the iframe with the Tower chrome around it.
+
+### When a subdomain IS the right call (the exceptions)
+
+| Reason for separate subdomain | Example |
+|---|---|
+| Non-HTTP protocol on a dedicated port | `git.yousirjuan.ai:2424` (SSH for git) |
+| Service explicitly serves third parties / public traffic | `hello.yousirjuan.ai` (public marketing page) |
+| Service requires its own TLS termination logic (mTLS, custom alpn) | rare; document why |
+| Legacy app that predates the Tower model | grandfathered; don't migrate without reason |
+| The operator explicitly directs a subdomain | this rule defers to direct operator decision |
+
+If none of the above apply: **embed in Tower.**
+
+### ❌ FORBIDDEN
+
+- Reflexively creating a new subdomain for a new web UI without considering the embed option
+- Standing up a service whose only surface is its own subdomain when the apps-manifest pattern would fit
+- Bypassing the manifest by hard-coding routes into the React app for one-off services
+- Telling the operator "visit `https://newthing.yousirjuan.ai/`" when it could have been `https://nephew.yousirjuan.ai/apps/newthing`
+
+### ✅ REQUIRED
+
+- Default to the apps-manifest pattern for every new browser-facing UI
+- When in doubt, ask the operator: "Embed in Tower (default) or separate subdomain (exception)?"
+- Document the embed_url + the X-Frame-Options strip + the manifest entry as a single coordinated PR
+- If a subdomain IS justified, write a one-paragraph note in the PR body explaining which exception applies
+
+### Why the operator named this rule
+
+The rule got its phrasing — "one Tower, one URL" — during the Uptime Kuma fix discussion. The operator framed it as a positive choice (the Tower IS the place, by design) rather than a defensive workaround. Naming it that way every time future agents look at this file should reinforce the architecture, not just the prohibition.
+
+### Cross-references
+
+- `.claude/rules/one-tower-one-url.md` — repo-level binding mirror
+- `marvelousempire/nephew` → `data/control-tower-apps.manifest.json` — the canonical apps registry
+- `marvelousempire/nephew` → `apps/control-tower/src/pages/EmbedAppPage.tsx` — the renderer
+- LEDGER-0016 — original standalone Kuma subdomain that violated this rule
+- LEDGER-0017 — failed attempt to retrofit via sub-path routing (Kuma 1.x doesn't sub-path)
+- `nephew` PR #27 — the embed-via-manifest fix that established the pattern this rule codifies
+
+---
+
 ## Enforcement
 
 This document is the **canonical universal ruleset** for all AI agents, LLMs, and orchestration systems. All systems must load these rules before executing any CLI, Git, or agent assignment operations.
@@ -427,6 +507,8 @@ Rule 13 (Operator-Intent Protocol) was established by operator directive on 2026
 
 Rule 14 (Dual-Push Protocol) was established by operator directive on 2026-05-21 after the same session pushed only to GitHub during an entire multi-PR run, breaking the GitLab-as-sovereign-mirror posture from LEDGER-0005. The operator's verbatim correction was: *"when i ask you to push everything to git, you must push everything to my github repo and my gitlab - make sure that is what you have been doing."* The rule + the `tools/git-dual-push.sh` tool + the binding `.claude/rules/dual-push-protocol.md` shipped the same day.
 
-From that moment forward, all AI executes CLI operations directly, displays success/failure badges, leaves loud cross-agent intent notes on every deliberate state change, AND dual-pushes every `git push` to both GitHub and GitLab — unless explicitly told otherwise.
+Rule 15 (One Tower, One URL) was established by operator directive on 2026-05-21 after an agent shipped Uptime Kuma as a standalone `uptime.yousirjuan.ai` subdomain. The operator's verbatim correction was unequivocal: *"can we just add that to the Control Tower which is the Nephew UI instead of 'uptime.yousirjuan.ai'? […] we have nephew.yousirjuan.ai — you need to make this as an app that can play inside of nephew."* The rule + the binding `.claude/rules/one-tower-one-url.md` mirror + the corrective `nephew` PR #27 (registering uptime-kuma in the apps manifest) shipped the same day.
+
+From that moment forward, all AI executes CLI operations directly, displays success/failure badges, leaves loud cross-agent intent notes on every deliberate state change, dual-pushes every `git push` to both GitHub and GitLab, AND defaults new browser-facing UIs to the Nephew Control Tower apps-manifest embed pattern rather than reflexively creating new subdomains — unless explicitly told otherwise.
 
 **Witnessed by:** Nephew CLOAK · Automata Layer 0 · **Universal to All AI Systems, IDE Agents, LLM Agents, and Human Workers**
