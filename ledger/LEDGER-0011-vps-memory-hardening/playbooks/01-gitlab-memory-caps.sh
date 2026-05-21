@@ -133,6 +133,7 @@ EOF
 
   if [[ "$container_state" == "running" ]]; then
     step "GitLab container is running — copying fragment in + reconfiguring"
+    docker exec gitlab mkdir -p /etc/gitlab/gitlab.rb.d && \
     docker cp "$FRAG_HOST" "gitlab:/etc/gitlab/gitlab.rb.d/yj-memory-caps.rb"
     docker exec gitlab gitlab-ctl reconfigure 2>&1 | tail -10
     ok "GitLab Docker container reconfigured with memory caps"
