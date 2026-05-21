@@ -274,6 +274,75 @@ or
 
 ---
 
+## Rule 13: Operator-Intent Protocol — Leave Loud Notes for the Next Agent
+
+<system_reminder>
+Every time you deliberately stop, disable, mask, remove, block, or alter the state of a service / container / port / firewall rule / mount / scheduled job on any operator host, you MUST write an operator-intent note that the next agent landing on the box cannot miss. **Recording the decision only in a PR description, a chat log, or git history is not enough.** PR descriptions are invisible to an agent SSH'd into the box. The intent must live where the next agent will look — on the box itself.
+</system_reminder>
+
+### Why this rule exists
+
+On 2026-05-21, an agent stopped `n8n-nephew.service` on the production VPS for a sound reason (it was the OOM trigger from runbook 05). The decision was recorded in a PR description. A later agent landing on the box saw a stopped service with no posted intent and helpfully restarted it. The OOM trigger came back online unannounced. The operator paid the cost.
+
+**Verbatim operator directive:**
+
+> "that n8n install issued by another agent was very bad. you must add that rule to make good notes so other people and other IA know what you are doing so they can know what to do. global rule please now."
+
+### ✅ REQUIRED
+
+When you change the deliberate state of anything on a host, in the **same session** that you made the change:
+
+1. **Write an intent file on the host** at `/etc/yousirjuan/operator-intent.d/<topic-slug>.md` using the LEDGER-0014 `intent.sh` playbook:
+
+   ```bash
+   sudo bash <repo>/ledger/LEDGER-0014-operator-intent-protocol/playbooks/intent.sh add \
+     <topic-slug> "<short description of what>" "<why — link to LEDGER / runbook>" \
+     [--mask-service <unit>]
+   ```
+
+2. **Verify it's visible.** Reconnect via SSH to confirm the MOTD hook dumps the new intent banner before the prompt.
+
+3. **For services that should NEVER come back without explicit operator action**, pass `--mask-service <unit>` so `systemctl start` fails with `"Unit is masked"`.
+
+### ❌ FORBIDDEN
+
+- Stopping a service and only mentioning it in a PR description.
+- Closing a session with a deliberate state change that isn't reflected in an intent file on the box.
+- Restarting / unmasking / re-enabling a service without first checking `/etc/yousirjuan/operator-intent.d/`. **Read before "fixing."**
+- Removing an intent file by hand (e.g. `rm /etc/yousirjuan/operator-intent.d/x.md`) — always use `intent.sh remove <topic>` so the systemd unit gets unmasked too.
+
+### Before "fixing" anything that looks broken
+
+```bash
+ssh <host> 'ls /etc/yousirjuan/operator-intent.d/ 2>/dev/null && \
+            cat /etc/yousirjuan/operator-intent.d/*.md 2>/dev/null'
+```
+
+If any intent file mentions what you're about to touch, **STOP.** Quote the intent to the operator and ask explicitly before proceeding.
+
+### Why the systemd mask matters
+
+`systemctl mask <unit>` replaces the unit file with a `/dev/null` symlink. A casual `systemctl start <unit>` then fails:
+
+```
+$ sudo systemctl start n8n-nephew.service
+Failed to start n8n-nephew.service: Unit n8n-nephew.service is masked.
+```
+
+That failure is the loud reminder. An agent will not silently override it; they have to deliberately `systemctl unmask` first, which is the moment they're forced to stop and check the intent file.
+
+### Scope
+
+This rule applies to every AI system, LLM, IDE agent, automated tool, and human worker operating on operator hosts. It is enforced at the repo level by [`.claude/rules/operator-intent-protocol.md`](../.claude/rules/operator-intent-protocol.md) and at the host level by the LEDGER-0014 MOTD hook + systemd masking.
+
+### Cross-references
+
+- LEDGER-0014 in marvelousempire/yousirjuan — the playbook + MOTD hook + concrete instances
+- LEDGER-0007 runbook 05 — the OOM incident that triggered the original n8n stop
+- `.claude/rules/contracts-and-prudence.md` — the operating philosophy this enforces: visible contracts maintain good; invisible contracts get broken
+
+---
+
 ## Enforcement
 
 This document is the **canonical universal ruleset** for all AI agents, LLMs, and orchestration systems. All systems must load these rules before executing any CLI, Git, or agent assignment operations.
@@ -288,6 +357,8 @@ Rule 1 (Always Take the Terminal) was established by operator directive on 2026-
 
 Rule 4 (Success/Error Badge) was added on 2026-05-16 as a universal standard for all AI systems, inspired by Perplexity's report card badge system. Every task must display ✅ or ❌ prominently.
 
-From that moment forward, all AI executes CLI operations directly and displays success/failure badges — unless explicitly told otherwise.
+Rule 13 (Operator-Intent Protocol) was established by operator directive on 2026-05-21 after an agent reinstalled n8n that a prior agent had deliberately stopped. The operator's verbatim correction was unequivocal: *"another agent reinstalled it because you did not leave healthy notes on what you did to play-well with others. you must add that rule to make good notes so other people and other IA know what you are doing so they can know what to do. global rule please now."* The rule + its host-side enforcement (intent files + MOTD hook + systemd mask) shipped the same day as LEDGER-0014 in marvelousempire/yousirjuan.
 
-**Witnessed by:** Nephew CLOAK · Automata Layer 0 · **Universal to All AI Systems**
+From that moment forward, all AI executes CLI operations directly, displays success/failure badges, AND leaves loud cross-agent intent notes on every deliberate state change — unless explicitly told otherwise.
+
+**Witnessed by:** Nephew CLOAK · Automata Layer 0 · **Universal to All AI Systems, IDE Agents, LLM Agents, and Human Workers**
