@@ -1,0 +1,17 @@
+{
+  "_comment": "LEDGER-0020 — maps systemd unit names to operator-intent topics. Used by both check-intent-before-start.sh (Layer B) and intent-aware-unmask.sh (Layer C). Operator-editable: add a new entry when you create a new intent file that protects a unit. The drift-detector heuristics in LEDGER-0019 don't need this map; this is specifically for the unit-name → topic lookup at start-time + unmask-time.",
+
+  "_default_path": "/etc/yousirjuan/intent-unit-map.json",
+
+  "n8n-nephew.service": {
+    "topic": "n8n-stopped",
+    "expected_state": "stopped",
+    "_note": "OOM trigger per LEDGER-0007 runbook 05. Restart only via intent-aware-unmask.sh OR if n8n is migrated into LEDGER-0010 sandbox."
+  },
+
+  "actions.runner.marvelousempire-red-e-play-app.readyplay-vps.service": {
+    "topic": "github-actions-runner-stopped",
+    "expected_state": "stopped",
+    "_note": "Per Avery decision 2026-05-20 — eliminating GitHub Actions from VPS."
+  }
+}
