@@ -1,0 +1,22 @@
+[Unit]
+Description=The Clinic — RAG dev-postmortem DB (LEDGER-0013 wire-marvelous-app)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=abrownsanta
+WorkingDirectory=/opt/clinic
+ExecStart=/usr/bin/python3 /opt/clinic/server.py --host 127.0.0.1 --port 5436
+Restart=on-failure
+RestartSec=10
+StandardOutput=append:/var/log/clinic.log
+StandardError=append:/var/log/clinic.log
+
+NoNewPrivileges=true
+ProtectSystem=full
+ProtectHome=read-only
+ReadWritePaths=/opt/clinic /var/log
+
+[Install]
+WantedBy=multi-user.target
