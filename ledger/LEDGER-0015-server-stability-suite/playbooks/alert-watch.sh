@@ -113,6 +113,21 @@ for s in d.get("sites", {}).get("sites", []):
       mark_fired "site_$sub"
     fi
   done
+
+  # LEDGER-0020 Layer A: poll intent-reality drift report (over SSH for now;
+  # future PR adds GET /intent-drift to LEDGER-0012 agent for direct HTTP poll).
+  local drift_count
+  drift_count=$(ssh -o BatchMode=yes -o ConnectTimeout=3 vps-godaddy \
+    "cat /var/lib/yousirjuan/intent-drift-report.json 2>/dev/null | python3 -c \"import json,sys; d=json.load(sys.stdin); print(d.get('drift_count',0))\" 2>/dev/null" 2>/dev/null || echo 0)
+  if (( drift_count > 0 )); then
+    local drift_topics
+    drift_topics=$(ssh -o BatchMode=yes -o ConnectTimeout=3 vps-godaddy \
+      "cat /var/lib/yousirjuan/intent-drift-report.json 2>/dev/null | python3 -c \"import json,sys; d=json.load(sys.stdin); print(', '.join(e['topic'] for e in d.get('drift_entries',[])))\"" 2>/dev/null || echo unknown)
+    if should_fire "intent_drift"; then
+      notify "🟣 Intent-reality drift" "$drift_count file(s): $drift_topics" "Run intent.sh remove <topic> OR fix the actual state."
+      mark_fired "intent_drift"
+    fi
+  fi
 }
 
 # Single-tick mode (for testing) or daemon mode

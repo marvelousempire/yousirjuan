@@ -118,6 +118,32 @@ for f in "$INTENT_DIR"/*.md; do
     drift_count=$((drift_count + 1))
     drift_entries+=("$topic|$actual|$expected_alternatives")
     log "  ✗  DRIFT: $topic — got '$actual', expected '$expected_alternatives'"
+
+    # LEDGER-0020 Layer D: auto-heal if the intent file opts in with
+    #   `auto_heal: stop` (or `auto_heal: start`) in its `## Drift check` section.
+    heal=$(awk '/^## Drift check/{flag=1; next} flag && /^auto_heal:/{sub(/^auto_heal: */,""); print; exit}' "$f")
+    if [[ -n "${heal:-}" ]]; then
+      log "  🩹 auto_heal=$heal requested by intent file; attempting"
+      # Heuristic: if the topic looks like "<svc>-stopped" and heal=stop, run systemctl stop.
+      # For docker containers (gitlab-stopped), use docker stop.
+      case "$topic" in
+        n8n-stopped|*-stopped)
+          if [[ "$heal" == "stop" ]]; then
+            # Try as systemd unit
+            unit=$(python3 -c "import json; m=json.load(open('/etc/yousirjuan/intent-unit-map.json',));print([u for u,c in m.items() if c.get('topic')=='$topic' and not u.startswith('_')][0])" 2>/dev/null || echo "")
+            if [[ -n "$unit" ]]; then
+              log "    → systemctl stop $unit"
+              systemctl stop "$unit" 2>&1 | head -3 | sed 's/^/      /' || true
+            elif [[ "$topic" == "gitlab-stopped" ]]; then
+              log "    → docker stop gitlab gitlab-runner"
+              docker stop gitlab gitlab-runner 2>&1 | head -3 | sed 's/^/      /' || true
+            else
+              log "    → no known heal mapping for $topic; skipping"
+            fi
+          fi
+          ;;
+      esac
+    fi
   fi
 done
 
