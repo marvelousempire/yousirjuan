@@ -362,6 +362,23 @@ class H(http.server.BaseHTTPRequestHandler):
                 self._json(200, collect_sites())
             elif self.path == "/entities":
                 self._json(200, collect_entities())
+            elif self.path.startswith("/history"):
+                # LEDGER-0015: serve last N lines of system-history.jsonl
+                # Query: /history?lines=N  (default 200, max 2880 = 24h at 30s ticks)
+                import urllib.parse as _up
+                qs = _up.parse_qs(self.path.split("?", 1)[1] if "?" in self.path else "")
+                try:
+                    n = min(int(qs.get("lines", ["200"])[0]), 2880)
+                except (ValueError, TypeError):
+                    n = 200
+                hist_path = "/var/lib/yousirjuan/system-history.jsonl"
+                try:
+                    with open(hist_path, "rb") as f:
+                        data = f.read()
+                    lines = data.splitlines()[-n:]
+                    self._send(200, b"\n".join(lines) + b"\n", "application/x-ndjson; charset=utf-8")
+                except FileNotFoundError:
+                    self._send(404, b"history not yet populated (LEDGER-0015 server-tamer not installed?)\n")
             elif self.path == "/all":
                 # convenience: single fetch for the DustPan panel
                 self._json(200, {

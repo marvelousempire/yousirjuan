@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.yousirjuan.alert-watch</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>__PLAYBOOK_PATH__</string>
+  </array>
+
+  <key>RunAtLoad</key>
+  <true/>
+
+  <key>KeepAlive</key>
+  <true/>
+
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+    <key>HOME</key>
+    <string>__HOME__</string>
+    <key>AGENT_URL</key>
+    <string>http://vps-godaddy:9878</string>
+    <key>MEM_THRESHOLD</key>
+    <string>85</string>
+    <key>SWAP_THRESHOLD</key>
+    <string>50</string>
+    <key>LOAD_PER_CPU</key>
+    <string>4</string>
+    <key>CPUS</key>
+    <string>4</string>
+    <key>DEBOUNCE_SECONDS</key>
+    <string>300</string>
+  </dict>
+
+  <key>StandardOutPath</key>
+  <string>__HOME__/Library/Logs/yousirjuan-alert-watch.stdout.log</string>
+
+  <key>StandardErrorPath</key>
+  <string>__HOME__/Library/Logs/yousirjuan-alert-watch.stderr.log</string>
+
+  <key>ProcessType</key>
+  <string>Background</string>
+
+  <key>ThrottleInterval</key>
+  <integer>10</integer>
+</dict>
+</plist>
