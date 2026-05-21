@@ -1,0 +1,33 @@
+# Uptime Kuma — lightweight uptime monitoring + alerts.
+# Per LEDGER-0016. Runs on the VPS at 127.0.0.1:3011 (nginx-fronted as uptime.yousirjuan.ai).
+
+services:
+  uptime-kuma:
+    image: louislam/uptime-kuma:1
+    container_name: uptime-kuma
+    restart: unless-stopped
+
+    # Bind only to localhost — nginx handles TLS termination + auth on the public side
+    ports:
+      - "127.0.0.1:3011:3001"
+
+    # Persistent state: monitors, settings, history
+    volumes:
+      - /var/lib/yousirjuan/uptime-kuma:/app/data
+
+    # Memory cap — Uptime Kuma is light (~50 MB steady-state) but the cap
+    # protects against any future runaway. Per ADR-0001 selective-docker rule.
+    mem_limit: 256m
+    memswap_limit: 256m
+    cpus: 0.5
+
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:3001/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+    # Modest hardening
+    security_opt:
+      - no-new-privileges:true
