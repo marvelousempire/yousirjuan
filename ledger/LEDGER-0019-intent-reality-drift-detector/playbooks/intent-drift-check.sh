@@ -41,8 +41,8 @@ heuristic_check() {
     gitlab-stopped)         echo "docker_state gitlab|exited|missing";;
     github-actions-runner-stopped) echo "systemctl is-active actions.runner.marvelousempire-red-e-play-app.readyplay-vps.service|inactive|failed";;
     clinic-systemd-managed) echo "systemctl is-active clinic.service|active";;
-    swap-doubled-to-8gb)    echo "free_swap_gb_at_least|8";;
-    sshd-oom-protected)     echo "sshd_oom_score|-1000";;
+    swap-doubled-to-8gb)    echo "free_swap_gb_at_least 8|ok";;
+    sshd-oom-protected)     echo "sshd_oom_score -1000|ok";;
     *) echo "";;  # no heuristic
   esac
 }
