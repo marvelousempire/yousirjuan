@@ -53,6 +53,18 @@
       "path": "ORIENTATION.md",
       "required": true,
       "content_slot": "orientation"
+    },
+    {
+      "id": "firing_order",
+      "path": "FIRING_ORDER.md",
+      "required": true,
+      "content_slot": "firing_order"
+    },
+    {
+      "id": "metadata_post_product",
+      "path": "METADATA_POST_AND_PRODUCT_RULE.md",
+      "required": true,
+      "content_slot": "metadata_post_product"
     }
   ],
   "sources": [
