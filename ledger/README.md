@@ -18,7 +18,7 @@ For the rule that makes adding to the ledger the default closing ritual, see [`.
 
 Counter is the source of truth for the next `LEDGER-NNNN`. Bump it when you open a new entry.
 
-**Next number:** `LEDGER-0015`
+**Next number:** `LEDGER-0016`
 
 | ID | Title | Status | Opened | Closed | Replay |
 |---|---|---|---|---|---|
@@ -36,6 +36,7 @@ Counter is the source of truth for the next `LEDGER-NNNN`. Bump it when you open
 | [`LEDGER-0012`](LEDGER-0012-vps-observability-control/) | VPS observability + control agent — /system /processes /docker /sites /entities /kill | `shipped` | 2026-05-20 | 2026-05-20 | `sudo bash ledger/LEDGER-0012-vps-observability-control/playbooks/install-vps-agent.sh install` (on VPS); Nephew + DustPan UIs consume |
 | [`LEDGER-0013`](LEDGER-0013-clinic-fix-and-vhost-audit/) | Clinic vhost fix + nginx upstream audit + wire-marvelous-app generator | `in-progress` | 2026-05-21 | _pending_ | `sudo bash ledger/LEDGER-0013-clinic-fix-and-vhost-audit/playbooks/audit-vhost-upstreams.sh` (on VPS) + `wire-marvelous-app.sh` for new apps |
 | [`LEDGER-0014`](LEDGER-0014-operator-intent-protocol/) | Operator-intent protocol — cross-agent ops notes (intent files + MOTD hook + systemd mask) | `in-progress` | 2026-05-21 | _pending_ | `sudo bash ledger/LEDGER-0014-operator-intent-protocol/playbooks/intent.sh add <topic> "<desc>" "<why>" [--mask-service <unit>]` |
+| [`LEDGER-0015`](LEDGER-0015-server-stability-suite/) | Server Stability Suite — proactive killer + /history endpoint + macOS notifications | `in-progress` | 2026-05-21 | _pending_ | VPS: `sudo bash ledger/LEDGER-0015-server-stability-suite/playbooks/install-server-tamer.sh install` · iMac: `bash …/install-alert-watch.sh install` |
 
 > LEDGER-0001 was originally captured at `docs/sessions/2026-05-19-mcp-setup/` (PR #4) as the embryo of this pattern. It was migrated into the ledger and reshaped (`artifacts/Makefile` → `playbooks/Makefile`, new ticket README, new `install.sh` shell sibling, ticket frontmatter) in the migration PR that landed alongside this row.
 
