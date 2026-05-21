@@ -18,7 +18,7 @@ For the rule that makes adding to the ledger the default closing ritual, see [`.
 
 Counter is the source of truth for the next `LEDGER-NNNN`. Bump it when you open a new entry.
 
-**Next number:** `LEDGER-0021`
+**Next number:** `LEDGER-0022`
 
 | ID | Title | Status | Opened | Closed | Replay |
 |---|---|---|---|---|---|
@@ -42,6 +42,7 @@ Counter is the source of truth for the next `LEDGER-NNNN`. Bump it when you open
 | [`LEDGER-0018`](LEDGER-0018-tailscale-to-wireguard-migration/) | Tailscale → WireGuard migration plan (VPS-anchored mesh + GL.iNet AX1800/AX600 subnet routers) | `planning` | 2026-05-21 | _pending_ | `sudo bash ledger/LEDGER-0018-tailscale-to-wireguard-migration/playbooks/install-wg-server.sh` (Phase 1; multi-phase rollout per README) |
 | [`LEDGER-0019`](LEDGER-0019-intent-reality-drift-detector/) | Intent-Reality Drift Detector — flag when operator-intent files diverge from actual state | `in-progress` | 2026-05-21 | _pending_ | `sudo bash ledger/LEDGER-0019-intent-reality-drift-detector/playbooks/install-intent-drift.sh install` (on VPS) |
 | [`LEDGER-0020`](LEDGER-0020-intent-defense-in-depth/) | Intent defense in depth — 4 layers (alert + ExecStartPre + wrapper + opt-in auto-heal) | `in-progress` | 2026-05-21 | _pending_ | VPS: `sudo bash ledger/LEDGER-0020-intent-defense-in-depth/playbooks/install.sh install` |
+| [`LEDGER-0021`](LEDGER-0021-contribution-network-private-parent/) | Contribution Network — private parent + public submodule pattern (new `marvelousempire/contribution-network-private` repo) | `shipped` | 2026-05-21 | 2026-05-21 | `git clone --recurse-submodules https://github.com/marvelousempire/contribution-network-private.git` |
 
 > LEDGER-0001 was originally captured at `docs/sessions/2026-05-19-mcp-setup/` (PR #4) as the embryo of this pattern. It was migrated into the ledger and reshaped (`artifacts/Makefile` → `playbooks/Makefile`, new ticket README, new `install.sh` shell sibling, ticket frontmatter) in the migration PR that landed alongside this row.
 
