@@ -489,6 +489,66 @@ The rule got its phrasing — "one Tower, one URL" — during the Uptime Kuma fi
 
 ---
 
+## Rule 16: Intent-Reality Drift Detector — every operator-intent file MUST be paired with a periodic truthfulness check
+
+<system_reminder>
+For every operator-intent file under `/etc/yousirjuan/operator-intent.d/`, there MUST be an automated drift check that compares the intent's claim against actual system state at least every 5 minutes. If the file says "X is stopped" but X is actually running (or vice versa), the system MUST surface that drift to the operator (log + JSON report + notification per Phase 2). The intent-file system is only as truthful as its weakest unverified claim.
+</system_reminder>
+
+### Why this rule exists
+
+Rule 13 + LEDGER-0014 made operator-intent files visible to future agents via MOTD banners + `systemctl mask`. On 2026-05-21 the operator himself ran `sudo systemctl unmask + start n8n-nephew.service` at 04:39 UTC because he needed n8n for a workflow. He did NOT then run `intent.sh remove n8n-stopped` to update the intent file. Result: for the next ~7 hours, the intent file claimed n8n was stopped while it was actually running, consuming memory toward the OOM threshold. Nothing in the protocol caught the drift until an agent happened to notice during an unrelated health check.
+
+The protocol prevents **careless** mistakes but not **silent overrides**. Rule 16 closes that gap: every intent claim is periodically re-verified against reality.
+
+### ✅ REQUIRED
+
+Every intent file SHOULD include a `## Drift check` section specifying:
+
+```markdown
+## Drift check
+check_cmd: <shell command that returns single-line status>
+match_output: <expected output (or pipe-separated alternatives)>
+```
+
+If absent, a built-in heuristic table in `intent-drift-check.sh` covers common cases (n8n-stopped, gitlab-stopped, etc.). Operator-extensible — add to `heuristic_check()` in the script or use the `## Drift check` section per-file.
+
+The `intent-drift-check.sh` script runs every 5 minutes via systemd timer on the VPS. Drift is logged + written to `/var/lib/yousirjuan/intent-drift-report.json` for UI consumption.
+
+### ❌ FORBIDDEN
+
+- Writing an operator-intent file without a drift-check (built-in OR `## Drift check` section)
+- Disabling the `yousirjuan-intent-drift.timer` without operator approval
+- Treating an intent file as truthful without checking the drift report
+
+### When YOU (operator or agent) need to override an intent
+
+The right workflow is **still** the LEDGER-0014 protocol:
+
+```bash
+# Stop honoring the intent first:
+sudo bash <repo>/ledger/LEDGER-0014-operator-intent-protocol/playbooks/intent.sh remove <topic>
+# THEN do the operational change:
+sudo systemctl start <unit>  # or whatever the override action is
+```
+
+NOT:
+
+```bash
+# Wrong order — leaves the intent file lying
+sudo systemctl unmask <unit>
+sudo systemctl start <unit>
+# (operator-intent file still says "stopped" → DRIFT detected by Rule 16)
+```
+
+### Cross-references
+
+- LEDGER-0019 — the implementation (intent-drift-check.sh + systemd timer + Phase 2 notification plan)
+- Rule 13 — the operator-intent protocol this rule audits
+- LEDGER-0014 — the playbook + MOTD hook + masking system Rule 13 enforces
+
+---
+
 ## Enforcement
 
 This document is the **canonical universal ruleset** for all AI agents, LLMs, and orchestration systems. All systems must load these rules before executing any CLI, Git, or agent assignment operations.
@@ -506,6 +566,8 @@ Rule 4 (Success/Error Badge) was added on 2026-05-16 as a universal standard for
 Rule 13 (Operator-Intent Protocol) was established by operator directive on 2026-05-21 after an agent reinstalled n8n that a prior agent had deliberately stopped. The operator's verbatim correction was unequivocal: *"another agent reinstalled it because you did not leave healthy notes on what you did to play-well with others. you must add that rule to make good notes so other people and other IA know what you are doing so they can know what to do. global rule please now."* The rule + its host-side enforcement (intent files + MOTD hook + systemd mask) shipped the same day as LEDGER-0014 in marvelousempire/yousirjuan.
 
 Rule 14 (Dual-Push Protocol) was established by operator directive on 2026-05-21 after the same session pushed only to GitHub during an entire multi-PR run, breaking the GitLab-as-sovereign-mirror posture from LEDGER-0005. The operator's verbatim correction was: *"when i ask you to push everything to git, you must push everything to my github repo and my gitlab - make sure that is what you have been doing."* The rule + the `tools/git-dual-push.sh` tool + the binding `.claude/rules/dual-push-protocol.md` shipped the same day.
+
+Rule 16 (Intent-Reality Drift Detector) was established by operator directive on 2026-05-21 after the operator himself accidentally created drift (running n8n while the intent file still said "stopped" for ~7 hours) — exposing that Rule 13 prevented careless mistakes but not silent overrides. The operator's verbatim: *"Yes — ship Rule 16: Intent-Reality Drift Detector."* The rule + LEDGER-0019 implementation (systemd timer + intent-drift-check.sh + JSON report + `.claude/rules/intent-reality-drift.md` mirror) shipped the same day.
 
 Rule 15 (One Tower, One URL) was established by operator directive on 2026-05-21 after an agent shipped Uptime Kuma as a standalone `uptime.yousirjuan.ai` subdomain. The operator's verbatim correction was unequivocal: *"can we just add that to the Control Tower which is the Nephew UI instead of 'uptime.yousirjuan.ai'? […] we have nephew.yousirjuan.ai — you need to make this as an app that can play inside of nephew."* The rule + the binding `.claude/rules/one-tower-one-url.md` mirror + the corrective `nephew` PR #27 (registering uptime-kuma in the apps manifest) shipped the same day.
 
