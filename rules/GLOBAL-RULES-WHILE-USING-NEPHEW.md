@@ -1,4 +1,6 @@
-# Universal Nephew Rules — Global AI Operating System
+# Global Rules While Using Nephew — Universal AI Operating System
+
+> **File renamed 2026-05-21** from `UNIVERSAL-NEPHEW-RULES.md` to `GLOBAL-RULES-WHILE-USING-NEPHEW.md` per operator directive. Content unchanged; the new name better signals that these rules govern every agent, IDE, LLM, and human worker the moment they begin operating in any Nephew-adjacent environment.
 
 **Owner:** ALL AI agents, LLMs, and orchestration systems  
 **Scope:** Universal — applies to every AI system, not just Nephew  
