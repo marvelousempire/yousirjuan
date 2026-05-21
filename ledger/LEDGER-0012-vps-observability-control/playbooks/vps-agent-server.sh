@@ -379,6 +379,49 @@ class H(http.server.BaseHTTPRequestHandler):
                     self._send(200, b"\n".join(lines) + b"\n", "application/x-ndjson; charset=utf-8")
                 except FileNotFoundError:
                     self._send(404, b"history not yet populated (LEDGER-0015 server-tamer not installed?)\n")
+            elif self.path == "/operator-intent":
+                # LEDGER-0014: list intent files (filename + topic + first 12 lines body)
+                import os as _os, glob as _glob
+                intents = []
+                for path in sorted(_glob.glob("/etc/yousirjuan/operator-intent.d/*.md")):
+                    try:
+                        with open(path) as f:
+                            body = f.read()
+                        intents.append({
+                            "topic": _os.path.splitext(_os.path.basename(path))[0],
+                            "path": path,
+                            "mtime": _os.path.getmtime(path),
+                            "preview": "\n".join(body.splitlines()[:12]),
+                            "body": body,
+                        })
+                    except Exception as e:
+                        intents.append({"topic": _os.path.basename(path), "error": str(e)})
+                self._json(200, {"intents": intents})
+            elif self.path == "/intent-drift":
+                # LEDGER-0019: serve the drift report JSON written by intent-drift-check.sh
+                report_path = "/var/lib/yousirjuan/intent-drift-report.json"
+                try:
+                    with open(report_path, "rb") as f:
+                        self._send(200, f.read(), "application/json; charset=utf-8")
+                except FileNotFoundError:
+                    self._send(404, b'{"error":"drift report not yet generated (LEDGER-0019 timer not installed?)"}\n', "application/json")
+            elif self.path == "/server-tamer":
+                # LEDGER-0015: state file + last 30 log lines
+                state_path = "/var/lib/yousirjuan/server-tamer-state.json"
+                log_path = "/var/log/yousirjuan-server-tamer.log"
+                state = {}
+                try:
+                    with open(state_path) as f:
+                        state = json.load(f)
+                except Exception:
+                    pass
+                log_tail = ""
+                try:
+                    with open(log_path, "rb") as f:
+                        log_tail = b"\n".join(f.read().splitlines()[-30:]).decode("utf-8", errors="replace")
+                except Exception:
+                    pass
+                self._json(200, {"state": state, "log_tail": log_tail})
             elif self.path == "/all":
                 # convenience: single fetch for the DustPan panel
                 self._json(200, {
