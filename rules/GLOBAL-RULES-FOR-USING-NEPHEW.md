@@ -345,6 +345,70 @@ This rule applies to every AI system, LLM, IDE agent, automated tool, and human 
 
 ---
 
+## Rule 14: Dual-Push Protocol — Every `git push` Goes to GitHub AND GitLab
+
+<system_reminder>
+When the operator says "push", "push to git", "push everything", or any equivalent — that means push to **BOTH** GitHub (`origin`) **AND** GitLab (`gitlab` at `git.yousirjuan.ai:2424`). Pushing to only one is a broken contract. GitLab is the sovereign mirror per LEDGER-0005; GitHub is the public source. **Both must receive every push.** Silently pushing to only GitHub leaves the GitLab mirror behind and breaks the source-of-truth posture.
+</system_reminder>
+
+### Why this rule exists
+
+On 2026-05-21, an agent (Claude Code) ran an entire multi-PR session pushing only to GitHub. The operator caught it after the fact: *"when i ask you to push everything to git, you must push everything to my github repo and my gitlab - make sure that is what you have been doing."*
+
+The mirror posture established in LEDGER-0005 was being silently eroded. Three of the four primary local clones didn't even have a `gitlab` remote configured — so the dual-push was structurally impossible without setup. Rule 14 closes both the procedural gap (you must dual-push) and the setup gap (you must add the `gitlab` remote if it's missing).
+
+### ✅ REQUIRED
+
+Use the dual-push tool whenever you would have run `git push`:
+
+```bash
+bash tools/git-dual-push.sh                  # current branch
+bash tools/git-dual-push.sh <branch>         # explicit
+bash tools/git-dual-push.sh --backfill       # retry pending entries after GitLab returns
+```
+
+After every `gh pr merge` (which only touches `origin/main` server-side), follow up with:
+
+```bash
+git fetch origin && git reset --hard origin/main && bash tools/git-dual-push.sh main
+```
+
+That mirrors the new main commit to GitLab.
+
+### ❌ FORBIDDEN
+
+- Bare `git push` — only goes to one remote; breaks the contract
+- `git push origin` alone — only GitHub; breaks the contract
+- `gh pr merge` followed by nothing — leaves GitLab behind
+- Pretending success when only GitHub received the push
+
+### Graceful degradation when GitLab is down
+
+The dual-push script handles this:
+
+- GitHub push fails → exit non-zero (operator must know)
+- GitLab push fails (timeout, container stopped, network) → log to `~/.local/share/yousirjuan/pushes-pending-to-gitlab.log` + warn + exit 0
+- Operator runs `tools/git-dual-push.sh --backfill` when GitLab returns to replay all pending entries
+
+This respects the LEDGER-0014 operator-intent file `gitlab-stopped.md` — the script does not unmask or restart GitLab; it just records what's pending for when the operator brings it back deliberately.
+
+### When the `gitlab` remote isn't configured
+
+The script prints the exact `git remote add` command. Add it before next push:
+
+```bash
+git remote add gitlab ssh://git@72.167.151.251:2424/marvelousempire/<repo>.git
+```
+
+### Cross-references
+
+- `.claude/rules/dual-push-protocol.md` — repo-level binding mirror of this rule
+- LEDGER-0005 in marvelousempire/yousirjuan — GitLab as sovereign source-of-truth (the mirror doctrine this enforces)
+- LEDGER-0014 — operator-intent protocol (why GitLab might be intentionally stopped during a session)
+- `tools/git-dual-push.sh` in marvelousempire/yousirjuan — the implementation
+
+---
+
 ## Enforcement
 
 This document is the **canonical universal ruleset** for all AI agents, LLMs, and orchestration systems. All systems must load these rules before executing any CLI, Git, or agent assignment operations.
@@ -361,6 +425,8 @@ Rule 4 (Success/Error Badge) was added on 2026-05-16 as a universal standard for
 
 Rule 13 (Operator-Intent Protocol) was established by operator directive on 2026-05-21 after an agent reinstalled n8n that a prior agent had deliberately stopped. The operator's verbatim correction was unequivocal: *"another agent reinstalled it because you did not leave healthy notes on what you did to play-well with others. you must add that rule to make good notes so other people and other IA know what you are doing so they can know what to do. global rule please now."* The rule + its host-side enforcement (intent files + MOTD hook + systemd mask) shipped the same day as LEDGER-0014 in marvelousempire/yousirjuan.
 
-From that moment forward, all AI executes CLI operations directly, displays success/failure badges, AND leaves loud cross-agent intent notes on every deliberate state change — unless explicitly told otherwise.
+Rule 14 (Dual-Push Protocol) was established by operator directive on 2026-05-21 after the same session pushed only to GitHub during an entire multi-PR run, breaking the GitLab-as-sovereign-mirror posture from LEDGER-0005. The operator's verbatim correction was: *"when i ask you to push everything to git, you must push everything to my github repo and my gitlab - make sure that is what you have been doing."* The rule + the `tools/git-dual-push.sh` tool + the binding `.claude/rules/dual-push-protocol.md` shipped the same day.
+
+From that moment forward, all AI executes CLI operations directly, displays success/failure badges, leaves loud cross-agent intent notes on every deliberate state change, AND dual-pushes every `git push` to both GitHub and GitLab — unless explicitly told otherwise.
 
 **Witnessed by:** Nephew CLOAK · Automata Layer 0 · **Universal to All AI Systems, IDE Agents, LLM Agents, and Human Workers**
