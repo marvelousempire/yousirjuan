@@ -23,7 +23,7 @@ Both required manual cherry-picks + force-pushes to align. Operator asked: *"is 
 |---|---|---|---|
 | GitHub Actions workflow per repo | ~2,100 GH minutes/month at the marvelous-empire scale — right at the Free cap | Yes | Rejected — uncomfortably close to billing cap |
 | GitLab pull mirror | Free | Yes | Rejected — pull mirror is a GitLab **Premium** feature, not in CE Free |
-| **Server-side cron on VPS** (this LEDGER) | Free | Yes | **Chosen** — runs as a systemd timer where SSH + git CLI already exist |
+| **Server-side cron on VPS** (this LEDGER) | Free | Yes | **Chosen** — runs as a systemd timer where SSH + git CLI already exist. Uses `-s ours` merge-commits (plumbing) rather than force-push, so it works with GitLab's branch-protected `main`. |
 | Pre-push git hook | Free | No (server-side merges bypass it) | Insufficient on its own |
 
 ## Architecture

@@ -47,11 +47,27 @@ sync_one() {
       origin_sha="$(git rev-parse origin/main 2>/dev/null || echo '?')"
       gitlab_sha="$(git rev-parse gitlab/main 2>/dev/null || echo '?')"
       if [ "$origin_sha" != "$gitlab_sha" ] && [ "$origin_sha" != "?" ]; then
-        action="force-push-origin-to-gitlab"
-        if git push --force-with-lease gitlab "origin/main:refs/heads/main" --quiet 2>/dev/null; then
-          gitlab_sha="$origin_sha"
+        # Case 1: gitlab is a strict ancestor of origin → fast-forward push, no merge needed.
+        if git merge-base --is-ancestor "$gitlab_sha" "$origin_sha" 2>/dev/null; then
+          action="fast-forward-gitlab"
+          if git push gitlab "origin/main:refs/heads/main" --quiet 2>/dev/null; then
+            gitlab_sha="$origin_sha"
+          else
+            result="gitlab-ff-push-failed"
+          fi
+        # Case 2: gitlab has commits origin doesn't → create -s ours merge commit (plumbing
+        # for bare repos: tree from origin, parents = both heads) and fast-forward both.
         else
-          result="gitlab-push-failed"
+          action="merge-ours-both-remotes"
+          tree="$(git rev-parse "$origin_sha^{tree}" 2>/dev/null)"
+          merge_sha="$(git commit-tree "$tree" -p "$origin_sha" -p "$gitlab_sha" -m "auto-sync(LEDGER-0024): reconcile origin/main + gitlab/main (no content change)" 2>/dev/null || echo '')"
+          if [ -n "$merge_sha" ] && git push origin "$merge_sha:refs/heads/main" --quiet 2>/dev/null \
+             && git push gitlab "$merge_sha:refs/heads/main" --quiet 2>/dev/null; then
+            origin_sha="$merge_sha"
+            gitlab_sha="$merge_sha"
+          else
+            result="merge-push-failed"
+          fi
         fi
       fi
     fi
@@ -71,7 +87,7 @@ export WORK_DIR GITLAB_URL_BASE GITHUB_URL_BASE
 grep -v '^\s*#' "$REPO_LIST" | grep -v '^\s*$' | \
   xargs -n1 -P"$PARALLEL" -I{} bash -c 'sync_one "$@"' _ {} >>"$results_tmp"
 
-drift_count="$(grep -c '"action":"force-push-origin-to-gitlab"' "$results_tmp" || echo 0)"
+drift_count="$(grep -cE '"action":"(fast-forward-gitlab|merge-ours-both-remotes)"' "$results_tmp" || echo 0)"
 fail_count="$(grep -cE '"result":"(clone-failed|.*-fetch-failed|.*-push-failed)"' "$results_tmp" || echo 0)"
 total="$(wc -l <"$results_tmp" | tr -d ' ')"
 
