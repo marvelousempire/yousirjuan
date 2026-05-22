@@ -1,0 +1,111 @@
+# marvelous-empire repos tracked by yousirjuan-dual-push-sync.timer
+# One repo name per line; lines starting with # are comments.
+# Excluded by default: archived repos (scene-scout, dotclaude) and forks.
+
+# === Control tower (LEDGER-0023 group 1) ===
+yousirjuan
+nephew
+nephew-ai
+nephew-meta-library
+dustpan
+bishop
+automata
+dockyard
+clinic
+historia
+ai-skills-library
+membadat
+json-archive-chat-reader
+
+# === Framework (LEDGER-0021/22) ===
+contribution-network-private
+ContributionNetwork
+
+# === Skills (LEDGER-0023 — nested under ai-skills-library) ===
+marketingskills
+ruflo
+claude-mem
+
+# === Quick Server fleet (LEDGER-0023 group 4) ===
+quick-server
+qs-actions
+qs-ai-console
+qs-applications
+qs-backups
+qs-clone-wizard
+qs-dashboard
+qs-dev-actions
+qs-docker-manager
+qs-file-browser
+qs-new-site
+qs-ollama-manager
+qs-open-webui
+qs-overview
+qs-performance
+qs-plugins
+qs-reverse-proxy
+qs-seeds
+qs-settings
+qs-sites
+qs-staging-viewer
+qs-uploads-inbox
+qs-uptime
+qs-wordpress
+qs-wordpress-deploy
+
+# === Consoles (LEDGER-0023 group 5 — merged dashboards) ===
+actions-console
+ai-console
+hive-console
+marketplace-console
+learnmappers-console
+sunday-console
+bank-reader
+crypto-reader
+llm-reader
+reader-console
+cn-console
+brokerage-prototype
+family-office-platform
+briefcase-app
+
+# === Business (LEDGER-0023 group 6) ===
+very-handy-man-services
+daro-andy
+briefcase-github-automation
+LearnMappers
+massillon-legal-site
+
+# === Apps (LEDGER-0023 group 7) ===
+pockit
+scene-skout
+red-e-play-app
+readyplay-marketing
+SundayApp
+Love-Art-Gallery-Tasks
+iowre
+slice-flows
+bigbandwidth-revamp
+big-6-pressure-plan-unit-418
+execution-hub-unit-418
+trustee-eyes-only-unit-418
+
+# === Infra (LEDGER-0023 group 8) ===
+gitlab-manager
+iac-project
+
+# === Writings (LEDGER-0023 group 9) ===
+architecture-of-truth
+ArchitectureOfTruth
+ConcisePerspective
+yousirjuan-ai
+series-handbook-framework
+
+# === Wrapper monorepos (LEDGER-0023) ===
+tower-monorepo
+quick-server-monorepo
+consoles-monorepo
+business-monorepo
+apps-monorepo
+infra-monorepo
+writings-monorepo

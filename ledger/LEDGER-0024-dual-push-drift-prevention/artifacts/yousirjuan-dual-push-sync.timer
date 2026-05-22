@@ -1,0 +1,12 @@
+[Unit]
+Description=marvelous-empire dual-push drift detector — runs every 5 min
+
+[Timer]
+OnBootSec=2min
+OnUnitActiveSec=5min
+AccuracySec=30s
+RandomizedDelaySec=30s
+Persistent=true
+
+[Install]
+WantedBy=timers.target

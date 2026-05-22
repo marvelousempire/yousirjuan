@@ -1,0 +1,12 @@
+[Unit]
+Description=marvelous-empire dual-push drift detector + auto-mirror
+After=network-online.target docker.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/opt/yousirjuan-sync/sync-and-drift.sh
+TimeoutStartSec=600
+Nice=10
+IOSchedulingClass=best-effort
+IOSchedulingPriority=7
