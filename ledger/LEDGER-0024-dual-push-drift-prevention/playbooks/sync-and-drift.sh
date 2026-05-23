@@ -12,8 +12,22 @@ REPO_LIST="${REPO_LIST:-/opt/yousirjuan-sync/tracked-repos.txt}"
 WORK_DIR="${WORK_DIR:-/var/cache/yousirjuan-sync}"
 REPORT="${REPORT:-/var/lib/yousirjuan/dual-push-drift-report.json}"
 LOG="${LOG:-/var/log/yousirjuan-sync.log}"
+CREDENTIALS_FILE="${CREDENTIALS_FILE:-/etc/yousirjuan-sync/credentials}"
 GITLAB_URL_BASE="ssh://git@127.0.0.1:2424/marvelousempire"
-GITHUB_URL_BASE="git@github.com:marvelousempire"
+# Per LEDGER-0025: GitHub access via fine-grained PAT (HTTPS). The token is
+# read from $CREDENTIALS_FILE and embedded in the URL. Rotation: edit the
+# file; the next 5-min timer tick re-points every bare repo via
+# `git remote set-url origin ...`.
+GITHUB_TOKEN=""
+if [ -r "$CREDENTIALS_FILE" ]; then
+  # shellcheck source=/dev/null
+  source "$CREDENTIALS_FILE"
+fi
+if [ -n "$GITHUB_TOKEN" ]; then
+  GITHUB_URL_BASE="https://x-access-token:${GITHUB_TOKEN}@github.com/marvelousempire"
+else
+  GITHUB_URL_BASE="git@github.com:marvelousempire"
+fi
 PARALLEL="${PARALLEL:-5}"
 TS="$(date -Iseconds)"
 

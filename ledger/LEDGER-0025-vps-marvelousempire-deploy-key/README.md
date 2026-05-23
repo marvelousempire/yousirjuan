@@ -1,7 +1,7 @@
 ---
 ledgerId: LEDGER-0025
 title: VPS deploy-key for marvelousempire — let sync-and-drift.sh clone any repo
-status: planning
+status: in-progress
 opened: 2026-05-22
 closed: null
 related-pains: []
@@ -57,23 +57,42 @@ Create a GitHub App owned by marvelousempire, install it on the org with `conten
 
 **Recommended starting point:** Option B (machine user) if there's a free seat available, else Option C (PAT). Option D is the right answer if this scales to other orgs later. Option A is the simplest but requires per-repo deploy-key creation that the script doesn't currently know how to do.
 
+## Decision (2026-05-22)
+
+**Option C — fine-grained PAT — selected.** Closes the gap in ~10 minutes; converts cleanly to Option D later when multi-org is real.
+
+- Option B (machine user) is out: GitHub now discourages machine users in favor of GitHub Apps; using a real human account for automation invites flagging.
+- Option A is out: 88+ per-repo deploy-key adds is friction, and the script has no awareness of new repos.
+- Option D is the right destination but premature today — token-minting helper adds ~30 lines and the 1-hour token lifetime isn't worth the complexity until multi-org is on the roadmap. Filed as a future ledger entry.
+
+The PAT is scoped to `marvelousempire/*` with `contents:read` + `metadata:read` only. Rotation cadence: annual (max-allowed 366 days). Rotation = re-run `install-credential.sh` with the new token; the script's per-iteration `git remote set-url` re-points every bare repo on the next 5-min tick.
+
 ## Runbooks
 
-(To be filled in once operator picks an option. Each runbook covers ONE step of the chosen path.)
-
-- [01-pick-auth-strategy.md](runbooks/01-pick-auth-strategy.md) — decide A/B/C/D; document the call
-- [02-generate-credential.md](runbooks/02-generate-credential.md) — create the key / PAT / GitHub App (varies by choice)
-- [03-deploy-credential-to-vps.md](runbooks/03-deploy-credential-to-vps.md) — land the credential at `/etc/yousirjuan-sync/` with `0600` and `chown root:root`
-- [04-teach-sync-and-drift-the-credential.md](runbooks/04-teach-sync-and-drift-the-credential.md) — `GIT_SSH_COMMAND` or HTTPS URL rewrite
+- [01-pick-auth-strategy.md](runbooks/01-pick-auth-strategy.md) — decide A/B/C/D (**done: C**)
+- [02-generate-pat.md](runbooks/02-generate-pat.md) — create the fine-grained PAT in GitHub settings
+- [03-deploy-credential-to-vps.md](runbooks/03-deploy-credential-to-vps.md) — `install-credential.sh` lands the token at `/etc/yousirjuan-sync/credentials` (0600 root:root)
+- [04-teach-sync-and-drift.md](runbooks/04-teach-sync-and-drift.md) — script change ships in the same PR; deploy via `install.sh install` on vps
 - [05-verify-end-to-end.md](runbooks/05-verify-end-to-end.md) — `failures: 0` smoke check
 
 ## Playbooks
 
-_no playbook because the auth strategy isn't picked yet. Once option A/B/C/D is chosen, the playbook lands as `playbooks/install-credential.sh` (idempotent) + a config patch to `sync-and-drift.sh`._
+- [install-credential.sh](playbooks/install-credential.sh) — `sudo bash install-credential.sh` interactive (paste token), `--token` flag, or `--from-stdin`. Idempotent: re-run to rotate.
+- `sync-and-drift.sh` patch (lives in `ledger/LEDGER-0024-.../playbooks/sync-and-drift.sh`) — reads `$CREDENTIALS_FILE`, rewrites `GITHUB_URL_BASE` to HTTPS with token when present, falls back to SSH otherwise.
 
 ## Replay (zero-AI)
 
-_pending — fills in once shipped._
+After this PR is merged + deployed:
+
+```
+ssh vps-godaddy 'cd ~/Developer/yousirjuan && \
+  git pull --ff-only && \
+  sudo bash ledger/LEDGER-0024-dual-push-drift-prevention/playbooks/install.sh install && \
+  sudo bash ledger/LEDGER-0025-vps-marvelousempire-deploy-key/playbooks/install-credential.sh'
+# paste the PAT when prompted
+```
+
+The PAT itself is generated once via runbook 02 (GitHub web UI) — that step is intrinsically operator-only and cannot be playbooked.
 
 ## Verification
 
