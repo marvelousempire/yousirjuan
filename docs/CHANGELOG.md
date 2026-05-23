@@ -10,6 +10,35 @@ Eastern time stamped to the second using `TZ=America/New_York date '+%Y-%m-%d %H
 
 ---
 
+## [0.2.2] — 2026-05-22 20:59:14 Eastern · *fix LEDGER-0024 drift report JSON (second bug)*
+
+**Headline:** v0.2.1 fixed the embedded-newline bug in the count fields but the JSON was still malformed because every clone-failure logged an `echo "  ✗ clone failed: <repo>"` on stdout, which the parallel `xargs ... >>"$results_tmp"` captured into the entries array between the JSON objects.
+
+The first deploy on vps-godaddy surfaced this — 88 clone failures (likely a separate SSH-key issue), each emitting a non-JSON line that broke the parser at `line 7 column 7 (char 118)`.
+
+### Fixed
+
+- `ledger/LEDGER-0024-dual-push-drift-prevention/playbooks/sync-and-drift.sh` — clone-failure echo now redirects to stderr (`>&2`). The parent script's `exec >>"$LOG" 2>&1` still catches it into the log file, but the xargs subshell's stdout redirect (`>>"$results_tmp"`) no longer sees it. Only the canonical `printf '  {...}\n'` reaches the results file.
+
+### Side benefit
+
+- The `total` count is now accurate. Before this fix, each clone-failed repo wrote 2 lines (echo + JSON) and `wc -l` counted both, doubling the total.
+
+### Verification
+
+```bash
+ssh vps-godaddy 'cd ~/Developer/yousirjuan && \
+  git pull --ff-only && \
+  sudo bash ledger/LEDGER-0024-dual-push-drift-prevention/playbooks/install.sh install && \
+  sudo /opt/yousirjuan-sync/sync-and-drift.sh && \
+  echo --- && \
+  sudo cat /var/lib/yousirjuan/dual-push-drift-report.json | python3 -m json.tool | head -40'
+```
+
+### Known follow-up (not this PR)
+
+88 clone failures on vps-godaddy point to an SSH-key / deploy-key gap on the marvelousempire org. That's a separate ledger item — this PR only makes the report parseable so the operator can SEE what's failing.
+
 ## [0.2.1] — 2026-05-22 20:39:17 Eastern · *fix LEDGER-0024 drift report JSON*
 
 **Headline:** the dual-push drift report was emitting malformed JSON whenever the drift or failure count was zero (the common case). `python3 -m json.tool` failed with `Expecting ',' delimiter: line 5 column 1 (char 78)` and the operator-facing report was unparseable.
