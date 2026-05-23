@@ -29,7 +29,7 @@ sync_one() {
 
   if [ ! -d "$d/.git" ]; then
     git clone --bare --quiet "$GITHUB_URL_BASE/$repo.git" "$d" \
-      || { echo "  ✗ clone failed: $repo"; result="clone-failed"; }
+      || { echo "  ✗ clone failed: $repo" >&2; result="clone-failed"; }
   fi
 
   if [ "$result" = "ok" ]; then
