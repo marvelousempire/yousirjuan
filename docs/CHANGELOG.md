@@ -10,6 +10,34 @@ Eastern time stamped to the second using `TZ=America/New_York date '+%Y-%m-%d %H
 
 ---
 
+## [0.4.0] — 2026-05-22 21:23:03 Eastern · *LEDGER-0025 — fine-grained PAT lands; sync-and-drift.sh now authenticates*
+
+**Headline:** Option C selected. `sync-and-drift.sh` now reads `/etc/yousirjuan-sync/credentials` at start-of-run and rewrites the GitHub URL base from SSH to HTTPS-with-token. A new idempotent installer (`ledger/LEDGER-0025-.../playbooks/install-credential.sh`) handles the credential file with `0600 root:root` and runs a one-call API smoke test against `/orgs/marvelousempire`. Four runbooks (02–05) cover token generation, credential deploy, script behavior, and end-to-end verification.
+
+### Added
+
+- [`ledger/LEDGER-0025-.../playbooks/install-credential.sh`](../ledger/LEDGER-0025-vps-marvelousempire-deploy-key/playbooks/install-credential.sh) — interactive / `--token` / `--from-stdin` modes; atomic file write; loose token-shape sanity; HTTP-code-aware smoke test (die clearly on 401/403/404).
+- [`runbooks/02-generate-pat.md`](../ledger/LEDGER-0025-vps-marvelousempire-deploy-key/runbooks/02-generate-pat.md) — operator-only step (GitHub web UI). Scopes: `contents:read` + `metadata:read`. Cap: 366 days.
+- [`runbooks/03-deploy-credential-to-vps.md`](../ledger/LEDGER-0025-vps-marvelousempire-deploy-key/runbooks/03-deploy-credential-to-vps.md) — interactive paste so the token never lands in shell history.
+- [`runbooks/04-teach-sync-and-drift.md`](../ledger/LEDGER-0025-vps-marvelousempire-deploy-key/runbooks/04-teach-sync-and-drift.md) — documents the URL-rewrite mechanism and why token-in-URL beats credential-helper here.
+- [`runbooks/05-verify-end-to-end.md`](../ledger/LEDGER-0025-vps-marvelousempire-deploy-key/runbooks/05-verify-end-to-end.md) — symptom→fix matrix + the canonical bright-line check (`failures < 5`).
+
+### Changed
+
+- [`ledger/LEDGER-0024-.../playbooks/sync-and-drift.sh`](../ledger/LEDGER-0024-dual-push-drift-prevention/playbooks/sync-and-drift.sh) — reads `$CREDENTIALS_FILE` (default `/etc/yousirjuan-sync/credentials`); when `$GITHUB_TOKEN` is set, rewrites `GITHUB_URL_BASE` to `https://x-access-token:${GITHUB_TOKEN}@github.com/marvelousempire`. Falls back to SSH otherwise (preserves graceful-failure behavior if credentials are absent).
+- [`ledger/LEDGER-0025-.../README.md`](../ledger/LEDGER-0025-vps-marvelousempire-deploy-key/README.md) — status `planning → in-progress`; `## Decision (2026-05-22)` block records why Option C beat A/B/D today and where D fits in the roadmap.
+- [`ledger/README.md`](../ledger/README.md) — LEDGER-0025 row updated to reflect Option C + the replay one-liner.
+
+### Why Option C and not B / D
+
+- **B (machine user):** GitHub now discourages machine users in favor of GitHub Apps.
+- **D (GitHub App):** the right destination for multi-org future, but ~30 lines of token-minting helper + 1-hour refresh logic is more complexity than this single-org context needs today. Filed as the next ledger entry when multi-org is real.
+- **C (PAT):** unblocks today, ~10 min from PR-merge to working drift detection. Annual rotation is a calendar event, not an emergency.
+
+### What ships next
+
+When the operator pastes the PAT into the installer on vps-godaddy and triggers a sync, `/var/lib/yousirjuan/dual-push-drift-report.json` should show `failures` drop from 88 → near 0. Status flips to `shipped` then.
+
 ## [0.3.0] — 2026-05-22 21:07:54 Eastern · *LEDGER-0025 — VPS deploy-key for marvelousempire (planning ticket)*
 
 **Headline:** LEDGER-0024 v0.2.2 made the drift report parseable, and the first valid report on vps-godaddy showed `failures: 88 / 88` — the systemd timer's root user has no SSH identity that authenticates to `git@github.com:marvelousempire/*`. The drift detector can't read either remote, so no comparison happens. New ledger entry captures the gap, lays out four auth strategies (per-repo deploy keys / machine user / PAT / GitHub App), and parks at `planning` until the operator picks one.
