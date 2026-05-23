@@ -1,6 +1,6 @@
 {
   "name": "yousirjuan-platform",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": true,
   "description": "Sovereign AI relationship-memory platform runtime scaffold.",
   "scripts": {
