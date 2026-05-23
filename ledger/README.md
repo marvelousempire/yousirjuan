@@ -18,7 +18,7 @@ For the rule that makes adding to the ledger the default closing ritual, see [`.
 
 Counter is the source of truth for the next `LEDGER-NNNN`. Bump it when you open a new entry.
 
-**Next number:** `LEDGER-0025`
+**Next number:** `LEDGER-0026`
 
 | ID | Title | Status | Opened | Closed | Replay |
 |---|---|---|---|---|---|
@@ -46,6 +46,7 @@ Counter is the source of truth for the next `LEDGER-NNNN`. Bump it when you open
 | [`LEDGER-0022`](LEDGER-0022-cn-contract-checks/) | Cross-repo contract checks — private parent ↔ public framework (Makefile + GitLab CI) | `shipped` | 2026-05-21 | 2026-05-21 | `cd ~/Developer/contribution-network-private && make check` (local) · GitLab CI runs on push/MR/schedule |
 | [`LEDGER-0023`](LEDGER-0023-wrapper-monorepo-org/) | Wrapper-monorepo organization — 83 marvelous-empire repos → 8 visible groupings on GitHub | `shipped` | 2026-05-21 | 2026-05-21 | 7 new wrapper repos: `tower-monorepo` `quick-server-monorepo` `consoles-monorepo` `business-monorepo` `apps-monorepo` `infra-monorepo` `writings-monorepo` (+ `ai-skills-library` sub-parent, + existing `contribution-network-private`). Leaf paths under `~/Developer/` untouched. |
 | [`LEDGER-0024`](LEDGER-0024-dual-push-drift-prevention/) | Dual-push drift prevention — server-side cron mirrors origin/main → gitlab/main every 5 min; writes drift report | `planning` | 2026-05-22 | _pending_ | `ssh vps-godaddy 'sudo bash ~/Developer/yousirjuan/ledger/LEDGER-0024-dual-push-drift-prevention/playbooks/install.sh install'` |
+| [`LEDGER-0025`](LEDGER-0025-vps-marvelousempire-deploy-key/) | VPS deploy-key for marvelousempire — 88/88 clone-failed on vps-godaddy, drift detection blocked until root can auth to `git@github.com:marvelousempire/*` | `planning` | 2026-05-22 | _pending_ | _pending — operator picks A/B/C/D in [`runbooks/01-pick-auth-strategy.md`](LEDGER-0025-vps-marvelousempire-deploy-key/runbooks/01-pick-auth-strategy.md)_ |
 
 > LEDGER-0001 was originally captured at `docs/sessions/2026-05-19-mcp-setup/` (PR #4) as the embryo of this pattern. It was migrated into the ledger and reshaped (`artifacts/Makefile` → `playbooks/Makefile`, new ticket README, new `install.sh` shell sibling, ticket frontmatter) in the migration PR that landed alongside this row.
 

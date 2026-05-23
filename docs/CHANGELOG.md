@@ -10,6 +10,27 @@ Eastern time stamped to the second using `TZ=America/New_York date '+%Y-%m-%d %H
 
 ---
 
+## [0.3.0] — 2026-05-22 21:07:54 Eastern · *LEDGER-0025 — VPS deploy-key for marvelousempire (planning ticket)*
+
+**Headline:** LEDGER-0024 v0.2.2 made the drift report parseable, and the first valid report on vps-godaddy showed `failures: 88 / 88` — the systemd timer's root user has no SSH identity that authenticates to `git@github.com:marvelousempire/*`. The drift detector can't read either remote, so no comparison happens. New ledger entry captures the gap, lays out four auth strategies (per-repo deploy keys / machine user / PAT / GitHub App), and parks at `planning` until the operator picks one.
+
+### Added
+
+- [`ledger/LEDGER-0025-vps-marvelousempire-deploy-key/README.md`](../ledger/LEDGER-0025-vps-marvelousempire-deploy-key/README.md) — ticket with the four-option decision matrix, recommended default (machine user if single-org, GitHub App if multi-org coming), and the verification one-liner that closes the loop (`python3 -m json.tool` showing `failures: 0`).
+- [`ledger/LEDGER-0025-.../runbooks/01-pick-auth-strategy.md`](../ledger/LEDGER-0025-vps-marvelousempire-deploy-key/runbooks/01-pick-auth-strategy.md) — first runbook, the decision step.
+
+### Changed
+
+- [`ledger/README.md`](../ledger/README.md) — next number bumped `0025 → 0026`; new index row for LEDGER-0025 with status `planning`.
+
+### Why this is here
+
+Per the `version-bump-and-changelog` rule v2: every ledger entry is a logged operator-visible event. Bump + CHANGELOG + tag + Release.
+
+### What ships next
+
+When the operator picks A/B/C/D in `runbooks/01-pick-auth-strategy.md`, the implementation lands as a follow-up minor bump with the playbook + verification.
+
 ## [0.2.2] — 2026-05-22 20:59:14 Eastern · *fix LEDGER-0024 drift report JSON (second bug)*
 
 **Headline:** v0.2.1 fixed the embedded-newline bug in the count fields but the JSON was still malformed because every clone-failure logged an `echo "  ✗ clone failed: <repo>"` on stdout, which the parallel `xargs ... >>"$results_tmp"` captured into the entries array between the JSON objects.
