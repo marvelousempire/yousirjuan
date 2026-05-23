@@ -87,8 +87,8 @@ export WORK_DIR GITLAB_URL_BASE GITHUB_URL_BASE
 grep -v '^\s*#' "$REPO_LIST" | grep -v '^\s*$' | \
   xargs -n1 -P"$PARALLEL" -I{} bash -c 'sync_one "$@"' _ {} >>"$results_tmp"
 
-drift_count="$(grep -cE '"action":"(fast-forward-gitlab|merge-ours-both-remotes)"' "$results_tmp" || echo 0)"
-fail_count="$(grep -cE '"result":"(clone-failed|.*-fetch-failed|.*-push-failed)"' "$results_tmp" || echo 0)"
+drift_count="$(grep -cE '"action":"(fast-forward-gitlab|merge-ours-both-remotes)"' "$results_tmp" || true)"
+fail_count="$(grep -cE '"result":"(clone-failed|.*-fetch-failed|.*-push-failed)"' "$results_tmp" || true)"
 total="$(wc -l <"$results_tmp" | tr -d ' ')"
 
 {

@@ -10,6 +10,42 @@ Eastern time stamped to the second using `TZ=America/New_York date '+%Y-%m-%d %H
 
 ---
 
+## [0.2.1] — 2026-05-22 20:39:17 Eastern · *fix LEDGER-0024 drift report JSON*
+
+**Headline:** the dual-push drift report was emitting malformed JSON whenever the drift or failure count was zero (the common case). `python3 -m json.tool` failed with `Expecting ',' delimiter: line 5 column 1 (char 78)` and the operator-facing report was unparseable.
+
+### Fixed
+
+- `ledger/LEDGER-0024-dual-push-drift-prevention/playbooks/sync-and-drift.sh` — replaced `|| echo 0` with `|| true` on the two `grep -c ... || ...` guards. `grep -c` always writes the count to stdout (including `0` for zero matches) and exits non-zero only when zero matches; the old guard appended a *second* `0\n` after the first, producing a literal newline inside the JSON number. `|| true` silences the non-zero exit without contaminating stdout.
+
+### Verification
+
+```bash
+# locally:
+touch /tmp/empty.txt
+NEW="$(grep -cE 'never' /tmp/empty.txt || true)"
+echo "[${NEW}]"   # → [0]   (one character, not "0\n0")
+
+# on vps-godaddy after pull + re-install:
+sudo /opt/yousirjuan-sync/sync-and-drift.sh && \
+  sudo cat /var/lib/yousirjuan/dual-push-drift-report.json | python3 -m json.tool
+```
+
+The second command now parses cleanly.
+
+### Deploy path
+
+```bash
+ssh vps-godaddy 'cd ~/Developer/yousirjuan && \
+  git pull --ff-only && \
+  sudo bash ledger/LEDGER-0024-dual-push-drift-prevention/playbooks/install.sh install && \
+  sudo /opt/yousirjuan-sync/sync-and-drift.sh && \
+  echo --- && \
+  sudo cat /var/lib/yousirjuan/dual-push-drift-report.json | python3 -m json.tool | head -40'
+```
+
+`install.sh install` is idempotent — it copies the fixed script into `/opt/yousirjuan-sync/` and the systemd timer picks it up on the next 5-min tick (or run it manually as shown).
+
 ## [0.2.0] — 2026-05-20 01:36:41 Eastern · *self-codifying ledger + workflow-debugger agent*
 
 **Headline:** yousirjuan grew a permanent **knowledge layer** today — a `/ledger/` system where every non-trivial task lands as ticket + runbook + executable playbook, so the same task doesn't need an AI the second time. First two entries shipped: the iMac MCP development stack (the embryo that proved the pattern), and a `workflow-debugger` specialist agent for YAML/Bash/JS/Python/Excel pipeline bugs.
