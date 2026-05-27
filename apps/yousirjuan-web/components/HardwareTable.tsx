@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
+import hardwareDataJson from '../../../../hardware/imac-hardware-data.json';
 
 // Type definitions for living table
 export interface HardwareRow {
@@ -16,23 +17,8 @@ export interface HardwareRow {
   notes: string;
 }
 
-const hardwareData: HardwareRow[] = [
-  // 2012 iMac
-  { id: '2012-cpu', machine: '2012 iMac', category: 'Processor', specification: '3.4 GHz Quad-Core Intel i7', maxRecommended: 'None (soldered)', upgradePath: 'None', recommendedPart: '—', price: '—', status: 'Maxed', notes: '4 cores, no efficiency cores' },
-  { id: '2012-gpu', machine: '2012 iMac', category: 'Graphics', specification: 'NVIDIA GeForce GTX 675MX 1GB', maxRecommended: 'None', upgradePath: 'None', recommendedPart: '—', price: '—', status: 'Maxed', notes: 'No CUDA / Metal AI acceleration' },
-  { id: '2012-ram', machine: '2012 iMac', category: 'Memory', specification: '8GB DDR3 1333/1600 MHz', maxRecommended: '32GB (4×8GB)', upgradePath: 'Replace all 4 sticks', recommendedPart: 'A-Tech 4×8GB DDR3 1600MHz PC3-12800', price: '$99 – $130', status: 'Needs Upgrade', notes: 'Must use identical matched modules' },
-  { id: '2012-storage', machine: '2012 iMac', category: 'Storage', specification: 'Original HDD (SATA)', maxRecommended: 'Fastest SATA SSD', upgradePath: 'Replace internal 3.5" drive', recommendedPart: 'Samsung 870 EVO 1TB / 2TB SATA SSD', price: '$130 – $220', status: 'Needs Upgrade', notes: 'SATA only — no native NVMe' },
-  { id: '2012-os', machine: '2012 iMac', category: 'OS', specification: 'macOS Catalina', maxRecommended: 'Sonoma or Sequoia', upgradePath: 'OpenCore Legacy Patcher', recommendedPart: '—', price: 'Free', status: 'Needs Upgrade', notes: 'Required for modern Ollama support' },
-  { id: '2012-ai', machine: '2012 iMac', category: 'AI Capability', specification: 'Very limited', maxRecommended: '1.5B – 3B models only', upgradePath: '—', recommendedPart: 'qwen2.5-coder:1.5b or :3b', price: 'Free', status: 'Limited', notes: 'Use tiny models only on this machine' },
-
-  // 2017 iMac
-  { id: '2017-cpu', machine: '2017 iMac', category: 'Processor', specification: 'Quad-Core Intel (i5/i7 gen)', maxRecommended: 'None (soldered)', upgradePath: 'None', recommendedPart: '—', price: '—', status: 'Maxed', notes: 'Better than 2012 but still 4-core' },
-  { id: '2017-gpu', machine: '2017 iMac', category: 'Graphics', specification: 'AMD Radeon Pro 560 4GB', maxRecommended: 'None', upgradePath: 'None', recommendedPart: '—', price: '—', status: 'Maxed', notes: 'No modern AI acceleration' },
-  { id: '2017-ram', machine: '2017 iMac', category: 'Memory', specification: '64GB DDR4 (installed)', maxRecommended: '64GB (official max)', upgradePath: 'Verify matched 2400MHz sticks', recommendedPart: 'A-Tech / OWC 4×16GB DDR4 2400MHz (if replacing)', price: '$200 – $260', status: 'Verify', notes: 'Mismatched/loose sticks cause sluggishness' },
-  { id: '2017-storage', machine: '2017 iMac', category: 'Storage', specification: 'Original SATA', maxRecommended: 'NVMe SSD via adapter', upgradePath: 'Add Sintech NVMe adapter + NVMe', recommendedPart: 'Sintech NVMe Adapter + Samsung 970 EVO Plus 1TB/2TB', price: 'Adapter $15–25 | SSD $110–$250', status: 'Needs Upgrade', notes: 'Biggest performance win available' },
-  { id: '2017-os', machine: '2017 iMac', category: 'OS', specification: 'macOS Ventura', maxRecommended: 'Ventura or higher (optional)', upgradePath: 'Optional OpenCore Legacy Patcher', recommendedPart: '—', price: 'Free', status: 'Good', notes: 'Native support is solid' },
-  { id: '2017-ai', machine: '2017 iMac', category: 'AI Capability', specification: 'Good for local use', maxRecommended: '7B models comfortable', upgradePath: '—', recommendedPart: 'qwen2.5-coder:7b', price: 'Free', status: 'Recommended', notes: 'Primary daily driver machine' },
-];
+// Import from shared single-source-of-truth JSON
+const hardwareData: HardwareRow[] = hardwareDataJson as HardwareRow[];
 
 const statusColors: Record<HardwareRow['status'], string> = {
   'Maxed': 'bg-green-100 text-green-800 border-green-200',
@@ -83,7 +69,7 @@ export default function HardwareTable() {
       const bValue = b[sortConfig.key];
 
       if (aValue < bValue) return sortConfig.direction === 'asc' ? -1 : 1;
-      if (aValue > bValue) return sortConfig.direction === 'asc' ? 1 : -1;
+      if (aValue > bValue) return sortConfig.direction === 'asc' ? 'asc' ? -1 : 1 : 0;
       return 0;
     });
 
@@ -201,7 +187,7 @@ export default function HardwareTable() {
 
       {/* Footer / Legend */}
       <div className="flex flex-wrap gap-x-6 gap-y-1 text-xs text-gray-500 px-1">
-        <div><span className="font-medium">Living Table:</span> Data is source of truth. Update here → both Markdown docs and dashboards stay in sync.</div>
+        <div><span className="font-medium">Living Table:</span> Single source of truth is <code>hardware/imac-hardware-data.json</code>. Update JSON → Markdown docs + this interactive table stay in sync.</div>
         <div className="hidden md:block">• Click column headers to sort</div>
         <div>• Filter by machine or category</div>
       </div>
