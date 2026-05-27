@@ -67,3 +67,29 @@ Observatory, everything. No per-device VPN install needed.
 - Private keys stored in `/etc/wireguard/` on the AX6000 (root only)
 - Client private keys in `~/.wireguard/` (chmod 600)
 - No HTTPS needed inside the tunnel — the tunnel IS the encryption
+
+---
+
+## Usage Notes
+
+### When at home (same LAN as AX6000)
+WireGuard is active but LAN traffic (`192.168.8.x`) routes through the local Wi-Fi interface, not the VPN tunnel. This is correct — you don't need VPN encryption on your own LAN.
+
+Access the Spark via IPv6: `http://nephew-spark:5174`
+
+### When away from home
+WireGuard routes `192.168.8.0/24` through the tunnel. The Spark is reachable at its LAN IP via the VPN.
+
+### AX6000 firewall rules for WireGuard
+The following iptables rules were added manually (positions 7-8, before the reject rule):
+```
+iptables -I FORWARD 7 -i wg0 -o br-lan -j ACCEPT
+iptables -I FORWARD 8 -i br-lan -o wg0 -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+iptables -t nat -A POSTROUTING -s 10.0.0.0/24 -o br-lan -j MASQUERADE
+```
+These are NOT persistent across router reboots. To persist, add to the GL.iNet firewall custom rules:
+`http://192.168.8.1` → System → Advanced (LuCI) → Network → Firewall → Custom Rules.
+
+### Port forwarding on Verizon 5G Business Gateway (6-antenna)
+UDP port 51820 forwarded to 192.168.0.157 (AX6000 WAN IP).
+Required for remote WireGuard connections from outside the home network.

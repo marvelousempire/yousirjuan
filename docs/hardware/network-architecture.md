@@ -95,3 +95,56 @@ The GL.iNet routers have WireGuard built into the firmware. Benefits over Tailsc
 
 - **Netgear WN3500RP** — old, no VLAN support, no security updates. Do not use.
 - **Jetson Thor** — NOT YET PURCHASED. When acquired, it will join VLAN 10 as an edge inference node alongside the DGX Spark.
+
+---
+
+## IPv4 vs IPv6 — The Dual-Interface Issue (Resolved)
+
+### Problem
+The DGX Spark has two network interfaces on the same subnet:
+- `enP7s7` (wired) — `192.168.8.249`
+- `wlP9s9` (Wi-Fi) — `192.168.8.114`
+
+Both on `192.168.8.0/24`. This causes **asymmetric routing** — packets arrive on one interface but replies go out the other. The AX6000 router drops them. Result: IPv4 connections from the Mac to the Spark time out on every port. SSH works because it resolves via **IPv6** (`fd4b:36c7:d004::ffe`) which doesn't have the dual-interface issue.
+
+### Solution
+1. **Bind services to `::` (all interfaces, IPv4 + IPv6)** instead of `0.0.0.0` (IPv4 only)
+2. **Access the Spark via IPv6** using the hostname alias `nephew-spark`
+3. **WireGuard VPN** for remote access (when away from home, the VPN creates a clean routing path)
+
+### Hostname alias
+Added to `/etc/hosts` on the Mac:
+```
+fd4b:36c7:d004::ffe nephew-spark
+```
+Access: `http://nephew-spark:5174` — resolves to IPv6, bypasses the IPv4 routing issue.
+
+### Vite allowedHosts
+The Spark's Vite config (`apps/control-tower/vite.config.ts`) includes:
+```js
+server: {
+  allowedHosts: ["nephew-spark", "nephew-nivram", ".localhost"],
+}
+```
+Without this, Vite blocks requests from non-localhost hostnames.
+
+### Access matrix
+
+| Location | How to access Spark CT | Protocol |
+|---|---|---|
+| At home (LAN) | `http://nephew-spark:5174` | IPv6 direct |
+| At home (SSH) | `ssh nephew-nivram` | IPv6 (auto) |
+| Away (WireGuard on) | `http://nephew-spark:5174` | IPv6 via VPN |
+| Away (no VPN) | SSH tunnel: `ssh -L 5174:localhost:5174 nephew-nivram` | IPv6 SSH |
+
+### What we tried that didn't work (for the record)
+- **UFW on the Spark** — enabled with port allows, didn't help (IPv4 routing was the issue, not firewall)
+- **nft flush ruleset** — cleared all NVIDIA nftables rules, still timed out
+- **Disabling Wi-Fi on the Spark** — killed SSH (SSH was using IPv6 over Wi-Fi). Had to reboot to recover.
+- **AP isolation on AX6000** — was already off on main radios
+- **WireGuard from the same LAN** — Mac's local route to `192.168.8.0/24` takes priority over VPN route, so VPN can't override the broken IPv4 path when already on the same subnet
+
+### What works
+- **IPv6 is the production path** for LAN access
+- **WireGuard is the production path** for remote access
+- **IPv4 to the Spark is broken** due to dual-interface routing — don't fight it, use IPv6
