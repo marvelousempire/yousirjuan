@@ -1,0 +1,39 @@
+name: Hardware Inventory Sync Check
+
+on:
+  push:
+    paths:
+      - 'hardware/imac-hardware-data.json'
+  pull_request:
+    paths:
+      - 'hardware/imac-hardware-data.json'
+
+jobs:
+  sync-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run hardware sync script
+        run: node hardware/sync-hardware-md.js
+
+      - name: Check if Markdown is in sync (dry-run enforcement)
+        run: |
+          if git diff --exit-code hardware/imac-legacy-max-out-hardware.md; then
+            echo "✅ Markdown is perfectly in sync with JSON. Good to merge."
+          else
+            echo "❌ ERROR: hardware/imac-legacy-max-out-hardware.md is out of sync with the JSON."
+            echo "Please run 'npm run sync:hardware' (or node hardware/sync-hardware-md.js) locally and commit the updated Markdown."
+            git diff hardware/imac-legacy-max-out-hardware.md
+            exit 1
+          fi
+
+      - name: Summary
+        if: success()
+        run: echo "Hardware inventory sync check passed. Living table and docs are consistent."
