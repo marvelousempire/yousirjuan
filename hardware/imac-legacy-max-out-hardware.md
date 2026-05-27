@@ -4,7 +4,22 @@
 **Goal:** Fully maximize both 27-inch Intel iMacs for the best possible Cursor-like experience that is 100% private and offline after setup.  
 **Date:** May 27, 2026  
 **Owner:** A Brown Santa / marvelousempire  
-**Status:** Living Document — See React component in `apps/yousirjuan-web/components/HardwareTable.tsx` for the interactive sortable/filterable version.
+**Status:** **Living Document** — Single source of truth is now `hardware/imac-hardware-data.json`. The interactive React table and this Markdown stay in sync from that file.
+
+> **How to update:** Edit `hardware/imac-hardware-data.json` → both the React component (`apps/yousirjuan-web/components/HardwareTable.tsx`) and future generated docs will reflect the change.
+
+---
+
+## Interactive Living Table (Recommended)
+
+Visit the demo page in the web app: `/hardware-demo` (or embed `<HardwareTable />` anywhere).
+
+The table supports:
+- Real-time search across all fields
+- Filter by machine (2012 / 2017 / Both)
+- Filter by category (Processor, Memory, Storage, etc.)
+- Clickable column headers for sorting
+- Color-coded status badges
 
 ---
 
@@ -68,11 +83,11 @@
 2. Install hardware
 3. Run OpenCore Legacy Patcher on 2012 iMac
 4. Apply Ollama performance plist + Continue.dev configs
-5. Use the interactive React table in the web app to track status
+5. Use the interactive React table (`/hardware-demo`) to track status
 
 ---
 
 **Living Document Note**  
-This Markdown is the canonical human-readable source. The React component at `apps/yousirjuan-web/components/HardwareTable.tsx` provides the interactive, sortable, filterable living view that can be embedded in dashboards or the admin app.
+`hardware/imac-hardware-data.json` is now the single source of truth. The React component and this Markdown are derived views. Future agents should update the JSON when hardware status or recommendations change.
 
-Last updated: 2026-05-27 by Grok (orchestrator-assisted)
+Last updated: 2026-05-27
