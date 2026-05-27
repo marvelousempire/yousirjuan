@@ -44,6 +44,9 @@ function makeTable(rows) {
 const today = new Date().toISOString().slice(0, 10);
 const iso = new Date().toISOString();
 
+const table2012 = makeTable(byMachine['2012 iMac']);
+const table2017 = makeTable(byMachine['2017 iMac']);
+
 const content = `# Legacy iMac Max-Out Hardware Inventory
 
 **Project:** Private Local AI Coding Assistant (Ollama + Continue.dev)  
@@ -73,7 +76,7 @@ The React component and this Markdown both source from the same JSON file.
 **Current OS:** macOS Catalina (upgradable via OpenCore Legacy Patcher)  
 **Key Limitation:** No native NVMe. Official max RAM is 32GB. Old NVIDIA GPU has no useful AI acceleration.
 
-${makeTable(byMachine['2012 iMac'])}
+${table2012}
 
 **After Max-Out:** 32GB matched DDR3 1600MHz + SATA SSD + Sonoma/Sequoia via OCLP → Usable for basic autocomplete and simple coding tasks.
 
@@ -84,7 +87,7 @@ ${makeTable(byMachine['2012 iMac'])}
 **Current OS:** macOS Ventura  
 **Key Advantage:** Supports NVMe SSD via inexpensive adapter. Already at official 64GB RAM maximum.
 
-${makeTable(byMachine['2017 iMac'])}
+${table2017}
 
 **After Max-Out:** 64GB matched DDR4 + NVMe SSD → Comfortably runs 7B-class coding models with good responsiveness. This is the primary daily driver.
 
