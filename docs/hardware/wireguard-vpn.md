@@ -11,7 +11,7 @@ WireGuard interface `wg0` on `10.0.0.1/24`, port `51820`.
 AX6000 (home, WireGuard server)
   wg0: 10.0.0.1/24, port 51820
   LAN: 192.168.8.0/24
-  WAN: 192.168.0.157 (behind Inseego FX3100)
+  WAN: 192.168.0.157 (behind Verizon 5G Business Internet Gateway (6-antenna))
   │
   ├── 10.0.0.2  MacBook Pro (client)
   ├── 10.0.0.3  iPhone (client)
@@ -37,9 +37,9 @@ Saved at `~/.wireguard/` on the Mac:
 
 ## Port forwarding required
 
-The AX6000 WAN IP is `192.168.0.157` (behind the Inseego FX3100).
+The AX6000 WAN IP is `192.168.0.157` (behind the Verizon 5G Business Internet Gateway (6-antenna)).
 For remote access (outside the home network), forward UDP port `51820`
-on the Inseego to `192.168.0.157`.
+on the Verizon Business Gateway to `192.168.0.157`.
 
 Without this, WireGuard only works from the same network as the AX6000
 (which is still useful for the IPv4 routing fix — see below).

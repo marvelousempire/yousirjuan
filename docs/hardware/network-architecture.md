@@ -6,14 +6,14 @@
 |---|---|---|
 | **GL.iNet AX6000** (Flint 2) | GL-MT6000 | Primary router, WireGuard server, VLANs, firewall |
 | **GL.iNet AX1800** (Flint) | GL-AX1800 | IoT Wi-Fi AP (bridge to VLAN 20) |
-| **Inseego FX3100** | 5G fixed wireless | WAN gateway (modem only — AX6000 routes behind it) |
+| **Verizon 5G Business Internet Gateway (6-antenna)** | Verizon 5G Business Internet | WAN gateway (modem only — AX6000 routes behind it) |
 | **Apple Airport Extreme ×2** | A1521 | Bridge-mode Wi-Fi APs for coverage |
 | **Netgear WN3500RP** | Wi-Fi extender | **RETIRED** — no VLAN, no security updates |
 
 ## Topology — 3 Isolated VLANs
 
 ```
-Internet (ISP / Inseego FX3100 5G)
+Internet (ISP / Verizon 5G Business Internet Gateway (6-antenna) 5G)
   │
   ▼
 ┌──────────────────────────────────────────────────────────────┐
@@ -79,7 +79,7 @@ Peers land on VLAN 10 — same access as being at home on the AI network.
 ### Setup steps (AX6000 admin panel)
 
 1. `http://192.168.8.1` → VPN → WireGuard Server → Enable
-2. Port: 51820 (forward on Inseego if it's the WAN gateway)
+2. Port: 51820 (forward on Verizon Business Gateway if it's the WAN gateway)
 3. Generate client configs → download .conf for Mac, scan QR for iPhone
 4. AllowedIPs: `10.0.0.0/24, 192.168.8.0/24`
 
