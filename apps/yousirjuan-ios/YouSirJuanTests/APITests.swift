@@ -48,7 +48,7 @@ final class APITests: XCTestCase {
           "agent": {
             "name": "JUAN",
             "voice": "deep_male_calm",
-            "persona": "sovereign",
+            "persona": "full",
             "avatar": null,
             "greeting": "Good morning."
           }

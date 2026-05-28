@@ -1,8 +1,8 @@
-# YSJ-RAG-0002 — Multimodal Sovereign Ingestion Engine
+# YSJ-RAG-0002 — Multimodal Full Ingestion Engine
 
 # Executive Summary
 
-This feature enables multimodal ingestion for sovereign memory systems.
+This feature enables multimodal ingestion for full memory systems.
 
 The engine supports:
 
@@ -42,4 +42,4 @@ This feature enables:
 
 # Long-Term Goal
 
-Build sovereign multimodal memory infrastructure.
+Build full multimodal memory infrastructure.

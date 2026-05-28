@@ -16,7 +16,7 @@ The design system creates visual consistency across:
 
 - cinematic
 - operational
-- sovereign
+- full
 - trustworthy
 - minimal but premium
 - intelligence-centric
@@ -38,4 +38,4 @@ The design system creates visual consistency across:
 
 ## Long-Term Goal
 
-Create a recognizable sovereign AI operating aesthetic.
+Create a recognizable full AI operating aesthetic.

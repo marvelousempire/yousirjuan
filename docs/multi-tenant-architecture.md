@@ -133,7 +133,7 @@ Policy Enforcement
 |---|---|
 | Shared Cloud | isolated tenant namespaces |
 | Dedicated Instance | isolated infrastructure |
-| Sovereign Deployment | local-only deployment |
+| Full Deployment | local-only deployment |
 | Family Office Tier | maximum isolation |
 
 ---
@@ -142,4 +142,4 @@ Policy Enforcement
 
 The long-term goal is:
 
-> scalable sovereign AI infrastructure with strict trust-domain separation.
+> scalable full AI infrastructure with strict trust-domain separation.

@@ -1,4 +1,4 @@
-# Sovereign Cognitive Forge™
+# Full Cognitive Forge™
 
 # Enterprise Product Requirements Document
 
@@ -8,7 +8,7 @@
 
 # 1. Executive Summary
 
-Sovereign Cognitive Forge™ is a private AI training, orchestration, evaluation, and deployment platform designed to allow organizations, trustees, developers, and sovereign operators to build Claude-class workflows locally without surrendering proprietary knowledge, operational logic, or intellectual property to public cloud systems.
+Full Cognitive Forge™ is a private AI training, orchestration, evaluation, and deployment platform designed to allow organizations, trustees, developers, and full operators to build Claude-class workflows locally without surrendering proprietary knowledge, operational logic, or intellectual property to public cloud systems.
 
 The platform enables:
 
@@ -71,7 +71,7 @@ working together under a unified orchestration engine.
 
 | Goal | Description |
 |---|---|
-| Privacy Sovereignty | Keep data local and encrypted |
+| Privacy Full ownership | Keep data local and encrypted |
 | Frontier-Class Workflow | Achieve Claude/Codex-like operational capability |
 | Multi-Agent Intelligence | Coordinate multiple specialist models |
 | Continuous Improvement | Create feedback and evaluation loops |
@@ -105,7 +105,7 @@ working together under a unified orchestration engine.
 
 ```text
 +------------------------------------------------------+
-|                 Sovereign Cognitive Forge            |
+|                 Full Cognitive Forge            |
 +------------------------------------------------------+
       +-------------------+
       |  User Interface   |
@@ -318,7 +318,7 @@ Enable active AI execution.
 
 # 8. Hardware Architecture
 
-## Recommended Sovereign Stack
+## Recommended Full Stack
 
 ### Tier 1 — Core Inference
 
@@ -326,7 +326,7 @@ Enable active AI execution.
 
 - 128GB unified memory
 - large-model inference
-- mobile sovereign workstation
+- mobile full workstation
 
 ## Mac mini M4 Max
 
@@ -478,7 +478,7 @@ Excluded:
 | Phase 4 | fine-tuning pipeline |
 | Phase 5 | distributed inference mesh |
 | Phase 6 | enterprise governance |
-| Phase 7 | full sovereign AI ecosystem |
+| Phase 7 | full full AI ecosystem |
 
 ---
 
@@ -521,19 +521,19 @@ It is:
 - privacy
 - orchestration
 - specialization
-- sovereignty
+- full ownership
 
 ---
 
 # 19. Closing Statement
 
-Sovereign Cognitive Forge™ transforms artificial intelligence from a rented utility into owned infrastructure — creating a private ecosystem where memory, reasoning, automation, and institutional intelligence remain permanently under the trust’s control.
+Full Cognitive Forge™ transforms artificial intelligence from a rented utility into owned infrastructure — creating a private ecosystem where memory, reasoning, automation, and institutional intelligence remain permanently under the trust’s control.
 
 ---
 
 # Enterprise Handoff Document
 
-## Sovereign Cognitive Forge™ Engineering & Operations Transfer Package
+## Full Cognitive Forge™ Engineering & Operations Transfer Package
 
 ---
 
@@ -541,7 +541,7 @@ Sovereign Cognitive Forge™ transforms artificial intelligence from a rented ut
 
 ## Product Name
 
-Sovereign Cognitive Forge™
+Full Cognitive Forge™
 
 ## Product Type
 
@@ -727,7 +727,7 @@ Private documents remain local unless explicitly exported.
 - distributed inference mesh
 - private voice assistants
 - local vision systems
-- sovereign mobile devices
+- full mobile devices
 - enterprise trustee memory systems
 - autonomous development swarms
 
@@ -750,13 +750,13 @@ The platform is not intended to:
 The platform is intended to:
 
 - orchestrate lawful open models
-- create sovereign infrastructure
+- create full infrastructure
 - maintain private institutional intelligence
 
 ---
 
 # 32. Final Operational Objective
 
-Create a permanently owned AI ecosystem capable of reasoning, coding, retrieval, automation, and memory retention without surrendering sovereignty to external providers.
+Create a permanently owned AI ecosystem capable of reasoning, coding, retrieval, automation, and memory retention without surrendering full ownership to external providers.
 
 > The future belongs not to those who rent intelligence, but to those who cultivate it privately and compound it over time.

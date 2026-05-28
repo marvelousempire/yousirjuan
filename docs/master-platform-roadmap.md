@@ -16,7 +16,7 @@ It tracks:
 - customer experience
 - security
 - robotics expansion
-- sovereign AI infrastructure
+- full AI infrastructure
 
 This is the primary planning document for platform evolution.
 
@@ -26,7 +26,7 @@ This is the primary planning document for platform evolution.
 
 Build:
 
-- sovereign AI infrastructure
+- full AI infrastructure
 - trainable AI assistants
 - persistent relationship-memory systems
 - AI operational continuity systems
@@ -45,7 +45,7 @@ The platform is evolving into:
 |---|---|
 | AI Assistant Platform | trainable assistants |
 | Relationship Memory System | persistent operational memory |
-| Sovereign AI Infrastructure | private/local-first systems |
+| Full AI Infrastructure | private/local-first systems |
 | AI Operating System | orchestration and continuity |
 | Multi-Tenant AI Platform | isolated customer workspaces |
 | AI Continuity Platform | preserves institutional knowledge |
@@ -58,7 +58,7 @@ The platform is evolving into:
 |---|---|
 | Vision documents | complete |
 | Infrastructure philosophy | complete |
-| Sovereign AI docs | complete |
+| Full AI docs | complete |
 | Business model docs | complete |
 | Assistant-role docs | complete |
 | Memory architecture docs | complete |
@@ -171,7 +171,7 @@ Define scalable monetization structure.
 | Storage pricing model | pending |
 | Assistant tier system | pending |
 | Managed infrastructure plans | pending |
-| Sovereign deployment pricing | pending |
+| Full deployment pricing | pending |
 | White-glove onboarding plans | pending |
 | Enterprise / FO pricing | pending |
 
@@ -308,7 +308,7 @@ Autonomous Assistants
         ↓
 Operational Intelligence
         ↓
-Secure Sovereign Infrastructure
+Secure Full Infrastructure
         ↓
 Embodied AI Systems
 ```
@@ -323,7 +323,7 @@ The long-term goal is NOT merely:
 
 The long-term goal is:
 
-> sovereign relationship-intelligence infrastructure.
+> full relationship-intelligence infrastructure.
 
 ---
 

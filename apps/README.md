@@ -81,7 +81,7 @@ Each family member has a distinct visual world and a named Associate Agent. Swit
 | `face-avery-001` | Avery Goodman | Sterling | `#7C5CFF` Obsidian | executive-grid / serif |
 | `face-bobby-001` | Robert Bobby | Blake | `#FF6B35` Copper | soft-stack / humanist |
 | `face-nivram-001` | NIVRAM | Cipher | `#00FF88` Matrix | developer-dense / mono |
-| `face-yousirjuan-001` | Yousir Juan | Sovereign | `#FFD700` Gold | command-center / display |
+| `face-yousirjuan-001` | Yousir Juan | Full | `#FFD700` Gold | command-center / display |
 
 ---
 

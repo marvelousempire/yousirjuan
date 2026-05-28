@@ -22,4 +22,4 @@ The evaluation layer validates quality, safety, reasoning, retrieval accuracy, a
 
 ## Long-Term Goal
 
-Create sovereign trust infrastructure for AI systems.
+Create full trust infrastructure for AI systems.

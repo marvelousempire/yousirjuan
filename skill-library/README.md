@@ -4,7 +4,7 @@ This directory is the new home for the private AI skills library formerly mainta
 
 `marvelousempire/ai-skills-library`
 
-The goal is to consolidate the skills catalog into `marvelousempire/yousirjuan` so You-Sir Juan™ becomes the canonical sovereign AI infrastructure repo for:
+The goal is to consolidate the skills catalog into `marvelousempire/yousirjuan` so You-Sir Juan™ becomes the canonical full AI infrastructure repo for:
 
 - local AI skills
 - Cursor skills

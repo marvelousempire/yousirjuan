@@ -18,7 +18,7 @@ The chain that matters: careless ≡ stupid; stupid is the opposite of good; we 
 
 ## What this repo is
 
-**You-Sir Juan™** is a sovereign private AI infrastructure platform for family offices and households. It is:
+**You-Sir Juan™** is a full private AI infrastructure platform for family offices and households. It is:
 
 - a backend runtime (Node.js/Express, Postgres, Redis, Qdrant, Ollama)
 - a native iOS/iPadOS app (SwiftUI + RealityKit 4 — kiosk interface)
@@ -80,7 +80,7 @@ It is a **git submodule** pinned to `marvelousempire/ai-skills-library` on `main
 | `plans/family-interface-vision.md` | Full build roadmap (software + hardware + service) |
 | `docs/hardware-topology.md` | Node roles and workload placement |
 | `docs/hardware/apple-device-stack.md` | Apple hardware inventory + pricing |
-| `hardware/dgx-spark-frontier-node.md` | DGX Spark sovereign compute role |
+| `hardware/dgx-spark-frontier-node.md` | DGX Spark full compute role |
 | `docs/cinematic-3d-ios-prd.md` | RealityMotion iOS design system PRD (SwiftUI + RealityKit 4) |
 | `apps/README.md` | How to run backend + iOS + web in 3 terminals |
 | `.env.example` | All environment variables documented |
@@ -96,7 +96,7 @@ It is a **git submodule** pinned to `marvelousempire/ai-skills-library` on `main
 | `u_avery` | Avery Goodman | Sterling | Obsidian `#7C5CFF` | executive-grid / serif-strong |
 | `u_bobby` | Robert Bobby | Blake | Copper `#FF6B35` | soft-stack / humanist-rounded |
 | `u_nivram` | NIVRAM | Cipher | Matrix `#00FF88` | developer-dense / monospace-sharp |
-| `u_yousirjuan` | Yousir Juan | Sovereign | Sovereign `#FFD700` | command-center / display-bold |
+| `u_yousirjuan` | Yousir Juan | Full | Full `#FFD700` | command-center / display-bold |
 
 Seeded in `api/src/personas.js`. Terminology rule: always say **Associate Agent** or **Associate** — never "butler" or "persona" in user-facing strings.
 
@@ -151,7 +151,7 @@ When an agent that isn't Claude Code lands in this repo (Cursor, Aider, Continue
 | Tier | Minimum hardware |
 |---|---|
 | Floor — entry product | Mac mini M4 Pro 48GB + iPad Pro (any M-series, iPadOS 18+) + GL.iNet Flint 2 |
-| Ceiling — full sovereign mesh | MacBook Pro M5 Max + Mac mini M4 Pro + DGX Spark + Jetson Thor + Flint 2/Slate AX + NAS |
+| Ceiling — full full mesh | MacBook Pro M5 Max + Mac mini M4 Pro + DGX Spark + Jetson Thor + Flint 2/Slate AX + NAS |
 
 Swap `OLLAMA_URL` in `.env` to route inference between Mac mini (floor) and DGX Spark (ceiling).
 

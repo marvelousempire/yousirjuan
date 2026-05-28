@@ -264,7 +264,7 @@ http://localhost:3000
 
 The system is currently:
 
-- a locally runnable sovereign AI runtime platform
+- a locally runnable full AI runtime platform
 - early-stage infrastructure
 - partially operational
 - development-oriented

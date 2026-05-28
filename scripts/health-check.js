@@ -1,4 +1,4 @@
-console.log('Sovereign Cognitive Runtime Health Check');
+console.log('Full Cognitive Runtime Health Check');
 console.log('-----------------------------------------');
 console.log('API Layer: configured');
 console.log('Runtime Layer: configured');

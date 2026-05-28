@@ -348,7 +348,7 @@ This rule applies to every AI system, LLM, IDE agent, automated tool, and human 
 ## Rule 14: Dual-Push Protocol — Every `git push` Goes to GitHub AND GitLab
 
 <system_reminder>
-When the operator says "push", "push to git", "push everything", or any equivalent — that means push to **BOTH** GitHub (`origin`) **AND** GitLab (`gitlab` at `git.yousirjuan.ai:2424`). Pushing to only one is a broken contract. GitLab is the sovereign mirror per LEDGER-0005; GitHub is the public source. **Both must receive every push.** Silently pushing to only GitHub leaves the GitLab mirror behind and breaks the source-of-truth posture.
+When the operator says "push", "push to git", "push everything", or any equivalent — that means push to **BOTH** GitHub (`origin`) **AND** GitLab (`gitlab` at `git.yousirjuan.ai:2424`). Pushing to only one is a broken contract. GitLab is the full mirror per LEDGER-0005; GitHub is the public source. **Both must receive every push.** Silently pushing to only GitHub leaves the GitLab mirror behind and breaks the source-of-truth posture.
 </system_reminder>
 
 ### Why this rule exists
@@ -403,7 +403,7 @@ git remote add gitlab ssh://git@72.167.151.251:2424/marvelousempire/<repo>.git
 ### Cross-references
 
 - `.claude/rules/dual-push-protocol.md` — repo-level binding mirror of this rule
-- LEDGER-0005 in marvelousempire/yousirjuan — GitLab as sovereign source-of-truth (the mirror doctrine this enforces)
+- LEDGER-0005 in marvelousempire/yousirjuan — GitLab as full source-of-truth (the mirror doctrine this enforces)
 - LEDGER-0014 — operator-intent protocol (why GitLab might be intentionally stopped during a session)
 - `tools/git-dual-push.sh` in marvelousempire/yousirjuan — the implementation
 
@@ -565,7 +565,7 @@ Rule 4 (Success/Error Badge) was added on 2026-05-16 as a universal standard for
 
 Rule 13 (Operator-Intent Protocol) was established by operator directive on 2026-05-21 after an agent reinstalled n8n that a prior agent had deliberately stopped. The operator's verbatim correction was unequivocal: *"another agent reinstalled it because you did not leave healthy notes on what you did to play-well with others. you must add that rule to make good notes so other people and other IA know what you are doing so they can know what to do. global rule please now."* The rule + its host-side enforcement (intent files + MOTD hook + systemd mask) shipped the same day as LEDGER-0014 in marvelousempire/yousirjuan.
 
-Rule 14 (Dual-Push Protocol) was established by operator directive on 2026-05-21 after the same session pushed only to GitHub during an entire multi-PR run, breaking the GitLab-as-sovereign-mirror posture from LEDGER-0005. The operator's verbatim correction was: *"when i ask you to push everything to git, you must push everything to my github repo and my gitlab - make sure that is what you have been doing."* The rule + the `tools/git-dual-push.sh` tool + the binding `.claude/rules/dual-push-protocol.md` shipped the same day.
+Rule 14 (Dual-Push Protocol) was established by operator directive on 2026-05-21 after the same session pushed only to GitHub during an entire multi-PR run, breaking the GitLab-as-full-mirror posture from LEDGER-0005. The operator's verbatim correction was: *"when i ask you to push everything to git, you must push everything to my github repo and my gitlab - make sure that is what you have been doing."* The rule + the `tools/git-dual-push.sh` tool + the binding `.claude/rules/dual-push-protocol.md` shipped the same day.
 
 Rule 16 (Intent-Reality Drift Detector) was established by operator directive on 2026-05-21 after the operator himself accidentally created drift (running n8n while the intent file still said "stopped" for ~7 hours) — exposing that Rule 13 prevented careless mistakes but not silent overrides. The operator's verbatim: *"Yes — ship Rule 16: Intent-Reality Drift Detector."* The rule + LEDGER-0019 implementation (systemd timer + intent-drift-check.sh + JSON report + `.claude/rules/intent-reality-drift.md` mirror) shipped the same day.
 

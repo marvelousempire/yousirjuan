@@ -32,7 +32,7 @@ Cline reads its own MCP config (different file, same data shape as VS Code's `mc
 
 **"yousirjuan-recommended VS Code profile."** A profile that pre-installs Cline + a known-good MCP server set, points at a yousirjuan-hosted or locally-running model by default, and explicitly skips Copilot Chat — so operators get a first-class agent UI without ever encountering the paywall. Distribute via VS Code's [Profile sharing](https://code.visualstudio.com/docs/configure/profiles).
 
-This also serves the broader "operator chooses sovereign defaults" theme.
+This also serves the broader "operator chooses full defaults" theme.
 
 ## Where the fix lives
 

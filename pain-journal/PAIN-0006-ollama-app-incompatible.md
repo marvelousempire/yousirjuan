@@ -32,7 +32,7 @@ We installed a per-user LaunchAgent at `~/Library/LaunchAgents/com.ollama.server
 
 ## Potential feature
 
-**"Sovereign LaunchAgent installer for legacy macOS."** A one-shot script (or part of the yousirjuan installer) that detects when the Ollama.app is broken or absent, drops a LaunchAgent plist, loads it, and verifies the HTTP endpoint — so older-Mac operators get the same "it just runs" experience the .app provides on Sonoma+.
+**"Full LaunchAgent installer for legacy macOS."** A one-shot script (or part of the yousirjuan installer) that detects when the Ollama.app is broken or absent, drops a LaunchAgent plist, loads it, and verifies the HTTP endpoint — so older-Mac operators get the same "it just runs" experience the .app provides on Sonoma+.
 
 This dovetails with the broader yousirjuan goal of running on hardware the user already owns, not forcing upgrades.
 

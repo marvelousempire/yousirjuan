@@ -44,7 +44,7 @@
 |---|---|
 | **Orchestration Engine** | Loop daemon, HTTP server (port 7337), MCP integration, fleet management |
 | **Meta Library** | `docs/meta-library/` — compounding brain, session learnings, witnessed entries |
-| **Personas/Agents** | Sterling (Avery), Blake (Robert), Cipher (NIVRAM), Sovereign (Yousir Juan) — Associate Agent definitions |
+| **Personas/Agents** | Sterling (Avery), Blake (Robert), Cipher (NIVRAM), Full (Yousir Juan) — Associate Agent definitions |
 | **Interface Experience** | Walk-up kiosk flow, biometric auth, voice-first conversation, family member onboarding |
 | **Frameworks** | `frameworks/` — Cinematic Broadcast Arena, future app-building templates |
 | **Skills** | `skills/nephew-core/`, `skills/nephew-federation/` — Nephew's orchestration capabilities |
@@ -65,7 +65,7 @@
 ## Clear Boundaries (What NEVER Crosses)
 
 ### ❌ You-Sir Juan DOES NOT Contain
-- **No persona definitions** (Sterling, Blake, Cipher, Sovereign)
+- **No persona definitions** (Sterling, Blake, Cipher, Full)
 - **No Associate Agent tables** or member-agent pairings
 - **No interface UX** (walk-up kiosk, biometric auth, voice-first conversation)
 - **No family member onboarding** flows
@@ -95,7 +95,7 @@ Nephew (Orchestration Layer)
     ├─> Retrieves documents (Qdrant vector DB on Mac mini)
     ├─> Executes tasks (OpenClaw agents on Mac mini)
     ├─> Local inference (Ollama on Mac mini / DGX Spark)
-    └─> Returns results via Associate Agent (Sterling/Blake/Cipher/Sovereign)
+    └─> Returns results via Associate Agent (Sterling/Blake/Cipher/Full)
          ↓
     You-Sir Juan Infrastructure (Hardware + Runtime)
 ```
@@ -167,7 +167,7 @@ Nephew (Orchestration Layer)
 
 | Check | Repo | Workflow | What It Blocks |
 |---|---|---|---|
-| **No Persona Content** | You-Sir Juan | `contract-enforcement-no-persona.yml` | PRs with Sterling/Blake/Cipher/Sovereign |
+| **No Persona Content** | You-Sir Juan | `contract-enforcement-no-persona.yml` | PRs with Sterling/Blake/Cipher/Full |
 | **No Interface UX** | You-Sir Juan | `contract-enforcement-no-persona.yml` | PRs with kiosk/biometric/voice-first |
 | **No Meta-Library** | You-Sir Juan | `contract-enforcement-no-persona.yml` | PRs with compounding brain content |
 | **No Hardware Specs** | Nephew | `contract-enforcement-no-hardware.yml` | PRs with MacBook Pro/DGX Spark specs |

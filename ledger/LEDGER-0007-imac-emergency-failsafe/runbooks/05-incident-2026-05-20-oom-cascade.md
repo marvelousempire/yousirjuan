@@ -89,7 +89,7 @@ puma['per_worker_max_memory_mb'] = 400         # currently default ~600
 sidekiq['concurrency'] = 10                    # currently 20
 ```
 
-Then `sudo gitlab-ctl reconfigure`. Trades throughput for headroom — fine for a sovereign single-tenant install.
+Then `sudo gitlab-ctl reconfigure`. Trades throughput for headroom — fine for a full single-tenant install.
 
 ### 3. Earmark `oom_score_adj` for survival-critical processes
 

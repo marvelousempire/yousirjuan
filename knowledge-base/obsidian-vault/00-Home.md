@@ -1,6 +1,6 @@
 # 🧠 You-Sir Juan Brain - Obsidian Vault
 
-**Central knowledge base** for the Sovereign AI Infrastructure + RealityMotion Cinematic 3D System.
+**Central knowledge base** for the Full AI Infrastructure + RealityMotion Cinematic 3D System.
 
 ## Quick Navigation
 - [[RealityMotion-MOC|RealityMotion System]]

@@ -1,8 +1,8 @@
-# Sovereign DevOps Stack
+# Full DevOps Stack
 
 ## Purpose
 
-This document defines the sovereign software governance and DevOps layer for the You-Sir Juan ecosystem.
+This document defines the full software governance and DevOps layer for the You-Sir Juan ecosystem.
 
 The platform is not only:
 
@@ -13,7 +13,7 @@ The platform is not only:
 
 It is also:
 
-> sovereign operational governance infrastructure.
+> full operational governance infrastructure.
 
 ---
 
@@ -35,16 +35,16 @@ should become:
 
 ---
 
-# Sovereign Governance Layers
+# Full Governance Layers
 
 | Layer | Purpose |
 |---|---|
 | Git | immutable operational memory |
-| GitLab CE | sovereign engineering platform |
+| GitLab CE | full engineering platform |
 | GitHub | upstream ecosystem synchronization |
 | GitOps | infrastructure-as-code governance |
 | CI/CD | deployment automation |
-| Runners | sovereign execution infrastructure |
+| Runners | full execution infrastructure |
 | Artifact Registry | model and deployment storage |
 | Audit Logs | operational accountability |
 
@@ -78,7 +78,7 @@ Git preserves:
 
 GitLab CE acts as:
 
-> sovereign development governance infrastructure.
+> full development governance infrastructure.
 
 It provides:
 
@@ -94,12 +94,12 @@ It provides:
 
 ---
 
-# Recommended Sovereign DevOps Stack
+# Recommended Full DevOps Stack
 
 | Layer | Technology |
 |---|---|
 | Source Control | Git |
-| Sovereign Git Platform | GitLab CE |
+| Full Git Platform | GitLab CE |
 | Lightweight Git Alternative | Gitea / Forgejo |
 | CI/CD | GitLab Pipelines |
 | Runner Infrastructure | GitLab Runners |
@@ -156,7 +156,7 @@ tracked through Git.
 
 The long-term goal is:
 
-> reproducible sovereign infrastructure.
+> reproducible full infrastructure.
 
 Meaning:
 
@@ -172,13 +172,13 @@ Meaning:
 
 The platform ultimately combines:
 
-- sovereign AI
-- sovereign memory
-- sovereign governance
-- sovereign deployment
-- sovereign orchestration
-- sovereign infrastructure
+- full AI
+- full memory
+- full governance
+- full deployment
+- full orchestration
+- full infrastructure
 
 into:
 
-> sovereign digital civilization infrastructure.
+> full digital civilization infrastructure.

@@ -156,7 +156,7 @@ OLLAMA_URL=http://localhost:11434
 OLLAMA_MODEL=llama3.2:3b        # best for real-time voice on this CPU
 KOKORO_URL=http://localhost:8880
 YOUSIRJUAN_API_URL=http://localhost:4000
-POSTGRES_PASSWORD=sovereign
-DATABASE_URL=postgresql://sovereign:sovereign@localhost:5432/yousirjuan
+POSTGRES_PASSWORD=full
+DATABASE_URL=postgresql://full:full@localhost:5432/yousirjuan
 SESSION_SECRET=change-me-before-deployment
 ```

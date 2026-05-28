@@ -212,7 +212,7 @@ The system should evolve toward:
 - scalable inference
 - persistent storage
 - creative workstation separation
-- sovereign AI architecture
+- full AI architecture
 
 ---
 

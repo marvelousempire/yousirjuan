@@ -13,7 +13,7 @@ const LABEL_SETS: Record<string, { day: string; tasks: string; world: string; si
   warm:      { day: 'Your day', tasks: 'On your list', world: 'Home', signOut: 'See you later' },
   casual:    { day: 'Right now', tasks: 'Stuff to do', world: 'World', signOut: 'Peace out' },
   technical: { day: 'Session', tasks: 'Queue', world: 'Runtime', signOut: 'End session' },
-  sovereign: { day: 'Agenda', tasks: 'Directives', world: 'Domain', signOut: 'Adjourn' },
+  full: { day: 'Agenda', tasks: 'Directives', world: 'Domain', signOut: 'Adjourn' },
 };
 
 const LAYOUTS: Record<string, string> = {

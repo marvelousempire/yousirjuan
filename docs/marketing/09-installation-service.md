@@ -6,7 +6,7 @@
 
 ## What it is
 
-You-Sir Juan™ is not a download-and-configure product. For Sovereign and Standard tier customers, we provide a complete white-glove installation service — a technician comes to the household, installs and configures the entire stack, and leaves the family with a working system they understand.
+You-Sir Juan™ is not a download-and-configure product. For Full and Standard tier customers, we provide a complete white-glove installation service — a technician comes to the household, installs and configures the entire stack, and leaves the family with a working system they understand.
 
 ---
 
@@ -28,7 +28,7 @@ The goal: every family member is comfortable using their Associate Agent before 
 ### On-site installation (half day)
 1. **Network setup** — GL.iNet router installed as the household's private AI gateway; existing Mac mini or MacBook joined to the WireGuard mesh
 2. **Runtime provisioning** — Ansible playbook runs on the Mac mini: Ollama, Postgres, Redis, Qdrant, Kokoro TTS, nginx all configured and started
-3. **Kiosk placement** — iPad Pro (Sovereign) or Pi touchscreen (Standard) mounted and configured; Guided Access enabled
+3. **Kiosk placement** — iPad Pro (Full) or Pi touchscreen (Standard) mounted and configured; Guided Access enabled
 4. **Member enrollment** — Each family member's face enrolled via the kiosk camera; Associate Agents named and voice-selected by each member
 5. **Onboarding** — Each member completes their train-your-associate flow; the system is ready to use
 6. **Handoff walkthrough** — Technician walks the household through basic use: how to talk to the Associate, how to train it, how to update preferences

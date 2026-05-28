@@ -2,7 +2,7 @@
   "name": "yousirjuan-platform",
   "version": "0.4.0",
   "private": true,
-  "description": "Sovereign AI relationship-memory platform runtime scaffold.",
+  "description": "Full AI relationship-memory platform runtime scaffold.",
   "scripts": {
     "dev:api": "node api/server.js",
     "start:api": "node api/server.js",

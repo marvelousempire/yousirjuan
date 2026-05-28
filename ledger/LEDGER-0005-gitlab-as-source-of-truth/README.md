@@ -1,6 +1,6 @@
 ---
 ledgerId: LEDGER-0005
-title: GitLab CE on the VPS as sovereign source-of-truth; GitHub becomes a push-mirror
+title: GitLab CE on the VPS as full source-of-truth; GitHub becomes a push-mirror
 status: phase-1-shipped
 opened: 2026-05-20
 closed: null
@@ -15,7 +15,7 @@ phase-1:
   ssh-clone: ssh://git@72.167.151.251:2424/marvelousempire/yousirjuan.git
 ---
 
-# LEDGER-0005 — GitLab CE as sovereign source-of-truth
+# LEDGER-0005 — GitLab CE as full source-of-truth
 
 ## Phase 1 — SHIPPED 2026-05-20
 
@@ -46,7 +46,7 @@ What's still on the Phase 2 + Phase 3 plan (below): push-mirror config to GitHub
 
 Migrate the development workflow from GitHub-as-source-of-truth to **GitLab CE on the VPS as source-of-truth, with GitHub serving as a downstream push-mirror.** Daily commits, MRs, CI, and merges happen on `gitlab.yousirjuan.ai`; GitHub stays in sync as a read-mostly mirror so public collaboration / discovery still works.
 
-This aligns with the yousirjuan ethos as documented in [`governance/gitlab-ce-stack.md`](../../governance/gitlab-ce-stack.md) and [`governance/sovereign-devops-stack.md`](../../governance/sovereign-devops-stack.md): self-hosted, sovereign, operator-owned operational backbone.
+This aligns with the yousirjuan ethos as documented in [`governance/gitlab-ce-stack.md`](../../governance/gitlab-ce-stack.md) and [`governance/full-devops-stack.md`](../../governance/full-devops-stack.md): self-hosted, full, operator-owned operational backbone.
 
 ## Recon findings (2026-05-20)
 
@@ -142,7 +142,7 @@ This PR adds only the ticket. The runbooks + playbooks come in follow-up PRs as 
 
 The operator initially proposed using the GitLab path as a workaround for the cross-org GitHub PR ceremony that was blocking LEDGER-0004's 47-repo rollout. I pushed back: routing the same 47-repo writes through GitLab mirror to bypass the GitHub-PR classifier guard would be the very anti-pattern the [`contracts-and-prudence.md`](../../.claude/rules/contracts-and-prudence.md) rule forbids ("don't suppress an error to make a symptom go away without diagnosing the cause" / "don't work around a safety check we don't understand").
 
-GitLab-as-source-of-truth is genuinely a good architectural decision for *other* reasons (sovereignty, control, the existing governance docs already say so). It's just not the right tactical lever for that one specific rollout. The two decisions are independent and this entry treats them as such.
+GitLab-as-source-of-truth is genuinely a good architectural decision for *other* reasons (full ownership, control, the existing governance docs already say so). It's just not the right tactical lever for that one specific rollout. The two decisions are independent and this entry treats them as such.
 
 ## Verification (per phase)
 

@@ -34,7 +34,7 @@ Products create businesses.
 | Pain ID | Problem | Potential Feature |
 |---|---|---|
 | PAIN-0001 | Families repeat the same instructions to new nannies repeatedly | Persistent Relationship Memory Engine |
-| PAIN-0002 | Sensitive legal documents cannot be safely uploaded to cloud AI systems | Sovereign RAG Vault |
+| PAIN-0002 | Sensitive legal documents cannot be safely uploaded to cloud AI systems | Full RAG Vault |
 | PAIN-0003 | Teams lose operational knowledge when staff leave | Institutional Continuity Engine |
 | PAIN-0004 | AI tools forget prior context between sessions | Persistent Namespace Memory |
 | PAIN-0005 | Organizations do not trust autonomous AI systems | Audit and Observability Layer |

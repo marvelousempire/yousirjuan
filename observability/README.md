@@ -28,4 +28,4 @@ The observability layer provides visibility into:
 
 ## Long-Term Goal
 
-Create sovereign operational visibility infrastructure.
+Create full operational visibility infrastructure.

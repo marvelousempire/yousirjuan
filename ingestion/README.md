@@ -2,7 +2,7 @@
 
 ## Purpose
 
-The ingestion layer transforms raw information into structured sovereign memory.
+The ingestion layer transforms raw information into structured full memory.
 
 ---
 
@@ -35,4 +35,4 @@ The ingestion layer transforms raw information into structured sovereign memory.
 
 ## Long-Term Goal
 
-Build multimodal sovereign memory infrastructure.
+Build multimodal full memory infrastructure.

@@ -91,4 +91,4 @@ Every request should support:
 
 The API eventually becomes:
 
-> the operational nervous system of the sovereign AI platform.
+> the operational nervous system of the full AI platform.

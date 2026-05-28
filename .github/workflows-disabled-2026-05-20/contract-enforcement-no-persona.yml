@@ -62,7 +62,7 @@ jobs:
 
       - name: Check for Associate Agent personas
         run: |
-          echo "🔍 Checking for forbidden persona definitions (Sterling, Blake, Cipher, Sovereign as Associate Agents)..."
+          echo "🔍 Checking for forbidden persona definitions (Sterling, Blake, Cipher, Full as Associate Agents)..."
           OFFENDERS=$(grep -rn "Associate Agent" --include="*.md" --exclude-dir=node_modules --exclude-dir=vendor --exclude-dir=.git . 2>/dev/null | grep -vE "$ALLOWLIST_LINE" || true)
           if [ -n "$OFFENDERS" ]; then
             echo "❌ FAIL: Found Associate Agent references outside the allowlist:"
@@ -78,12 +78,12 @@ jobs:
             echo "$OFFENDERS_TABLE"
             exit 1
           fi
-          # Files containing all four persona names (Sterling + Blake + Cipher + Sovereign)
+          # Files containing all four persona names (Sterling + Blake + Cipher + Full)
           PERSONA_FILES=$(
             grep -rl "Sterling" --include="*.md" --exclude-dir=node_modules --exclude-dir=vendor --exclude-dir=.git . 2>/dev/null \
               | xargs -I{} sh -c 'grep -l "Blake" "{}" 2>/dev/null' \
               | xargs -I{} sh -c 'grep -l "Cipher" "{}" 2>/dev/null' \
-              | xargs -I{} sh -c 'grep -l "Sovereign" "{}" 2>/dev/null' \
+              | xargs -I{} sh -c 'grep -l "Full" "{}" 2>/dev/null' \
               | grep -vE "$ALLOWLIST_PATH" || true
           )
           if [ -n "$PERSONA_FILES" ]; then

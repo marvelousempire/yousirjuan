@@ -89,7 +89,7 @@ The GL.iNet routers have WireGuard built into the firmware. Benefits over Tailsc
 - No third-party coordination server
 - Hardware-accelerated on AX6000
 - No per-device install needed
-- Full self-hosted sovereignty
+- Full self-hosted full ownership
 
 ## Retired Hardware
 

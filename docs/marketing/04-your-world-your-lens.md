@@ -25,7 +25,7 @@ Most interfaces force everyone into the same view. You-Sir Juan™ does the oppo
 | **Executive** | Obsidian — deep purple `#7C5CFF` | Today · Briefings · Operations | Dense 3-column grid | Principals, executives, decision-makers |
 | **Warm** | Copper — amber `#FF6B35` | Your day · On your list · Home | Soft vertical stack | Partners, family members who want warmth |
 | **Technical** | Matrix — neon green `#00FF88` | Session · Queue · Runtime | Developer-dense grid | Builders, operators, technical members |
-| **Sovereign** | Gold — `#FFD700` | Agenda · Directives · Domain | Command center | Founders, household heads |
+| **Full** | Gold — `#FFD700` | Agenda · Directives · Domain | Command center | Founders, household heads |
 | **Casual** | Adaptable | Right now · Stuff to do · World | Open cards | Younger members, lighter users |
 
 ---

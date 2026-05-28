@@ -11,9 +11,9 @@ The goal is to preserve:
 - operational visibility
 - cinematic frontend quality
 - developer velocity
-- sovereign infrastructure ownership
+- full infrastructure ownership
 
-while replacing sports-specific functionality with sovereign AI infrastructure.
+while replacing sports-specific functionality with full AI infrastructure.
 
 ---
 
@@ -21,18 +21,18 @@ while replacing sports-specific functionality with sovereign AI infrastructure.
 
 | Layer | ReadyPlay Stack | You-Sir Juan Direction |
 |---|---|---|
-| Frontend | Next.js 15 + React 19 | sovereign admin + marketing + memory UI |
-| Styling | Tailwind CSS | sovereign design tokens |
-| Motion | Framer Motion | cinematic sovereign interactions |
-| 3D | Three.js + React Three Fiber | sovereign infrastructure visualization |
-| Backend | Node + Express | sovereign runtime API |
+| Frontend | Next.js 15 + React 19 | full admin + marketing + memory UI |
+| Styling | Tailwind CSS | full design tokens |
+| Motion | Framer Motion | cinematic full interactions |
+| 3D | Three.js + React Three Fiber | full infrastructure visualization |
+| Backend | Node + Express | full runtime API |
 | Database | PostgreSQL 16 | memory and orchestration persistence |
-| Queueing | EventEmitter → Redis evolution | sovereign orchestration queues |
-| Deploy | pm2 + rsync + nginx | sovereign deployment system |
-| Observability | Sentry | sovereign runtime monitoring |
-| CI/CD | GitHub Actions | sovereign deployment automation |
+| Queueing | EventEmitter → Redis evolution | full orchestration queues |
+| Deploy | pm2 + rsync + nginx | full deployment system |
+| Observability | Sentry | full runtime monitoring |
+| CI/CD | GitHub Actions | full deployment automation |
 | Auth | JWT + middleware | namespace-aware access control |
-| AI | OpenAI vector sync workflows | sovereign retrieval + local inference |
+| AI | OpenAI vector sync workflows | full retrieval + local inference |
 
 ---
 
@@ -71,7 +71,7 @@ The platform should combine:
 - cinematic polish
 - premium motion
 - enterprise trust
-- sovereign aesthetics
+- full aesthetics
 
 The frontend should feel:
 
@@ -87,4 +87,4 @@ The frontend should feel:
 
 Take the strongest operational and frontend infrastructure from ReadyPlay and evolve it into:
 
-> sovereign cognitive infrastructure.
+> full cognitive infrastructure.

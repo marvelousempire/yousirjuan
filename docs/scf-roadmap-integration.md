@@ -8,12 +8,12 @@ The repository now contains two interconnected strategic layers:
 
 | Layer | Purpose |
 |---|---|
-| You-Sir Juan | relationship-memory and sovereign assistant infrastructure |
+| You-Sir Juan | relationship-memory and full assistant infrastructure |
 | SCF | private multi-model orchestration, training, and evaluation infrastructure |
 
 Together they form:
 
-> a sovereign AI operating ecosystem.
+> a full AI operating ecosystem.
 
 ---
 
@@ -63,7 +63,7 @@ Relationship Memory
         ↓
 Operational Continuity
         ↓
-Sovereign AI Infrastructure
+Full AI Infrastructure
 ```
 
 ---
@@ -78,7 +78,7 @@ Sovereign AI Infrastructure
 | Autonomous Coding | repo execution and workflows |
 | Synthetic Teacher Learning | frontier-output refinement |
 | Enterprise Governance | audit and approval systems |
-| Distributed Inference | multi-node sovereign AI mesh |
+| Distributed Inference | multi-node full AI mesh |
 | Air-Gapped Deployments | isolated operational environments |
 
 ---
@@ -89,7 +89,7 @@ Sovereign AI Infrastructure
 
 Primary role:
 
-- sovereign inference workstation
+- full inference workstation
 - coding environment
 - orchestration console
 - creative operations
@@ -159,7 +159,7 @@ The long-term direction is no longer merely:
 
 The expanded direction is:
 
-> sovereign multi-model intelligence infrastructure.
+> full multi-model intelligence infrastructure.
 
 ---
 
@@ -194,7 +194,7 @@ Persistent Memory
        ↓
 Operational Continuity
        ↓
-Enterprise Sovereignty
+Enterprise Full ownership
        ↓
 Embodied AI Systems
 ```

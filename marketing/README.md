@@ -34,7 +34,7 @@ Every feature should become:
 | Feature Pages | individual feature marketing |
 | Industry Pages | PMA, family office, enterprise |
 | Docs | onboarding and education |
-| Comparisons | sovereign vs cloud AI |
+| Comparisons | full vs cloud AI |
 | Pricing | plans and deployment tiers |
 | Security | trust and governance |
 | Hardware | Mac + Thor positioning |

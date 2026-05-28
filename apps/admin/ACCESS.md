@@ -14,7 +14,7 @@ From the repository root:
 bash bootstrap.sh
 ```
 
-This prepares the local runtime environment and starts the lightweight sovereign AI stack.
+This prepares the local runtime environment and starts the lightweight full AI stack.
 
 ---
 
@@ -152,7 +152,7 @@ without requiring a repo redesign.
 
 The repository is currently:
 
-- an early-stage sovereign AI runtime platform
+- an early-stage full AI runtime platform
 - partially implemented infrastructure
 - active development architecture
 - evolving orchestration system
@@ -167,7 +167,7 @@ The focus is:
 
 - private AI infrastructure
 - local-first orchestration
-- sovereign deployment
+- full deployment
 - retrieval systems
 - coding workflows
 - operational continuity

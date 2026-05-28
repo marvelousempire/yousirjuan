@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Redis queues coordinate asynchronous sovereign runtime execution.
+Redis queues coordinate asynchronous full runtime execution.
 
 ---
 
@@ -41,4 +41,4 @@ Persistent Storage
 
 ## Long-Term Goal
 
-Build resilient sovereign asynchronous infrastructure.
+Build resilient full asynchronous infrastructure.

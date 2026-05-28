@@ -10,13 +10,13 @@ This registry tracks outside repositories, frameworks, skills, CLIs, and systems
 - integrated
 - white-labeled
 - adapted into You-Sir Juan
-- adapted into Sovereign Cognitive Forge
+- adapted into Full Cognitive Forge
 
 The goal is not random tool collection.
 
 The goal is:
 
-> extract the strongest features from elite upstream systems and unify them into one sovereign cognitive operating ecosystem.
+> extract the strongest features from elite upstream systems and unify them into one full cognitive operating ecosystem.
 
 ---
 
@@ -74,7 +74,7 @@ The platform should:
 1. Respect licenses.
 2. Avoid copying proprietary or restricted code.
 3. Extract patterns, not steal identity.
-4. Replace sports-specific ReadyPlay concepts with sovereign AI concepts.
+4. Replace sports-specific ReadyPlay concepts with full AI concepts.
 5. Convert upstream features into You-Sir Juan feature IDs and PRDs.
 6. Tie every upstream feature to the feature ledger and pain journal.
 
@@ -84,6 +84,6 @@ The platform should:
 
 The final system should feel like:
 
-> one Megatron Optimus Prime sovereign AI stack.
+> one Megatron Optimus Prime full AI stack.
 
 Many best-in-class systems become one coordinated operating ecosystem.

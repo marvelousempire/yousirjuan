@@ -2,23 +2,23 @@
 
 ## Purpose
 
-The NVIDIA DGX Spark™ is positioned inside the You-Sir Juan sovereign cognitive operating system as:
+The NVIDIA DGX Spark™ is positioned inside the You-Sir Juan full cognitive operating system as:
 
-> a sovereign frontier inference and fine-tuning node.
+> a full frontier inference and fine-tuning node.
 
 It complements:
 
 - Apple Silicon orchestration
 - persistent runtime infrastructure
 - edge multimodal AI
-- sovereign networking
+- full networking
 - distributed inference systems
 
 rather than replacing them.
 
 ---
 
-# Sovereign Hardware Mesh
+# Full Hardware Mesh
 
 | Hardware | Primary Role |
 |---|---|
@@ -26,7 +26,7 @@ rather than replacing them.
 | Mac mini M4 Max • 4TB SSD | persistent runtime, APIs, ingestion, queues, orchestration |
 | NVIDIA DGX Spark™ | frontier inference, CUDA AI, fine-tuning, model serving |
 | Jetson Thor | edge multimodal AI, robotics, voice, vision |
-| Flint 2 | sovereign gateway and infrastructure routing |
+| Flint 2 | full gateway and infrastructure routing |
 | Slate AX | secure travel networking |
 | DAS / NAS / NVMe arrays | models, archives, embeddings, memory |
 
@@ -42,7 +42,7 @@ DGX Spark is not treated as:
 
 It is treated as:
 
-> a compact sovereign AI datacenter node.
+> a compact full AI datacenter node.
 
 ---
 
@@ -76,7 +76,7 @@ Apple Silicon excels at:
 - local coding workflows
 - motion design
 - editing and rendering
-- sovereign workstation ergonomics
+- full workstation ergonomics
 
 ---
 
@@ -108,7 +108,7 @@ DGX Spark excels at:
 
 ---
 
-# Sovereign Compute Topology
+# Full Compute Topology
 
 ```text
 MacBook Pro M5 Max
@@ -134,7 +134,7 @@ Edge Multimodal AI + Robotics + Voice + Vision
 
 The long-term architecture evolves toward:
 
-> a sovereign distributed AI compute mesh.
+> a full distributed AI compute mesh.
 
 Where:
 
@@ -142,7 +142,7 @@ Where:
 - DGX Spark handles frontier inference and training
 - Jetson Thor handles edge multimodal execution
 - Mac mini nodes handle persistent runtime infrastructure
-- Tailscale and sovereign networking connect the entire ecosystem
+- Tailscale and full networking connect the entire ecosystem
 
 ---
 
@@ -154,4 +154,4 @@ DGX Spark transforms the ecosystem from:
 
 into:
 
-> sovereign frontier AI infrastructure.
+> full frontier AI infrastructure.

@@ -1,6 +1,6 @@
 # You-Sir Juan™ Admin Console
 
-The You-Sir Juan™ Admin Console is the operator-facing control surface for the sovereign AI infrastructure platform.
+The You-Sir Juan™ Admin Console is the operator-facing control surface for the full AI infrastructure platform.
 
 It is designed to manage:
 
@@ -49,7 +49,7 @@ Future production access will add:
 
 The admin console is not a marketing page.
 
-It is the administrative cockpit for the You-Sir Juan™ sovereign AI infrastructure platform.
+It is the administrative cockpit for the You-Sir Juan™ full AI infrastructure platform.
 
 It should make the system:
 
@@ -183,9 +183,9 @@ Avoid legacy names such as:
 Use:
 
 - You-Sir Juan™ Admin Console
-- You-Sir Juan™ sovereign AI infrastructure
+- You-Sir Juan™ full AI infrastructure
 - Skill Library
-- Sovereign Cognitive Forge™
+- Full Cognitive Forge™
 
 ---
 

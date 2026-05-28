@@ -2,7 +2,7 @@
 
 ## Purpose
 
-The API layer exposes sovereign platform functionality through structured service endpoints.
+The API layer exposes full platform functionality through structured service endpoints.
 
 ---
 
@@ -24,10 +24,10 @@ The API layer exposes sovereign platform functionality through structured servic
 
 ## Long-Term Goal
 
-Provide a secure sovereign API platform supporting:
+Provide a secure full API platform supporting:
 
 - local deployments
 - enterprise deployments
 - PMA deployments
 - family-office deployments
-- hybrid sovereign deployments
+- hybrid full deployments

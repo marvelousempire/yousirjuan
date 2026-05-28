@@ -109,5 +109,5 @@ After those three, run the install playbook and the standby is up. After one nig
 
 ## Cross-references
 
-- Builds on: [LEDGER-0005 — GitLab CE sovereign source-of-truth (Phase 1 shipped)](../LEDGER-0005-gitlab-as-source-of-truth/)
+- Builds on: [LEDGER-0005 — GitLab CE full source-of-truth (Phase 1 shipped)](../LEDGER-0005-gitlab-as-source-of-truth/)
 - Referenced from: `apps/control-tower/src/pages/StatusPage.tsx` in `marvelousempire/nephew` (Phase 2 — add GitLabHostingCard, NOT in this ticket; separate PR after standby is live)

@@ -4,7 +4,7 @@ Imported from:
 
 `marvelousempire/ai-skills-library`
 
-This file indexes the private AI skills ecosystem being consolidated into the You-Sir Juan™ sovereign AI infrastructure repository.
+This file indexes the private AI skills ecosystem being consolidated into the You-Sir Juan™ full AI infrastructure repository.
 
 ---
 
