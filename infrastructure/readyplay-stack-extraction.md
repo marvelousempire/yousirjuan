@@ -25,11 +25,11 @@ while replacing sports-specific functionality with full AI infrastructure.
 | Styling | Tailwind CSS | full design tokens |
 | Motion | Framer Motion | cinematic full interactions |
 | 3D | Three.js + React Three Fiber | full infrastructure visualization |
-| Backend | Node + Express | full runtime API |
+| Backend | Node + Express | Family Office runtime API |
 | Database | PostgreSQL 16 | memory and orchestration persistence |
 | Queueing | EventEmitter → Redis evolution | full orchestration queues |
 | Deploy | pm2 + rsync + nginx | full deployment system |
-| Observability | Sentry | full runtime monitoring |
+| Observability | Sentry | Family Office runtime monitoring |
 | CI/CD | GitHub Actions | full deployment automation |
 | Auth | JWT + middleware | namespace-aware access control |
 | AI | OpenAI vector sync workflows | full retrieval + local inference |

@@ -84,6 +84,6 @@ The platform should:
 
 The final system should feel like:
 
-> one Megatron Optimus Prime full AI stack.
+> one Megatron Optimus Prime Family Office AI stack.
 
 Many best-in-class systems become one coordinated operating ecosystem.

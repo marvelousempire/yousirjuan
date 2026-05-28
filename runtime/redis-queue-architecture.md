@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Redis queues coordinate asynchronous full runtime execution.
+Redis queues coordinate asynchronous Family Office runtime execution.
 
 ---
 

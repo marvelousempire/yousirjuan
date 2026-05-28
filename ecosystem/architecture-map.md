@@ -60,7 +60,7 @@ Full Cognitive Forge
 | Evaluations | quality enforcement |
 | Automation | active execution |
 | Integrations | operational synchronization |
-| Infrastructure | full compute |
+| Infrastructure | Family Office compute |
 
 ---
 

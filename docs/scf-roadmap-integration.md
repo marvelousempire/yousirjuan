@@ -89,7 +89,7 @@ Full AI Infrastructure
 
 Primary role:
 
-- full inference workstation
+- Family Office inference workstation
 - coding environment
 - orchestration console
 - creative operations

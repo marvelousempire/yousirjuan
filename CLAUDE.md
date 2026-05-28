@@ -80,7 +80,7 @@ It is a **git submodule** pinned to `marvelousempire/ai-skills-library` on `main
 | `plans/family-interface-vision.md` | Full build roadmap (software + hardware + service) |
 | `docs/hardware-topology.md` | Node roles and workload placement |
 | `docs/hardware/apple-device-stack.md` | Apple hardware inventory + pricing |
-| `hardware/dgx-spark-frontier-node.md` | DGX Spark full compute role |
+| `hardware/dgx-spark-frontier-node.md` | DGX Spark Family Office compute role |
 | `docs/cinematic-3d-ios-prd.md` | RealityMotion iOS design system PRD (SwiftUI + RealityKit 4) |
 | `apps/README.md` | How to run backend + iOS + web in 3 terminals |
 | `.env.example` | All environment variables documented |
@@ -96,7 +96,7 @@ It is a **git submodule** pinned to `marvelousempire/ai-skills-library` on `main
 | `u_avery` | Avery Goodman | Sterling | Obsidian `#7C5CFF` | executive-grid / serif-strong |
 | `u_bobby` | Robert Bobby | Blake | Copper `#FF6B35` | soft-stack / humanist-rounded |
 | `u_nivram` | NIVRAM | Cipher | Matrix `#00FF88` | developer-dense / monospace-sharp |
-| `u_yousirjuan` | Yousir Juan | Full | Full `#FFD700` | command-center / display-bold |
+| `u_yousirjuan` | Yousir Juan | Family Office | Family Office `#FFD700` | command-center / display-bold |
 
 Seeded in `api/src/personas.js`. Terminology rule: always say **Associate Agent** or **Associate** — never "butler" or "persona" in user-facing strings.
 

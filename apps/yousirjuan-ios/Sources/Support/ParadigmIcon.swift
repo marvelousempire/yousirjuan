@@ -13,8 +13,8 @@ func icon(for labelSet: String, kind: IconKind) -> String {
         return warmIcon(kind)
     case "technical":
         return technicalIcon(kind)
-    case "full":
-        return fullIcon(kind)
+    case "family-office":
+        return familyOfficeIcon(kind)
     case "casual":
         return casualIcon(kind)
     default:
@@ -54,7 +54,7 @@ private func technicalIcon(_ kind: IconKind) -> String {
     }
 }
 
-private func fullIcon(_ kind: IconKind) -> String {
+private func familyOfficeIcon(_ kind: IconKind) -> String {
     switch kind {
     case .day:     return "crown.fill"
     case .tasks:   return "scroll.fill"

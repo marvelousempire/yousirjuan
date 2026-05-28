@@ -14,7 +14,7 @@ From the repository root:
 bash bootstrap.sh
 ```
 
-This prepares the local runtime environment and starts the lightweight full AI stack.
+This prepares the local runtime environment and starts the lightweight Family Office AI stack.
 
 ---
 
