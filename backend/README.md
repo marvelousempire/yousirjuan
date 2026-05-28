@@ -37,4 +37,4 @@ It will manage:
 
 ## Long-Term Goal
 
-Turn the repo from documentation plus scripts into a persistent sovereign AI operating platform.
+Turn the repo from documentation plus scripts into a persistent full AI operating platform.

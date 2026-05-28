@@ -1,4 +1,4 @@
-# Sovereign Identity Layer
+# Full Identity Layer
 
 ## Purpose
 
@@ -32,4 +32,4 @@ The identity layer models relationships between:
 
 ## Long-Term Goal
 
-Create sovereign organizational cognition infrastructure.
+Create full organizational cognition infrastructure.

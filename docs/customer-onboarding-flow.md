@@ -196,7 +196,7 @@ The memory compounds.
 |---|---|
 | Standard | isolated cloud-assisted workspace |
 | Private | isolated infrastructure |
-| Sovereign | local-only deployment |
+| Full | local-only deployment |
 | Family Office | maximum isolation and audit logging |
 
 ---

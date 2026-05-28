@@ -49,15 +49,15 @@ services:
       - "5432:5432"
     environment:
       POSTGRES_DB: yousirjuan
-      POSTGRES_USER: sovereign
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-sovereign}
+      POSTGRES_USER: full
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-full}
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./db/migrations:/docker-entrypoint-initdb.d
 
   # Elevation F — Kokoro TTS: locally-hosted neural TTS for Associate Agent voices
   # POST http://localhost:8880/v1/audio/speech  { model:"kokoro", voice:"<id>", input:"<text>" }
-  # Voice map: Sterling→af_sky, Blake→am_adam, Cipher→af_nicole, Sovereign→am_michael
+  # Voice map: Sterling→af_sky, Blake→am_adam, Cipher→af_nicole, Full→am_michael
   kokoro:
     image: ghcr.io/remsky/kokoro-fastapi-cpu:v0.2.4
     container_name: ysj-kokoro

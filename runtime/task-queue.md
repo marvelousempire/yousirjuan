@@ -29,4 +29,4 @@ The task queue coordinates:
 
 ## Long-Term Goal
 
-Build sovereign asynchronous execution infrastructure.
+Build full asynchronous execution infrastructure.

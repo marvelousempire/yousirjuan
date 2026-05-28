@@ -157,7 +157,7 @@ wsVoice.attach(server);
 const PORT = process.env.PORT || 4000;
 
 server.listen(PORT, () => {
-  console.log(`Sovereign API runtime listening on ${PORT}`);
+  console.log(`Full API runtime listening on ${PORT}`);
   console.log(`  REST: http://localhost:${PORT}`);
   console.log(`  Voice WS: ws://localhost:${PORT}/api/voice/ws`);
 });

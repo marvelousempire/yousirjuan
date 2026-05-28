@@ -16,8 +16,8 @@ services:
   postgres:
     image: postgres:16
     environment:
-      POSTGRES_USER: sovereign
-      POSTGRES_PASSWORD: sovereign
+      POSTGRES_USER: full
+      POSTGRES_PASSWORD: full
       POSTGRES_DB: yousirjuan
     ports:
       - '5432:5432'

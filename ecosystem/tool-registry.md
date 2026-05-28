@@ -20,9 +20,9 @@ This document tracks approved tools, integrations, and ecosystem modules.
 | Firecrawl | Web Intelligence | structured web ingestion | approved |
 | AwesomeDesign.md | Design | frontend quality guidance | approved |
 | GWS | Productivity | Google workspace integration | approved |
-| Open WebUI | UI | sovereign AI interface | approved |
+| Open WebUI | UI | full AI interface | approved |
 | Framer Motion | Motion | frontend animations | approved |
-| Tailscale | Networking | sovereign remote networking | approved |
+| Tailscale | Networking | full remote networking | approved |
 | WireGuard | Networking | encrypted tunnels | approved |
 | Jetson Thor | Edge AI | edge inference and robotics | approved |
 

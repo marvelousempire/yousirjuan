@@ -2,7 +2,7 @@
 
 # Executive Summary
 
-This feature enables structured sovereign web acquisition and AI-native web retrieval.
+This feature enables structured full web acquisition and AI-native web retrieval.
 
 The system supports:
 
@@ -46,4 +46,4 @@ AI systems become significantly more valuable when connected to:
 
 # Long-Term Goal
 
-Create sovereign web intelligence infrastructure.
+Create full web intelligence infrastructure.

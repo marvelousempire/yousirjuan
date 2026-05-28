@@ -57,7 +57,7 @@ grep -r "Member.*Associate.*Palette.*Character" --include="*.md" . | grep -v "RE
 # Fails if found
 
 # Check 3: All four personas defined together
-grep -l "Sterling" . | xargs grep -l "Blake" | xargs grep -l "Cipher" | xargs grep -l "Sovereign"
+grep -l "Sterling" . | xargs grep -l "Blake" | xargs grep -l "Cipher" | xargs grep -l "Full"
 # Fails if all four appear in same file (signature of persona table)
 
 # Check 4: Interface UX (Walk-Up Kiosk, Biometric, Voice-First)
@@ -73,7 +73,7 @@ grep -r "meta-library\|compounding brain" --include="*.md" .
 # Fails if found
 ```
 
-**Why this works:** The check looks for **patterns unique to personas** (Associate Agent table, all four names together), not just the word "Sovereign" which appears legitimately in "Sovereign AI Infrastructure."
+**Why this works:** The check looks for **patterns unique to personas** (Associate Agent table, all four names together), not just the word "Full" which appears legitimately in "Full AI Infrastructure."
 
 ---
 

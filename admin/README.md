@@ -43,7 +43,7 @@ The admin system should feel:
 - cinematic
 - premium
 - operational
-- sovereign
+- full
 - trustworthy
 - intelligence-centric
 

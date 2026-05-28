@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This registry tracks the design, UI, animation, and frontend-polish systems that belong inside the You-Sir Juan sovereign cognitive operating system.
+This registry tracks the design, UI, animation, and frontend-polish systems that belong inside the You-Sir Juan full cognitive operating system.
 
 The design layer should not be reduced to only UI/UX Pro Max.
 
@@ -143,7 +143,7 @@ The platform should feel:
 
 - premium
 - calm
-- sovereign
+- full
 - intelligent
 - cinematic
 - operational

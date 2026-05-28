@@ -11,7 +11,7 @@ This rule mirrors **Universal Rule 14** in [`rules/GLOBAL-RULES-FOR-USING-NEPHEW
 When the operator says **"push"**, **"push to git"**, **"push everything"**, or any equivalent — that means push to **BOTH**:
 
 1. **GitHub** (`origin` remote) — public source of truth
-2. **GitLab** (`gitlab` remote at `git.yousirjuan.ai:2424`) — sovereign mirror per LEDGER-0005
+2. **GitLab** (`gitlab` remote at `git.yousirjuan.ai:2424`) — full mirror per LEDGER-0005
 
 Pushing to only one is a broken contract. The single shorthand "push" must fan out to both.
 
@@ -80,7 +80,7 @@ That replays every pending entry across every repo on the box.
 ## Cross-references
 
 - Universal Rule 14 in [`rules/GLOBAL-RULES-FOR-USING-NEPHEW.md`](../../rules/GLOBAL-RULES-FOR-USING-NEPHEW.md)
-- LEDGER-0005 — GitLab CE sovereign source-of-truth (the mirror doctrine this enforces)
+- LEDGER-0005 — GitLab CE full source-of-truth (the mirror doctrine this enforces)
 - LEDGER-0014 — operator-intent protocol (why GitLab might be intentionally stopped)
 - `.claude/rules/operator-intent-protocol.md` — companion rule that complements this one
 - `.claude/rules/contracts-and-prudence.md` — underlying operating philosophy

@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This is the master implementation lead sheet for turning the repository into a deployable sovereign cognitive operating system.
+This is the master implementation lead sheet for turning the repository into a deployable full cognitive operating system.
 
 This document answers:
 
@@ -44,7 +44,7 @@ Deploy one coordinated operating system made of:
 |---|---|
 | Local Dev | developer machine test stack |
 | Home Lab | Mac mini / MacBook / local network |
-| Sovereign Workstation | MacBook Pro M5 Max controlled install |
+| Full Workstation | MacBook Pro M5 Max controlled install |
 | Persistent Node | Mac mini always-on install |
 | Edge Node | Jetson Thor install |
 | VPS Node | public-facing API/admin/marketing install |
@@ -56,7 +56,7 @@ Deploy one coordinated operating system made of:
 
 | Hardware | Role |
 |---|---|
-| MacBook Pro M5 Max, 128GB RAM, 4TB SSD | sovereign workstation, coding, orchestration console, local inference |
+| MacBook Pro M5 Max, 128GB RAM, 4TB SSD | full workstation, coding, orchestration console, local inference |
 | Mac mini M4 Max, 4TB SSD | always-on runtime, API, workers, Open WebUI, ingestion, queues |
 | Jetson Thor | edge AI, robotics, vision, voice, low-latency multimodal execution |
 | Flint 2 | home infrastructure gateway |
@@ -249,7 +249,7 @@ The operating system is complete when a user can run one command and receive:
 
 The goal is:
 
-> one command to launch a sovereign cognitive operating system.
+> one command to launch a full cognitive operating system.
 
 ---
 

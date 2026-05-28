@@ -13,7 +13,7 @@ The model router determines which model handles a request.
 | namespace policy | local-only vs cloud-enabled |
 | task type | coding, reasoning, retrieval |
 | latency | fast vs deep inference |
-| privacy level | sovereign enforcement |
+| privacy level | full enforcement |
 | cost | token and compute optimization |
 | hardware availability | local GPU/edge selection |
 
@@ -33,4 +33,4 @@ The model router determines which model handles a request.
 
 ## Long-Term Goal
 
-Create sovereign multi-model orchestration infrastructure.
+Create full multi-model orchestration infrastructure.

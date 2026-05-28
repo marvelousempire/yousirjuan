@@ -51,4 +51,4 @@ The You-Sir Juan™ visionOS target ships alongside the iOS app. On Apple Vision
 
 ## Who it's for
 
-Anyone who wants their home AI to feel like it belongs in their home — not like a utility they open and close. The Sovereign SKU (iPad Pro) is built specifically for this experience.
+Anyone who wants their home AI to feel like it belongs in their home — not like a utility they open and close. The Full SKU (iPad Pro) is built specifically for this experience.

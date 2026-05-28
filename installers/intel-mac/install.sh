@@ -220,8 +220,8 @@ OLLAMA_MODEL=$OLLAMA_MODEL
 KOKORO_URL=http://localhost:8880
 
 # ── Database ─────────────────────────────────────────────────────────
-POSTGRES_PASSWORD=sovereign
-DATABASE_URL=postgresql://sovereign:sovereign@localhost:5432/yousirjuan
+POSTGRES_PASSWORD=full
+DATABASE_URL=postgresql://full:full@localhost:5432/yousirjuan
 
 # ── Memory ───────────────────────────────────────────────────────────
 MEMORY_DIR=.data/memory
@@ -255,7 +255,7 @@ docker compose up -d postgres redis qdrant ollama kokoro
 # Wait for Postgres to be healthy
 printf "    Waiting for Postgres"
 for _ in {1..20}; do
-  docker exec ysj-postgres pg_isready -U sovereign >/dev/null 2>&1 && break
+  docker exec ysj-postgres pg_isready -U full >/dev/null 2>&1 && break
   printf "."
   sleep 2
 done

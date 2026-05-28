@@ -7,7 +7,7 @@ You-Sir Juan is a:
 - private AI infrastructure company
 - AI memory company
 - hosted assistant platform
-- sovereign AI operations platform
+- full AI operations platform
 - relationship-memory platform
 
 The business model is based around:
@@ -84,7 +84,7 @@ You-Sir Juan focuses on:
 - persistence
 - continuity
 - privacy
-- sovereignty
+- full ownership
 - relationship memory
 - operational intelligence
 
@@ -101,4 +101,4 @@ The platform can eventually support:
 - embodied AI systems
 - AI workflow marketplaces
 - assistant marketplaces
-- sovereign AI hosting
+- full AI hosting

@@ -84,7 +84,7 @@ sudo bash ledger/LEDGER-0011-vps-memory-hardening/playbooks/01-gitlab-memory-cap
 ## Cross-references
 
 - [LEDGER-0007 runbook 05](../LEDGER-0007-imac-emergency-failsafe/runbooks/05-incident-2026-05-20-oom-cascade.md) — the postmortem that motivated this hardening.
-- ADR-0001 — the architectural philosophy this fits: "selective, careful, sovereign" — not "throw more hardware."
+- ADR-0001 — the architectural philosophy this fits: "selective, careful, full" — not "throw more hardware."
 - Future: a LEDGER-0012 may track the RAM upgrade (8 → 16 GB) if these caps prove insufficient.
 
 ## Open follow-ups (not in this PR)

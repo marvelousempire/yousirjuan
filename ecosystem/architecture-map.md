@@ -2,7 +2,7 @@
 
 # Purpose
 
-This document maps the complete sovereign cognitive ecosystem.
+This document maps the complete full cognitive ecosystem.
 
 The goal is to show how:
 
@@ -45,7 +45,7 @@ Evaluation Systems
    ↓
 Infrastructure Mesh
    ↓
-Sovereign Cognitive Forge
+Full Cognitive Forge
 ```
 
 ---
@@ -60,10 +60,10 @@ Sovereign Cognitive Forge
 | Evaluations | quality enforcement |
 | Automation | active execution |
 | Integrations | operational synchronization |
-| Infrastructure | sovereign compute |
+| Infrastructure | full compute |
 
 ---
 
 # Long-Term Goal
 
-Create a permanently owned sovereign cognitive operating ecosystem.
+Create a permanently owned full cognitive operating ecosystem.

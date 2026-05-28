@@ -1,0 +1,10 @@
+{
+  "ID": "yousirjuan-handbook",
+  "post_title": "yousirjuan Handbook",
+  "post_name": "yousirjuan-handbook",
+  "post_status": "publish",
+  "post_type": "handbook",
+  "meta": {
+    "entity_id": "yousirjuan"
+  }
+}

@@ -93,7 +93,7 @@ A multi-repo session landed 6 PRs across 6 repos, all merged to origin. GitLab m
 ## Why
 
 Without this rule:
-- Multi-repo sessions land work on origin but skip gitlab on some repos. The operator can pull from origin everywhere, but the sovereign mirror is stale — defeating the point of having a mirror.
+- Multi-repo sessions land work on origin but skip gitlab on some repos. The operator can pull from origin everywhere, but the full mirror is stale — defeating the point of having a mirror.
 - Feature branches get left checked out, the next session opens on the wrong branch, and either re-applies work that already landed or accidentally branches from a stale point.
 - The operator's "I want to sit at any machine and `git pull`" contract gets broken silently.
 

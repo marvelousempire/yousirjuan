@@ -324,7 +324,7 @@ http://localhost:3000
 
 The platform is currently:
 
-- sovereign AI infrastructure in active development
+- full AI infrastructure in active development
 - local-first runtime architecture
 - partially operational
 - infrastructure-focused

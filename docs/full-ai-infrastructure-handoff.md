@@ -1,4 +1,4 @@
-# Sovereign AI Infrastructure — Full Handoff Sheet
+# Full AI Infrastructure — Full Handoff Sheet
 
 # Mission
 
@@ -459,9 +459,9 @@ Capabilities include:
 
 ---
 
-# 15. Sovereign AI Infrastructure
+# 15. Full AI Infrastructure
 
-A sovereign AI system means:
+A full AI system means:
 
 > owning and controlling your own AI ecosystem.
 
@@ -697,7 +697,7 @@ This architecture enables:
 - autonomous agents
 - local inference
 - robotics
-- sovereign systems
+- full systems
 - reduced cloud dependency
 
 ---
@@ -801,4 +801,4 @@ Modern AI infrastructure contains multiple layers.
 | Networks | Connect systems |
 | Hardware | Provide compute |
 
-That is the complete modern sovereign AI infrastructure map.
+That is the complete modern full AI infrastructure map.

@@ -1,10 +1,10 @@
-# GitLab CE Sovereign Infrastructure Stack
+# GitLab CE Full Infrastructure Stack
 
 ## Purpose
 
 GitLab CE is positioned inside the You-Sir Juan ecosystem as:
 
-> sovereign software governance infrastructure.
+> full software governance infrastructure.
 
 It provides:
 
@@ -23,11 +23,11 @@ It provides:
 
 The ecosystem is evolving into:
 
-- sovereign AI infrastructure
-- sovereign memory systems
-- sovereign orchestration
-- sovereign deployment systems
-- sovereign governance systems
+- full AI infrastructure
+- full memory systems
+- full orchestration
+- full deployment systems
+- full governance systems
 
 GitLab CE becomes the:
 
@@ -41,7 +41,7 @@ GitLab CE becomes the:
 |---|---|
 | Repositories | assistant and infrastructure storage |
 | Pipelines | deployment automation |
-| Runners | sovereign execution |
+| Runners | full execution |
 | Registry | container and package storage |
 | Wiki | operational documentation |
 | Issues | feature and PRD tracking |
@@ -73,4 +73,4 @@ Transform the ecosystem from:
 
 into:
 
-> sovereign operational governance infrastructure.
+> full operational governance infrastructure.

@@ -1,6 +1,6 @@
 # Hardware SKUs
 
-**Tagline:** From $150 to sovereign. Pick your level.
+**Tagline:** From $150 to full. Pick your level.
 
 ---
 
@@ -12,7 +12,7 @@ You-Sir Juan™ ships as a complete hardware-software-service system in three ti
 
 ## The three tiers
 
-### Sovereign — iPad Pro
+### Full — iPad Pro
 
 The premium experience. A large-format iPad Pro mounted in the home — wall-mounted or countertop — running the full native iOS app with RealityKit 4 cinematic UI, Face ID biometric recognition, and Touch ID 2FA.
 
@@ -61,14 +61,14 @@ No new hardware. The web app runs in any browser on any device the family alread
 
 | Question | Answer |
 |---|---|
-| Do you want the cinematic 3D experience? | Sovereign |
+| Do you want the cinematic 3D experience? | Full |
 | Do you want a dedicated kiosk without the iPad price? | Standard |
 | Do you have a Mac and want to start today? | BYO |
-| Will you eventually want the full experience? | Start BYO, upgrade to Sovereign — same account, same memory, no migration |
+| Will you eventually want the full experience? | Start BYO, upgrade to Full — same account, same memory, no migration |
 
 ---
 
-## The installation kit (Sovereign + Standard)
+## The installation kit (Full + Standard)
 
 Every installed unit ships with:
 - **GL.iNet Flint 2 router** pre-loaded with WireGuard config — creates the household's private AI mesh

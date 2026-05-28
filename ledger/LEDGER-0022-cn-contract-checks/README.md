@@ -41,7 +41,7 @@ Both halves run the same checks — local pre-push and CI are identical.
 
 Two reasons:
 
-1. **LEDGER-0005** established GitLab as the sovereign source-of-truth. CI for first-class platform repos lives there.
+1. **LEDGER-0005** established GitLab as the full source-of-truth. CI for first-class platform repos lives there.
 2. **yousirjuan PR #23** disabled all GitHub Actions in yousirjuan. New CI shouldn't reintroduce that pattern.
 
 ## How a normal bump flow looks now
@@ -106,7 +106,7 @@ Pattern is intentionally lightweight — bash + grep + git, no Python deps beyon
 ## Cross-references
 
 - LEDGER-0021 — private parent + public submodule pattern (the foundation)
-- LEDGER-0005 — GitLab as sovereign source-of-truth (why CI lives there)
+- LEDGER-0005 — GitLab as full source-of-truth (why CI lives there)
 - yousirjuan PR #23 — GitHub Actions elimination (why CI doesn't live in GH)
 - Rule 14 (Dual-Push) — every push to this repo dual-targets both forges
 - `marvelousempire/contribution-network-private` PR #1 — the actual implementation

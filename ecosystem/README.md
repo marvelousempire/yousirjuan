@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This folder defines the preferred sovereign AI ecosystem stack used throughout the platform.
+This folder defines the preferred full AI ecosystem stack used throughout the platform.
 
 The goal is to organize isolated tools into one unified cognitive operating ecosystem.
 

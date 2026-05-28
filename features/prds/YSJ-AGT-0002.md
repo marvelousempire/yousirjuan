@@ -50,4 +50,4 @@ into:
 
 # Long-Term Goal
 
-Create sovereign browser automation infrastructure.
+Create full browser automation infrastructure.

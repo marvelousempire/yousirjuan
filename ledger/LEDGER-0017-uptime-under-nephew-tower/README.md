@@ -88,4 +88,4 @@ Operator preference + scaling argument both favor path-based for this control-to
 
 - LEDGER-0016 — original standalone Kuma setup (this supersedes its nginx vhost decision)
 - LEDGER-0013 — wire-marvelous-app.sh + nginx vhost pattern (different — that's for separate apps with their own subdomains; this is for sub-paths under the Tower)
-- LEDGER-0005 — GitLab as sovereign source-of-truth (also has its own subdomain; that's intentional because it serves git over SSH on port 2424 which requires a dedicated TLS cert)
+- LEDGER-0005 — GitLab as full source-of-truth (also has its own subdomain; that's intentional because it serves git over SSH on port 2424 which requires a dedicated TLS cert)

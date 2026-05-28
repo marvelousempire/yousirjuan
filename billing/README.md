@@ -28,4 +28,4 @@ The billing layer tracks:
 
 ## Long-Term Goal
 
-Create sustainable sovereign AI economics.
+Create sustainable full AI economics.

@@ -304,7 +304,7 @@ it can offer:
 - PMA-safe deployments
 - offline-capable systems
 - reduced cloud dependency
-- sovereign AI ownership
+- full AI ownership
 
 This becomes a major differentiator.
 
@@ -316,7 +316,7 @@ Long term, the platform can evolve into:
 
 - a hosted AI assistant company
 - a private AI operating system
-- a sovereign family memory platform
+- a full family memory platform
 - a PMA operations platform
 - a portfolio intelligence network
 - a private AI cloud
