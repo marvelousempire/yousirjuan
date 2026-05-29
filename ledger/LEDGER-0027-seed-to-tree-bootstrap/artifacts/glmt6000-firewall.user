@@ -1,0 +1,5 @@
+# /etc/firewall.user on the GL-MT6000
+# Loaded automatically by OpenWRT after every `fw3 restart`.
+# LEDGER-0027 / LEDGER-0026 — WireGuard mesh forwarding rules.
+iptables -I FORWARD 1 -i wg0 -d 192.168.8.0/24 -j ACCEPT
+iptables -I FORWARD 1 -i br-lan -s 192.168.8.0/24 -d 10.0.0.0/24 -j ACCEPT
