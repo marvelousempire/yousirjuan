@@ -70,18 +70,49 @@ Internet (ISP / Verizon 5G Business Internet Gateway (6-antenna) 5G)
 
 ## WireGuard Remote Access
 
-The AX6000 runs a WireGuard server. Client configs generated for:
-- MacBook Pro (for travel / coffee shop / co-working)
-- iPhone (for mobile access away from home)
+The AX6000 (GL-MT6000) runs a WireGuard server on UDP/51820 with the family WG subnet `10.0.0.0/24`. Peers land on VLAN 10 — same access as being at home on the AI network.
 
-Peers land on VLAN 10 — same access as being at home on the AI network.
+### Current WG mesh — peer table
 
-### Setup steps (AX6000 admin panel)
+| # | Peer | WG IP | Role | Endpoint when off-LAN |
+|---|---|---|---|---|
+| 1 | (server) GL-MT6000 | 10.0.0.1 | WG server | n/a |
+| 2 | MacBook Pro | 10.0.0.2 | Operator dev machine | `xr5899d.glddns.com:51820` |
+| 3 | iPhone | 10.0.0.3 | Mobile access | `xr5899d.glddns.com:51820` |
+| 4 | GL-AX1800 (IoT AP) | 10.0.0.4 | IoT bridge | LAN only |
+| 5 | clinic-vps (Nephew VPS at GoDaddy) | 10.0.0.5 | Bridges `nephew.yousirjuan.ai/chat` to the DGX over WG | `xr5899d.glddns.com:51820` (see Plan 0090) |
 
-1. `http://192.168.8.1` → VPN → WireGuard Server → Enable
-2. Port: 51820 (forward on Verizon Business Gateway if it's the WAN gateway)
-3. Generate client configs → download .conf for Mac, scan QR for iPhone
-4. AllowedIPs: `10.0.0.0/24, 192.168.8.0/24`
+Server public key: `Be87LSRYnvURzDNnnHOCWdfUC/o5tDkaxrdJmEU0iAI=`
+Server config lives at `/etc/wireguard/wg0.conf` on the GL-MT6000 (managed via `wg-quick`, NOT the GL.iNet "WireGuard Server" UI — that UI configures a separate, currently-OFF 10.1.0.0/24 instance that we do not use).
+
+### DDNS — `xr5899d.glddns.com`
+
+GL.iNet's built-in DDNS service (Applications → Dynamic DNS) gives the family a stable public hostname that resolves to the Verizon WAN IP. Resolves to `97.164.202.176` as of 2026-05-29. Used by off-LAN WG peers as their `Endpoint` so the mesh survives Verizon WAN IP changes.
+
+### Verizon port-forward (required for off-LAN peers)
+
+Verizon Business Internet Gateway sits between the GL-MT6000 and the public internet. Inbound UDP/51820 must be port-forwarded:
+
+| Field | Value |
+|---|---|
+| Application | `WireGuard` |
+| Protocol | `UDP` |
+| External port | `51820` |
+| Fwd to Addr | `192.168.0.157` (GL-MT6000 WAN-side IP) |
+| Fwd to Port | `51820` |
+
+The GL-MT6000 has two upstream interfaces (`eth1` at `192.168.0.157`, `apclix0` at `192.168.0.162`) — the rule must match whichever the GL-MT6000 uses as its default route. If the rule is configured correctly but inbound packets don't arrive at the GL-MT6000, suspect Verizon's SPI firewall or CGNAT.
+
+### Setup steps (AX6000 admin panel, for adding new peers)
+
+1. `http://192.168.8.1` → VPN → WireGuard Server (for the legacy 10.1.0.0/24 instance) — DO NOT USE. The 10.0.0.0/24 instance we actually use is managed via SSH (`ssh root@192.168.8.1`, then edit `/etc/wireguard/wg0.conf`).
+2. Add new `[Peer]` block to `/etc/wireguard/wg0.conf`. Live-apply with `wg set wg0 peer <pubkey> allowed-ips 10.0.0.X/32 persistent-keepalive 25`.
+3. Distribute the matching client config to the new peer with `Endpoint = xr5899d.glddns.com:51820` and `AllowedIPs = 10.0.0.0/24, 192.168.8.0/24`.
+4. Confirm Verizon port-forward is in place.
+
+### Plan 0090 — VPS in the mesh
+
+See `marvelousempire/nephew` → `plans/0090-vps-wireguard-direct-dgx.md` for the full plan that brought clinic-vps into the mesh. The Nephew tower-api on the VPS uses `NEPHEW_HERMES_DIRECT_URL=http://192.168.8.249:8642/v1/chat/completions` to reach the DGX over WG, replacing the previous Mac-only SSH-tunnel path.
 
 ## Why Not Tailscale
 
