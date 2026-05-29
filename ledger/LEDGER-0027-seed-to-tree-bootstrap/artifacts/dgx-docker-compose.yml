@@ -1,0 +1,42 @@
+# ~/.hermes/docker-compose.yml on the DGX Spark.
+# LEDGER-0027 — Hermes API container bound to all interfaces (LAN + WG reach).
+# Dashboard (9119) stays locked to 127.0.0.1 — only the chat API is exposed.
+#
+# Security model:
+#   - bridge networking, own network namespace
+#   - 8642 exposed to LAN + WG (filtered by DGX iptables INPUT rules)
+#   - 9119 stays loopback-only (web dashboard, local admin only)
+#   - all Linux caps dropped except s6-overlay minimum
+#   - no-new-privileges: prevents suid escalation inside the container
+#   - host service (Ollama) reached via host.docker.internal
+
+services:
+  hermes:
+    image: openclaw/hermes-agent:latest
+    container_name: hermes
+    restart: unless-stopped
+
+    # Plan 0090 / LEDGER-0026 — bind 8642 to all interfaces so LAN + WG peers
+    # can reach the API. Dashboard stays loopback-only.
+    ports:
+      - "127.0.0.1:9119:9119"
+      - "8642:8642"
+
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+    environment:
+      - HERMES_DASHBOARD=1
+      - HERMES_DASHBOARD_HOST=0.0.0.0
+      - OLLAMA_HOST=http://host.docker.internal:11434
+      - API_SERVER_HOST=0.0.0.0
+      - API_SERVER_PORT=8642
+      - API_SERVER_KEY=v7pQ40f8zgfW-O7xy9y_vMgmy5LAzoZdr-pEOC1UjZI
+      - HERMES_UID=1000
+      - HERMES_GID=1000
+
+    volumes:
+      - ${HOME}/.hermes:/opt/data
+
+    security_opt:
+      - no-new-privileges:true
