@@ -18,7 +18,7 @@ For the rule that makes adding to the ledger the default closing ritual, see [`.
 
 Counter is the source of truth for the next `LEDGER-NNNN`. Bump it when you open a new entry.
 
-**Next number:** `LEDGER-0026`
+**Next number:** `LEDGER-0027`
 
 | ID | Title | Status | Opened | Closed | Replay |
 |---|---|---|---|---|---|
@@ -47,6 +47,7 @@ Counter is the source of truth for the next `LEDGER-NNNN`. Bump it when you open
 | [`LEDGER-0023`](LEDGER-0023-wrapper-monorepo-org/) | Wrapper-monorepo organization — 83 marvelous-empire repos → 8 visible groupings on GitHub | `shipped` | 2026-05-21 | 2026-05-21 | 7 new wrapper repos: `tower-monorepo` `quick-server-monorepo` `consoles-monorepo` `business-monorepo` `apps-monorepo` `infra-monorepo` `writings-monorepo` (+ `ai-skills-library` sub-parent, + existing `contribution-network-private`). Leaf paths under `~/Developer/` untouched. |
 | [`LEDGER-0024`](LEDGER-0024-dual-push-drift-prevention/) | Dual-push drift prevention — server-side cron mirrors origin/main → gitlab/main every 5 min; writes drift report | `planning` | 2026-05-22 | _pending_ | `ssh vps-godaddy 'sudo bash ~/Developer/yousirjuan/ledger/LEDGER-0024-dual-push-drift-prevention/playbooks/install.sh install'` |
 | [`LEDGER-0025`](LEDGER-0025-vps-marvelousempire-deploy-key/) | VPS deploy-key for marvelousempire — fine-grained PAT (Option C), unblocks dual-push drift detection on vps-godaddy | `in-progress` | 2026-05-22 | _pending_ | `ssh vps-godaddy 'cd ~/Developer/yousirjuan && git pull --ff-only && sudo bash ledger/LEDGER-0024-.../playbooks/install.sh install && sudo bash ledger/LEDGER-0025-.../playbooks/install-credential.sh'` (paste PAT when prompted) |
+| [`LEDGER-0026`](LEDGER-0026-vps-into-wg-mesh/) | Add clinic-vps to family WireGuard mesh — Plan 0090 (Nephew). 10.0.0.5 peer on GL-MT6000 + DDNS + Verizon port-forward + tower-api `NEPHEW_HERMES_DIRECT_URL` | `in-progress` | 2026-05-29 | _pending_ | `bash ledger/LEDGER-0026-vps-into-wg-mesh/playbooks/add-wg-peer-to-glinet.sh --name <peer> --pubkey <key> --wg-ip 10.0.0.X` (for adding future peers) |
 
 > LEDGER-0001 was originally captured at `docs/sessions/2026-05-19-mcp-setup/` (PR #4) as the embryo of this pattern. It was migrated into the ledger and reshaped (`artifacts/Makefile` → `playbooks/Makefile`, new ticket README, new `install.sh` shell sibling, ticket frontmatter) in the migration PR that landed alongside this row.
 
