@@ -98,3 +98,17 @@ curl -sI https://<new-host>.yousirjuan.ai | head -1          # HTTP/2 200
 
 - `marvelousempire/json-archive-chat-reader/plans/0033-wg-acme-dns-archive-yousirjuan-ai.md` — the consumer plan; first archive of acme-dns. Uses this ledger's output to provision `https://archive.yousirjuan.ai`.
 - [LEDGER-0026](../LEDGER-0026-vps-into-wg-mesh/) — the wg mesh this depends on (clinic-vps is already a peer).
+
+## Known SHA drift
+
+This ledger was committed locally, pushed to gitlab as **17af279**, then rebased onto an upstream change at origin (the rebased commit is **d6c7b2d**). A `--force-with-lease` push to gitlab was correctly **rejected by the GitLab pre-receive hook** (main branch is protected).
+
+Consequence: until reconciled, the dual-push drift detector (LEDGER-0024) will report this ledger's commit at different SHAs on origin vs gitlab. Content is identical; only the SHA differs.
+
+**Resolution path (operator-only — requires GitLab admin):**
+
+1. In GitLab → Settings → Repository → Protected branches → main → temporarily lift the force-push restriction.
+2. From a clone, `git push gitlab main --force-with-lease`.
+3. Re-enable the force-push restriction.
+
+Or, alternatively, leave it: the drift is cosmetic; LEDGER-0024's report will tag this entry, but the substantive content matches. Cleared on the next "real" commit that ends up at the same SHA on both remotes.
