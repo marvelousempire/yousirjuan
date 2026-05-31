@@ -112,3 +112,28 @@ Consequence: until reconciled, the dual-push drift detector (LEDGER-0024) will r
 3. Re-enable the force-push restriction.
 
 Or, alternatively, leave it: the drift is cosmetic; LEDGER-0024's report will tag this entry, but the substantive content matches. Cleared on the next "real" commit that ends up at the same SHA on both remotes.
+
+## Tower-API → archive direct call pattern (for future use)
+
+When tower-api or any other clinic-vps service eventually needs to call the Claude Archive (`https://archive.yousirjuan.ai`), use the wg-direct path — same shape as LEDGER-0026's `NEPHEW_HERMES_DIRECT_URL` short-circuit for Nephew → DGX.
+
+**Why:** clinic-vps is wg peer 10.0.0.5; the DGX is reachable on its LAN IP 192.168.8.249 through the mesh's `AllowedIPs`. Going direct over wg has zero public-internet hops, no Let's Encrypt cert renewal in the critical path, and no nginx-on-clinic-vps reverse proxy to maintain.
+
+**Env-var convention** (recommended for any service that needs to talk to the archive):
+
+```
+ARCHIVE_DIRECT_URL=https://archive.yousirjuan.ai
+ARCHIVE_API_TOKEN=ca_<personal-access-token>
+```
+
+The PAT is minted on the DGX:
+
+```bash
+ssh nephew-nivram "cd ~/Developer/json-archive-chat-reader && \
+  docker compose exec -T -e POSTGRES_URL=postgres://claude:claude@db:5432/claude_archive \
+    watcher pnpm tsx src/scripts/new-pat.ts shade_worries_0c@icloud.com tower-api"
+```
+
+Then drop `ARCHIVE_DIRECT_URL` and `ARCHIVE_API_TOKEN` into `/etc/systemd/system/<service>.service.d/override.conf` (or wherever the service reads env), restart, done.
+
+**No archive-side code change needed.** The auth + URL contract from Plan 0032/0033 is the canonical interface; tower-api just becomes another PAT holder.
