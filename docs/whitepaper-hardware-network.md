@@ -79,6 +79,7 @@ is the authoritative map of the hardware and how it all connects.
 | Wi-Fi | Wi-Fi 6 dual-band AX6000 — 1148 + 4804 Mbps | 📄 |
 | VPN | **WireGuard server** live: `10.1.0.0/24` on `:51821` (hub 10.1.0.1) | ✅ |
 | LAN IP | **192.168.8.1** (ASUS MAC `94:83:c4:a5:89:9f`) | ✅ |
+| Firmware ❓ | Admin console answers as **`console.gl-inet.com`** (despite the ASUS MAC OUI) → likely **GL.iNet / OpenWrt** — *good for the border plan*: real per-flow `iptables`/`nftables` customs. Confirm SKU. | ✅ probed |
 
 ### 2.5 Airport Extreme ×2 (inner country)
 | Attribute | Value | Src |
@@ -188,6 +189,7 @@ with it. The only path between countries is a WireGuard tunnel; the firewall at 
 | Item | State |
 |---|---|
 | AX6000 inner WG mesh (`10.1.0.1`) | live (Mac, DGX peers) |
+| **DGX IPv4 on the LAN** | 🔴 down (2026-06-01) — `192.168.8.249`/`.114` unreachable over IPv4 from Mac **and** VPS (even `:22`); **IPv6 works** (`fd4b:36c7:d004::352`, how SSH connects). App/Caddy/DGX healthy — a LAN-layer IPv4 fault (wired port / switch / router IPv4). Workaround: Mac `/etc/hosts` points search/bank at the DGX IPv6. Fix: restore wired/LAN IPv4 (cable/switch/router or reboot). |
 | DGX AI Engine — Ollama + Control Tower `:5174` | healthy |
 | MacBook + DGX DustPan agents | healthy |
 | WG border tunnel (two countries) | NOT built yet — this plan |
