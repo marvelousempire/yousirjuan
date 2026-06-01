@@ -153,6 +153,7 @@ ASUS AX6000  ── INTERNAL ──  192.168.8.1            (traceroute hop 1; d
 | DGX agent + Control Tower (`:5174`) | Internet-inbound WG — blocked by 5G CGNAT |
 | MacBook agent; Mac WG tunnel | Ollama `:11434` open LAN-wide (to seal) |
 | Internal border path (eth link) ready | Border tunnel — not built yet (the plan) |
+| — | **DGX off IPv4 on the LAN (2026-06-01)** — `192.168.8.249`/`.114` unreachable over IPv4 from Mac+VPS (even `:22`); **IPv6 works** (`fd4b:36c7:d004::352`). App/Caddy/DGX healthy — a LAN-layer IPv4 fault. Workaround: Mac `/etc/hosts`→DGX IPv6. Fix: wired/switch/router IPv4. |
 
 ---
 
@@ -160,6 +161,7 @@ ASUS AX6000  ── INTERNAL ──  192.168.8.1            (traceroute hop 1; d
 1. iMac RAM 64 GB exceeds Apple's official 21.5″ 2017 max (32 GB) — confirm the module config. ⚠️
 2. Mac `en0` is `192.168.8.205` (roster said `.200`) — DHCP drift; pin a reservation if a stable address is wanted.
 3. Exact ASUS model numbers (AX1800/AX6000) inferred from class + MAC — confirm for the port matrices.
+4. Inner router `192.168.8.1` answers as **`console.gl-inet.com`** (despite the ASUS MAC `94:83:c4…`) — likely **GL.iNet / OpenWrt**, good for the border (real customs). Confirm firmware/SKU. ✅(probed)
 4. Mac `utun8`/WG was not active at probe — confirm the inner-WG peer is meant to be always-up.
 
 *Probe provenance: DGX via SSH (`lscpu`, `free`, `lsblk`, `nvme list`, `nvidia-smi`, `ip`, `ethtool`, `wg`, `ss`); Mac via `system_profiler`, `ifconfig`, `networksetup`. Router/NAS/dock/iMac/modem from manufacturer datasheets pending direct admin access.*
