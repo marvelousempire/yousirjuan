@@ -18,7 +18,7 @@ For the rule that makes adding to the ledger the default closing ritual, see [`.
 
 Counter is the source of truth for the next `LEDGER-NNNN`. Bump it when you open a new entry.
 
-**Next number:** `LEDGER-0032`
+**Next number:** `LEDGER-0033`
 
 | ID | Title | Status | Opened | Closed | Replay |
 |---|---|---|---|---|---|
@@ -52,7 +52,8 @@ Counter is the source of truth for the next `LEDGER-NNNN`. Bump it when you open
 | [`LEDGER-0028`](LEDGER-0028-acme-dns-clinic-vps/) | acme-dns DNS-01 on the clinic VPS | `in-progress` | 2026-05-30 | _pending_ | see ticket |
 | [`LEDGER-0029`](LEDGER-0029-domain-migration-jailynmarvin/) | Domain migration yousirjuan.ai → jailynmarvin.com (dual-domain transition) | `in-progress` | 2026-05-31 | _pending_ | see ticket |
 | [`LEDGER-0030`](LEDGER-0030-tower-api-on-dgx/) | tower-api on the DGX | `in-progress` | 2026-05-31 | _pending_ | see ticket |
-| [`LEDGER-0031`](LEDGER-0031-cassette-edge-mtls-wireguard/) | Cassette edge Phase 1 — Caddy at the helm (WG + mTLS, wildcard DNS-01, family CA) | `in-progress` | 2026-06-02 | _pending_ | `bash ledger/LEDGER-0031-cassette-edge-mtls-wireguard/playbooks/family-ca.sh init` then deploy the Caddyfile (runbook 03) |
+| [`LEDGER-0031`](LEDGER-0031-cassette-edge-mtls-wireguard/) | Cassette edge — mTLS gate + restore home↔VPS WireGuard (root cause: random WG port) | `shipped` | 2026-06-02 | 2026-06-02 | search live + mTLS-gated; fixes persisted across VPS/router/DGX — see ticket Outcome |
+| [`LEDGER-0032`](LEDGER-0032-claude-ssh-user/) | `claude` SSH user — VPS, DGX, GL-MT6000, GL-AX1800, UGreen NAS, Mac (one pubkey) | `in-progress` | 2026-06-02 | _pending_ | `bash ledger/LEDGER-0032-claude-ssh-user/playbooks/install-from-mac.sh` |
 
 > LEDGER-0001 was originally captured at `docs/sessions/2026-05-19-mcp-setup/` (PR #4) as the embryo of this pattern. It was migrated into the ledger and reshaped (`artifacts/Makefile` → `playbooks/Makefile`, new ticket README, new `install.sh` shell sibling, ticket frontmatter) in the migration PR that landed alongside this row.
 
