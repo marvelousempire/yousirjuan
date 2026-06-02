@@ -1,0 +1,77 @@
+# Caddyfile — jailynmarvin.com cassette edge (Phase 1: Caddy at the helm)
+# Runs on the VPS public edge AND the DGX failover edge — same file both sides.
+#
+# Requires Caddy built with the acme-dns DNS module:
+#   xcaddy build --with github.com/caddy-dns/acmedns
+# acme-dns creds live in /etc/caddy/acmedns.json (see acmedns.json.example),
+# registered once against the acme.jailynmarvin.com delegation (LEDGER-0028).
+# Family CA public cert (mTLS trust anchor) at /etc/jailynmarvin-ca/ca.crt.
+
+{
+	email abrownsanta@jailynmarvin.com
+	# One wildcard cert for every cassette, via DNS-01 (works for mesh hosts + under mTLS).
+	cert_issuer acme {
+		dns acmedns {
+			username  {env.ACMEDNS_USER}
+			password  {env.ACMEDNS_PASS}
+			subdomain {env.ACMEDNS_SUBDOMAIN}
+		}
+	}
+}
+
+# ── Public + mTLS family apps ────────────────────────────────────────────────
+# The wildcard site requires a family device certificate. No cert → TLS refused
+# (outsiders see a dead connection, not a login). Family SSO layers inside the app.
+*.jailynmarvin.com {
+	tls {
+		dns acmedns {
+			username  {env.ACMEDNS_USER}
+			password  {env.ACMEDNS_PASS}
+			subdomain {env.ACMEDNS_SUBDOMAIN}
+		}
+		client_auth {
+			mode               require_and_verify
+			trust_pool file /etc/jailynmarvin-ca/ca.crt
+		}
+	}
+
+	# Host → backend. Adjust ports to each cassette's real upstream.
+	@nephew   host nephew.jailynmarvin.com
+	@search   host search.jailynmarvin.com
+	@bank     host bank.jailynmarvin.com
+	@clinic   host clinic.jailynmarvin.com
+	@hello    host hello.jailynmarvin.com
+	@git      host git.jailynmarvin.com
+	@archive  host archive.jailynmarvin.com
+	@historia host historia.jailynmarvin.com
+
+	handle @nephew   { reverse_proxy 127.0.0.1:8088 }
+	handle @search   { reverse_proxy 127.0.0.1:3000 }
+	handle @bank     { reverse_proxy 127.0.0.1:8090 }
+	handle @clinic   { reverse_proxy 127.0.0.1:5439 }
+	handle @hello    { reverse_proxy 127.0.0.1:8080 }
+	handle @git      { reverse_proxy 127.0.0.1:3001 }
+	handle @archive  { reverse_proxy 127.0.0.1:8091 }
+	handle @historia { reverse_proxy 127.0.0.1:8092 }
+
+	# Default-deny: any *.jailynmarvin.com host without an explicit handle above.
+	handle { abort }
+}
+
+# ── Apex + www (public marketing; NO mTLS so the world can see the front page) ──
+# If the apex should also be private, move it into the mTLS block above instead.
+jailynmarvin.com, www.jailynmarvin.com {
+	tls {
+		dns acmedns {
+			username  {env.ACMEDNS_USER}
+			password  {env.ACMEDNS_PASS}
+			subdomain {env.ACMEDNS_SUBDOMAIN}
+		}
+	}
+	reverse_proxy 127.0.0.1:8080   # marketing/hello backend
+}
+
+# NOTE — WG-only ops cassettes (portainer, vault, admin, cockpit, beszel, uptime,
+# workflow) are NOT served here. They have no public DNS and are reached only over
+# the WireGuard mesh (served by an internal Caddy/site on the DGX, optionally with
+# internal-CA server certs via `family-ca.sh issue-server`).

@@ -1,0 +1,8 @@
+{
+  "_comment": "acme-dns credentials for the *.jailynmarvin.com wildcard (DNS-01). Register ONCE against the acme.jailynmarvin.com delegation (see LEDGER-0028), then export these as env for Caddy: ACMEDNS_USER / ACMEDNS_PASS / ACMEDNS_SUBDOMAIN. Keep this file 0600 root:root; never commit the real values.",
+  "username": "REPLACE-acme-dns-username-uuid",
+  "password": "REPLACE-acme-dns-password",
+  "subdomain": "REPLACE-acme-dns-subdomain-uuid",
+  "fulldomain": "REPLACE.acme.jailynmarvin.com",
+  "server_url": "https://acme.jailynmarvin.com"
+}

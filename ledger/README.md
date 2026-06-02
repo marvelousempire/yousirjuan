@@ -18,7 +18,7 @@ For the rule that makes adding to the ledger the default closing ritual, see [`.
 
 Counter is the source of truth for the next `LEDGER-NNNN`. Bump it when you open a new entry.
 
-**Next number:** `LEDGER-0028`
+**Next number:** `LEDGER-0032`
 
 | ID | Title | Status | Opened | Closed | Replay |
 |---|---|---|---|---|---|
@@ -49,6 +49,10 @@ Counter is the source of truth for the next `LEDGER-NNNN`. Bump it when you open
 | [`LEDGER-0025`](LEDGER-0025-vps-marvelousempire-deploy-key/) | VPS deploy-key for marvelousempire — fine-grained PAT (Option C), unblocks dual-push drift detection on vps-godaddy | `in-progress` | 2026-05-22 | _pending_ | `ssh vps-godaddy 'cd ~/Developer/yousirjuan && git pull --ff-only && sudo bash ledger/LEDGER-0024-.../playbooks/install.sh install && sudo bash ledger/LEDGER-0025-.../playbooks/install-credential.sh'` (paste PAT when prompted) |
 | [`LEDGER-0026`](LEDGER-0026-vps-into-wg-mesh/) | Add clinic-vps to family WireGuard mesh — Plan 0090 (Nephew). 10.0.0.5 peer on GL-MT6000 + DDNS + Verizon port-forward + tower-api `NEPHEW_HERMES_DIRECT_URL` | `shipped` | 2026-05-29 | 2026-05-29 | `bash ledger/LEDGER-0026-vps-into-wg-mesh/playbooks/add-wg-peer-to-glinet.sh --name <peer> --pubkey <key> --wg-ip 10.0.0.X` (for adding future peers) |
 | [`LEDGER-0027`](LEDGER-0027-seed-to-tree-bootstrap/) | Seed-to-Tree — full re-deployable Nephew family AI infrastructure (VPS + GL-MT6000 + DGX + WG mesh + DDNS + Verizon port-forward + nginx + tower-api). 9 runbooks, 4 playbooks, 6 artifact templates, 8-gate verification | `shipped` | 2026-05-29 | 2026-05-29 | `bash ledger/LEDGER-0027-seed-to-tree-bootstrap/playbooks/verify-end-to-end.sh` |
+| [`LEDGER-0028`](LEDGER-0028-acme-dns-clinic-vps/) | acme-dns DNS-01 on the clinic VPS | `in-progress` | 2026-05-30 | _pending_ | see ticket |
+| [`LEDGER-0029`](LEDGER-0029-domain-migration-jailynmarvin/) | Domain migration yousirjuan.ai → jailynmarvin.com (dual-domain transition) | `in-progress` | 2026-05-31 | _pending_ | see ticket |
+| [`LEDGER-0030`](LEDGER-0030-tower-api-on-dgx/) | tower-api on the DGX | `in-progress` | 2026-05-31 | _pending_ | see ticket |
+| [`LEDGER-0031`](LEDGER-0031-cassette-edge-mtls-wireguard/) | Cassette edge Phase 1 — Caddy at the helm (WG + mTLS, wildcard DNS-01, family CA) | `in-progress` | 2026-06-02 | _pending_ | `bash ledger/LEDGER-0031-cassette-edge-mtls-wireguard/playbooks/family-ca.sh init` then deploy the Caddyfile (runbook 03) |
 
 > LEDGER-0001 was originally captured at `docs/sessions/2026-05-19-mcp-setup/` (PR #4) as the embryo of this pattern. It was migrated into the ledger and reshaped (`artifacts/Makefile` → `playbooks/Makefile`, new ticket README, new `install.sh` shell sibling, ticket frontmatter) in the migration PR that landed alongside this row.
 
