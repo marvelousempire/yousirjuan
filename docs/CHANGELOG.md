@@ -10,6 +10,24 @@ Eastern time stamped to the second using `TZ=America/New_York date '+%Y-%m-%d %H
 
 ---
 
+## [0.7.0] — 2026-06-02 16:55:50 Eastern · *Plan 0004 Phase 1 — domain generator (TLD is one variable)*
+
+### Added
+- framework.config.json (single source of truth: tld + org + edge_ip + cassettes with exposure tiers) and scripts/render-framework.mjs, which generates every edge vhost + DNS record + cert SAN from the TLD. Proven: changing tld regenerates the whole edge (the change-the-TLD test). No live edge change yet (Phase 2). Foundation for SaaSing the Framework per-tenant.
+
+
+## [0.6.2] — 2026-06-02 17:10:00 Eastern · *LEDGER-0032 — family `claude` SSH fleet docs (sanitized)*
+
+### Added
+- `docs/family-fleet-ssh-claude.md` — public fleet SSH map with `192.168.x.y` placeholders only.
+- `ledger/LEDGER-0032-claude-ssh-user/` — shipped playbooks, runbooks, `operator-hosts.env.example`,
+  `ssh-config-snippet.example`; real hostnames/users stay in gitignored `operator-hosts.env`.
+
+> **What to look for:** Copy `operator-hosts.env.example` → `operator-hosts.env`, fill VPS/DGX
+> targets locally, merge `ssh-config-snippet.example` into `~/.ssh/config`; verify
+> `ssh ax1800-claude id` and `ssh mt6000-claude` from the operator Mac. Repo must not
+> contain your VPS hostname or operator Unix names.
+
 ## [0.6.1] — 2026-06-02 15:25:09 Eastern · *LEDGER-0031 closeout — search restored + mTLS-gated; WG root cause fixed*
 
 ### Fixed / Shipped
