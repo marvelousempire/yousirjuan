@@ -80,7 +80,13 @@ Two PRs racing for the same number is a real risk — that's why the bump goes i
 
 ## Naming + frontmatter
 
-- **Folder:** `LEDGER-NNNN-<kebab-slug>/` where `NNNN` is zero-padded four digits and `<slug>` describes the *task*, not the date. Dates live in frontmatter.
+- **Folder:** `LEDGER-NNNN-<kebab-slug>/`. The `NNNN` (zero-padded four digits) exists **only** for ordering + uniqueness — it carries no meaning. **The `<slug>` must carry the subject.** It is a **subject-matter-focused** phrase (≈2–6 kebab words) naming *what the entry is about* — the system, component, or outcome — so a reader knows the topic from `ls ledger/` alone, without opening anything. Dates live in frontmatter, never the name.
+  - **The `ls` test:** scan `ledger/` and every entry's purpose should be obvious from its name. If you must open `LEDGER-0031` to remember what it is, the slug failed — rename it.
+  - **Subject, not activity, not date.** Lead with the noun/domain. Forbidden as the *whole* slug: `setup`, `fix`, `update`, `changes`, `misc`, `phase-1`, `2026-06-02-work` — those describe activity or time, not subject. (A verb is fine only when paired with the subject: `restore-wireguard-tunnel` ✓.)
+  - **Good:** `cassette-edge-mtls-wireguard`, `operator-intent-protocol`, `vps-marvelousempire-deploy-key`, `acme-dns-clinic-vps`.
+  - **Weak → fixed:** `setup` → `imac-mcp-setup` · `gitlab` → `gitlab-ce-source-of-truth` · `routing-fix` → `vps-dgx-wireguard-reply-path`.
+  - **Keep the name true to reality:** if the entry's focus shifts mid-flight, **rename the folder** and update the index row + `title:` so the slug still matches the subject. The number never changes; the slug tracks the truth.
+  - The frontmatter **`title:`** is the human-readable form of the same subject — the slug is its kebab-case shorthand. They must describe the same thing.
 - **Frontmatter:** every ticket starts with the YAML block from [`ledger/_template/README.md`](../../ledger/_template/README.md). The `triggers:` field is important — it tells a future agent how this playbook fires automatically (launchd / cron / GitHub Actions / file-watch / manual).
 - **Cross-links:** if the entry resolves a pain, list it in `related-pains: [PAIN-NNNN]`. If it builds on a prior ledger entry, list it in `related-tickets: [LEDGER-NNNN]`.
 
