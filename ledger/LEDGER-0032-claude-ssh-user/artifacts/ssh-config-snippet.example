@@ -1,0 +1,40 @@
+# LEDGER-0032 — append to ~/.ssh/config on the operator Mac (LOCAL ONLY).
+# Replace placeholder hostnames with values from operator-hosts.env (gitignored).
+
+Host clinic-vps-claude
+    HostName your.vps.hostname.example
+    User claude
+    Port 2222
+    IdentityFile ~/.ssh/id_ed25519
+    IdentitiesOnly yes
+
+Host dgx-claude
+    HostName your-dgx-ipv6-alias
+    User claude
+    AddressFamily inet6
+    IdentityFile ~/.ssh/id_ed25519
+    IdentitiesOnly yes
+
+Host mt6000-claude
+    HostName 192.168.8.1
+    User claude
+    IdentityFile ~/.ssh/id_ed25519
+    IdentitiesOnly yes
+
+Host ax1800-claude
+    HostName 192.168.9.1
+    User claude
+    IdentityFile ~/.ssh/id_ed25519
+    IdentitiesOnly yes
+
+Host nas-claude
+    HostName 192.168.8.x
+    User claude
+    IdentityFile ~/.ssh/id_ed25519
+    IdentitiesOnly yes
+
+Host mac-claude
+    HostName 127.0.0.1
+    User claude
+    IdentityFile ~/.ssh/id_ed25519
+    IdentitiesOnly yes
