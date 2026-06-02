@@ -10,6 +10,18 @@ Eastern time stamped to the second using `TZ=America/New_York date '+%Y-%m-%d %H
 
 ---
 
+## [0.5.0] — 2026-06-02 09:43:14 Eastern · *Cassette subdomain & edge architecture (Option A: edge anchor + CNAME per cassette)*
+
+### Added
+- `docs/cassette-subdomain-edge-architecture.md` — adopted infra design for
+  per-cassette subdomains of the family TLD (`jailynmarvin.com`): a single `edge`
+  A record holds the IP; every cassette is a **CNAME → edge** (auditable allowlist,
+  no wildcard, per-host TLS, one-edit DGX failover). Includes the security tradeoff
+  vs. wildcards, the mandatory **edge default-deny** vhost, the 3-step new-cassette
+  ritual, and the reconciliation with the `one-tower-one-url` rule (Tower-embed is
+  the default; subdomains are the operator-directed exception). Current live
+  cassettes: nephew, search, bank, clinic, git → the VPS edge `72.167.151.251`.
+
 ## [0.4.0] — 2026-05-22 21:23:03 Eastern · *LEDGER-0025 — fine-grained PAT lands; sync-and-drift.sh now authenticates*
 
 **Headline:** Option C selected. `sync-and-drift.sh` now reads `/etc/yousirjuan-sync/credentials` at start-of-run and rewrites the GitHub URL base from SSH to HTTPS-with-token. A new idempotent installer (`ledger/LEDGER-0025-.../playbooks/install-credential.sh`) handles the credential file with `0600 root:root` and runs a one-call API smoke test against `/orgs/marvelousempire`. Four runbooks (02–05) cover token generation, credential deploy, script behavior, and end-to-end verification.
