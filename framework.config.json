@@ -1,0 +1,24 @@
+{
+  "_comment": "Single source of truth for the Framework's domain. Change `tld` and re-run scripts/render-framework.mjs to regenerate every edge vhost, DNS record, and cert SAN. This is what makes the Framework domain-portable + SaaS-able (one config per tenant). Plan 0004.",
+  "tld": "jailynmarvin.com",
+  "org": "Jailyn Marvin Family Office",
+  "edge_ip": "72.167.151.251",
+  "ca_cert": "/etc/jailynmarvin-ca/ca.crt",
+  "le_cert_dir": "/etc/letsencrypt/live",
+  "contact": "abrownsanta@jailynmarvin.com",
+  "cassettes": {
+    "nephew":   { "tier": "mtls",   "upstream": "http://127.0.0.1:8000",     "note": "tower hub (local)" },
+    "search":   { "tier": "mtls",   "upstream": "https://192.168.8.249:443", "proxy_ssl": true, "note": "search-my-engine on DGX" },
+    "bank":     { "tier": "mtls",   "upstream": "http://192.168.8.249:3010", "note": "bank-reader on DGX" },
+    "clinic":   { "tier": "public", "upstream": "http://127.0.0.1:5436",     "note": "knowledge register" },
+    "portainer":{ "tier": "wireguard", "note": "ops — mesh only, no public DNS" },
+    "vault":    { "tier": "wireguard", "note": "secrets — mesh only" },
+    "admin":    { "tier": "wireguard", "note": "ops — mesh only" },
+    "cockpit":  { "tier": "wireguard", "note": "ops — mesh only" }
+  },
+  "tiers": {
+    "mtls":      "public DNS + nginx requires a family client cert (ssl_verify_client on)",
+    "public":    "public DNS + open (no client cert) — marketing/known-public surfaces",
+    "wireguard": "NO public DNS, NO public vhost — reachable only over the WireGuard mesh"
+  }
+}

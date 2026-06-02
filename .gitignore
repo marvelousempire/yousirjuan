@@ -68,3 +68,7 @@ apps/yousirjuan-web/test-results/
 
 # LEDGER-0004 rollout per-run summary files (ephemeral audit logs)
 ledger/LEDGER-0004-contracts-and-prudence-rollout/artifacts/runs/
+
+# LEDGER-0032 — operator-specific fleet SSH targets (hostnames, users, real LAN IPs)
+ledger/LEDGER-0032-claude-ssh-user/artifacts/operator-hosts.env
+generated/

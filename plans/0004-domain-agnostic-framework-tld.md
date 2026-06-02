@@ -1,4 +1,4 @@
-Status: proposed (awaiting operator sign-off)
+Status: Phase 1 SHIPPED 2026-06-02 (config + generator proven, incl. the change-the-TLD test). Phases 2–6 pending.
 
 # Plan 0004 — Domain-agnostic Framework: the TLD is one variable (SaaS-ready)
 
