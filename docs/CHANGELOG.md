@@ -10,6 +10,22 @@ Eastern time stamped to the second using `TZ=America/New_York date '+%Y-%m-%d %H
 
 ---
 
+## [0.6.0] — 2026-06-02 10:48:05 Eastern · *Triple-threat edge architecture + LEDGER-0031 (Caddy-at-the-helm Phase 1)*
+
+### Added
+- `docs/edge-architecture-triple-threat.md` — target edge topology: **Caddy at the
+  helm** (mTLS + wildcard DNS-01 + cassette routing, VPS + DGX), **nginx+WAF** as a
+  Phase-3 public moat, **Traefik** as a Phase-2 dynamic-container dispatcher. Layered
+  defense-in-depth; phased so each earns its keep.
+- `ledger/LEDGER-0031-cassette-edge-mtls-wireguard/` — Phase 1 made real:
+  `family-ca.sh` (EC P-256 private CA + per-device mTLS certs + revoke/CRL), the
+  cassette-edge `Caddyfile` (wildcard DNS-01 via acme-dns + `client_auth` mTLS +
+  Host-routing + default-deny), `acmedns.json.example`, and 4 runbooks (CA bootstrap,
+  device-cert issue/install, reversible parallel-port Caddy cutover, GoDaddy DNS
+  changes). Ledger index reconciled (0028–0031 rows added; Next number → 0032).
+- Access model: ops/secrets → WireGuard-only (no public DNS); family apps → public
+  but mTLS-gated; one `*.jailynmarvin.com` wildcard covers all.
+
 ## [0.5.0] — 2026-06-02 09:43:14 Eastern · *Cassette subdomain & edge architecture (Option A: edge anchor + CNAME per cassette)*
 
 ### Added
