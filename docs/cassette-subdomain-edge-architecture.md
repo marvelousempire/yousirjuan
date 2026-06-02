@@ -46,7 +46,7 @@ We use **explicit per-cassette records**, not a wildcard. To avoid per-cassette 
 toil, exactly one record holds the IP (`edge`), and every cassette is a **CNAME**
 to it.
 
-### DNS records (Cloudflare — **DNS-only / grey-cloud on every row**, never orange-proxy)
+### DNS records (provider: **GoDaddy** `ns47/ns48.domaincontrol.com` — DNS-only, no proxy layer; see [`dns-jailynmarvin-zone-2026-06-02.md`](dns-jailynmarvin-zone-2026-06-02.md))
 
 **Anchor (the only record that holds the IP):**
 
@@ -123,10 +123,13 @@ the VPS is down, the family stack fails over to the DGX as primary.
 No wildcard means anything not run through these three steps simply does not exist
 to the outside world.
 
-## Current state (2026-06-02)
+## Current state (2026-06-02 — from the captured zone)
 
-- Live, resolving to the VPS edge: `nephew`, `search`, `bank`, `clinic`, `git`.
-- No wildcard present (bogus names return NXDOMAIN — verified).
-- Migration: the five existing records are currently **A** records → convert each
-  to **CNAME → `edge`** so the IP lives in one place (functionally identical; same
-  IP) and failover becomes a one-record edit.
+- **Option A is live.** `edge` A → `72.167.151.251`; **15 cassettes are already
+  `CNAME → edge`**: admin, archive, bank, beszel, clinic, cockpit, git, hello,
+  historia, nephew, portainer, search, uptime, vault, workflow. No wildcard.
+- CAA pins Let's Encrypt (`issue` + `issuewild`); acme-dns DNS-01 delegation in place.
+- **Open fixes** (see the zone doc's Findings): SPF TXT has doubled quotes (bug);
+  `api` + `sync` are still A records (convert to CNAME→edge); sensitive ops UIs
+  (portainer/vault/admin/cockpit/beszel/uptime/workflow) are publicly resolvable and
+  should move behind WireGuard or sit strictly behind the edge default-deny + auth.
