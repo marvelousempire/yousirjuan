@@ -10,6 +10,22 @@ Eastern time stamped to the second using `TZ=America/New_York date '+%Y-%m-%d %H
 
 ---
 
+## [0.6.1] — 2026-06-02 15:25:09 Eastern · *LEDGER-0031 closeout — search restored + mTLS-gated; WG root cause fixed*
+
+### Fixed / Shipped
+- **search.jailynmarvin.com restored** after a ~13.5h outage and **mTLS-gated**
+  (family device cert → 307; cert-less → 400 hidden). Root cause: the VPS
+  WireGuard had no fixed `ListenPort` and grabbed a random port on a restart that
+  the firewall blocked. Fixed + persisted across all three boxes:
+  VPS (pin port + ufw), router (firewall.user reply-path forward + endpoint
+  self-heal cron), DGX (systemd symmetric LAN route). Family CA stood up + a device
+  cert issued. DGX redeployed to the latest app.
+- **Plan diverged prudently:** the VPS edge is shared production nginx (4 other
+  businesses) + the installed Caddy lacked the acme-dns module, so mTLS was added
+  **in-place in nginx scoped to the jailynmarvin cassettes** rather than the full
+  Caddy cutover (which remains future Phase-1 work). LEDGER-0031 ticket updated with
+  the real fix set + persistence verification; status → shipped.
+
 ## [0.6.0] — 2026-06-02 10:48:05 Eastern · *Triple-threat edge architecture + LEDGER-0031 (Caddy-at-the-helm Phase 1)*
 
 ### Added

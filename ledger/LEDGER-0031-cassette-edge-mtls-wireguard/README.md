@@ -1,9 +1,9 @@
 ---
 ledgerId: LEDGER-0031
-title: Cassette edge Phase 1 — Caddy at the helm (WG + mTLS, wildcard DNS-01, family CA)
-status: in-progress
+title: Cassette edge — mTLS gate + restore home↔VPS WireGuard (root cause - random WG port)
+status: shipped
 opened: 2026-06-02
-closed: null
+closed: 2026-06-02
 related-pains: []
 related-tickets: [LEDGER-0028, LEDGER-0029]
 triggers: [manual]
@@ -38,9 +38,44 @@ DNS-01/acme-dns covers everything. Family SSO layers inside for per-user identit
 - **Family CA:** EC P-256 private CA issues one client cert per device; per-device revoke + CRL.
 - **Default-deny:** unknown Host → 404/abort; no-cert → handshake refused.
 
-## Outcome
+## Outcome (shipped 2026-06-02)
 
-<fill on ship>
+`search.jailynmarvin.com` restored end-to-end **and** mTLS-gated: with a family
+device cert → `307` (the app); without → `400` (hidden). The DGX was redeployed to
+the latest app (federated RAG, Nephew agent, federated search, import fixes).
+
+**Implementation diverged from the original plan — prudently.** The VPS edge turned
+out to be a **shared production nginx** fronting four other businesses (readyplay,
+averyhandyman, massillonlegal, thebriefcase) + the installed Caddy lacked the
+acme-dns module, so the full Caddy cutover was **deferred**. Instead: **mTLS was
+added in-place in the existing nginx, scoped to the `*.jailynmarvin.com` cassette
+vhosts only** (`ssl_verify_client on` + the family CA), leaving the other businesses
+untouched. Caddy-everywhere remains the future Phase-1 target (`docs/edge-architecture-triple-threat.md`).
+
+**Root cause of the ~13.5h outage:** the VPS WireGuard had **no fixed `ListenPort`**,
+so a restart gave it a random port (35270) the firewall blocked and the router
+wasn't dialing.
+
+### Actual fixes applied (all persisted)
+
+| Host | Fix | Persistence |
+|---|---|---|
+| VPS | Pin `ListenPort = 35270` in `wg0.conf` + `ufw allow 35270/udp` | permanent (conf + ufw) |
+| VPS nginx | Removed stale `search.*.bak-elevA/elevC` vhosts (conflicting server_name) → cleaned to one; added `ssl_client_certificate /etc/jailynmarvin-ca/ca.crt` + `ssl_verify_client on` to the search vhost | live config (backups in `/root/nginx-bak-20260602/`) |
+| Router (GL-MT6000) | `wgserver→wg0` + `wg0→wgserver` FORWARD ACCEPT (reply path) | `/etc/firewall.user` (fw3-included) |
+| Router | cron re-asserts `wg0` peer endpoint `72.167.151.251:35270` + keepalive every 5 min | `/etc/crontabs/root` (self-heal after reboot) |
+| DGX | symmetric LAN route `10.0.0.0/24 via 192.168.8.1 dev enP7s7` (the full-tunnel DGX was replying via WG, breaking conntrack) | `systemd` unit `vps-lan-route.service` (enabled) |
+| Family CA | EC P-256 CA at `/etc/jailynmarvin-ca` (on the VPS); issued `avery-mac` device cert | `family-ca.sh init` |
+
+### Persistence verification (all green)
+`fw3_include=1`, `firewall.user` rule present, router endpoint cron present,
+`vps-lan-route.service = enabled`, VPS `ListenPort` pinned, `ufw` allows 35270.
+
+### Follow-ups
+- Operator installs `avery-mac.p12` to load search in a browser; then roll mTLS to
+  the remaining cassettes.
+- Caddy-everywhere migration (the original Phase-1 plan) remains future work — deferred
+  because the VPS edge is shared production.
 
 ## Runbooks
 
