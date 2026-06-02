@@ -83,6 +83,7 @@ wasn't dialing.
 - [02-issue-install-device-cert.md](runbooks/02-issue-install-device-cert.md) — issue + install a device cert (Mac/iOS)
 - [03-caddy-edge-cutover.md](runbooks/03-caddy-edge-cutover.md) — deploy Caddy on the VPS via reversible parallel-port cutover (nginx kept as rollback)
 - [04-dns-changes.md](runbooks/04-dns-changes.md) — WG-only deletes + SPF/api/sync fixes
+- [05-add-family-device.md](runbooks/05-add-family-device.md) — onboard a family member's device (mint cert, macOS/iOS-compatible .p12, install, revoke)
 
 ## Playbooks
 
