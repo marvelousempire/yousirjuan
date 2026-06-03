@@ -1,0 +1,44 @@
+# search.jailynmarvin.com — Search My Engine on the DGX (Plan 0134), proxied over WireGuard.
+# VPS terminates TLS (own LE cert, plain ACME), re-encrypts to the DGX nephew-family-edge.
+# Elevation A: branded maintenance page when the DGX/mesh upstream is unreachable.
+server {
+    listen 80;
+    server_name search.jailynmarvin.com;
+    location /.well-known/acme-challenge/ { root /var/www/letsencrypt; }
+    location / { return 301 https://$host$request_uri; }
+}
+server {
+    listen 443 ssl http2;
+    server_name search.jailynmarvin.com;
+    ssl_certificate     /etc/letsencrypt/live/search.jailynmarvin.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/search.jailynmarvin.com/privkey.pem;
+    ssl_client_certificate /etc/jailynmarvin-ca/ca.crt;
+    ssl_verify_client on;
+
+    proxy_intercept_errors on;
+    error_page 502 503 504 =503 /maintenance.html;
+    location = /maintenance.html { root /var/www/maintenance; internal; }
+
+    # Elevation C: tower-api-independent family JWKS, served edge-local (refreshed by cron).
+    location = /.well-known/family-jwks.json {
+        alias /var/www/jwks/family-jwks.json;
+        default_type application/json;
+        add_header Cache-Control "public, max-age=300";
+        add_header Access-Control-Allow-Origin "*";
+    }
+
+    location / {
+        proxy_pass https://192.168.8.249:443;
+        proxy_ssl_server_name on;
+        proxy_ssl_name search.jailynmarvin.com;
+        proxy_ssl_verify off;
+        proxy_connect_timeout 4s;
+        proxy_set_header Host search.jailynmarvin.com;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Cookie $http_cookie;
+        proxy_read_timeout 300s;
+        proxy_send_timeout 300s;
+    }
+}
