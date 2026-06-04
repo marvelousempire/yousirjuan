@@ -48,6 +48,13 @@ if [[ "$PLATFORM" == linux ]] && command -v useradd >/dev/null 2>&1; then
   id "$USER_NAME" >/dev/null 2>&1 || useradd -m -s /bin/bash "$USER_NAME"
   getent group sudo  >/dev/null 2>&1 && usermod -aG sudo  "$USER_NAME" || true
   getent group wheel >/dev/null 2>&1 && usermod -aG wheel "$USER_NAME" || true
+  # UGOS Pro: SSH often requires the admin group (else "This account is currently not available")
+  if getent group admin >/dev/null 2>&1; then
+    step "UGOS admin group: add $USER_NAME for SSH"
+    usermod -aG admin "$USER_NAME" || true
+  fi
+  usermod -U "$USER_NAME" 2>/dev/null || true
+  usermod -s /bin/bash "$USER_NAME" 2>/dev/null || true
 else
   step "OpenWrt / manual passwd path ($USER_NAME)"
   if ! id "$USER_NAME" >/dev/null 2>&1; then

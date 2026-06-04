@@ -1,6 +1,6 @@
 # LEDGER-0032 — `claude` SSH user (family fleet)
 
-**Status:** shipped (2026-06-02) — VPS, DGX, Flint, Slate, Mac. NAS optional.
+**Status:** shipped (2026-06-02 fleet SSH; 2026-06-03 NAS NFS + DGX mount playbooks) — 8/8 `claude` targets + SME NAS storage on DGX.
 
 Canonical public doc: [`docs/family-fleet-ssh-claude.md`](../../docs/family-fleet-ssh-claude.md)
 

@@ -12,8 +12,10 @@ NOPASSWD_SUDO="${NOPASSWD_SUDO:-0}"
 die() { printf '✗ %s\n' "$*" >&2; exit 1; }
 
 [[ "$(uname -s)" == Darwin ]] || die "macOS only"
-[[ -f "$PUBKEY_FILE" ]] || die "Missing pubkey: $PUBKEY_FILE"
-PUBKEY=$(tr -d '\n\r' <"$PUBKEY_FILE")
+if [[ -z "${PUBKEY:-}" && -n "${PUBKEY_FILE:-}" && -f "$PUBKEY_FILE" ]]; then
+  PUBKEY=$(tr -d '\n\r' <"$PUBKEY_FILE")
+fi
+[[ -n "${PUBKEY:-}" ]] || die "Set PUBKEY or PUBKEY_FILE to your ssh-ed25519 public key (one line)."
 
 if ! id "$USER_NAME" &>/dev/null; then
   PW=$(openssl rand -base64 24)
@@ -33,6 +35,17 @@ fi
 sudo chmod 700 "$H/.ssh"
 sudo chmod 600 "$H/.ssh/authorized_keys"
 sudo chown -R "${USER_NAME}:staff" "$H/.ssh"
+sudo chown -R "${USER_NAME}:staff" "$H" 2>/dev/null || true
+
+# Remote Login user allowlist (macOS drops session after "Server accepts key" if missing)
+if dseditgroup -o checkmember -m "$USER_NAME" com.apple.access_ssh 2>/dev/null | grep -qi 'yes'; then
+  :
+else
+  echo "Adding $USER_NAME to com.apple.access_ssh (Remote Login allow list)…"
+  sudo dseditgroup -o edit -a "$USER_NAME" -t user com.apple.access_ssh 2>/dev/null \
+    || sudo dscl . -append "/Groups/com.apple.access_ssh" GroupMembership "$USER_NAME" 2>/dev/null \
+    || echo "! Could not add to com.apple.access_ssh — in System Settings → Sharing → Remote Login, choose All users or add $USER_NAME"
+fi
 
 if [[ "$NOPASSWD_SUDO" == 1 ]]; then
   echo "$USER_NAME ALL=(ALL) NOPASSWD:ALL" | sudo tee "/etc/sudoers.d/${USER_NAME}" >/dev/null

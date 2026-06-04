@@ -5,6 +5,8 @@
 #   cp ../artifacts/operator-hosts.env.example ../artifacts/operator-hosts.env  # first time
 #   bash install-from-mac.sh              # all targets
 #   bash install-from-mac.sh vps dgx      # subset: vps | dgx | mt6000 | ax1800 | nas | mac
+#   bash install-from-mac.sh macs         # every Mac in operator-hosts.env (local + LAN)
+#   bash install-from-mac.sh onemac bigmac twomac
 #
 # Prereqs: operator-hosts.env filled in; SSH as admin/root already works.
 
@@ -14,6 +16,8 @@ ROOT="$(cd "$(dirname "$0")" && pwd)"
 ARTIFACTS="$(cd "$ROOT/../artifacts" && pwd)"
 CREATE="$ROOT/create-claude-user.sh"
 MAC_CREATE="$ROOT/create-claude-user-mac.sh"
+MAC_REMOTE="$ROOT/provision-macos-remote.sh"
+BOOTSTRAP_LIB="$ROOT/ssh-password-bootstrap.sh"
 ENV_FILE="${OPERATOR_HOSTS_ENV:-$ARTIFACTS/operator-hosts.env}"
 PUBKEY_FILE="${PUBKEY_FILE:-$HOME/.ssh/id_ed25519.pub}"
 
@@ -33,12 +37,22 @@ fi
 : "${UPSTREAM_GW:=192.168.9.1}"
 : "${NAS_HOST:=192.168.8.x}"
 
+# Usage: run_linux_simple <label> <nopasswd> <platform> [ssh argv …]  (last argv is user@host)
 run_linux_simple() {
-  local label=$1 ssh_target=$2 nopasswd=${3:-1} platform=${4:-auto}
-  printf '\n=== %s (%s) ===\n' "$label" "$ssh_target"
+  local label=$1 nopasswd=${2:-1} platform=${3:-auto}
+  shift 3
+  printf '\n=== %s (%s) ===\n' "$label" "${*: -1}"
   PUBKEY=$(tr -d '\n\r' <"$PUBKEY_FILE")
-  ssh -o BatchMode=yes -o ConnectTimeout=12 "$ssh_target" \
+  ssh -o BatchMode=yes -o ConnectTimeout=12 "$@" \
     "sudo env USER_NAME=claude PUBKEY='$PUBKEY' NOPASSWD_SUDO=$nopasswd PLATFORM=$platform bash -s" <"$CREATE"
+}
+
+provision_mac_remote() {
+  local label=$1 bootstrap=$2
+  local label_upper
+  label_upper=$(printf '%s' "$label" | tr '[:lower:]' '[:upper:]')
+  [[ -n "$bootstrap" ]] || die "Set MAC_${label_upper}_BOOTSTRAP in $ENV_FILE (e.g. admin@192.168.8.x)"
+  bash "$MAC_REMOTE" "$label" "$bootstrap"
 }
 
 TARGETS=("${@:-vps dgx mt6000 ax1800 nas mac}")
@@ -47,36 +61,72 @@ for t in "${TARGETS[@]}"; do
   case "$t" in
     vps)
       [[ -n "${VPS_SSH:-}" ]] || die "Set VPS_SSH in $ENV_FILE (e.g. user@host, use -p in ssh config)"
-      run_linux_simple vps \
-        "-p ${VPS_SSH_PORT:-2222} -i ${HOME}/.ssh/id_ed25519 ${VPS_SSH}" \
-        1 linux
+      run_linux_simple vps 1 linux \
+        -p "${VPS_SSH_PORT:-2222}" -i "${HOME}/.ssh/id_ed25519" "${VPS_SSH}"
       ;;
     dgx)
       DGX_SSH="${DGX_SSH:--i ${HOME}/.ssh/id_ed25519 your-dgx-user@your-dgx-host}"
-      run_linux_simple dgx "$DGX_SSH" 1 linux
+      # shellcheck disable=SC2086
+      run_linux_simple dgx 1 linux $DGX_SSH
       ;;
     mt6000|ax6000|flint)
       MT6000_SSH="${MT6000_SSH:-claude@${INNER_GW}}"
-      run_linux_simple gl-mt6000 \
-        "-i ${HOME}/.ssh/id_ed25519 ${MT6000_SSH}" \
-        0 openwrt
+      run_linux_simple gl-mt6000 0 openwrt \
+        -i "${HOME}/.ssh/id_ed25519" "${MT6000_SSH}"
       ;;
     ax1800|slate)
       AX1800_SSH="${AX1800_SSH:-root@${UPSTREAM_GW}}"
       die "Use provision-ax1800-slate.sh for Slate (password bootstrap), or install claude manually on-router. Target: $AX1800_SSH"
       ;;
-    nas)
-      NAS_SSH="${NAS_SSH:-admin@${NAS_HOST}}"
-      echo "NAS: trying $NAS_SSH (enable SSH in UGOS first)"
-      run_linux_simple ugreen-nas \
-        "-i ${HOME}/.ssh/id_ed25519 ${NAS_SSH}" \
-        0 linux || echo "! NAS skipped — enable SSH in UGOS"
+    nas|nasa)
+      # shellcheck source=ssh-password-bootstrap.sh
+      source "$BOOTSTRAP_LIB"
+      NAS_SSH_USER="${NAS_SSH_USER:-admin}"
+      NAS_SSH="${NAS_SSH:-${NAS_SSH_USER}@${NAS_HOST}}"
+      if [[ ! -t 0 || ! -t 1 ]]; then
+        die "Interactive Terminal required for NAS bootstrap. Run: bash install-from-mac.sh nas"
+      fi
+      printf '\n=== ugreen-nas (%s) ===\n' "$NAS_SSH"
+      printf 'UGOS SSH user must match your *web login* username (Control Panel → Terminal → SSH ON).\n'
+      printf 'If password fails, fix NAS_SSH_USER in operator-hosts.env — it is often NOT literally "admin".\n'
+      printf 'Preflight: ssh -o PubkeyAuthentication=no %s   OR (if key works) ssh %s\n' "$NAS_SSH" "$NAS_SSH"
+      PUBKEY=$(tr -d '\n\r' <"$PUBKEY_FILE")
+      PUBKEY_ESC=${PUBKEY//\'/\'\\\'\'}
+      if ssh_can_batch "${NAS_SSH}"; then
+        printf '→ NAS accepts your Mac SSH key as %s — only sudo password needed.\n' "$NAS_SSH_USER"
+        ssh_key_bootstrap "${NAS_SSH}" "$CREATE" \
+          "sudo env USER_NAME=claude PUBKEY='${PUBKEY_ESC}' NOPASSWD_SUDO=0 PLATFORM=linux bash" \
+          || printf '! NAS failed at sudo — enter UGOS password when prompted\n'
+        if ssh -o BatchMode=yes -o ConnectTimeout=8 -i "${HOME}/.ssh/id_ed25519" "claude@${NAS_HOST}" 'whoami' 2>/dev/null | grep -q claude; then
+          printf 'OK: claude@%s\n' "$NAS_HOST"
+        else
+          printf '! Re-run: bash install-from-mac.sh nas (UGOS may need claude in admin group — script updated)\n'
+        fi
+      else
+        ssh_password_bootstrap "${NAS_SSH}" "$CREATE" \
+          "sudo env USER_NAME=claude PUBKEY='${PUBKEY_ESC}' NOPASSWD_SUDO=0 PLATFORM=linux bash" \
+          || {
+            printf '! NAS failed — wrong NAS_SSH_USER/password, SSH off in UGOS, or account locked.\n'
+            printf '  Test: ssh -o PubkeyAuthentication=no %s\n' "$NAS_SSH"
+          }
+      fi
       ;;
-    mac)
+    mac|onemac)
       bash "$MAC_CREATE"
       ;;
+    bigmac)
+      provision_mac_remote bigmac "${MAC_BIGMAC_BOOTSTRAP:-}" || printf '! bigmac bootstrap failed\n'
+      ;;
+    twomac)
+      provision_mac_remote twomac "${MAC_TWOMAC_BOOTSTRAP:-}" || printf '! twomac bootstrap failed\n'
+      ;;
+    macs)
+      bash "$MAC_CREATE"
+      [[ -n "${MAC_BIGMAC_BOOTSTRAP:-}" ]] && provision_mac_remote bigmac "$MAC_BIGMAC_BOOTSTRAP" || echo "! bigmac skipped — set MAC_BIGMAC_BOOTSTRAP"
+      [[ -n "${MAC_TWOMAC_BOOTSTRAP:-}" ]] && provision_mac_remote twomac "$MAC_TWOMAC_BOOTSTRAP" || echo "! twomac skipped — set MAC_TWOMAC_BOOTSTRAP"
+      ;;
     *)
-      die "Unknown target: $t (use vps dgx mt6000 ax1800 nas mac)"
+      die "Unknown target: $t (use vps dgx mt6000 ax1800 nas nasa mac onemac bigmac twomac macs)"
       ;;
   esac
 done
