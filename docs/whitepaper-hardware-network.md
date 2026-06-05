@@ -1,167 +1,247 @@
 # Whitepaper — Awe Engine Stack: Hardware & Network Reference
 
-**Status:** living document · **Last verified:** 2026-06-01 · **Author:** Nephew (Claude Code)
-**Provenance legend:** ✅ *verified* = read live from the device this session · 📄 *spec-sheet* = manufacturer datasheet value (device not directly probeable over the network) · ⚠️ *inferred* = best-estimate, confirm.
+**Status:** living document · **Last verified:** 2026-06-05 · **Author:** Nephew (operator-confirmed)
+**Provenance legend:** ✅ *verified* = read live from the device this session · 📄 *spec-sheet* = manufacturer datasheet value (device not directly probeable over the network) · ⚠️ *inferred* = best-estimate, confirm · 🔄 *transitional* = correct intent, interim hardware still in place.
 
-This document describes the physical hardware, every cabled and wireless link, the address plan, the data pipeline, and the security model of the two-country WireGuard border that sits on top. It is the canonical reference; a portable copy lives in `yousirjuan/docs/`.
+This document describes the physical hardware, every cabled link, the address plan, and the security model of the family network. It is the canonical reference; a portable copy lives in `yousirjuan/docs/`.
 
 ---
 
 ## 1. Executive summary
 
-The stack is a **double-NAT, trust-segmented home datacenter**. A Verizon 5G uplink feeds an **edge router (ASUS AX1800)** which is the only device on the carrier modem. Behind it, an **internal router (ASUS AX6000)** hosts the trusted "inner country" where the **DGX Spark "Awe Engine"** (NVIDIA GB10, 128 GB unified) runs the LLM, the DustPan disk cockpit, and the Nephew Control Tower. Storage is a **UGreen DXP4800 Pro NAS** reached over 10 GbE through a **Thunderbolt 5 dock** to the MacBook. The design goal is two L3 "countries" — outer (international/edge) and inner (trusted/Awe Engine) — joined only by a **site-to-site WireGuard "border" tunnel** with firewall "customs" on each side.
+The stack is a **trust-segmented home datacenter** on Verizon 5G. **Brume 3 #1** (MT5000) is the main gateway: **2.5G WAN** from Verizon, **LAN 1 (2.5G)** to **Flint 2** for the house, **LAN 2 (2.5G)** to **Brume 3 #2** for the isolated AI island (cutover today). Until Brume 3 #2 is cabled, the AI leg runs **interim via Flint 2 → AX1800 (1G) → Comet → DGX Spark**, with **WireGuard on the AI gateway**. The AI island includes **Comet GL-RM10RC** (KVM only), **DGX Spark**, and **UGREEN DXP6800 Pro** on a direct **10 GbE** link. Desk storage uses **HyperDrive TB5**, **Sonnet Echo 11 TB4**, and **Anker Prime 14-in-1** docks. **No Tailscale** — WireGuard + obfuscation on Brume 3 #2 only.
 
 ---
 
-## 2. Hardware roster (one line each)
+## 2. Current network setup (as of June 5, 2026)
 
-| # | Device | Role | Key spec | Mgmt address |
-|---|--------|------|----------|--------------|
-| 1 | Verizon 5G Internet Gateway (6 antennas) | WAN uplink | 5G mmWave/C-band, CGNAT 📄 | carrier → public `97.164.202.176` ✅ |
-| 2 | ASUS AX1800 (RT-AX1800S-class) | **Edge / front gate** | WiFi6 AX1800, 1×GbE WAN + 4×GbE LAN 📄 | LAN `192.168.0.1` ✅ |
-| 3 | ASUS AX6000 (RT-AX88U-class, MAC `94:83:c4…`) | **Internal router** | WiFi6 AX6000, 1×GbE WAN + 8×GbE LAN 📄; WG hub `10.1.0.1:51821` ✅ | LAN `192.168.8.1` ✅ |
-| 4 | Apple AirPort Extreme A1521 ×2 | Wired switches / AP extension | 802.11ac 3×3, 3×GbE LAN + 1×GbE WAN each 📄 | bridged (inner) ✅(topology) |
-| 5 | **DGX Spark "Awe Engine"** | AI + control plane | GB10, 20×Cortex-X925, 121 GiB unified, 3.7 TB NVMe ✅ | `enP7s7 192.168.8.249`, `wlP9s9 192.168.8.114`, `wg0 10.1.0.5` ✅ |
-| 6 | UGreen DXP4800 Pro | NAS (4-bay) | Intel Pentium Gold 8505, DDR5, 1×10GbE + 1×2.5GbE 📄 | 10 GbE→Hyperdrive; 2.5 GbE→AX6000 ✅(topology) |
-| 7 | HyperDrive Thunderbolt 5 Dock (HD2801) | TB5 bridge | Thunderbolt 5 (80 Gb/s) 📄; negotiates 40 Gb/s to M1 ✅ | NAS 10 GbE in → TB to MacBook |
-| 8 | MacBook Pro17,1 "ONEMAC-2" | Operator workstation | Apple M1 (4P+4E), 8 GB, macOS 26.3.1 ✅ | `en0 192.168.8.205` ✅ (roster said .200), `utun8 10.1.0.4` 📄 |
-| 9 | iMac 21.5″ (2017 Retina 4K) | Secondary workstation | i5/i7 Kaby Lake, Radeon Pro 560 4 GB, 64 GB RAM 📄/⚠️ | via AirPort Extreme (inner) ⚠️ |
-| 10 | clinic-vps (GoDaddy) | Off-site VPS | `abrownsanta@…:2222` | `72.167.151.251` — reachable for edge; DustPan service down ⚠️ |
+Operator-confirmed canonical topology. Copy this block when briefing another AI.
+
+### Gateway roles
+
+| Gateway | Role | Purpose |
+|---------|------|---------|
+| **Brume 3 #1** (MT5000) | **Main gateway** | Internet ingress from Verizon; splits uplink to house vs AI island; house-side protection |
+| **Brume 3 #2** (MT5000) | **AI gateway** (target) | Dedicated isolated AI security boundary; WireGuard + obfuscation; only path to Comet + DGX Spark |
+| **Flint 2** (AX6000) | **House router** | Wi-Fi + switching for household devices only — not the AI security boundary |
+| **AX1800** (interim) | **AI gateway placeholder** | 1 GbE WireGuard until Brume 3 #2 cutover today — **being replaced** |
+
+### Internet flow
+
+- **Verizon modem** → **Brume 3 #1** via its **2.5G WAN port**
+- **Brume 3 #1** splits using two **2.5G LAN ports** (see port map below)
+
+### Brume 3 #1 port map (MT5000 — 3× flexible 2.5G)
+
+| Port | Assignment | Speed | Connected to |
+|------|------------|-------|--------------|
+| **WAN** | Verizon uplink | 2.5 GbE | Verizon 5G modem |
+| **LAN 1** | House leg | 2.5 GbE | **Flint 2 (AX6000) WAN port** |
+| **LAN 2** | AI leg (target) | 2.5 GbE | **Brume 3 #2 WAN port** 🔄 *live after cutover* |
+
+### Brume 3 #2 port map (target — Router mode ⚠️ confirm at install)
+
+| Port | Assignment | Speed | Connected to |
+|------|------------|-------|--------------|
+| **WAN** | From Brume 3 #1 LAN 2 | 2.5 GbE | Brume 3 #1 |
+| **LAN** | AI island | 2.5 GbE | Comet 5G Ethernet → downstream DGX + NAS |
+
+Expected mode: **Router mode** (separate AI subnet from house). ⚠️ Confirm at Brume 3 #2 install.
+
+### House network (off Flint 2)
+
+- **Flint 2** receives internet from **Brume 3 #1 LAN 1** (2.5G WAN port on Flint 2)
+- Flint 2 ports: **2× 2.5 GbE + 4× 1 GbE** + Wi-Fi 6
+- Two **AirPort Extreme 802.11ac** routers on Flint 2 **1G ports** (extend Ethernet + Wi-Fi)
+- All regular household devices, laptops, and phones
+
+### Isolated AI network
+
+**Target (Brume 3 #2 live — cutover today):**
+
+- Brume 3 #1 **LAN 2** (2.5G) → **Brume 3 #2 WAN** (2.5G)
+- Brume 3 #2 **LAN** → **Comet 5G (GL-RM10RC) Ethernet** (1G on Comet; 2.5G link speed on Brume side)
+- Comet **USB-C KVM port** → **DGX Spark Thunderbolt / USB4**
+- DGX Spark **10GbE** → **UGREEN DXP6800 Pro NAS 10GbE port #1** (direct)
+- **WireGuard + obfuscation** on Brume 3 #2 — sole remote-access path to Comet + DGX Spark
+
+**Current interim (until Brume 3 #2 is cabled):**
+
+- 🔄 **Flint 2 LAN (1G)** → **AX1800 WAN** (1G) — temporary AI leg feed
+- AX1800 **LAN (1G)** → **Comet Ethernet** (1G)
+- Same Comet → DGX → NAS downstream chain
+- **WireGuard** on AX1800 controls Comet + DGX access today
+
+> **Note:** Interim path routes AI traffic through Flint 2 temporarily. Target path is **direct Brume 3 #1 LAN 2 → Brume 3 #2** so the AI island never touches the house router.
+
+### Desk / workstation storage (house network)
+
+| Dock | Connected to | Notes |
+|------|--------------|-------|
+| **HyperDrive Next TB5** #1 | M1 MacBook | 2.5G Ethernet + Samsung 990 Pro NVMe in dock |
+| **HyperDrive Next TB5** #2 | M5 Max MacBook Pro (Thursday) | Ready to connect |
+| **Sonnet Echo 11 TB4** ×2 | Workstations | 1G Ethernet · 4× TB4 · SD reader |
+| **Anker Prime 14-in-1** | Workstation hub | 1G Ethernet · dual 4K HDMI/DP · smart front screen |
+
+### Key notes
+
+- **DGX Spark** is fully isolated behind the AI gateway (AX1800 interim → **Brume 3 #2** permanent)
+- **Comet** = KVM only (keyboard, mouse, screen, power) — accessed remotely via **WireGuard on the AI gateway**
+- **NAS** = direct **10 GbE** to DGX Spark (models, datasets, backups)
+- **No Tailscale** anywhere — private WireGuard on AI gateway only
+- **Mullvad on Brume 3 #1:** ⚠️ not yet decided — see open items
 
 ---
 
-## 3. Per-device deep specs
+## 3. Hardware — full port overview
 
-### 3.1 DGX Spark "Awe Engine" — ✅ all probed
-- **SoC:** NVIDIA **GB10** Grace-Blackwell. **CPU:** 20× ARM **Cortex-X925**, aarch64, 1 socket / 10 cores·socket / 1 thread·core, max **3.90 GHz**. **GPU:** NVIDIA GB10 (unified-memory; driver **580.159.03**).
-- **Memory:** **121 GiB** unified (128 GB nominal).
-- **Storage:** **Samsung MZALC4T0HBL1-00B07 NVMe**, **3.7 TB** (4.10 TB raw), 414 GB used, FW `NXHB202Q`.
-- **OS:** Ubuntu **24.04.4 LTS**, kernel **6.17.0-1018-nvidia**, aarch64.
-- **NICs / ports:**
-  - `enP7s7` — wired **1 GbE** (1000 Mb/s, full-duplex ✅), MAC `4c:bb:47:2b:b1:07`, `192.168.8.249/24`. **Primary LAN uplink to the AX6000.**
-  - `wlP9s9` — Wi-Fi, MAC `58:02:05:f5:d4:0e`, `192.168.8.114/24` (secondary).
-  - `wg0` — WireGuard, `10.1.0.5/24`, **full-tunnel** (AllowedIPs `0.0.0.0/0, ::/0`) to peer `192.168.8.1:51821` (the AX6000 hub); local listen `:40278`.
-  - `docker0` + multiple `br-*`/`veth*` — Docker bridge networks (the search-my-engine + bank-reader + nephew-family-edge stacks).
-- **Runs:** Ollama (`qwen2.5:32b`) `*:11434` ⚠️ (see §6), Nephew Control Tower `0.0.0.0:5174`, DustPan agent `0.0.0.0:8765`, plus the Dockerized search/bank/edge stacks.
+| Device | Ethernet Ports | Thunderbolt / USB-C Ports | USB Ports | Other Ports & Features |
+|--------|----------------|---------------------------|-----------|------------------------|
+| **NVIDIA DGX Spark** | 1× 10 GbE | 4× USB4 / Thunderbolt (40 Gbps) | Included in USB4 | 1× HDMI 2.1a, 2× QSFP (200 Gbps) |
+| **UGREEN DXP6800 Pro NAS** | 2× 10 GbE | 2× Thunderbolt 4 (40 Gbps) | 3× USB-A 3.2 (10 Gbps), 2× USB 2.0 | 8K HDMI, 2× M.2 NVMe, SD card reader |
+| **Brume 3 (MT5000)** ×2 | 3× 2.5 GbE (flexible WAN/LAN) | None | 1× USB 3.0 | — |
+| **Flint 2 (AX6000)** | 2× 2.5 GbE + 4× 1 GbE | None | 1× USB 3.0 | Wi-Fi 6 |
+| **Comet 5G (GL-RM10RC)** | 1× 1 GbE | 1× USB-C (KVM) | 1× USB 2.0 | HDMI In/Out (4K@30), 3.69″ touchscreen |
+| **HyperDrive Next TB5 Dock** (×2) | 1× 2.5 GbE | Multiple Thunderbolt 5 (up to 120 Gbps) | Multiple USB 3.2 (10 Gbps) | M.2 NVMe slot (Samsung 990 Pro), triple 4K |
+| **Sonnet Echo 11 TB4 Dock** (×2) | 1× 1 GbE | 4× Thunderbolt 4 | 3× USB-A (10 Gbps) | SD card reader |
+| **Anker Prime 14-in-1** | 1× 1 GbE | Multiple USB-C | Multiple 10 Gbps USB | Dual 4K HDMI/DP, smart front screen |
+| **AirPort Extreme 802.11ac** (×2) | 4× 1 GbE (1 WAN + 3 LAN) | None | None | Wi-Fi AC |
+| **GL.iNet AX1800** (interim) 🔄 | 1× GbE WAN + 4× GbE LAN | None | 1× USB 2.0 | Wi-Fi 6 · WireGuard · **retiring today** |
 
-### 3.2 MacBook Pro17,1 "ONEMAC-2" — ✅ probed
-- **Chip:** Apple **M1** (8 cores: 4 performance + 4 efficiency). **RAM:** 8 GB unified. **macOS:** 26.3.1 (build 25D771280a). Serial `FVFFFZ8EQ05D`.
-- **Ports:** 2× Thunderbolt 3 / USB4 (**40 Gb/s** host bus ✅), 1× 3.5 mm, MagSafe-era 13″ chassis. Wi-Fi 6 (802.11ax) 📄.
-- **Network:** `en0` (Wi-Fi) `192.168.8.205` ✅; WireGuard `utun8` `10.1.0.4` 📄 (tunnel was not active at probe time — confirm). Connected to the **HyperDrive TB5 dock** (NAS 10 GbE behind it).
-- **Runs:** DustPan v0.69.0 `:8765`.
+### WireGuard throughput (expected)
 
-### 3.3 ASUS AX1800 — edge / front gate — 📄 spec-sheet (RT-AX1800S-class)
-- **Wi-Fi:** AX1800 (574 Mb/s 2.4 GHz + 1201 Mb/s 5 GHz, WiFi 6). **CPU:** ~1.5 GHz tri/quad-core 📄.
-- **Ports:** **1× Gigabit WAN** (to the 5G modem), **4× Gigabit LAN** (one feeds the AX6000 WAN). No multi-gig.
-- **Role:** the *only* device on the Verizon modem; LAN `192.168.0.1/24`; will host **WG-OUTER `10.10.0.0/24:51820`** (proposed).
-
-### 3.4 ASUS AX6000 — internal router — 📄 spec-sheet (RT-AX88U-class; ASUS MAC `94:83:c4…`)
-- **Wi-Fi:** AX6000 (1148 Mb/s 2.4 GHz + 4804 Mb/s 5 GHz, WiFi 6). **CPU:** Broadcom quad-core 1.8 GHz, 1 GB RAM, 256 MB flash 📄.
-- **Ports:** **1× Gigabit WAN** (leased `192.168.0.x` from the AX1800), **8× Gigabit LAN** (DGX, NAS 2.5 GbE→1 GbE neg., AirPort Extremes), 2× USB 3.
-- **Role:** internal router `192.168.8.1/24`; **WG-INNER hub `10.1.0.0/24:51821` — LIVE** (peers: Mac `10.1.0.4`, DGX `10.1.0.5`). This is the trusted country's gateway.
-
-### 3.5 Apple AirPort Extreme A1521 (×2) — 📄 spec-sheet
-- 6th-gen (2013). **Wi-Fi:** 802.11ac 3×3 (1300 Mb/s 5 GHz + 450 Mb/s 2.4 GHz). **Ports each:** 3× Gigabit LAN, 1× Gigabit WAN, 1× USB 2.0.
-- **Topology (operator-confirmed):** both inside the inner country, **wired together**, and **one of them feeds the UGreen NAS**. Used as gigabit switches / Wi-Fi extension off the AX6000.
-
-### 3.6 UGreen DXP4800 Pro NAS — 📄 spec-sheet
-- **CPU:** Intel **Pentium Gold 8505** (5-core, up to 4.4 GHz). **RAM:** 8 GB DDR5 (→ 64 GB). **Bays:** 4× 3.5″/2.5″ SATA + 2× M.2 NVMe.
-- **Ports:** **1× 10 GbE RJ45**, **1× 2.5 GbE RJ45**, USB-C 10 Gb/s, USB-A, HDMI.
-- **Cabling (confirmed):** 10 GbE → HyperDrive TB5 dock (→ MacBook); 2.5 GbE → AX6000.
-
-### 3.7 HyperDrive Thunderbolt 5 Dock (HD2801) — 📄 spec-sheet
-- **Thunderbolt 5** (80 Gb/s bi-dir, 120 Gb/s boost). Downstream TB5 ports + 10 GbE + USB. **To the M1 MacBook it negotiates 40 Gb/s** (M1 is TB3/USB4) ✅. Bridges the NAS 10 GbE into the Mac.
-
-### 3.8 iMac 21.5″ (2017 Retina 4K) — 📄 spec-sheet / ⚠️
-- **CPU:** Intel Core i5/i7 (Kaby Lake). **GPU:** Radeon Pro 560 4 GB. **RAM:** 64 GB (⚠️ above Apple's official 32 GB max — third-party; confirm). **Ports:** 2× Thunderbolt 3, 4× USB-A 3, 1× GbE, SDXC, 3.5 mm. Reaches the LAN via an AirPort Extreme (inner) ⚠️.
-
-### 3.9 Verizon 5G Internet Gateway (6 antennas) — 📄 spec-sheet
-- 5G (C-band/mmWave) + 4G fallback; 6 internal antennas. Typically 2× 2.5 GbE/GbE LAN out. **Carrier-grade NAT (CGNAT)** — no port-forwardable inbound from the internet. Public-facing IP observed: `97.164.202.176`.
+| Gateway | Link speed to Comet/DGX path | WireGuard notes |
+|---------|------------------------------|-----------------|
+| AX1800 (interim) | 1 GbE max | WireGuard active today |
+| **Brume 3 #2** (target) | 2.5 GbE to Comet; 10 GbE DGX↔NAS bypasses WG | Obfuscation enabled; Comet access via WG only |
 
 ---
 
-## 4. Physical pipeline (cabling, top → bottom; verified by traceroute)
+## 4. Hardware roster (one line each)
+
+| # | Device | Role | Key spec | Notes |
+|---|--------|------|----------|-------|
+| 1 | Verizon 5G Internet Gateway | WAN uplink | 5G mmWave/C-band, CGNAT 📄 | Carrier → public IP; no inbound port-forward |
+| 2 | **Brume 3 #1** | **Main gateway** | 2.5G WAN + 2× 2.5G LAN 📄 | Splits house vs AI island |
+| 3 | **Brume 3 #2** | **AI gateway** (target) | 2.5G WAN + LAN, WireGuard + obfuscation 📄 | Replaces AX1800 on AI leg 🔄 |
+| 4 | GL.iNet Flint 2 (AX6000) | **House router** | 2× 2.5G + 4× 1G + Wi-Fi 6 📄 | Off Brume 3 #1 LAN 1 |
+| 5 | GL.iNet AX1800 (Slate AX) | **AI gateway (interim)** | 1 GbE WAN/LAN, WireGuard 📄 | Retiring today 🔄 |
+| 6 | Apple AirPort Extreme A1521 ×2 | House AP / switch extension | 4× 1 GbE each (1 WAN + 3 LAN) 📄 | Off Flint 2 1G ports |
+| 7 | **Comet 5G (GL-RM10RC)** | **KVM appliance** | 1G Eth + USB-C KVM + touchscreen 📄 | Remote console to DGX only |
+| 8 | **DGX Spark "Awe Engine"** | AI + control plane | GB10, 128 GB unified, 10GbE + TB 📄 | Isolated AI subnet |
+| 9 | **UGREEN DXP6800 Pro** | NAS | 10GbE + additional ports 📄 | Port #1 ↔ DGX Spark 10GbE direct |
+| 10 | HyperDrive Next TB5 Dock ×2 | TB5 bridge + 2.5G Eth + NVMe | TB5 up to 120 Gbps 📄 | M1 live; M5 Max Thursday |
+| 11 | Sonnet Echo 11 TB4 Dock ×2 | TB4 hub + 1G Eth | 4× TB4 📄 | SD reader · workstations |
+| 12 | Anker Prime 14-in-1 | USB-C hub + 1G Eth | Multi USB-C 📄 | Dual 4K · smart front screen |
+| 13 | MacBook Pro M1 "ONEMAC-2" | Operator workstation | M1, macOS ✅ | House network + HyperDrive dock |
+| 14 | MacBook Pro M5 Max | Creative workstation | 128 GB / 4 TB 📄 | Arriving Thursday |
+| 15 | clinic-vps (GoDaddy) | Off-site edge | `72.167.151.251` | Public Control Tower + GitLab |
+
+---
+
+## 5. Physical pipeline (cabling, top → bottom)
 
 ```
-Verizon 5G Internet Gateway (6 antennas)            public 97.164.202.176 (CGNAT)
-      │ eth
+Verizon 5G Internet Gateway                         (CGNAT — no inbound)
+      │ 2.5G
       ▼
-ASUS AX1800  ── EDGE / FRONT GATE ──  192.168.0.1   (traceroute hop 2; only box on the modem)
-      │ eth   (AX6000 WAN takes a 192.168.0.x lease)
-      ▼
-ASUS AX6000  ── INTERNAL ──  192.168.8.1            (traceroute hop 1; default gateway of inner hosts)
-      ├── eth ───────── DGX Spark / Awe Engine (enP7s7 192.168.8.249)   ← Control Tower + LLM
-      ├── eth ───────── AirPort Extreme #1 ─┬─ eth ─ AirPort Extreme #2
-      │                                     └─ eth ─ UGreen DXP4800 NAS (also 2.5 GbE → AX6000)
-      └── 2.5 GbE ───── UGreen NAS ──10 GbE── HyperDrive TB5 ──TB(40Gb/s)── MacBook M1 (192.168.8.205)
+Brume 3 #1  ── MAIN GATEWAY ──  splits two 2.5G LAN legs
+      │
+      ├── 2.5G LAN ──► Flint 2 (AX6000) WAN          HOUSE NETWORK
+      │                      ├── 1G ── AirPort Extreme #1 ──┐
+      │                      ├── 1G ── AirPort Extreme #2   │ laptops · phones · IoT
+      │                      └── 1G ── household devices ◄──┘
+      │
+      └── 2.5G LAN 2 ──► Brume 3 #2 WAN (target)     ISOLATED AI NETWORK
+                 🔄 interim today: Flint 2 1G ──► AX1800 WAN ──► Comet
+                              │
+                              ├── Comet GL-RM10RC Eth (1G)
+                              │       └── USB-C KVM ──► DGX Spark (console)
+                              │
+                              └── DGX Spark 10GbE ◄────► UGREEN DXP6800 Pro (port #1)
+
+House desk: HyperDrive TB5 (×2) · Sonnet Echo 11 TB4 (×2) · Anker Prime 14-in-1
 ```
 
-**Double-NAT (verified):** inner `192.168.8.0/24` sits behind outer `192.168.0.0/24` behind the 5G carrier → public `97.164.202.176`. 5G is CGNAT → **no inbound port-forward from the internet** (the reason an off-site host can no longer dial home directly).
+**Segmentation:** house LAN and AI island are **separate L3 networks**. Target join point is **Brume 3 #1 only** (not Flint 2). DGX Spark is **not** on the household LAN.
 
 ---
 
-## 5. Logical network & address plan
+## 6. Logical network & address plan
 
 | Plane | Subnet / value | Notes |
 |-------|----------------|-------|
-| Outer LAN | `192.168.0.0/24` (gw `.1` = AX1800) | edge; only the AX6000 WAN + AX1800 Wi-Fi clients |
-| Inner LAN | `192.168.8.0/24` (gw `.1` = AX6000) | trusted; DGX `.249`/`.114`, Mac `.205`, NAS, iMac, AirPorts |
-| WG-INNER (live) | `10.1.0.0/24` `:51821` hub `.1`=AX6000 | peers Mac `.4`, DGX `.5` (full-tunnel) ✅ |
-| WG-OUTER (proposed) | `10.10.0.0/24` `:51820` on AX1800 | not built |
-| Border transit (proposed) | `10.255.255.0/30` (`.1`⇄`.2`) | site-to-site AX1800⇄AX6000 |
-| Public | `97.164.202.176` (Verizon, CGNAT) | no inbound |
-| Legacy | `10.0.0.0/24` | **dead** (old mesh) |
+| Carrier WAN | Verizon CGNAT | No inbound port-forward from the internet |
+| House LAN | `192.168.8.0/24` (gw `.1` = Flint 2) ✅(historical) ⚠️ confirm | Family devices, Macs, AirPorts, desk docks |
+| AI island LAN | ⚠️ **TBD** — document after Brume 3 #2 install | DGX Spark, Comet, NAS — isolated from house |
+| WireGuard (AI gateway) | AX1800 interim → Brume 3 #2 🔄 | Obfuscation on Brume 3 #2; Comet access via WG only |
+| DGX ↔ NAS | Layer-2 10 GbE direct | 10 Gbps — bypasses WireGuard (local link) |
+| Mullvad (Brume 3 #1) | ⚠️ **TBD** — operator decision pending | See open items |
+| Tailscale | **Not used** | Retired from this topology |
 
 ---
 
-## 6. Software / services map & security findings
+## 7. Per-device deep specs (still-valid probes)
 
-- **Nephew Control Tower** — DGX `:5174` (single pane). Agent registry: `dustpan` (DGX-local), `dustpan-spark` (DGX). ⚠️ `dustpan-clinic 10.0.0.5` stale → fix to current.
-- **DustPan agents** — MacBook v0.69.0 `:8765`, DGX v0.67.0 `:8765` (token-gated). clinic offline.
-- **Ollama** — DGX `*:11434`, `qwen2.5:32b`. 🔴 **Security finding (verified):** listening on all interfaces (`*:11434`), unauthenticated, LAN-wide. Sealing it into the inner country (bind to the inner address + customs firewall) closes this.
-- **WireGuard** — AX6000 inner mesh `10.1.0.0/24` live; Mac full-tunnel via `utun8`. Old `10.0.0.0/24` dead.
+### 7.1 DGX Spark "Awe Engine" — partial ✅ (pre-isolation probes)
 
----
+- **SoC:** NVIDIA **GB10** Grace-Blackwell. **Memory:** **121 GiB** unified (128 GB nominal).
+- **Storage:** Samsung NVMe **~3.7 TB** usable.
+- **OS:** Ubuntu **24.04 LTS**, aarch64.
+- **NICs / ports (topology today):**
+  - **10GbE** → UGREEN DXP6800 Pro port #1 (direct)
+  - **Thunderbolt** ← Comet KVM (console only)
+  - **Ethernet** ← AI gateway LAN via Comet chain (interim 1 GbE)
+- **Runs:** Ollama, Nephew Control Tower, DustPan agent, Docker stacks (search-my-engine, family-edge).
 
-## 7. The two-country WireGuard border (design)
+### 7.2 MacBook Pro M1 "ONEMAC-2" — ✅ probed (house network)
 
-```
-┌─ OUTER COUNTRY (edge / international) ─┐      ┌─ INNER COUNTRY (trusted / Awe Engine) ─┐
-│ AX1800  LAN 192.168.0.0/24            │      │ AX6000  LAN 192.168.8.0/24             │
-│ WG-OUTER 10.10.0.0/24 :51820          │      │ WG-INNER 10.1.0.0/24 :51821 (LIVE)     │
-│ faces the 5G modem                    │      │ DGX/Awe Engine, iMac, Mac, NAS, AirPorts│
-└───────────────┬───────────────────────┘      └───────────────┬────────────────────────┘
-                └────────  ░ BORDER TUNNEL ░  ───────────────────┘
-                  site-to-site WG over the eth link · transit 10.255.255.0/30
-                  CUSTOMS = firewall allowlist each side:
-                    Outer→Inner: DENY by default + vetted allowlist (the checkpoint)
-                    Inner→Outer: controlled egress only
-```
+- **Chip:** Apple **M1**. Connected via **HyperDrive TB5 dock** (Samsung 990 Pro NVMe in dock).
+- **Network:** House Wi-Fi / Flint 2 LAN. DustPan agent locally.
 
-- **Border** = a site-to-site WG tunnel peering **AX1800 ⇄ AX6000 over the local eth link** (CGNAT-immune). Each peer lists the other country's subnets in `AllowedIPs`. This — not flat NAT routing — becomes the only L3 path between countries.
-- **Customs** = per-side firewall. Outer→Inner deny-by-default with a narrow allowlist (e.g. an authenticated client reaching the Awe Engine API). Inner→Outer controlled egress (model pulls, updates) only.
-- **Why it survives CGNAT:** the border rides the internal ethernet link, so it works today; only *internet-inbound* to the outer post is blocked (a cloud relay handles remote access later — out of scope for v1).
-- **Firewall note:** ASUS stock firewall is coarse; **Merlin firmware** (or a small Linux gateway) gives real per-flow iptables "customs." Recommended on whichever router enforces the strict checkpoint.
+### 7.3 UGREEN DXP6800 Pro NAS — 📄 spec-sheet
 
----
+- **Ports:** **10GbE port #1** ↔ DGX Spark direct; additional ports per SKU 📄
+- **Role:** Shared storage for models, datasets, backups on the AI island
 
-## 8. Current status
+### 7.4 Comet 5G (GL-RM10RC) — 📄 spec-sheet
 
-| Up ✅ | Down 🔴 / ⚠️ |
-|------|--------------|
-| AX6000 inner WG mesh (`10.1.0.1` reachable) | clinic-vps DustPan service offline |
-| DGX agent + Control Tower (`:5174`) | Internet-inbound WG — blocked by 5G CGNAT |
-| MacBook agent; Mac WG tunnel | Ollama `:11434` open LAN-wide (to seal) |
-| Internal border path (eth link) ready | Border tunnel — not built yet (the plan) |
-| — | **DGX off IPv4 on the LAN (2026-06-01)** — `192.168.8.249`/`.114` unreachable over IPv4 from Mac+VPS (even `:22`); **IPv6 works** (`fd4b:36c7:d004::352`). App/Caddy/DGX healthy — a LAN-layer IPv4 fault. Workaround: Mac `/etc/hosts`→DGX IPv6. Fix: wired/switch/router IPv4. |
+- **Role:** KVM-only appliance — keyboard, mouse, display, power for DGX Spark over USB-C/Thunderbolt
+- **Network:** 1 GbE to AI gateway (2.5 GbE when Brume 3 #2 live)
 
 ---
 
-## 9. Open items / confirmations
-1. iMac RAM 64 GB exceeds Apple's official 21.5″ 2017 max (32 GB) — confirm the module config. ⚠️
-2. Mac `en0` is `192.168.8.205` (roster said `.200`) — DHCP drift; pin a reservation if a stable address is wanted.
-3. Exact ASUS model numbers (AX1800/AX6000) inferred from class + MAC — confirm for the port matrices.
-4. Inner router `192.168.8.1` answers as **`console.gl-inet.com`** (despite the ASUS MAC `94:83:c4…`) — likely **GL.iNet / OpenWrt**, good for the border (real customs). Confirm firmware/SKU. ✅(probed)
-4. Mac `utun8`/WG was not active at probe — confirm the inner-WG peer is meant to be always-up.
+## 8. Software / services map & security
 
-*Probe provenance: DGX via SSH (`lscpu`, `free`, `lsblk`, `nvme list`, `nvidia-smi`, `ip`, `ethtool`, `wg`, `ss`); Mac via `system_profiler`, `ifconfig`, `networksetup`. Router/NAS/dock/iMac/modem from manufacturer datasheets pending direct admin access.*
+- **Nephew Control Tower** — DGX `:5174` (single pane on the Spark).
+- **DustPan agents** — MacBook + DGX disk cockpit agents.
+- **Ollama** — DGX local inference. 🔴 Bind to AI-island addresses only; never expose on house LAN.
+- **WireGuard** — AI gateway only (AX1800 interim → Brume 3 #2 with obfuscation). Controls Comet + DGX access.
+- **Tailscale** — **not deployed** in this topology.
+
+---
+
+## 9. Current status (2026-06-05)
+
+| Up ✅ | In progress 🔄 / ⚠️ |
+|------|---------------------|
+| Brume 3 #1 main gateway live (2.5G split) | Brume 3 #2 arriving — replaces AX1800 on AI leg |
+| House network on Flint 2 + AirPort Extremes | WireGuard obfuscation flips to Brume 3 #2 at cutover |
+| DGX ↔ NAS direct 10GbE | Confirm AI-island subnet + DHCP after Brume 3 #2 install |
+| Comet KVM path to DGX Spark | Interim: Flint 2 → AX1800 → Comet at 1G |
+| HyperDrive dock on M1 MacBook | Sonnet Echo ×2 + Anker Prime on desk |
+| — | Brume 3 #2 Router mode + AI subnet CIDR — confirm at install |
+| — | Mullvad on Brume 3 #1 — operator decision pending |
+
+---
+
+## 10. Open items / confirmations
+
+1. **Brume 3 #2 cutover** — cable Brume 3 #1 LAN 2 → Brume 3 #2 WAN; retire AX1800 + interim Flint 2 feed; migrate WireGuard + obfuscation.
+2. **Brume 3 #2 mode** — confirm Router mode and document AI-island subnet (CIDR + gateway IP).
+3. **House vs AI IP ranges** — pin final CIDRs for both networks in this doc once configured.
+4. **Mullvad on Brume 3 #1** — decide yes/no for house-leg VPN egress.
+5. **MacBook Pro M5 Max** — second HyperDrive TB5 dock + house-network onboarding (Thursday).
+6. **Retire stale docs** — seed-to-tree runbooks describing DGX on Flint 2 LAN are superseded by this file.
+
+*Topology source: operator-confirmed summary 2026-06-05. Prior probe data (DGX/Mac specs) retained where still accurate.*
