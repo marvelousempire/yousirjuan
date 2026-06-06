@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# Trust Spine secret guard — last line before a secret leaves the machine
+# (Plan 0151, secret-hygiene rule). Runs gitleaks over the commits being pushed.
+# Honors the stack's no-GitHub-Actions rule: scanning is LOCAL, not CI.
+# No-op (with a hint) when gitleaks is not installed — the pre-commit guard
+# still covers filename patterns.
+set -uo pipefail
+
+if ! command -v gitleaks >/dev/null 2>&1; then
+  echo "• pre-push: gitleaks not installed — skipping deep scan (brew install gitleaks)." >&2
+  exit 0
+fi
+
+# Scan the new commits on each ref being pushed. stdin: <local ref> <local sha> <remote ref> <remote sha>
+fail=0
+while read -r local_ref local_sha remote_ref remote_sha; do
+  [ "$local_sha" = "0000000000000000000000000000000000000000" ] && continue   # branch deletion
+  if [ "$remote_sha" = "0000000000000000000000000000000000000000" ]; then
+    range="$local_sha"                          # new branch — scan all reachable new commits
+    log_opts="$local_sha --not --remotes"
+  else
+    range="${remote_sha}..${local_sha}"
+    log_opts="$range"
+  fi
+  if ! gitleaks detect --no-banner --redact --log-opts="$log_opts" 2>/dev/null; then
+    echo "🛑 pre-push: gitleaks found a secret in $range — push refused." >&2
+    echo "   Inspect, scrub history if needed, or override a false positive with: git push --no-verify" >&2
+    fail=1
+  fi
+done
+
+exit $fail
