@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# Trust Spine secret guard (Plan 0151). Blocks committing real env files, keys,
+# certs, or WireGuard configs. These are gitignored, so they only reach the
+# index via `git add -f` — this catches that bypass. Runs gitleaks if present.
+set -euo pipefail
+staged=$(git diff --cached --name-only --diff-filter=ACM)
+bad=""
+while IFS= read -r f; do
+  [ -z "$f" ] && continue
+  case "$f" in
+    *.example|*.sample) continue ;;
+    *.env|*.key|*.pem|*.crt|*.p12|*.pfx|*-privkey*|ca.key) bad="$bad $f" ;;
+    *.env.*) bad="$bad $f" ;;
+    wg*.conf|wireguard*.conf|*/wg*.conf) bad="$bad $f" ;;
+  esac
+done <<< "$staged"
+if [ -n "$bad" ]; then
+  echo "🛑 pre-commit: refusing to commit secret-shaped files:$bad" >&2
+  echo "   If this is a deliberately-public artifact, override with: git commit --no-verify" >&2
+  exit 1
+fi
+if command -v gitleaks >/dev/null 2>&1; then
+  gitleaks protect --staged --redact --no-banner || { echo "🛑 gitleaks found a secret in staged content." >&2; exit 1; }
+fi
+exit 0

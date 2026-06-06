@@ -72,3 +72,22 @@ ledger/LEDGER-0004-contracts-and-prudence-rollout/artifacts/runs/
 # LEDGER-0032 — operator-specific fleet SSH targets (hostnames, users, real LAN IPs)
 ledger/LEDGER-0032-claude-ssh-user/artifacts/operator-hosts.env
 generated/
+
+# Secret hygiene (secret-hygiene rule) — no secret reaches git.
+.env
+.env.*
+*.env
+!*.env.example
+!.env*.example
+!.env*.sample
+*.key
+*.pem
+*.crt
+*.p12
+*.pfx
+id_rsa*
+id_ed25519*
+wg*.conf
+wireguard*.conf
+*-privkey*
+ca.key
