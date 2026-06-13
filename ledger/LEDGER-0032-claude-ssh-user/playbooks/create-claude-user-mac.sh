@@ -18,8 +18,13 @@ fi
 [[ -n "${PUBKEY:-}" ]] || die "Set PUBKEY or PUBKEY_FILE to your ssh-ed25519 public key (one line)."
 
 if ! id "$USER_NAME" &>/dev/null; then
-  PW=$(openssl rand -base64 24)
-  echo "Creating user $USER_NAME (password stored only in macOS Keychain via sysadminctl)…"
+  if [[ -n "${PASSWORD:-}" ]]; then
+    PW="$PASSWORD"
+    echo "Creating user $USER_NAME (using provided PASSWORD)…"
+  else
+    PW=$(openssl rand -base64 24)
+    echo "Creating user $USER_NAME (random password stored only in macOS Keychain via sysadminctl)…"
+  fi
   if [[ "$GIVE_ADMIN" == 1 ]]; then
     sudo sysadminctl -addUser "$USER_NAME" -fullName "Claude Agent" -shell /bin/zsh -password "$PW" -admin
   else

@@ -10,6 +10,32 @@ Eastern time stamped to the second using `TZ=America/New_York date '+%Y-%m-%d %H
 
 ---
 
+## [0.7.2] — 2026-06-09 14:00:00 Eastern · *§7 microscopic operator detail (OpenWrt, Synapse, Matrix bot, Protectli)*
+
+### Added
+- `docs/home-network-full-architecture-report.md` **§7** — LuCI VLAN paths, uci CLI, fw4/nft zone
+  rules, Wi-Fi SSID binding, Synapse + Element + AppService snippets, Docker Compose skeleton,
+  Protectli migration checklist. §2 VLAN table aligned to live `.10` Trusted + `.11` IoT.
+- Cross-link to `marvelousempire/nephew/infra/README.md` (Plan 0162 DGX IaC).
+
+> **What to look for:** In §7.1, export a GL.iNet backup before VLAN lab. After §7.2, run
+> `glmt6000-firewall-persist.sh` so VPS→DGX forwarding survives fw4. Matrix snippets use
+> mesh-only `matrix.jailynmarvin.com` — no public A record. DGX fleet IaC: `make infra-verify-dgx` in nephew repo.
+
+## [0.7.1] — 2026-06-09 12:00:00 Eastern · *Full home-network architecture report (MT6000, Matrix, Protectli)*
+
+### Added
+- `docs/home-network-full-architecture-report.md` — operator-confirmed microscopic briefing for
+  agents: current MT6000 + Brume dumb-switch topology, immediate VLAN/firewall plan, Matrix +
+  Element on UGREEN NAS, DGX-backed Matrix AppService bot, Protectli VP6670 future state, privacy
+  goals. Portable copy in `marvelousempire/nephew/docs/`.
+- Supersession banner on `docs/hardware/network-architecture.md`; cross-link from
+  `docs/whitepaper-hardware-network.md`.
+
+> **What to look for:** Open `docs/home-network-full-architecture-report.md` and confirm §1 matches
+> live cabling (Verizon passthrough → MT6000 WAN; Brume 3 as switch). Compare §2 VLAN targets to
+> the flat `192.168.10.0/24` LAN before applying OpenWrt changes.
+
 ## [0.7.0] — 2026-06-02 16:55:50 Eastern · *Plan 0004 Phase 1 — domain generator (TLD is one variable)*
 
 ### Added

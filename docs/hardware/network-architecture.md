@@ -1,5 +1,11 @@
 # Network Architecture — Segmented + Secure
 
+> **Superseded for strategic planning** by
+> [`../home-network-full-architecture-report.md`](../home-network-full-architecture-report.md)
+> (June 2026 operator briefing: MT6000-as-router, Brume dumb switch, Matrix on NAS,
+> Protectli future state). **Keep this file** for historical WG peer tables and IPv6
+> dual-interface notes until those sections are merged into the full report.
+
 ## Hardware Inventory
 
 | Device | Model | Role |
@@ -164,9 +170,9 @@ Without this, Vite blocks requests from non-localhost hostnames.
 | Location | How to access Spark CT | Protocol |
 |---|---|---|
 | At home (LAN) | `http://nephew-spark:5174` | IPv6 direct |
-| At home (SSH) | `ssh nephew-nivram` | IPv6 (auto) |
+| At home (SSH) | `ssh nephew-spark` | IPv6 or LAN |
 | Away (WireGuard on) | `http://nephew-spark:5174` | IPv6 via VPN |
-| Away (no VPN) | SSH tunnel: `ssh -L 5174:localhost:5174 nephew-nivram` | IPv6 SSH |
+| Away (no VPN) | SSH tunnel: `ssh -L 5174:localhost:5174 nephew-spark` | IPv6 SSH |
 
 ### What we tried that didn't work (for the record)
 - **UFW on the Spark** — enabled with port allows, didn't help (IPv4 routing was the issue, not firewall)

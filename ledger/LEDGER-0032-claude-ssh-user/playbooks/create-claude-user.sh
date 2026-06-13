@@ -8,12 +8,16 @@
 #   PUBKEY_FILE=              (read one line from file)
 #   NOPASSWD_SUDO=1|0         (default 1 on Debian/Ubuntu, 0 on OpenWrt)
 #   PLATFORM=auto|linux|openwrt
+#   PASSWORD=                 (optional: if set, sets the login password via chpasswd on Linux)
+#   SSH_ALLOW=1               (default 1: append to sshd AllowUsers if the file exists)
 
 set -euo pipefail
 
 USER_NAME="${USER_NAME:-claude}"
 NOPASSWD_SUDO="${NOPASSWD_SUDO:-}"
 PLATFORM="${PLATFORM:-auto}"
+PASSWORD="${PASSWORD:-}"
+SSH_ALLOW="${SSH_ALLOW:-1}"
 
 die() { printf '✗ %s\n' "$*" >&2; exit 1; }
 
@@ -55,6 +59,12 @@ if [[ "$PLATFORM" == linux ]] && command -v useradd >/dev/null 2>&1; then
   fi
   usermod -U "$USER_NAME" 2>/dev/null || true
   usermod -s /bin/bash "$USER_NAME" 2>/dev/null || true
+
+  # Set password if provided (Linux)
+  if [[ -n "$PASSWORD" ]]; then
+    step "Setting password for $USER_NAME"
+    echo "$USER_NAME:$PASSWORD" | chpasswd
+  fi
 else
   step "OpenWrt / manual passwd path ($USER_NAME)"
   if ! id "$USER_NAME" >/dev/null 2>&1; then
@@ -66,6 +76,11 @@ else
     fi
   fi
   mkdir -p "/home/${USER_NAME}"
+
+  # Set password if provided (basic systems)
+  if [[ -n "$PASSWORD" && -x /usr/sbin/chpasswd ]]; then
+    echo "$USER_NAME:$PASSWORD" | chpasswd
+  fi
 fi
 
 # --- passwordless sudo (optional) ---
@@ -93,16 +108,18 @@ if [[ "$PLATFORM" == openwrt ]] && [[ -f /etc/config/dropbear ]]; then
   fi
 fi
 
-# sshd AllowUsers — append claude if a drop-in lists only the legacy admin user
-ALLOW_FILE=/etc/ssh/sshd_config.d/60-allowusers.conf
-if [[ -f "$ALLOW_FILE" ]] && grep -q '^AllowUsers ' "$ALLOW_FILE"; then
-  if ! grep -qw "$USER_NAME" "$ALLOW_FILE"; then
-    step "sshd AllowUsers: append $USER_NAME in $ALLOW_FILE"
-    sed -i "s/^AllowUsers /AllowUsers $USER_NAME /" "$ALLOW_FILE" || true
+# sshd AllowUsers — append user if a drop-in lists only the legacy admin user (ACL)
+if [[ "$SSH_ALLOW" == 1 ]]; then
+  ALLOW_FILE=/etc/ssh/sshd_config.d/60-allowusers.conf
+  if [[ -f "$ALLOW_FILE" ]] && grep -q '^AllowUsers ' "$ALLOW_FILE"; then
     if ! grep -qw "$USER_NAME" "$ALLOW_FILE"; then
-      echo "AllowUsers $USER_NAME" >>"$ALLOW_FILE"
+      step "sshd AllowUsers: append $USER_NAME in $ALLOW_FILE (ACL)"
+      sed -i "s/^AllowUsers /AllowUsers $USER_NAME /" "$ALLOW_FILE" || true
+      if ! grep -qw "$USER_NAME" "$ALLOW_FILE"; then
+        echo "AllowUsers $USER_NAME" >>"$ALLOW_FILE"
+      fi
+      systemctl reload ssh 2>/dev/null || service ssh reload 2>/dev/null || true
     fi
-    systemctl reload ssh 2>/dev/null || service ssh reload 2>/dev/null || true
   fi
 fi
 

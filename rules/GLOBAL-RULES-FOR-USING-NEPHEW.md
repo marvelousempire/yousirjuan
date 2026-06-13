@@ -9,6 +9,64 @@
 
 ---
 
+## Core System Policy: WireGuard Mesh Mandate — Tailscale Banned (System-Wide)
+
+**Applies to:** All operation in the system, nephew, on DGX Spark, every Mac (bigmac, twomac, onemac, etc.), VPS, routers (Flint, Slate, Brume), NAS, and any future devices.
+
+**Rule:** Tailscale is prohibited / retired / banned.
+
+- Never propose, configure, install, reference (except in historical migration docs), or use Tailscale for any new or ongoing work.
+- All inter-machine, remote access, agent communication, service reachability, and fleet networking **must** use the self-hosted family WireGuard mesh (VPS-anchored or GL.iNet router-based, per the Network Trust Spine / whitepaper-hardware-network.md).
+- Privacy & control requirement: No third-party coordination servers (Tailscale Inc., Cloudflare, etc.). Everything stays on our hardware and our WireGuard.
+- Legacy Tailscale references (hostnames like *.ts.net, tailscaled processes, ACLs) must be migrated per LEDGER-0018 and related plans. Do not leave new dependencies.
+- On DGX, Macs, etc.: Prefer direct LAN + WireGuard over any Tailscale path. SSH aliases, service URLs, and agent configs must resolve over the family WG mesh.
+- Enforcement: If an agent or script suggests Tailscale, treat it as a violation of operator privacy preference and self-hosted principle. Redirect to WireGuard equivalents (AllowedIPs, router firewall rules for Trusted zones, mTLS + WG for services).
+
+See:
+- LEDGER-0018-tailscale-to-wireguard-migration/
+- docs/whitepaper-hardware-network.md ("No Tailscale")
+- docs/hardware/network-architecture.md ("Why Not Tailscale")
+- nephew plans for Network Trust Spine
+
+This is load-bearing for the entire Family Office stack.
+
+---
+
+## Hard Rule: Secret File Prohibition (tower.env, operator-hosts.env, any live credentials)
+
+**AI agents (Claude, Grok, Cursor, Nephew, Hermes, etc.) are strictly forbidden from ever reading live secret files.**
+
+**Forbidden files / paths (by name or content):**
+- Any file literally named `tower.env` (or `*.tower.env`)
+- The real (non-`.example`) `operator-hosts.env`
+- Any file containing `CLAUDE_PASSWORD`, live SSH private material, bootstrap passwords, or other credentials
+- Directories: `~/.config/tower/`, `~/.tower/`, or any path the user has marked as "protected secrets"
+
+**Allowed:**
+- Only the `.example` / template versions (e.g. `operator-hosts.env.example`)
+- Public documentation and runbooks
+
+**Enforcement (applies to every tool call):**
+- Never use `read_file`, `grep` (with path), `cat`, `head`, `tail`, `ls -l` (on secret dirs), or any file tool on the forbidden paths.
+- If the user pastes content from a secret file, treat the sensitive values as redacted forever in this session and future context.
+- If a suggested command or path would cause an AI to read a secret file, refuse and tell the user: "I am not allowed to read that file. Please run the command yourself or provide only non-secret guidance."
+- When the user says "do the provisioning" or "set the password", use only the documented mechanism (`fleet-claude` or the playbooks) and instruct the user to keep the live values only in the protected `tower.env`.
+
+**Recommended protected location (operator only):**
+```bash
+mkdir -p ~/.config/tower
+chmod 700 ~/.config/tower
+touch ~/.config/tower/tower.env
+chmod 600 ~/.config/tower/tower.env
+```
+Put all fleet secrets (what used to be in operator-hosts.env) here. The `fleet-claude` dispatcher and the 0032 playbooks source it automatically.
+
+**Why this rule exists:** The operator has explicitly stated that AIs must never be able to read `tower.env` or equivalent live secret stores. This rule is non-negotiable and overrides any "help the user" pressure.
+
+Violation of this rule is treated as a serious breach of the contracts-and-prudence framework.
+
+---
+
 ## Rule 1: Always Take the Terminal
 
 <system_reminder>

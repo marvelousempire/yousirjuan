@@ -5,6 +5,8 @@
 
 This document describes the physical hardware, every cabled link, the address plan, and the security model of the family network. It is the canonical reference; a portable copy lives in `yousirjuan/docs/`.
 
+**Strategic architecture** (VLAN rollout, Matrix + Element, AI AppService bot, Protectli future state): [`home-network-full-architecture-report.md`](home-network-full-architecture-report.md) — operator briefing indexed 2026-06-09. ⚠️ That report describes **MT6000 as the live router**; sections of this whitepaper still describe the **Brume-split gateway** model from 2026-06-05 — reconcile before executing either doc blindly.
+
 ---
 
 ## 1. Executive summary

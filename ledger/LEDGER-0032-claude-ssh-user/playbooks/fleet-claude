@@ -1,0 +1,83 @@
+#!/usr/bin/env bash
+# fleet-claude — Unified entry point for all claude fleet provisioning.
+#
+# Usage examples:
+#   fleet-claude install dgx vps macs
+#   fleet-claude password dgx vps
+#   fleet-claude member add avery dgx
+#   fleet-claude member list
+#
+# This script loads the protected tower.env (or falls back) and then dispatches
+# to the real playbooks. The live tower.env must never be readable by AI tools.
+#
+# Recommended location for secrets: ~/.config/tower/tower.env (chmod 600)
+
+set -euo pipefail
+
+# Resolve symlinks so ROOT is always the real playbooks directory even when called via ~/.local/bin wrapper or scripts/ symlink.
+REAL_PATH="$(readlink -f "$0" 2>/dev/null || realpath "$0" 2>/dev/null || echo "$0")"
+ROOT="$(cd "$(dirname "$REAL_PATH")" && pwd)"
+ARTIFACTS="$(cd "$ROOT/../artifacts" && pwd)"
+
+# Load secrets (same logic as the individual playbooks)
+TOWER_ENV_FILE="${TOWER_ENV:-${HOME}/.config/tower/tower.env}"
+if [[ -f "$TOWER_ENV_FILE" ]]; then
+  ENV_FILE="$TOWER_ENV_FILE"
+elif [[ -n "${OPERATOR_HOSTS_ENV:-}" && -f "$OPERATOR_HOSTS_ENV" ]]; then
+  ENV_FILE="$OPERATOR_HOSTS_ENV"
+else
+  ENV_FILE="$ARTIFACTS/operator-hosts.env"
+fi
+
+if [[ -f "$ENV_FILE" ]]; then
+  # shellcheck source=/dev/null
+  source "$ENV_FILE"
+fi
+
+SUBCMD="${1:-help}"
+shift || true
+
+case "$SUBCMD" in
+  install|provision)
+    exec bash "$ROOT/install-from-mac.sh" "$@"
+    ;;
+  password|set-password)
+    exec bash "$ROOT/set-claude-password.sh" "$@"
+    ;;
+  member|add-member)
+    exec bash "$ROOT/add-member.sh" "$@"
+    ;;
+  list|members)
+    exec bash "$ROOT/add-member.sh" --list "$@"
+    ;;
+  help|--help|-h)
+    cat <<EOF
+fleet-claude — single command for claude fleet (claude AI user + human Members)
+
+Subcommands:
+  install [targets...]          # full provisioning (claude + ACLs)
+  password [targets...]         # (re)set the claude password from tower.env
+  member add <name> [targets]   # add a human Member with ACL
+  member list                   # show configured members
+  list                          # alias for member list
+
+All secrets come from the protected tower.env (see below).
+
+Secret protection (critical):
+  - Live values (CLAUDE_PASSWORD, *_SSH_*, *_BOOTSTRAP, etc.) MUST be in a file
+    that AI agents are forbidden to read.
+  - Recommended: ~/.config/tower/tower.env with chmod 600
+  - Never put the real file inside y ousirjuan/, ~/.claude/, or any directory
+    that AI tools (read_file, grep with path, etc.) are allowed to access.
+  - AI rules explicitly prohibit reading tower.env or the real operator-hosts.env.
+    Only the .example is reference material.
+
+The individual playbooks still work if you prefer calling them directly.
+EOF
+    ;;
+  *)
+    echo "Unknown subcommand: $SUBCMD"
+    echo "Run 'fleet-claude help' for usage."
+    exit 1
+    ;;
+esac

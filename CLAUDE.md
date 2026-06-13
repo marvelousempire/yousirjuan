@@ -14,6 +14,10 @@ Full rule with pre-action checklist: [`.claude/rules/contracts-and-prudence.md`]
 
 The chain that matters: careless ≡ stupid; stupid is the opposite of good; we are not stupid here. **Therefore: every commitment is a contract, prudence is required before action, and any non-trivial action that can't be defended as careful doesn't get taken.**
 
+**Networking rule (system-wide, including nephew on DGX + all Macs):** Tailscale is banned. Use only the self-hosted family WireGuard mesh. See `rules/GLOBAL-RULES-FOR-USING-NEPHEW.md` (Core System Policy: WireGuard Mesh Mandate) and LEDGER-0018 for the migration + ban rationale. No third-party coordination servers. All fleet access (SSH, services, agents) must resolve over WG / LAN Trusted paths.
+
+**Secret file rule (hard):** Never read `tower.env` (any location), the real `operator-hosts.env`, or any file containing live passwords/credentials. Only `.example` versions and public docs are allowed. See the full prohibition in `rules/GLOBAL-RULES-FOR-USING-NEPHEW.md`. The unified command `scripts/fleet-claude` handles sourcing the protected file for you.
+
 ---
 
 ## What this repo is

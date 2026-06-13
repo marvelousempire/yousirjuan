@@ -18,7 +18,18 @@ CREATE="$ROOT/create-claude-user.sh"
 MAC_CREATE="$ROOT/create-claude-user-mac.sh"
 MAC_REMOTE="$ROOT/provision-macos-remote.sh"
 BOOTSTRAP_LIB="$ROOT/ssh-password-bootstrap.sh"
-ENV_FILE="${OPERATOR_HOSTS_ENV:-$ARTIFACTS/operator-hosts.env}"
+
+# Unified secret loading (tower-first for protection).
+# Live secrets MUST live in a protected tower.env (chmod 600, outside any AI tree).
+# AI agents are strictly forbidden from reading the real tower.env or operator-hosts.env.
+TOWER_ENV_FILE="${TOWER_ENV:-${HOME}/.config/tower/tower.env}"
+if [[ -f "$TOWER_ENV_FILE" ]]; then
+  ENV_FILE="$TOWER_ENV_FILE"
+elif [[ -n "${OPERATOR_HOSTS_ENV:-}" && -f "$OPERATOR_HOSTS_ENV" ]]; then
+  ENV_FILE="$OPERATOR_HOSTS_ENV"
+else
+  ENV_FILE="$ARTIFACTS/operator-hosts.env"
+fi
 PUBKEY_FILE="${PUBKEY_FILE:-$HOME/.ssh/id_ed25519.pub}"
 
 die() { printf '✗ %s\n' "$*" >&2; exit 1; }
@@ -43,8 +54,13 @@ run_linux_simple() {
   shift 3
   printf '\n=== %s (%s) ===\n' "$label" "${*: -1}"
   PUBKEY=$(tr -d '\n\r' <"$PUBKEY_FILE")
+  local extra_env=""
+  if [[ -n "${CLAUDE_PASSWORD:-}" ]]; then
+    # Pass the default password for claude (from operator-hosts.env) so it gets set on the target
+    extra_env=" CLAUDE_PASSWORD='${CLAUDE_PASSWORD}'"
+  fi
   ssh -o BatchMode=yes -o ConnectTimeout=12 "$@" \
-    "sudo env USER_NAME=claude PUBKEY='$PUBKEY' NOPASSWD_SUDO=$nopasswd PLATFORM=$platform bash -s" <"$CREATE"
+    "sudo env USER_NAME=claude PUBKEY='$PUBKEY' NOPASSWD_SUDO=$nopasswd PLATFORM=$platform${extra_env} bash -s" <"$CREATE"
 }
 
 provision_mac_remote() {
@@ -132,3 +148,13 @@ for t in "${TARGETS[@]}"; do
 done
 
 printf '\nAll requested targets finished.\n'
+
+# Optional: batch Members (human accounts) using the new add-member.sh
+# Define in operator-hosts.env: MEMBERS="avery bobby ..."
+if [[ -n "${MEMBERS:-}" ]]; then
+  printf '\n=== MEMBERS list detected: %s ===\n' "$MEMBERS"
+  for m in $MEMBERS; do
+    printf '→ Adding member %s via add-member.sh (dgx vps by default)\n' "$m"
+    bash "$ROOT/add-member.sh" "$m" dgx vps || printf ' ! %s failed (check pubkey/bootstrap)\n' "$m"
+  done
+fi
