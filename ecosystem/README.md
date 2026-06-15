@@ -1,5 +1,7 @@
 # Ecosystem Doctrine
 
+> **Full operator setup (hardware + Nephew + mesh + workflows):** [`../docs/setup/README.md`](../docs/setup/README.md)
+
 ## Purpose
 
 This folder defines the preferred full AI ecosystem stack used throughout the platform.

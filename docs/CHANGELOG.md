@@ -10,6 +10,18 @@ Eastern time stamped to the second using `TZ=America/New_York date '+%Y-%m-%d %H
 
 ---
 
+## [0.7.3] — 2026-06-15 11:55:00 Eastern · *Public-safe operator setup master doc (`docs/setup/`)*
+
+### Added
+- `docs/setup/README.md` — master index for the complete Family Office system (hardware +
+  network + software + Nephew + git/deploy + daily workflows).
+- Chapters `01-hardware.md` through `08-daily-operator-workflows.md` — consolidated,
+  GitHub-safe reference with no LAN addresses, port numbers, domain names, or operator PII.
+- README link block pointing agents and operators to `docs/setup/`.
+
+> **What to look for:** Open `docs/setup/README.md` before briefing another model on the full
+> stack. Use `ledger/` and nephew `docs/infrastructure/` for live ports and peers — not this tree.
+
 ## [0.7.2] — 2026-06-09 14:00:00 Eastern · *§7 microscopic operator detail (OpenWrt, Synapse, Matrix bot, Protectli)*
 
 ### Added

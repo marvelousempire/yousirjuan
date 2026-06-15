@@ -46,6 +46,16 @@ Yousir Juan should be comfortable authoring:
 
 For local Docker infrastructure, the preferred operating path is Colima-backed Docker with Dockyard as the container management surface. When a setup pattern repeats, Yousir Juan packages it as a reusable kit, splits it into micro-slices when useful, and stores the known-good pattern in the Cabinet/Kitchen library for future builds.
 
+## Operator setup (complete system reference)
+
+**Start here** for the full picture of hardware, network, software, repos, and Nephew — public-safe (no ports, IPs, or PII):
+
+→ **[`docs/setup/README.md`](docs/setup/README.md)**
+
+Eight chapters cover machines, security model, Docker fleet, repo ecosystem, CLOAK/Pockit, RAG/memory, git/deploy, and daily workflows. Private runbooks with live wiring stay in `ledger/`.
+
+---
+
 ## Quick Start
 
 Any technically comfortable user can clone the repo and stand up the stack:
