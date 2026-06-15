@@ -2,6 +2,21 @@
 
 **Public-safe:** architecture, vocabulary, and agent behavior. No live URLs or ports.
 
+> **Deep dive:** [17-agents-fleet-bishop-cloak.md](./17-agents-fleet-bishop-cloak.md) · [15-doors-cassettes-pockit-navigation.md](./15-doors-cassettes-pockit-navigation.md)
+
+---
+
+## Chapter intents
+
+| Intent | Why |
+|---|---|
+| **Nephew = full stack** | Hardware + runtime + Pockit + CLOAK — not one chat file |
+| **Five layers** | Doctrine before library — every input classified and witnessed |
+| **Pockit = family shell** | One navigational desktop for all cassettes |
+| **Manifest-driven** | Hosts read JSON — never hardcode cassette IDs |
+| **MCP session load first** | Agents ground in meta-library before acting |
+| **Visual ≠ Jarvis** | Wiki vs voice — naming prevents operator confusion |
+
 ---
 
 ## What "Nephew" means

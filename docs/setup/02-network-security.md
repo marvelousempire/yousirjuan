@@ -2,6 +2,21 @@
 
 **Public-safe:** architecture and rules only. No subnet octets, port lists, peer tables, keys, or domain names.
 
+> **Deep dive:** [18-wireguard-matrix-nas-gitea-why.md](./18-wireguard-matrix-nas-gitea-why.md) · [15-doors-cassettes-pockit-navigation.md](./15-doors-cassettes-pockit-navigation.md)
+
+---
+
+## Chapter intents
+
+| Intent | Why |
+|---|---|
+| **One public edge** | Single HTTPS gate — not fifty port-forwards |
+| **WireGuard mesh** | Encrypted reach to DGX/NAS/VPS — membership is the lock |
+| **Closed LAN binds** | AI ports refuse Wi-Fi — forces VPN or gateway |
+| **Doors for humans** | `http://<id>.localhost/` — names beat port memorization |
+| **VLAN segmentation** | IoT/Guest cannot reach Trusted compute |
+| **Git over SSH** | Token-free push — keychain on Mac |
+
 ---
 
 ## The Family Office Sandwich

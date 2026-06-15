@@ -2,6 +2,21 @@
 
 **Public-safe:** workflow and rules only. No hostnames, keys, or paths with usernames.
 
+> **Why Gitea vs GitLab:** [18-wireguard-matrix-nas-gitea-why.md](./18-wireguard-matrix-nas-gitea-why.md)
+
+---
+
+## Chapter intents
+
+| Intent | Why |
+|---|---|
+| **Gitea = daily forge** | Direct push, no PR gate — fast inner loop |
+| **GitHub = mirror + PRs** | Branch protection, collaboration, offsite backup |
+| **SSH only** | No PAT expiry — macOS keychain |
+| **Explicit-path stage** | Never `git add -A` — monorepo drift guard |
+| **CLI-first ship** | Local verify + laptop deploy — not GitHub Actions billing |
+| **Plans are immutable** | Append-only decision history |
+
 ---
 
 ## Source-of-truth hierarchy

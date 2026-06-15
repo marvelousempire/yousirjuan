@@ -8,9 +8,23 @@ All notable changes to **yousirjuan** ship here. Format follows the convention i
 
 Eastern time stamped to the second using `TZ=America/New_York date '+%Y-%m-%d %H:%M:%S'`. Newest entries first.
 
-4. Keep secrets in `ledger/` — chapter 13 may include internal LAN IPs for cabling accuracy; never commit WG private keys or credentials.
-
 ---
+
+## [0.7.6] — 2026-06-15 18:45:00 Eastern · *Doors, RAG fabric, agents, WG/Matrix/Gitea with intents*
+
+### Added
+- `docs/setup/15-doors-cassettes-pockit-navigation.md` — Pockit as family desktop,
+  door mechanism, `make doors` vs `make door`, full-page cassette URLs, embed vs tape types.
+- `docs/setup/16-knowledge-fabric-rag-quantization.md` — Brain A/B, bge-m3/reranker,
+  AWQ/FP8 tiers, KB cassettes, ingest→retrieve pipeline, agent checklist.
+- `docs/setup/17-agents-fleet-bishop-cloak.md` — chain of command, Bishop factory,
+  fleet passports, CLOAK MCP 28 tools, Trust Protocol, Visual vs Jarvis.
+- `docs/setup/18-wireguard-matrix-nas-gitea-why.md` — WG mesh to DGX/NAS, Protectli path,
+  Matrix/Element family chat, NAS Docker tier (Plan 0197), Gitea vs GitLab vs GitHub reasons.
+- Intent blocks added to chapters 2, 5, 6, 7; README expanded to 18 chapters.
+
+> **What to look for:** Every section now leads with **Intents** (the why). Start at ch. 15
+> for doors/Pockit; ch. 16 for RAG; ch. 17 for Bishop/agents; ch. 18 for WG + forge reasons.
 
 ## [0.7.5] — 2026-06-15 16:30:00 Eastern · *Physical topology, Protectli, Historia memory chapters*
 

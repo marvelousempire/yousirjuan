@@ -1,6 +1,6 @@
 # Operator Setup — Complete System Reference (Public-Safe)
 
-**Status:** living document · **Last updated:** 2026-06-15 (expanded — voice, M5 edge, machine comms)  
+**Status:** living document · **Last updated:** 2026-06-15 (ch. 15–18 — doors, RAG, agents, WG/Matrix/Gitea)  
 **Audience:** operators, family members, and every agent (Nephew, Cursor, Claude Code, Grok, Perplexity)  
 **Privacy rule:** this tree avoids operator credentials, WG keys, and public WAN identifiers. **Internal LAN addressing** (192.168.10.x) appears in chapter 13 where needed for accurate cabling — same as [`home-network-full-architecture-report.md`](../home-network-full-architecture-report.md). Secrets stay in `ledger/` and private nephew infra runbooks.
 
@@ -26,12 +26,18 @@ This folder is the **single front door** for understanding how the Family Office
 | 12 | [12-pockit-non-vanilla-surfaces.md](./12-pockit-non-vanilla-surfaces.md) | Suite bar, Comet motion, cassettes, Jarvis hub — non-vanilla UI synthesis |
 | 13 | [13-physical-topology-protectli.md](./13-physical-topology-protectli.md) | **Live cabling**, `.10` LAN, 10GbE DGX↔NAS, VLAN plan, **Protectli migration** |
 | 14 | [14-historia-and-operator-memory.md](./14-historia-and-operator-memory.md) | Historia, sovereign vault, Qdrant, Grok pump — **where chat history lives** |
+| 15 | [15-doors-cassettes-pockit-navigation.md](./15-doors-cassettes-pockit-navigation.md) | **Doors**, cassette taxonomy, Pockit as family desktop / wildcard navigator |
+| 16 | [16-knowledge-fabric-rag-quantization.md](./16-knowledge-fabric-rag-quantization.md) | **RAG**, bge-m3, Qdrant, quantization, KB cassettes, Brain A/B |
+| 17 | [17-agents-fleet-bishop-cloak.md](./17-agents-fleet-bishop-cloak.md) | **Nephew**, Bishop, fleet passports, CLOAK MCP, chain of command |
+| 18 | [18-wireguard-matrix-nas-gitea-why.md](./18-wireguard-matrix-nas-gitea-why.md) | **WireGuard**, Matrix/Element, NAS Docker, **Gitea vs GitLab — reasons** |
+
+Every chapter lists **Intents** at the top of each section — the *why* behind each design choice, not just the *what*.
 
 ---
 
 ## One-paragraph summary
 
-The operator runs a **sovereign Family Office stack** on owned hardware: a **DGX Spark** is Nephew's body (inference, RAG, containers, git forge compute), a **UGREEN NAS** holds durable git objects and backups, a **VPS** is the gated public edge and Clinic, and **Mac fleet** nodes orchestrate development and the Pockit player shell. Everything internal binds to **loopback + WireGuard only** — never the open LAN. **Nephew** (orchestrator repo) sits on top of **You-Sir Juan** (infrastructure repo) and consumes **ai-skills-library** (shared skills). Family surfaces boot through **Pockit** and **cassettes** — plug-in apps reached by **door names**, not raw ports.
+The operator runs a **sovereign Family Office stack** on owned hardware: a **DGX Spark** is Nephew's body (inference, RAG, containers, git forge compute), a **UGREEN NAS** holds durable git objects and backups, a **VPS** is the gated public edge and Clinic, and **Mac fleet** nodes orchestrate development and the Pockit player shell. Everything internal binds to **loopback + WireGuard only** — never the open LAN. **Pockit** is the family **navigational desktop** — type `http://pockit.localhost/` for the full pad or `http://<cassette-id>.localhost/` for any cassette full-page. **Nephew** orchestrates via CLOAK; **Bishop** builds agents behind it. Knowledge flows through **bge-m3 → Qdrant → reranker** with **quantized** LLMs on DGX and **Holler** voice on M5. **Gitea** is the daily forge (reasons in ch. 18); **Matrix/Element** is private family chat. **Protectli** replaces the consumer router as the security brain (ch. 13).
 
 ---
 
@@ -82,13 +88,14 @@ The operator runs a **sovereign Family Office stack** on owned hardware: a **DGX
 ## Agent read order
 
 1. This README + chapters 1–5 (minimum before touching infra or cassettes).
-2. Chapters 9–12 before voice, M5 edge, or Pockit surface work.
-3. **Chapter 13** before any network change or Protectli cutover.
-4. **Chapter 14** when you need prior decisions, chat context, or vault truth.
-5. `marvelousempire/nephew` → `docs/product-stack-glossary.md` (Pockit, cassette, door vocabulary).
-6. `marvelousempire/nephew` → `AGENTS.md` (session hooks, SOP pointers).
-7. `REPOS-CONTRACT.md` (what lives in which repo).
-8. Private runbooks only when executing live changes.
+2. **Chapters 15–18** before explaining doors, RAG, agents, or WG/Matrix/Gitea to anyone.
+3. Chapters 9–12 before voice, M5 edge, or Pockit surface work.
+4. **Chapter 13** before any network change or Protectli cutover.
+5. **Chapter 14** when you need prior decisions, chat context, or vault truth.
+6. `marvelousempire/nephew` → `docs/product-stack-glossary.md` (Pockit, cassette, door vocabulary).
+7. `marvelousempire/nephew` → `AGENTS.md` (session hooks, SOP pointers).
+8. `REPOS-CONTRACT.md` (what lives in which repo).
+9. Private runbooks only when executing live changes.
 
 ---
 

@@ -2,6 +2,21 @@
 
 **Public-safe:** architecture and discipline only.
 
+> **Deep dive:** [16-knowledge-fabric-rag-quantization.md](./16-knowledge-fabric-rag-quantization.md) · [14-historia-and-operator-memory.md](./14-historia-and-operator-memory.md)
+
+---
+
+## Chapter intents
+
+| Intent | Why |
+|---|---|
+| **Retrieve before invent** | `nephew_corpus_retrieve` grounds agents in rules/plans |
+| **Central bge-m3** | One embed model — identical vectors Mac + DGX |
+| **Qdrant on DGX** | Hot index near GPU; NAS holds lake + snapshots |
+| **Brain A default** | `nephew-*` collections for agent MCP path |
+| **KB cassettes** | Chunks carry provenance — auditable knowledge |
+| **Vault + Qdrant pair** | Human wiki + machine index — both sovereign |
+
 ---
 
 ## Sovereign principle
