@@ -89,12 +89,16 @@ Runbook: `marvelousempire/nephew` → `docs/infrastructure/dgx-spark-hermes-dock
 
 | Component | Role |
 |---|---|
-| Whisper | STT — transcribe operator/family speech |
-| Fish Speech / speaches | TTS — reply audio |
-| iMessage / Telegram bridges | Channel adapters polling local chat DB or gateway |
-| Mac ANE path | Dev/edge low-latency STT on M5 Max without cloud |
+| **Holler** (Qwen3-TTS) | **Premium** daily TTS on M5 edge — Grok-class natural speech |
+| faster-whisper | STT on M5 edge and DGX paths |
+| **F5-TTS** | DGX premium — operator voice clone from reference WAV |
+| **NeMo Riva** | DGX premium gateway for prime-quality synthesis |
+| Kokoro / speaches | **Fallback only** — bootstrap wiring demoted (see ch. 11) |
+| Fish Speech container | Legacy name; backend was Kokoro until native aarch64 ships |
+| iMessage / Telegram bridges | Channel adapters → Hermes → premium TTS path |
+| Mac ANE path | Roadmap: CoreML Whisper, MLX embeddings for offline Jarvis |
 
-Status: voice containers deployed on DGX; VPS edge drop-in may be pending.
+Full undressing: [11-voice-parakeet-premium-stack.md](./11-voice-parakeet-premium-stack.md) · M5 edge: [10-m5-max-sovereign-edge.md](./10-m5-max-sovereign-edge.md)
 
 ---
 

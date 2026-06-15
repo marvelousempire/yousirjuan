@@ -58,6 +58,11 @@ Or read `docs/product-stack-glossary.md` — Pockit version, cassette vocabulary
 | Boot one cassette | `make up <id>` |
 | Console shorthand | `make bishop`, `make clinic`, … |
 | Visual Obsidian vault | `make visual-obsidian` |
+| M5 voice edge (reboot-safe) | `make voice-launchagent` (once) · `make m5-edge-up` |
+| Talk loop CLI | `make m5-voice-loop` |
+| Parakeet voice pad | `make pockit` → `http://pockit.localhost/#/c/voice` |
+| Jarvis Sovereign hub | `make jarvis-sovereign-hub` |
+| Orchestra full probe | `make orchestra-doctor` |
 | NAS mounts | `make nas-mounts` |
 
 Door URLs use `http://<id>.localhost/` form — tell operators the name, not gateway ports (canonical door URL rule).

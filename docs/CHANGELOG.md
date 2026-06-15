@@ -10,6 +10,21 @@ Eastern time stamped to the second using `TZ=America/New_York date '+%Y-%m-%d %H
 
 ---
 
+## [0.7.4] — 2026-06-15 16:05:00 Eastern · *Setup docs — machine comms, M5 edge, premium voice, Pockit synthesis*
+
+### Added
+- `docs/setup/09-talking-to-your-machines.md` — SSH fleet, doors, tower-api, Visual vs Jarvis,
+  Cursor/MCP, Apple hands-on, async messaging.
+- `docs/setup/10-m5-max-sovereign-edge.md` — Nephew Max M5 edge daemon chain, hybrid routing,
+  Obsidian golden profile, failover.
+- `docs/setup/11-voice-parakeet-premium-stack.md` — Kokoro demoted to fallback; Holler premium
+  on M5; F5/Riva on DGX; Parakeet cassette; reboot-safe voice (Plans 0201/0202).
+- `docs/setup/12-pockit-non-vanilla-surfaces.md` — suite bar, Comet motion, cassette discipline,
+  Jarvis Sovereign hub, native Pockit.app.
+
+> **What to look for:** Chapter 11 documents the intentional move off vanilla Kokoro TTS to
+> Holler (Grok-class premium) — the synthesis story for non-vanilla sovereign voice.
+
 ## [0.7.3] — 2026-06-15 11:55:00 Eastern · *Public-safe operator setup master doc (`docs/setup/`)*
 
 ### Added

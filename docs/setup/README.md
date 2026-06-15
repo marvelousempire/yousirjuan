@@ -1,6 +1,6 @@
 # Operator Setup — Complete System Reference (Public-Safe)
 
-**Status:** living document · **Last updated:** 2026-06-15  
+**Status:** living document · **Last updated:** 2026-06-15 (expanded — voice, M5 edge, machine comms)  
 **Audience:** operators, family members, and every agent (Nephew, Cursor, Claude Code, Grok, Perplexity)  
 **Privacy rule:** this tree is safe for GitHub. It contains **no LAN addresses, WireGuard IPs, port numbers, domain names, credentials, or operator PII**. For live wiring (ports, peers, keys), use the private runbooks in `ledger/` and the mirrored copies under `marvelousempire/nephew/docs/infrastructure/`.
 
@@ -20,6 +20,10 @@ This folder is the **single front door** for understanding how the Family Office
 | 6 | [06-retrieval-and-memory.md](./06-retrieval-and-memory.md) | Brain A/B, Qdrant, embeddings, sovereign vault |
 | 7 | [07-git-and-deploy.md](./07-git-and-deploy.md) | Gitea forge, dual-push, SSH git, ship discipline |
 | 8 | [08-daily-operator-workflows.md](./08-daily-operator-workflows.md) | Make targets, boot order, agent ritual, verification |
+| 9 | [09-talking-to-your-machines.md](./09-talking-to-your-machines.md) | SSH, doors, tower-api, Cursor/MCP, Visual vs Jarvis, Apple hands-on |
+| 10 | [10-m5-max-sovereign-edge.md](./10-m5-max-sovereign-edge.md) | M5 Nephew Max — edge daemon, hybrid routing, Obsidian, failover |
+| 11 | [11-voice-parakeet-premium-stack.md](./11-voice-parakeet-premium-stack.md) | Kokoro demoted → Holler premium, Parakeet, F5 clone, routing tiers |
+| 12 | [12-pockit-non-vanilla-surfaces.md](./12-pockit-non-vanilla-surfaces.md) | Suite bar, Comet motion, cassettes, Jarvis hub — non-vanilla UI synthesis |
 
 ---
 
@@ -74,6 +78,7 @@ The operator runs a **sovereign Family Office stack** on owned hardware: a **DGX
 ## Agent read order
 
 1. This README + chapters 1–5 (minimum before touching infra or cassettes).
+2. Chapters 9–12 before voice, M5 edge, or Pockit surface work.
 2. `marvelousempire/nephew` → `docs/product-stack-glossary.md` (Pockit, cassette, door vocabulary).
 3. `marvelousempire/nephew` → `AGENTS.md` (session hooks, SOP pointers).
 4. `REPOS-CONTRACT.md` (what lives in which repo).
