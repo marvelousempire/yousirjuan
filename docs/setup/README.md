@@ -2,7 +2,7 @@
 
 **Status:** living document · **Last updated:** 2026-06-15 (expanded — voice, M5 edge, machine comms)  
 **Audience:** operators, family members, and every agent (Nephew, Cursor, Claude Code, Grok, Perplexity)  
-**Privacy rule:** this tree is safe for GitHub. It contains **no LAN addresses, WireGuard IPs, port numbers, domain names, credentials, or operator PII**. For live wiring (ports, peers, keys), use the private runbooks in `ledger/` and the mirrored copies under `marvelousempire/nephew/docs/infrastructure/`.
+**Privacy rule:** this tree avoids operator credentials, WG keys, and public WAN identifiers. **Internal LAN addressing** (192.168.10.x) appears in chapter 13 where needed for accurate cabling — same as [`home-network-full-architecture-report.md`](../home-network-full-architecture-report.md). Secrets stay in `ledger/` and private nephew infra runbooks.
 
 This folder is the **single front door** for understanding how the Family Office hardware, You-Sir Juan platform, and Nephew orchestration fit together.
 
@@ -24,6 +24,8 @@ This folder is the **single front door** for understanding how the Family Office
 | 10 | [10-m5-max-sovereign-edge.md](./10-m5-max-sovereign-edge.md) | M5 Nephew Max — edge daemon, hybrid routing, Obsidian, failover |
 | 11 | [11-voice-parakeet-premium-stack.md](./11-voice-parakeet-premium-stack.md) | Kokoro demoted → Holler premium, Parakeet, F5 clone, routing tiers |
 | 12 | [12-pockit-non-vanilla-surfaces.md](./12-pockit-non-vanilla-surfaces.md) | Suite bar, Comet motion, cassettes, Jarvis hub — non-vanilla UI synthesis |
+| 13 | [13-physical-topology-protectli.md](./13-physical-topology-protectli.md) | **Live cabling**, `.10` LAN, 10GbE DGX↔NAS, VLAN plan, **Protectli migration** |
+| 14 | [14-historia-and-operator-memory.md](./14-historia-and-operator-memory.md) | Historia, sovereign vault, Qdrant, Grok pump — **where chat history lives** |
 
 ---
 
@@ -39,7 +41,9 @@ The operator runs a **sovereign Family Office stack** on owned hardware: a **DGX
 |---|---|
 | **This setup (public, no secrets)** | `docs/setup/` ← you are here |
 | Hardware deep-dive (product specs) | `hardware/`, `docs/hardware-topology.md` |
-| Strategic architecture / PRD | `PRD.md`, `docs/architecture.md` |
+| **Full physical topology + Protectli** | [13-physical-topology-protectli.md](./13-physical-topology-protectli.md) |
+| **Historia / chat memory** | [14-historia-and-operator-memory.md](./14-historia-and-operator-memory.md) |
+| Strategic architecture (microscopic) | [`home-network-full-architecture-report.md`](../home-network-full-architecture-report.md) |
 | Repo boundaries (YSJ vs Nephew) | `REPOS-CONTRACT.md` |
 | Tool & upstream registry | `ecosystem/ai-skills-and-repos-registry.md` |
 | Ledger runbooks (may contain live wiring) | `ledger/LEDGER-*` |
@@ -79,10 +83,27 @@ The operator runs a **sovereign Family Office stack** on owned hardware: a **DGX
 
 1. This README + chapters 1–5 (minimum before touching infra or cassettes).
 2. Chapters 9–12 before voice, M5 edge, or Pockit surface work.
-2. `marvelousempire/nephew` → `docs/product-stack-glossary.md` (Pockit, cassette, door vocabulary).
-3. `marvelousempire/nephew` → `AGENTS.md` (session hooks, SOP pointers).
-4. `REPOS-CONTRACT.md` (what lives in which repo).
-5. Private runbooks only when executing live changes.
+3. **Chapter 13** before any network change or Protectli cutover.
+4. **Chapter 14** when you need prior decisions, chat context, or vault truth.
+5. `marvelousempire/nephew` → `docs/product-stack-glossary.md` (Pockit, cassette, door vocabulary).
+6. `marvelousempire/nephew` → `AGENTS.md` (session hooks, SOP pointers).
+7. `REPOS-CONTRACT.md` (what lives in which repo).
+8. Private runbooks only when executing live changes.
+
+---
+
+## Known gaps (check Historia + nephew plans — not duplicated here yet)
+
+| Topic | Where truth lives |
+|---|---|
+| Trust Spine outbound-only WG flip | Nephew `plans/0151-network-trust-spine-secure-cutover.md` |
+| NAS Docker migration (WP, Gitea, Matrix off DGX) | Nephew `plans/0197-nas-docker-heavy-storage-migration.md` |
+| DXP6800 full buildout (mail, chat, 10GbE program) | Nephew `plans/0156` (referenced; verify file on branch) |
+| Brume-split AI island (whitepaper target) | `docs/whitepaper-hardware-network.md` — reconcile with ch. 13 |
+| Redis short-term memory | Unbuilt — file checkpoints today |
+| Open WebUI health | Deployed but unhealthy on DGX — needs heal |
+| LiveSync CouchDB edge | Wizard pending — registry notes in Jarvis hub audit |
+| MLX / ANE distilled edge models on M5 | Roadmap — Holler path shipped first |
 
 ---
 
@@ -93,4 +114,4 @@ When hardware, services, or repo boundaries change:
 1. Update the relevant chapter in `docs/setup/`.
 2. Bump `docs/CHANGELOG.md` with an Eastern timestamp.
 3. If the change is substantive, add a row to `plans/README.md` or a new `plans/NNNN-*.md`.
-4. Keep private wiring in `ledger/` — do not paste ports or IPs into this tree.
+4. Keep secrets in `ledger/` — chapter 13 may include internal LAN IPs for cabling accuracy; never commit WG private keys or credentials.

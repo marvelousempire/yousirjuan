@@ -1,6 +1,8 @@
 # Chapter 1 — Hardware Inventory
 
-**Public-safe:** machine roles and specs only. No addresses, serials, or location data.
+**Status:** living · **Last verified:** 2026-06-15 hardware audit  
+**Physical wiring & Protectli:** see [13-physical-topology-protectli.md](./13-physical-topology-protectli.md)  
+**Historia / vault memory:** see [14-historia-and-operator-memory.md](./14-historia-and-operator-memory.md)
 
 ---
 
@@ -29,7 +31,7 @@ Different hardware **specializes**. The stack avoids running heavy inference on 
 | **Memory** | ~122 GB unified LPDDR5X |
 | **Storage** | Multi-TB NVMe (models, containers, hot indexes) |
 | **OS** | Ubuntu LTS (aarch64) |
-| **Network** | Wired to trusted LAN; direct 10GbE link to NAS; WireGuard mesh peer |
+| **Network** | Wired `.205` on Trusted LAN; **10GbE direct** to NAS `.119`; WG mesh `10.1.0.5`; Comet KVM for headless console |
 | **Best for** | Large-model serving, embeddings + reranking on GPU, fine-tuning, concurrent family workloads, container orchestration |
 | **Not for** | Final Cut / DaVinci primary edit station; portable operator work |
 
@@ -37,16 +39,27 @@ Detailed product notes: [`hardware/dgx-spark-frontier-node.md`](../../hardware/d
 
 ---
 
-### MacBook Pro M5 Max — primary operator workstation
+### MacBook Pro M5 Max (FIVEMAC) — primary operator workstation
 
 | Attribute | Value |
 |---|---|
-| **Role** | Creative workstation, coding, Cursor/Claude Code orchestration, local dev inference, Pockit gateway host on desk |
+| **Role** | Creative workstation, coding, Cursor/Claude Code orchestration, Pockit gateway, **M5 Holler voice edge**, Obsidian host |
 | **CPU / GPU / ANE** | M5 Max — high-core-count CPU, 40-core GPU, 16-core Neural Engine |
 | **Memory** | 128 GB unified |
 | **Storage** | 4 TB SSD |
-| **Best for** | Blender, Unreal, Resolve, Xcode, agent development, MLX/Ollama dev loops, ANE-accelerated Whisper STT locally |
-| **Inference note** | Usable for 36B-class models at moderate speed; 70B-class usable for dev turns; DGX handles family-scale concurrency |
+| **Network** | Trusted LAN Wi-Fi or wired; NAS SMB **`/Volumes/historia`**; `OLLAMA_HOST` → DGX; local tower-api proxy |
+| **LaunchAgents** | tower-api, vault-watcher, LiveSync bridge, m5-voice-edge (see ch. 14) |
+| **Best for** | Blender, Unreal, Resolve, Xcode, agent development, Parakeet voice pad, sovereign vault editing |
+
+---
+
+### MacBook Pro M1 (ONEMAC-2) — legacy operator laptop
+
+| Attribute | Value |
+|---|---|
+| **Role** | Secondary Mac, travel, light dev |
+| **Dock** | HyperDrive TB5 — 2.5G Ethernet + NVMe |
+| **Network** | House Trusted LAN |
 
 ---
 
@@ -66,8 +79,9 @@ Detailed product notes: [`hardware/dgx-spark-frontier-node.md`](../../hardware/d
 
 | Attribute | Value |
 |---|---|
-| **Role** | Durable storage — git object store for Gitea, backups, media, Historia/sovereign vault sync target |
-| **Link to DGX** | Dedicated 10GbE direct connection for fast git and backup IO |
+| **Role** | Durable storage — git object store, Historia/sovereign vault, media, **target** for Matrix + heavy Docker |
+| **LAN** | `192.168.10.119` (`nasa.local`); SSH often non-default port on UGOS |
+| **Link to DGX** | **10GbE port #1 ↔ DGX** — primary fast path for NFS/git/backup |
 | **Stores** | Gitea repositories (objects on NAS, metadata DB stays on compute node), Qdrant snapshots, raw-docs archives, family media |
 | **Best for** | Anything that must survive a compute-node rebuild |
 | **Not for** | Primary GPU inference or live vector index hot path (kept on DGX for latency today) |
@@ -111,18 +125,20 @@ Notes: [`docs/hardware/imac-2017-intel-i5.md`](../hardware/imac-2017-intel-i5.md
 
 ---
 
-## Network hardware
+## Network & KVM hardware
 
 | Device | Role |
 |---|---|
-| **GL-MT6000 (Flint 2)** | Primary home router — Wi-Fi, switching, WireGuard server, VLAN segmentation, firewall |
-| **GL-MT5000 (Brume 3)** | Secondary gateway or dumb switch — AI island isolation (target topology) |
-| **GL-Slate AX** | Travel router — WireGuard client for encrypted access from away |
-| **Verizon 5G Business gateway** | WAN uplink (IP passthrough to main router) |
-| **AirPort Extreme (×2)** | Bridge-mode APs for extended coverage |
-| **Comet GL-RM10RC** | KVM appliance for headless DGX console (no network role) |
+| **Verizon 5G Business Gateway** | WAN — IP passthrough to main router (LAN2) |
+| **GL-MT6000 (Flint 2)** | **Live:** sole router, firewall, Wi-Fi, WG server (`192.168.10.1`) |
+| **GL-MT5000 (Brume 3)** | **Live:** dumb 2.5G switch on MT6000 LAN · **Future:** travel WG client |
+| **Protectli VP6670** | **Arriving** — OPNsense firewall/router/WG · i7-1255U, 32GB+, 1TB NVMe |
+| **GL-AX1800 (Slate)** | Interim IoT/AP in older plans — retiring |
+| **Apple AirPort Extreme ×2** | Bridge APs for coverage |
+| **Comet GL-RM10RC** | **KVM only** to DGX — not a router |
+| **HyperDrive TB5 / Sonnet Echo 11 / Anker Prime 14-in-1** | Desk docks for MacBooks |
 
-Strategic topology (may contain live addresses — operator-only): [`docs/home-network-full-architecture-report.md`](../home-network-full-architecture-report.md)
+Full cabling ASCII: [13-physical-topology-protectli.md](./13-physical-topology-protectli.md)
 
 ---
 

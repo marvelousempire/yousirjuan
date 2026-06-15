@@ -8,7 +8,23 @@ All notable changes to **yousirjuan** ship here. Format follows the convention i
 
 Eastern time stamped to the second using `TZ=America/New_York date '+%Y-%m-%d %H:%M:%S'`. Newest entries first.
 
+4. Keep secrets in `ledger/` — chapter 13 may include internal LAN IPs for cabling accuracy; never commit WG private keys or credentials.
+
 ---
+
+## [0.7.5] — 2026-06-15 16:30:00 Eastern · *Physical topology, Protectli, Historia memory chapters*
+
+### Added
+- `docs/setup/13-physical-topology-protectli.md` — live `.10` LAN cabling, complete device
+  inventory, 10GbE DGX↔NAS, VLAN plan, Protectli VP6670 ten-step migration, Plan 0197
+  DGX-vs-NAS tiers, doc-era reconciliation (stale `.8.x` warning).
+- `docs/setup/14-historia-and-operator-memory.md` — sovereign vault paths, Qdrant
+  collections, Grok pump, LaunchAgents, where chat history lives vs setup docs.
+- Expanded `01-hardware.md` — FIVEMAC/ONEMAC, Protectli arriving, Comet KVM, desk docks.
+- Setup README — gaps table, chapters 13–14 index, privacy rule clarified for LAN docs.
+
+> **What to look for:** Protectli arrives → execute checklist in chapter 13 before
+> retiring MT6000 as router. For "what did we say in chat," use chapter 14 + Historia vault.
 
 ## [0.7.4] — 2026-06-15 16:05:00 Eastern · *Setup docs — machine comms, M5 edge, premium voice, Pockit synthesis*
 
