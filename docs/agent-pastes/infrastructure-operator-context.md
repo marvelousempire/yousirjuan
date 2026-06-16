@@ -113,3 +113,4 @@ Always pair this paste with Nephew:
 - Copying long Nephew SOP bodies into yousirjuan (link instead)
 - Persona / soul / meta-library content in yousirjuan PRs (CI blocks)
 - Reporting "live" without curl or health JSON proof
+- **Delegating safe work to the operator** — git, SSH, forge-sync, branch cleanup, verify (RL-0051). Boss Moves only for sudo, secrets, browser, explicit vetoes.

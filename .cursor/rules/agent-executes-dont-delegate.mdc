@@ -1,0 +1,14 @@
+---
+description: Agents execute all safe work directly — no paste blocks. Boss Moves only for sudo, secrets, browser, explicit vetoes. Agent runs make forge-push.
+alwaysApply: true
+---
+
+# Agent executes — don't delegate (RL-0051)
+
+**Standing order (Avery 2026-06-16):** If it does not violate an explicit user rule or require **sudo**, **just do it.**
+
+Execute: git hygiene, SSH DGX, `make forge-push`, verify, branch cleanup, ledger updates. Use `cd /path/to/repo && …` — never instruct operator to cd from `~`.
+
+**Boss Moves ONLY:** sudo · secrets · browser test · explicit don't-commit/push · force-push main
+
+Canonical: `marvelousempire/nephew/.claude/rules/agent-executes-dont-delegate.md` · `rules/GLOBAL-RULES-FOR-USING-NEPHEW.md` Rule 1

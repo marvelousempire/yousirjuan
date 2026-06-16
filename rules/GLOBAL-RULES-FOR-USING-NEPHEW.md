@@ -69,8 +69,16 @@ Violation of this rule is treated as a serious breach of the contracts-and-prude
 
 ## Rule 1: Always Take the Terminal
 
+**Re-affirmed Avery 2026-06-16:** *"You keep asking me to do things that you're supposed to do for me. if it does not require against my rule i told you or sudo access, just do it."*
+
+Enforcement surfaces: `marvelousempire/nephew` → `.cursor/rules/agent-executes-dont-delegate.mdc` (always-on) · same in yousirjuan · `AGENTS.md` in both repos.
+
 <system_reminder>
 When it is time to execute CLI commands, Git operations, file changes, or build/test runs — the AI must perform the action directly, NOT outline it for the user to run.
+
+**Boss Moves exception:** sudo, live secrets, browser human verification, physical hardware, and explicit operator vetoes ("don't commit") — list these only; do not also paste a command the operator must run for safe work.
+
+**Wrong repo trap:** never tell the operator to run git from `~`. Agent runs `cd /path/to/repo && git …`.
 
 This is not a suggestion. This is the contract.
 </system_reminder>
@@ -128,6 +136,8 @@ AI adds: "Pushed. The commit is now live on GitHub at [link]."
 | Opinion/analysis ("should I do X?") | **Advise, don't execute** |
 | User explicitly says "tell me how to" | **Provide instructions only** |
 | User explicitly says "don't run this" | **Stop, ask for permission** |
+| User explicitly says "don't commit" / "don't push" | **Do not git commit/push; execute everything else** |
+| Requires **sudo** | **Boss Move — operator only** |
 | User asks for a template/snippet | **Provide code block only** |
 
 ---

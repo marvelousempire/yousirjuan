@@ -5,7 +5,7 @@ alwaysApply: true
 
 # Forge push always — Gitea master, GitHub mirror
 
-**Operator standing order (2026-06-16):** Nephew and every agent **always** finish yousirjuan work with `make forge-push`. Do not ask the operator to sync manually.
+**Operator standing order (2026-06-16):** Nephew and every agent **always** finish yousirjuan work with `make forge-push`. **Run it yourself** — do not ask the operator to sync manually (RL-0051).
 
 ## Canonical forge
 

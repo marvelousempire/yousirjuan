@@ -69,6 +69,7 @@ Carelessness is, definitionally, stupidity. Stupid is the opposite of good. So w
 
 ## Universal rules (apply to every agent in this repo)
 
+0. **Execute, don't delegate (RL-0051):** If it does not require **sudo** or violate an explicit user rule, **run it yourself** — git, SSH DGX, `make forge-push`, verify, branch cleanup. Never paste optional commands for safe work. Boss Moves only for sudo, secrets, browser, physical, explicit vetoes. See [`.claude/rules/agent-executes-dont-delegate.md`](.claude/rules/agent-executes-dont-delegate.md) and [`rules/GLOBAL-RULES-FOR-USING-NEPHEW.md`](rules/GLOBAL-RULES-FOR-USING-NEPHEW.md) Rule 1.
 1. **The ledger is the canonical place for replayable knowledge.** Don't duplicate content elsewhere — link to the relevant ledger entry. New ledger entries copy [`ledger/_template/`](ledger/_template/) and bump the counter in [`ledger/README.md`](ledger/README.md) in the same commit.
 2. **Playbooks must be strictly AI-free.** If a task can't be expressed without AI in the loop, ship the runbook only and note `no playbook because <reason>` in the ticket.
 3. **Shell snippets emitted to the human go in ONE fenced code block** with `\` continuations and `&&` chaining. Never split a sequence into multiple blocks the operator has to paste separately.

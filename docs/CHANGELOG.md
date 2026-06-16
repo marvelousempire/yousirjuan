@@ -14,6 +14,18 @@ Eastern time stamped to the second using `TZ=America/New_York date '+%Y-%m-%d %H
 
 ---
 
+---
+
+## [0.7.14] — 2026-06-16 11:08:05 Eastern · *RL-0051 agent executes don't delegate*
+
+### Added
+- `.claude/rules/agent-executes-dont-delegate.md` + `.cursor/rules/agent-executes-dont-delegate.mdc`
+  (always-on) — operator standing order: execute safe work; Boss Moves only for sudo/secrets/browser.
+
+### Changed
+- `rules/GLOBAL-RULES-FOR-USING-NEPHEW.md` Rule 1 re-affirmed with 2026-06-16 verbatim.
+- `AGENTS.md`, `CLAUDE.md`, agent paste, `forge-push-always` — cross-links to RL-0051.
+
 ## [0.7.13] — 2026-06-15 18:30:00 Eastern · *Cassette agent bridge + Nephew voice sync*
 
 ### Added
