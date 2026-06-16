@@ -12,6 +12,9 @@ forge-sync:
 forge-sync-all:
 	@bash scripts/forge-sync-all.sh
 
+forge-sync-core:
+	@bash scripts/forge-sync-core.sh
+
 forge-status:
 	@bash scripts/forge-status.sh
 

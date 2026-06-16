@@ -60,7 +60,8 @@ bash scripts/setup-forge-remotes.sh
 | `make verify` | Local gate — setup index, required scripts |
 | `make forge-push` | **After edits** — verify + push Gitea + GitHub |
 | `make forge-sync` | One repo reconcile (GitHub ahead → fast-forward Gitea) |
-| `make forge-sync-all` | All LEDGER-0024 tracked repos |
+| `make forge-sync-core` | Core public repos only (timer default) |
+| `make forge-sync-all` | Full list via `FORGE_SYNC_LIST` (needs GitHub SSH/PAT) |
 | `make forge-status` | Print SHAs + push-mirror health |
 
 ---
@@ -100,9 +101,13 @@ Install on Mac (LaunchAgent):
 bash scripts/install-mac-forge-sync-timer.sh
 ```
 
-Runs `scripts/forge-sync-all.sh` every **5 minutes** — catches enterprise agent pushes to GitHub without you in the loop.
+Runs `scripts/forge-sync-core.sh` every **5 minutes** — catches enterprise agent pushes to GitHub without you in the loop.
 
-Log: `~/.local/share/yousirjuan/forge-sync.log`
+**DGX** uses `scripts/forge-pull-on-gitea-core.sh` (HTTPS into Gitea bare repos — no Mac GitHub SSH).
+
+**Mac** does not need GitHub SSH for status/sync on **public** repos — `forge-status` and `forge-sync` fall back to HTTPS.
+
+Log: `~/.local/share/yousirjuan/forge-sync.log` (Mac) · `~/.local/share/yousirjuan/forge-pull.log` (DGX pull)
 
 ---
 

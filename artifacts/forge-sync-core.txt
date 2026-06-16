@@ -1,0 +1,9 @@
+# Core forge repos — background timer scope (every 5 min).
+# Public GitHub repos sync via HTTPS without Mac/DGX GitHub SSH keys.
+# Private repos (e.g. nephew) need deploy-key auth — see docs/setup/23-forge-sync-automation.md.
+#
+# Full LEDGER-0024 list (~90 repos) — only when FORGE_SYNC_LIST points at tracked-repos.txt
+# and the host has GitHub SSH or PAT configured.
+
+yousirjuan
+ai-skills-library

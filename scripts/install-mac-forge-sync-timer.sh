@@ -17,7 +17,7 @@ cat >"$PLIST" <<EOF
   <key>ProgramArguments</key>
   <array>
     <string>/bin/bash</string>
-    <string>$REPO_ROOT/scripts/forge-sync-all.sh</string>
+    <string>$REPO_ROOT/scripts/forge-sync-core.sh</string>
   </array>
   <key>StartInterval</key>
   <integer>300</integer>

@@ -49,6 +49,9 @@ async function main() {
   await mustExist('.gitea/workflows/verify.yml');
   await mustExist('scripts/forge-sync.sh');
   await mustExist('scripts/forge-push.sh');
+  await mustExist('scripts/forge-sync-core.sh');
+  await mustExist('scripts/forge-pull-on-gitea.sh');
+  await mustExist('artifacts/forge-sync-core.txt');
   await mustExist('Makefile');
   await checkSetupIndex();
   await checkNoSecrets();

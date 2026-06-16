@@ -14,6 +14,19 @@ Eastern time stamped to the second using `TZ=America/New_York date '+%Y-%m-%d %H
 
 ---
 
+## [0.7.11] — 2026-06-16 10:00:00 Eastern · *Forge sync without GitHub SSH*
+
+### Added
+- `artifacts/forge-sync-core.txt` — timer scope (public repos: yousirjuan, ai-skills-library).
+- `scripts/forge-pull-on-gitea.sh`, `forge-pull-on-gitea-core.sh` — DGX bare-repo GitHub→Gitea pull via HTTPS.
+- `scripts/forge-sync-core.sh`, `make forge-sync-core`.
+
+### Fixed
+- `forge-sync.sh` — Gitea-first bootstrap; GitHub HTTPS fallback; optional DGX server pull.
+- `forge-sync-all.sh` — defaults to core list (not ~90 LEDGER repos without GitHub auth).
+- `forge-status.sh` — HTTPS origin SHA when Mac lacks GitHub SSH.
+- Mac LaunchAgent + DGX systemd timer — core repos only; DGX uses server-side pull.
+
 ## [0.7.10] — 2026-06-16 09:50:00 Eastern · *Standing order: agents always forge-push*
 
 ### Added
