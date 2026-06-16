@@ -44,6 +44,7 @@ Match the kind of task to the right starting point:
 | To set up the local dev MCP stack (Cline + Ollama LaunchAgent + workspace MCP) | [`ledger/LEDGER-0001-imac-mcp-setup/`](ledger/LEDGER-0001-imac-mcp-setup/) | `make install` reproduces the whole stack on a fresh Mac. |
 | To know what's allowed / forbidden in this repo | [`REPOS-CONTRACT.md`](REPOS-CONTRACT.md) | yousirjuan is infrastructure-only. Personas, orchestration, UX content belong in `nephew`. The `Contract Enforcement` CI workflow blocks PRs that cross this boundary. |
 | To match the repo's existing CLI / commit / file-edit conventions | [`.claude/rules/dev-discipline.md`](.claude/rules/dev-discipline.md), [`.claude/rules/cli-snippet-formatting.md`](.claude/rules/cli-snippet-formatting.md) | These are stable across sessions and across agents. |
+| To ship / sync after edits | **`make forge-push`** · [`docs/setup/23-forge-sync-automation.md`](docs/setup/23-forge-sync-automation.md) | Gitea master → GitHub mirror. **Required** before reporting done. |
 
 ---
 
@@ -75,6 +76,7 @@ Carelessness is, definitionally, stupidity. Stupid is the opposite of good. So w
 7. **State the pipeline stage when reporting "done"** — *committed → pushed → PR'd → merged → deployed* — but inline in the relevant sentence, not as a trailing victory-lap line.
 8. **Contract-enforcement CI blocks PRs** that contain persona / interface-UX / onboarding / meta-library content unless the file is allowlisted in [`.github/workflows/contract-enforcement-no-persona.yml`](.github/workflows/contract-enforcement-no-persona.yml). Adding to that allowlist requires explaining why in the workflow file's header comment.
 9. **Prudence is required.** See the operating philosophy above. If a planned action can't be defended as careful, it doesn't get taken.
+10. **Always `make forge-push` before reporting done** on substantive changes. Gitea `marvelousempire/*` is master; GitHub mirrors. See [`.cursor/rules/forge-push-always.mdc`](.cursor/rules/forge-push-always.mdc) and [`docs/setup/23-forge-sync-automation.md`](docs/setup/23-forge-sync-automation.md). Operator standing order — agents run this; do not delegate sync to the human.
 
 ---
 

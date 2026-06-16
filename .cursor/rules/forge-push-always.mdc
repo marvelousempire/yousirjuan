@@ -1,0 +1,56 @@
+---
+description: After any yousirjuan ship — always make forge-push to Gitea master; never manual GitHub-only sync.
+alwaysApply: true
+---
+
+# Forge push always — Gitea master, GitHub mirror
+
+**Operator standing order (2026-06-16):** Nephew and every agent **always** finish yousirjuan work with `make forge-push`. Do not ask the operator to sync manually.
+
+## Canonical forge
+
+| Remote | Path | Role |
+|---|---|---|
+| **`gitea`** | `git@gitea-dgx:marvelousempire/<repo>.git` | **Master** — push here |
+| **`origin`** | `git@github.com:marvelousempire/<repo>.git` | Mirror (enterprise agents + push-mirror) |
+
+**Never** push to `avery/yousirjuan` — archived.
+
+## Required session closer (every substantive change)
+
+After commit(s), before reporting done:
+
+```bash
+cd /path/to/yousirjuan   # or operator clone
+make forge-push
+```
+
+`make forge-push` runs:
+
+1. `node scripts/yousirjuan-verify.mjs`
+2. `git push gitea <branch>`
+3. `git push origin <branch>` (best-effort; Gitea push-mirror also syncs GitHub)
+
+## When enterprise agents edited GitHub only
+
+You do **not** need manual reconcile if timers are active. Optionally run:
+
+```bash
+make forge-sync
+make forge-status
+```
+
+Timers (every 5 min): Mac LaunchAgent + DGX systemd — see `docs/setup/23-forge-sync-automation.md`.
+
+## Forbidden
+
+- Reporting "done" without `make forge-push` when code/docs committed
+- `git push origin` alone as the ship step (bypasses Gitea master)
+- `git push gitea avery/yousirjuan`
+- Waiting on **GitHub Actions** — use Gitea Actions (`.gitea/workflows/`) or `make verify`
+
+## Pipeline stage truth
+
+Name the stage: committed → **forge-pushed (Gitea)** → GitHub mirrored → Gitea Actions green.
+
+Full doc: [`docs/setup/23-forge-sync-automation.md`](../../docs/setup/23-forge-sync-automation.md)
