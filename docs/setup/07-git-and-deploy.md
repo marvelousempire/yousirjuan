@@ -58,6 +58,29 @@ Forbidden: embedding PATs in remotes for routine push.
 
 ---
 
+## SSO vs git SSH (cassette standard)
+
+| Surface | Auth | Never use for git CLI |
+|---|---|---|
+| **Gitea web UI** (`:3300`) | Nephew OIDC / family SSO | — |
+| **Pockit / cassette doors** | `nephew_session` cookie / mTLS | — |
+| **`git push` / `git pull`** | **SSH keys** in macOS keychain | OAuth, PAT, browser SSO |
+
+**Web SSO does not authenticate `git push`.** That is intentional — cassette deploy discipline is SSH-only (clean deploy = `git pull`, not scp).
+
+One-time Mac setup:
+
+```bash
+bash scripts/setup-cassette-git-ssh.sh
+bash scripts/setup-forge-remotes.sh
+```
+
+If GitHub org uses **SAML SSO**: after adding your SSH public key at GitHub → Settings → SSH keys, click **Configure SSO** → **Authorize** for `marvelousempire`. Without that step, `git@github.com` returns `Permission denied` even when the key exists.
+
+**Gitea master works without GitHub SSH:** `git push gitea main` or `make forge-push` (push-mirror syncs GitHub when configured).
+
+---
+
 ## Dual-remote sync guardrails
 
 - Never force-push `main` on GitHub

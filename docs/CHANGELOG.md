@@ -14,6 +14,16 @@ Eastern time stamped to the second using `TZ=America/New_York date '+%Y-%m-%d %H
 
 ---
 
+## [0.7.13] — 2026-06-16 10:30:00 Eastern · *Cassette git SSH standard (SSO ≠ git)*
+
+### Added
+- `scripts/setup-cassette-git-ssh.sh` + `make setup-cassette-git-ssh` — SSH-only git
+  auth blocks for `github.com` and `gitea-dgx` (no OAuth/PAT for git CLI).
+
+### Changed
+- `docs/setup/07-git-and-deploy.md` — SSO vs git SSH table; GitHub SAML key authorization step.
+- `setup-forge-remotes.sh` — points at cassette git SSH setup.
+
 ## [0.7.12] — 2026-06-16 10:15:00 Eastern · *Master blueprint consolidation*
 
 ### Changed
