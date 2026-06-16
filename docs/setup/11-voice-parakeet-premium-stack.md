@@ -76,7 +76,7 @@ Parakeet is **not** a standalone app — it is a **Pockit pad cassette**:
 - Engine label in status: “Holler · M5 premium” vs fallback warnings  
 - `pumpTurn` telemetry into live knowledge fabric  
 
-Verify: `make cassette-line CHECK=voice`
+Verify: `make cassette-line CHECK=voice` — **all gates green** as of Nephew v1.79.42 (2026-06-15): manifest registered, `settings.surface` validates via `cassette-surface.schema.json`, door + resolve-surface pass.
 
 ---
 

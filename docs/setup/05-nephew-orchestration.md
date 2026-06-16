@@ -148,6 +148,18 @@ Binder: `AI_AGENT_RULES/manifest.json` — read order for every session.
 
 ---
 
+## Agent paste attach (cross-repo)
+
+| Chat type | Attach first | Then |
+|---|---|---|
+| Infrastructure / mesh / forge | YSJ `docs/agent-pastes/infrastructure-operator-context.md` | This setup README |
+| Cassette update / doors / Pockit | Nephew `docs/agent-pastes/cassette-update-context.md` | YSJ ch. 15 + [25-cassette-update-agent-bridge.md](./25-cassette-update-agent-bridge.md) |
+| Per-surface checklist | Nephew `docs/agent-pastes/agent-chat-attach-bundle.md` | Surface annex in `docs/pockit/` |
+
+Do not fork Nephew SOP bodies into yousirjuan — link and route agents to the nephew checkout for `make cassette-line`.
+
+---
+
 ## Related
 
 - [03-software-services.md](./03-software-services.md) — tower-api, Hermes, containers

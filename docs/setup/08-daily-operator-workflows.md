@@ -51,7 +51,8 @@ Or read `docs/product-stack-glossary.md` — Pockit version, cassette vocabulary
 
 | Goal | Command |
 |---|---|
-| Pockit player shell | `make pockit` |
+| Pockit player shell | `make pockit` (aliases: `make pad`, `make pocket`) |
+| Local boot only (no apex deploy) | `POCKIT_LOCAL_ONLY=1 make pockit` |
 | Full family stack on DGX | SSH to spark → `make family` |
 | Clean door URLs (once, sudo) | `make doors` |
 | Browse cassette library | `make door` |
@@ -69,13 +70,39 @@ Door URLs use `http://<id>.localhost/` form — tell operators the name, not gat
 
 ---
 
+## Family SSO smoke (after boot)
+
+Run from operator Mac when SSO is questioned — full detail: [26-family-sso-and-door-tickets.md](./26-family-sso-and-door-tickets.md).
+
+```bash
+# From nephew checkout
+POCKIT_LOCAL_ONLY=1 make pockit
+lsof -nP -iTCP:8088,8781,8782 -sTCP:LISTEN
+curl -s 'http://127.0.0.1:8088/api/v1/auth/door-ticket?target=http://hello.localhost/'
+# expect not_signed_in when logged out — not not_found
+
+# From yousirjuan checkout (replay only)
+bash ledger/LEDGER-0035-family-sso-infra-receipt/playbooks/sso-smoke.sh
+```
+
+Sign in once at `http://pockit.localhost/signin` with `~/.nephew/tower.env` credentials.  
+Agent-comms (nephew Plans 0175–0178): `make agent-comms-mac-install` · `nephew relay` — orchestration bus, separate from browser SSO.
+
+---
+
 ## Cassette update ritual
 
-When operator says **"Update the Cassette"** or **make vanilla**:
+When operator says **"Update the Cassette"** or **make vanilla** — work in **nephew**, not yousirjuan:
 
-1. Read `docs/sop/update-the-cassette.md`
-2. Run `make cassette-line CHECK=<id>`
-3. For embed apps: `docs/pockit/Family-Office-Embed-Apps.md`
+1. Read `marvelousempire/nephew` → `docs/sop/update-the-cassette.md` (canonical SOP)
+2. Attach agent paste: `docs/agent-pastes/cassette-update-context.md` (+ YSJ `docs/agent-pastes/infrastructure-operator-context.md` for infra context)
+3. Run `make cassette-line CHECK=<id>` from nephew checkout
+4. For embed apps: `docs/pockit/Family-Office-Embed-Apps.md`
+5. For voice (Pattern E): `docs/pockit/Parakeet-Voice-Cassette-Vanilla.md` · `CHECK=voice` · `make voice-launchagent` once per Mac
+
+Cross-repo bridge (what YSJ documents vs what Nephew ships): [25-cassette-update-agent-bridge.md](./25-cassette-update-agent-bridge.md)
+
+After Nephew merges: skim Nephew CHANGELOG → update YSJ setup chapter if architecture changed → **`make forge-push`** here.
 
 ---
 

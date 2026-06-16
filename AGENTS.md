@@ -27,6 +27,7 @@ The current platform version is in [`docs/CHANGELOG.md`](docs/CHANGELOG.md) (new
 | **Feature status grid** | [`docs/Feature Ledger.md`](docs/Feature%20Ledger.md) | ✅/✔️/🔜/❌ per feature. Update when status changes. |
 | **Incident / near-miss log** | [`docs/Issue-Log.md`](docs/Issue-Log.md) | Lessons learned from bugs. Add entries when something cost time. |
 | **State-of-the-world** | [`HANDOFF.md`](HANDOFF.md) | Multi-day session log. Day-by-day timeline. |
+| **Agent paste library** | [`docs/agent-pastes/`](docs/agent-pastes/) | Infrastructure attach blocks — pair with Nephew `cassette-update-context.md` for Pockit/voice work. |
 
 ---
 
@@ -45,6 +46,7 @@ Match the kind of task to the right starting point:
 | To know what's allowed / forbidden in this repo | [`REPOS-CONTRACT.md`](REPOS-CONTRACT.md) | yousirjuan is infrastructure-only. Personas, orchestration, UX content belong in `nephew`. The `Contract Enforcement` CI workflow blocks PRs that cross this boundary. |
 | To match the repo's existing CLI / commit / file-edit conventions | [`.claude/rules/dev-discipline.md`](.claude/rules/dev-discipline.md), [`.claude/rules/cli-snippet-formatting.md`](.claude/rules/cli-snippet-formatting.md) | These are stable across sessions and across agents. |
 | To ship / sync after edits | **`make forge-push`** · [`docs/setup/23-forge-sync-automation.md`](docs/setup/23-forge-sync-automation.md) | Gitea master → GitHub mirror. **Required** before reporting done. |
+| Cassette / voice / doors (cross-repo) | [`docs/setup/25-cassette-update-agent-bridge.md`](docs/setup/25-cassette-update-agent-bridge.md) | YSJ documents routing; **nephew** owns manifests + `make cassette-line`. |
 
 ---
 

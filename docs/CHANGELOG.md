@@ -14,15 +14,21 @@ Eastern time stamped to the second using `TZ=America/New_York date '+%Y-%m-%d %H
 
 ---
 
-## [0.7.13] — 2026-06-16 10:30:00 Eastern · *Cassette git SSH standard (SSO ≠ git)*
+## [0.7.13] — 2026-06-15 18:30:00 Eastern · *Cassette agent bridge + Nephew voice sync*
 
 ### Added
-- `scripts/setup-cassette-git-ssh.sh` + `make setup-cassette-git-ssh` — SSH-only git
-  auth blocks for `github.com` and `gitea-dgx` (no OAuth/PAT for git CLI).
+- `docs/setup/25-cassette-update-agent-bridge.md` — YSJ ↔ Nephew routing for Update the Cassette,
+  elevations map, agent attach bundle, post-Nephew maintenance ritual.
+- `docs/agent-pastes/README.md` + `infrastructure-operator-context.md` — infrastructure agent
+  paste; links to Nephew `cassette-update-context.md` without duplicating SOP.
 
 ### Changed
-- `docs/setup/07-git-and-deploy.md` — SSO vs git SSH table; GitHub SAML key authorization step.
-- `setup-forge-remotes.sh` — points at cassette git SSH setup.
+- `docs/setup/README.md` — chapter 25 index + agent paste pointers.
+- `docs/setup/08-daily-operator-workflows.md` — expanded cassette ritual with cross-repo steps.
+- `docs/setup/05-nephew-orchestration.md` — agent paste attach table.
+- `docs/setup/11-voice-parakeet-premium-stack.md` — v1.79.42 `CHECK=voice` + schema note.
+- `docs/setup/15-doors-cassettes-pockit-navigation.md` — Pattern E voice pad + ch. 25 link.
+- `AGENTS.md` — agent-pastes surface + cross-repo routing row.
 
 ## [0.7.12] — 2026-06-16 10:15:00 Eastern · *Master blueprint consolidation*
 

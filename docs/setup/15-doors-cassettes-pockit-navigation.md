@@ -166,7 +166,9 @@ Motion: **cotton-ball Comet settle** — sneeze-out entry, soft overshoot, rest 
 | **Embed-app cassette** | `data/control-tower-apps.manifest.json` | `gitea`, `matrix-element`, `comfyui` |
 | **Native card** | `data/native-cards.manifest.json` | `nephew-hello`, `overview` |
 
-Update ritual: operator says **"Update the Cassette"** → SOP + `make cassette-line CHECK=<id>`.
+Update ritual: operator says **"Update the Cassette"** → Nephew SOP + `make cassette-line CHECK=<id>`. YSJ bridge: [25-cassette-update-agent-bridge.md](./25-cassette-update-agent-bridge.md).
+
+**Pattern E — voice pad (reference):** cassette id `voice` · URL `http://pockit.localhost/#/c/voice` · `settings.surface.type: voice` · eight-layer verify includes Mac edge (`make voice-launchagent`). Annex: Nephew `docs/pockit/Parakeet-Voice-Cassette-Vanilla.md`.
 
 Key manifests (nephew repo):
 

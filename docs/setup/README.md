@@ -56,8 +56,10 @@ Full detail: [23-forge-sync-automation.md](./23-forge-sync-automation.md)
 | 24 | [24-apple-neural-engine-voice-optimization.md](./24-apple-neural-engine-voice-optimization.md) | ANE voice optimization stub — expand from audit |
 | 22 | [22-doc-era-reconciliation.md](./22-doc-era-reconciliation.md) | **Stale branches / whitepapers** — what is live vs superseded |
 | 23 | [23-forge-sync-automation.md](./23-forge-sync-automation.md) | **Gitea ↔ GitHub automation** — forge-push, timer, Actions, push-mirror |
+| 25 | [25-cassette-update-agent-bridge.md](./25-cassette-update-agent-bridge.md) | **YSJ ↔ Nephew bridge** — Update the Cassette ritual, agent pastes, elevations map |
+| 26 | [26-family-sso-and-door-tickets.md](./26-family-sso-and-door-tickets.md) | **Family SSO** — one hub sign-in, door tickets, recovery when SSO breaks |
 
-Every chapter lists **Intents** at the top of each section — the *why* behind each design choice, not just the *what*.
+**Last updated:** 2026-06-16 (ch. 26 family SSO + Nephew 0195/0198 sync) **Intents** at the top of each section — the *why* behind each design choice, not just the *what*.
 
 ---
 
@@ -80,6 +82,8 @@ The operator runs a **sovereign Family Office stack** on owned hardware: a **DGX
 | Tool & upstream registry | `ecosystem/ai-skills-and-repos-registry.md` |
 | Ledger runbooks (may contain live wiring) | `ledger/LEDGER-*` |
 | Nephew product vocabulary | `marvelousempire/nephew` → `docs/product-stack-glossary.md` |
+| **Agent paste (infrastructure)** | `docs/agent-pastes/infrastructure-operator-context.md` |
+| **Agent paste (cassettes/voice)** | `marvelousempire/nephew` → `docs/agent-pastes/cassette-update-context.md` |
 | Sovereign operating principle | `marvelousempire/nephew` → `docs/sovereign.md` |
 | Live fleet ground truth (operator-only) | `marvelousempire/nephew` → `docs/infrastructure/dgx-rag-and-fleet-state.md` |
 | Redis / Caddy compose stubs | `infrastructure/redis/`, `infrastructure/caddy/` |
@@ -122,8 +126,9 @@ The operator runs a **sovereign Family Office stack** on owned hardware: a **DGX
 6. **Chapter 14** when you need prior decisions, chat context, or vault truth.
 7. `marvelousempire/nephew` → `docs/product-stack-glossary.md` (Pockit, cassette, door vocabulary).
 8. `marvelousempire/nephew` → `AGENTS.md` (session hooks, SOP pointers).
-9. `REPOS-CONTRACT.md` (what lives in which repo).
-10. Private runbooks only when executing live changes.
+9. **Chapter 25** + `docs/agent-pastes/` before cassette/voice cross-repo work.
+10. `REPOS-CONTRACT.md` (what lives in which repo).
+11. Private runbooks only when executing live changes.
 
 ---
 
