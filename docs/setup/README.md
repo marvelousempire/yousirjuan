@@ -51,6 +51,7 @@ This folder is the **single front door** for understanding how the Family Office
 | 20 | [20-mobile-surfaces-ios17.md](./20-mobile-surfaces-ios17.md) | iPhone 17 / iPad Pro voice surfaces (enterprise audit — planning) |
 | 21 | [21-redis-persistence.md](./21-redis-persistence.md) | Redis STM hybrid persistence (enterprise audit + `infrastructure/redis/`) |
 | 24 | [24-apple-neural-engine-voice-optimization.md](./24-apple-neural-engine-voice-optimization.md) | ANE voice optimization stub — expand from audit |
+| 22 | [22-doc-era-reconciliation.md](./22-doc-era-reconciliation.md) | **Stale branches / whitepapers** — what is live vs superseded |
 
 Every chapter lists **Intents** at the top of each section — the *why* behind each design choice, not just the *what*.
 
@@ -129,7 +130,7 @@ The operator runs a **sovereign Family Office stack** on owned hardware: a **DGX
 | Trust Spine outbound-only WG flip | Nephew `plans/0151-network-trust-spine-secure-cutover.md` |
 | NAS Docker migration (WP, Gitea, Matrix off DGX) | Nephew `plans/0197-nas-docker-heavy-storage-migration.md` |
 | DXP6800 full buildout (mail, chat, 10GbE program) | Nephew `plans/0156` (referenced; verify file on branch) |
-| Brume-split AI island (whitepaper target) | `docs/whitepaper-hardware-network.md` on branch `plan/border-control-wg` — reconcile with ch. 13 |
+| Brume-split AI island (whitepaper target) | Superseded — see [22-doc-era-reconciliation.md](./22-doc-era-reconciliation.md) |
 | Redis short-term memory | **Documented** ch. 21 + `infrastructure/redis/` — **not yet deployed** on DGX fleet |
 | Zero-trust Caddy mTLS doors | **Documented** ch. 19 — planning; differs from live `make doors` gateway today |
 | Open WebUI health | Deployed but unhealthy on DGX — needs heal |

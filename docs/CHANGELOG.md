@@ -10,6 +10,19 @@ Eastern time stamped to the second using `TZ=America/New_York date '+%Y-%m-%d %H
 
 ---
 
+---
+
+## [0.7.8] — 2026-06-16 09:30:00 Eastern · *Gitea branch hygiene + doc era reconciliation*
+
+### Added
+- `docs/setup/22-doc-era-reconciliation.md` — live topology vs superseded whitepapers/branches.
+
+### Fixed
+- Gitea `avery/yousirjuan` default branch set to **`main`** (was `docs/operator-setup-master-guide`).
+- Bare repo `HEAD` pointed at `main`.
+- Deleted stale branches on Gitea + GitHub: `docs/operator-setup-master-guide`,
+  `voice-security-audit-2026-06`, `plan/border-control-wg`.
+
 ## [0.7.7] — 2026-06-15 19:30:00 Eastern · *Reconcile Gitea master with GitHub enterprise audit*
 
 ### Added (from GitHub branch `voice-security-audit-2026-06`)
