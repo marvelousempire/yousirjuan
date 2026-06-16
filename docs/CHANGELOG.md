@@ -14,6 +14,13 @@ Eastern time stamped to the second using `TZ=America/New_York date '+%Y-%m-%d %H
 
 ---
 
+## [0.7.10] — 2026-06-16 09:50:00 Eastern · *Standing order: agents always forge-push*
+
+### Added
+- `.cursor/rules/forge-push-always.mdc` + `.claude/rules/forge-push-always.md` — operator
+  directive: Nephew always runs `make forge-push` before reporting done; never delegate sync.
+- `AGENTS.md` universal rule #10 + forge-push row in task table.
+
 ## [0.7.9] — 2026-06-16 09:45:00 Eastern · *Full forge sync automation + Gitea Actions*
 
 ### Added
