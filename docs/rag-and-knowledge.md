@@ -1,5 +1,13 @@
 # RAG and knowledge bases
 
+> **⚠️ Superseded for Family Office fleet operations.**  
+> Canonical RAG: [`docs/setup/06-retrieval-and-memory.md`](setup/06-retrieval-and-memory.md) · [`docs/setup/16-knowledge-fabric-rag-quantization.md`](setup/16-knowledge-fabric-rag-quantization.md) · Nephew `docs/infrastructure/dgx-rag-and-fleet-state.md`.  
+> This page describes **local Open WebUI + nomic-embed + chromadb** — valid for isolated dev only, **not** the DGX Brain A path (`bge-m3` → Qdrant → `bge-reranker-v2-m3` → tower-api `/api/v1/retrieve`).
+
+---
+
+# RAG and knowledge bases (legacy dev stack)
+
 RAG = Retrieval-Augmented Generation. The model "reads" your documents at query time, pulling relevant chunks into the prompt. **Open WebUI has this built-in.** No extra setup.
 
 ## How it works
@@ -15,9 +23,20 @@ RAG = Retrieval-Augmented Generation. The model "reads" your documents at query 
    - Sends to the LLM
 6. LLM answers using your docs as context.
 
-**Zero data leaves your machine.** Everything (embedding, storage, retrieval, generation) is local.
+**Zero data leaves your machine** when Ollama and storage are local — but **fleet agents must use tower-api retrieve**, not this path.
 
-## The 5-minute setup
+## Fleet path (use this)
+
+```bash
+# On DGX or via WG from Mac
+curl -s http://10.1.0.5:8088/api/v1/retrieve \
+  -H 'Content-Type: application/json' \
+  -d '{"query":"What does sovereign.md say?","top_k":5}'
+```
+
+Agents: MCP `nephew_corpus_retrieve` · eval gate: Nephew `evals/retrieval/`.
+
+## The 5-minute setup (dev / Open WebUI workshop only)
 
 ### 1. Pull the embedding model
 ```bash
@@ -48,31 +67,3 @@ Pick the new model from the chat dropdown. Ask questions about the docs you uplo
 - **Cite sources**: include "cite the source document" in the system prompt. Open WebUI displays which chunks were retrieved with each answer.
 - **Update by re-uploading**: replace files in the knowledge base when docs change. Open WebUI re-embeds automatically.
 - **Try `llava:13b` for vision** if your docs are scanned PDFs / image-heavy — it can read images directly. Combined with RAG it's powerful.
-- **Larger context windows help**: a 128k-context model can fit ~50 chunks; an 8k-context model only fits ~6. Larger = better recall, slower.
-
-## Per-user vs shared knowledge
-
-- **Per-user knowledge**: each family member uploads their own private docs (medical, personal). Stays on their account only.
-- **Shared knowledge**: admin (you) uploads to a public model. All users can chat with it. Use case: "Family Office Assistant" with shared policies.
-
-See [`multi-user.md`](multi-user.md) for the sharing mechanism.
-
-## Security considerations
-
-- Documents are stored in the Open WebUI Docker volume (`/var/lib/docker/volumes/open-webui/_data/uploads/`). Volume is on your VPS disk.
-- Embeddings are stored in `chromadb` in the same volume.
-- **At-rest encryption is your job** — encrypt the host disk (LUKS) if the VPS provider doesn't already.
-- If you back up the volume (`tools/backup.sh`), the backup contains everything. Encrypt your backup tarball before storing off-site.
-
-## RAG vs fine-tuning — when to use which
-
-| | RAG (this doc) | Fine-tuning |
-|---|---|---|
-| **What it changes** | What the model has access to (read-only context) | The model's weights themselves (permanent learning) |
-| **Setup time** | 5 min | Hours-to-days, GPU recommended |
-| **Updates** | Re-upload files; re-embed; instant | Re-train; new GGUF; re-import |
-| **Best for** | Living documents, large corpora, multiple users with separate docs | Stable knowledge baked into a model's "personality" |
-| **Cost** | $0 if local | $0 if local on your GPU; $$$ if cloud |
-| **Privacy** | Fully local | Fully local |
-
-**For family-office work (financials, contracts, policies that change), RAG is the right tool every time.**

@@ -15,15 +15,17 @@ Boundary: `REPOS-CONTRACT.md` — **no personas, no meta-library, no cassette.js
 
 ---
 
-## Current truth (2026-06-15)
+## Current truth (2026-06-16)
 
 | Track | Value |
 |---|---|
-| **YSJ docs** | `docs/setup/` chapters 0–25 — public-safe operator reference |
-| **Nephew monorepo** | v1.79.42 · voice `CHECK=voice` green · Holler M5 edge reboot-safe |
+| **YSJ docs** | `docs/setup/` chapters 0–29 — public-safe operator reference |
+| **Nephew monorepo** | v1.79.75 · Cassette Factory one-tap · Plan 0231 egress gate |
 | **Forge** | Gitea master on DGX → GitHub mirror · **`make forge-push`** before reporting done |
 | **Operator Mac** | FIVEMAC · Pockit `http://pockit.localhost/` · Parakeet `http://pockit.localhost/#/c/voice` |
 | **Doors** | `http://<id>.localhost/` after `make doors` — never teach `:8782` to humans |
+| **Egress** | `make sovereign-egress-audit` (Nephew) · default deny cloud LLM |
+| **Factory** | `make cassette-from URL=…` · ch. 27 · `NEPHEW_BRAIN_PROXY=http://10.1.0.5:8088` |
 
 ---
 
@@ -38,7 +40,7 @@ E4  NAS              Historia · WP files · git objects · docker stacks
 E5  VPS edge         Public TLS gate only
 ```
 
-Detail: [`docs/setup/README.md`](../setup/README.md) · voice: ch. 11 · doors: ch. 15 · cassette bridge: ch. 25
+Detail: [`docs/setup/README.md`](../setup/README.md) · voice: ch. 11 + **28** · factory: **27** · egress: **29** · doors: ch. 15 · SSO: **26**
 
 ---
 

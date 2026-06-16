@@ -21,9 +21,6 @@ forge-status:
 setup-forge-remotes:
 	@bash scripts/setup-forge-remotes.sh
 
-setup-cassette-git-ssh:
-	@bash scripts/setup-cassette-git-ssh.sh
-
 hooks:
 	@bash scripts/install-git-hooks.sh
 

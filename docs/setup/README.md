@@ -58,8 +58,11 @@ Full detail: [23-forge-sync-automation.md](./23-forge-sync-automation.md)
 | 23 | [23-forge-sync-automation.md](./23-forge-sync-automation.md) | **Gitea ↔ GitHub automation** — forge-push, timer, Actions, push-mirror |
 | 25 | [25-cassette-update-agent-bridge.md](./25-cassette-update-agent-bridge.md) | **YSJ ↔ Nephew bridge** — Update the Cassette ritual, agent pastes, elevations map |
 | 26 | [26-family-sso-and-door-tickets.md](./26-family-sso-and-door-tickets.md) | **Family SSO** — one hub sign-in, door tickets, recovery when SSO breaks |
+| 27 | [27-cassette-factory-and-brain-proxy.md](./27-cassette-factory-and-brain-proxy.md) | **Cassette Factory** — one-tap GitHub ingest, `NEPHEW_BRAIN_PROXY`, brain merge |
+| 28 | [28-voice-containers-whisper-fish-speech.md](./28-voice-containers-whisper-fish-speech.md) | **DGX voice containers** — Whisper, Fish Speech vs M5 Holler/Parakeet |
+| 29 | [29-sovereign-egress-default-deny.md](./29-sovereign-egress-default-deny.md) | **Default deny egress** — no cloud LLM phoning home (Plan 0231) |
 
-**Last updated:** 2026-06-16 (ch. 26 family SSO + Nephew 0195/0198 sync) **Intents** at the top of each section — the *why* behind each design choice, not just the *what*.
+**Last updated:** 2026-06-16 (ch. 27–29 factory/voice/egress + Nephew 0231)
 
 ---
 

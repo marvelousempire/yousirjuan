@@ -52,7 +52,6 @@ async function main() {
   await mustExist('scripts/forge-sync-core.sh');
   await mustExist('scripts/forge-pull-on-gitea.sh');
   await mustExist('artifacts/forge-sync-core.txt');
-  await mustExist('scripts/setup-cassette-git-ssh.sh');
   await mustExist('Makefile');
   await checkSetupIndex();
   await checkNoSecrets();

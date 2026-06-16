@@ -33,5 +33,3 @@ git remote -v
 echo ""
 echo "Master:  git push gitea main   (or: make forge-push)"
 echo "Mirror:  GitHub push-mirror + scripts/forge-sync.sh for enterprise agent pushes"
-echo ""
-echo "SSH (cassette standard): bash scripts/setup-cassette-git-ssh.sh"
