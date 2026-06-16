@@ -7,6 +7,8 @@
     "dev:api": "node api/server.js",
     "start:api": "node api/server.js",
     "health": "node scripts/health-check.js",
+    "verify": "node scripts/yousirjuan-verify.mjs",
+    "forge-push": "make forge-push",
     "features:export": "node scripts/export-feature-ledger.js",
     "provision:demo": "bash tools/init-client-assistant.sh smith-family",
     "sync:hardware": "node hardware/sync-hardware-md.js",

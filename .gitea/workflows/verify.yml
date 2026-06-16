@@ -1,0 +1,28 @@
+# Gitea Actions — verify on push to main (self-hosted runner on DGX).
+# Replaces GitHub Actions billing — see docs/rules/cli-first-git-no-github-actions.md
+
+name: Yousirjuan Verify
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Yousirjuan verify gate
+        run: node scripts/yousirjuan-verify.mjs
+
+      - name: API tests (when present)
+        run: npm test --if-present

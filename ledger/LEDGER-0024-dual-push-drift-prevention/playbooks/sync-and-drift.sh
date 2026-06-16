@@ -13,7 +13,9 @@ WORK_DIR="${WORK_DIR:-/var/cache/yousirjuan-sync}"
 REPORT="${REPORT:-/var/lib/yousirjuan/dual-push-drift-report.json}"
 LOG="${LOG:-/var/log/yousirjuan-sync.log}"
 CREDENTIALS_FILE="${CREDENTIALS_FILE:-/etc/yousirjuan-sync/credentials}"
-GITLAB_URL_BASE="ssh://git@127.0.0.1:2424/marvelousempire"
+GITLAB_URL_BASE="${GITLAB_URL_BASE:-ssh://git@127.0.0.1:2424/marvelousempire}"
+# On DGX / Mac with gitea-dgx SSH alias, override:
+#   GITLAB_URL_BASE=git@gitea-dgx:marvelousempire bash sync-and-drift.sh
 # Per LEDGER-0025: GitHub access via fine-grained PAT (HTTPS). The token is
 # read from $CREDENTIALS_FILE and embedded in the URL. Rotation: edit the
 # file; the next 5-min timer tick re-points every bare repo via

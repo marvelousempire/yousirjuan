@@ -12,6 +12,27 @@ Eastern time stamped to the second using `TZ=America/New_York date '+%Y-%m-%d %H
 
 ---
 
+---
+
+## [0.7.9] — 2026-06-16 09:45:00 Eastern · *Full forge sync automation + Gitea Actions*
+
+### Added
+- `Makefile` — `verify`, `forge-push`, `forge-sync`, `forge-status`, `setup-forge-remotes`.
+- `scripts/forge-sync.sh`, `forge-push.sh`, `forge-sync-all.sh`, `forge-status.sh`,
+  `setup-forge-remotes.sh`, `yousirjuan-verify.mjs`.
+- `scripts/install-dgx-forge-sync-timer.sh`, `install-mac-forge-sync-timer.sh`.
+- `scripts/gitea-enable-actions.sh`, `deploy/gitea/act-runner-compose.yml`.
+- `.gitea/workflows/verify.yml` — CI on self-hosted runner (not GitHub Actions).
+- `docs/setup/23-forge-sync-automation.md` — full automation chapter.
+
+### Fixed
+- Canonical remote: **`marvelousempire/yousirjuan`** on Gitea (not `avery/yousirjuan`).
+- `avery/yousirjuan` archived in Gitea DB with deprecation description.
+- Gitea Actions enabled on DGX; `gitea-act-runner` registered (`dgx-spark-family-office`).
+- Forge-sync timers: Mac LaunchAgent + DGX user systemd (every 5 min).
+
+> **Operator:** `make forge-push` after edits. Enterprise GitHub pushes auto-reconcile within 5 min.
+
 ## [0.7.8] — 2026-06-16 09:30:00 Eastern · *Gitea branch hygiene + doc era reconciliation*
 
 ### Added

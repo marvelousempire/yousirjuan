@@ -12,15 +12,18 @@ This folder is the **single front door** for understanding how the Family Office
 
 | Remote | Role | Who uses it |
 |---|---|---|
-| **Gitea on DGX** (`gitea-dgx`) | **Master** — canonical `main` | Operator Mac, DGX, Nephew sessions with forge access |
-| **GitHub** (`origin`) | **Mirror + enterprise agent lane** | Agents without DGX/VPN access push here |
+| **Gitea** `marvelousempire/yousirjuan` on DGX | **Master** | `make forge-push` · push-mirror → GitHub |
+| **GitHub** `origin` | **Mirror + enterprise agent lane** | Agents without VPN |
 
-**Sync discipline:**
+**Sync discipline (automated):**
 
-1. Enterprise agents push branches/PRs to **GitHub**.
-2. Operator (or Nephew on Mac/DGX) **merges into `main` on Gitea** — never leave GitHub-only commits on `main` without pulling to Gitea.
-3. After Gitea `main` is truth, **mirror push to GitHub** so both remotes match.
-4. Stale Gitea-only branches (e.g. `docs/operator-setup-master-guide`) should be deleted after merge.
+1. Enterprise agents push/merge to **GitHub `main`**.
+2. **`forge-sync` timer** (every 5 min on DGX) fast-forwards **Gitea** when GitHub is ahead.
+3. Operator runs **`make forge-push`** for immediate master + mirror.
+4. **Push mirror** on Gitea syncs to GitHub on every Gitea commit.
+5. **Gitea Actions** runs `.gitea/workflows/verify.yml` on push — not GitHub Actions.
+
+Full detail: [23-forge-sync-automation.md](./23-forge-sync-automation.md)
 
 ---
 
@@ -52,6 +55,7 @@ This folder is the **single front door** for understanding how the Family Office
 | 21 | [21-redis-persistence.md](./21-redis-persistence.md) | Redis STM hybrid persistence (enterprise audit + `infrastructure/redis/`) |
 | 24 | [24-apple-neural-engine-voice-optimization.md](./24-apple-neural-engine-voice-optimization.md) | ANE voice optimization stub — expand from audit |
 | 22 | [22-doc-era-reconciliation.md](./22-doc-era-reconciliation.md) | **Stale branches / whitepapers** — what is live vs superseded |
+| 23 | [23-forge-sync-automation.md](./23-forge-sync-automation.md) | **Gitea ↔ GitHub automation** — forge-push, timer, Actions, push-mirror |
 
 Every chapter lists **Intents** at the top of each section — the *why* behind each design choice, not just the *what*.
 
