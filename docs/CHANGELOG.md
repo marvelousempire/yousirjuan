@@ -14,6 +14,12 @@ Eastern time stamped to the second using `TZ=America/New_York date '+%Y-%m-%d %H
 
 ---
 
+## [0.7.12] — 2026-06-16 10:15:00 Eastern · *Master blueprint consolidation*
+
+### Changed
+- `docs/setup/00-system-blueprint-audit-2026-06.md` — full consolidated system blueprint
+  (voice, zero-trust Caddy, Redis Sentinel, devices, DNS, WireGuard roadmap).
+
 ## [0.7.11] — 2026-06-16 10:00:00 Eastern · *Forge sync without GitHub SSH*
 
 ### Added
