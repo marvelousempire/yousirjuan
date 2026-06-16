@@ -1,0 +1,33 @@
+version: '3.9'
+
+services:
+  redis:
+    image: redis/redis-stack:latest
+    container_name: yousirjuan-redis
+    restart: unless-stopped
+    networks:
+      - control-net
+      - voice-net
+    ports:
+      - "6379:6379"  # Only expose internally via networks
+    volumes:
+      - redis-data:/data
+    command: >
+      redis-server --save 60 1000 --save 300 100 --save 900 1
+      --appendonly yes
+      --appendfsync everysec
+      --auto-aof-rewrite-percentage 100
+      --auto-aof-rewrite-min-size 64mb
+    labels:
+      - "caddy=true"
+      - "caddy.tls.internal=true"
+
+volumes:
+  redis-data:
+    driver: local
+
+networks:
+  control-net:
+    external: true
+  voice-net:
+    external: true
