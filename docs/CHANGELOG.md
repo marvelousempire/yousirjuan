@@ -10,6 +10,22 @@ Eastern time stamped to the second using `TZ=America/New_York date '+%Y-%m-%d %H
 
 ---
 
+## [0.7.7] — 2026-06-15 19:30:00 Eastern · *Reconcile Gitea master with GitHub enterprise audit*
+
+### Added (from GitHub branch `voice-security-audit-2026-06`)
+- `docs/setup/00-system-blueprint-audit-2026-06.md` — enterprise audit index.
+- `docs/setup/19-zero-trust-caddy-doors.md`, `20-mobile-surfaces-ios17.md`,
+  `21-redis-persistence.md`, `24-apple-neural-engine-voice-optimization.md`.
+- `infrastructure/redis/` and `infrastructure/caddy/` compose stubs.
+
+### Fixed
+- Restored full `docs/setup/README.md` and `11-voice-parakeet-premium-stack.md` after
+  enterprise branch had replaced them with stubs during fast-forward.
+- README now documents **Gitea = master**, GitHub = enterprise agent mirror lane.
+- Integrated audit chapters into 24-chapter index without losing ch. 1–18 content.
+
+> **Sync rule:** merge enterprise GitHub work to **Gitea `main` first**, then mirror to GitHub.
+
 ## [0.7.6] — 2026-06-15 18:45:00 Eastern · *Doors, RAG fabric, agents, WG/Matrix/Gitea with intents*
 
 ### Added
