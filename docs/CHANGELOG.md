@@ -16,6 +16,22 @@ Eastern time stamped to the second using `TZ=America/New_York date '+%Y-%m-%d %H
 
 ---
 
+## [0.7.15] — 2026-06-17 13:50:00 Eastern · *Family SSO receipt + LEDGER-0035 (merge PR #1)*
+
+### Added
+- `ledger/LEDGER-0035-family-sso-infra-receipt/` — triage + recover runbooks + `sso-smoke.sh` replay.
+- `plans/0006-nephew-platform-sync-receipt.md` — standing sync table when Nephew ships platform plans.
+- `docs/agent-pastes/family-sso-operator-context.md` — short paste for SSO debugging across repos.
+
+### Changed
+- `docs/setup/26-family-sso-and-door-tickets.md` — expanded hub sign-in, door-ticket handoff, recovery (host-only local cookies).
+- `docs/setup/17-agents-fleet-bishop-cloak.md` — Bishop-optional boot (0195) + factory player (0198) tables.
+- `docs/setup/12-pockit-non-vanilla-surfaces.md` — living re-skin section.
+- `docs/setup/08-daily-operator-workflows.md` — `POCKIT_LOCAL_ONLY`, SSO smoke.
+- `docs/Feature Ledger.md` — SSO, Bishop boot, factory player rows.
+
+---
+
 ## [0.7.14] — 2026-06-16 11:08:05 Eastern · *RL-0051 agent executes don't delegate*
 
 ### Added
@@ -26,6 +42,7 @@ Eastern time stamped to the second using `TZ=America/New_York date '+%Y-%m-%d %H
 - `rules/GLOBAL-RULES-FOR-USING-NEPHEW.md` Rule 1 re-affirmed with 2026-06-16 verbatim.
 - `AGENTS.md`, `CLAUDE.md`, agent paste, `forge-push-always` — cross-links to RL-0051.
 
+---
 ## [0.7.13] — 2026-06-15 18:30:00 Eastern · *Cassette agent bridge + Nephew voice sync*
 
 ### Added

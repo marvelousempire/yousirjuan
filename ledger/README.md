@@ -18,10 +18,11 @@ For the rule that makes adding to the ledger the default closing ritual, see [`.
 
 Counter is the source of truth for the next `LEDGER-NNNN`. Bump it when you open a new entry.
 
-**Next number:** `LEDGER-0035`
+**Next number:** `LEDGER-0036`
 
 | ID | Title | Status | Opened | Closed | Replay |
 |---|---|---|---|---|---|
+| [`LEDGER-0035`](LEDGER-0035-family-sso-infra-receipt/) | Family SSO infra receipt — verify stack, recover hub sign-in | `shipped` | 2026-06-16 | 2026-06-16 | `bash ledger/LEDGER-0035-family-sso-infra-receipt/playbooks/sso-smoke.sh` |
 | [`LEDGER-0001`](LEDGER-0001-imac-mcp-setup/) | iMac MCP development stack | `shipped` | 2026-05-19 | 2026-05-19 | `make -C ledger/LEDGER-0001-imac-mcp-setup/playbooks install` |
 | [`LEDGER-0002`](LEDGER-0002-workflow-debugger-agent/) | workflow-debugger agent (YAML / Bash / JS / Python / Excel) | `shipped` | 2026-05-20 | 2026-05-20 | already loaded at `.claude/agents/workflow-debugger.md`; promote to user scope via `bash ledger/LEDGER-0002-workflow-debugger-agent/playbooks/install-user-scope.sh` |
 | [`LEDGER-0003`](LEDGER-0003-vscode-remote-vps/) | VS Code Remote-SSH to vps-godaddy (port 2222, abrownsanta) | `shipped` | 2026-05-20 | 2026-05-20 | `bash ledger/LEDGER-0003-vscode-remote-vps/playbooks/install.sh install && code --remote ssh-remote+vps-godaddy /home/abrownsanta` |

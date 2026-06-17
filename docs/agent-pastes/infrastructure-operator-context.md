@@ -20,7 +20,7 @@ Boundary: `REPOS-CONTRACT.md` — **no personas, no meta-library, no cassette.js
 | Track | Value |
 |---|---|
 | **YSJ docs** | `docs/setup/` chapters 0–29 — public-safe operator reference |
-| **Nephew monorepo** | v1.79.75 · Cassette Factory one-tap · Plan 0231 egress gate |
+| **Nephew monorepo** | v1.79.75+ · Bishop-optional boot (0195) · factory player (0198) · door-ticket SSO · Cassette Factory |
 | **Forge** | Gitea master on DGX → GitHub mirror · **`make forge-push`** before reporting done |
 | **Operator Mac** | FIVEMAC · Pockit `http://pockit.localhost/` · Parakeet `http://pockit.localhost/#/c/voice` |
 | **Doors** | `http://<id>.localhost/` after `make doors` — never teach `:8782` to humans |
@@ -51,6 +51,7 @@ Detail: [`docs/setup/README.md`](../setup/README.md) · voice: ch. 11 + **28** �
 | Update cassette / make vanilla | **nephew** | `make cassette-line CHECK=<id>` · `docs/sop/update-the-cassette.md` |
 | Parakeet voice / Holler edge | **nephew** | `make voice-launchagent` · `CHECK=voice` · ch. 11 (YSJ) for architecture |
 | Explain family stack | **yousirjuan** | `docs/setup/README.md` |
+| Family SSO broken | **yousirjuan** | ch. 26 · `family-sso-operator-context.md` · LEDGER-0035 smoke |
 | Sync git remotes | **yousirjuan** | `make forge-push` · ch. 23 |
 | Replay infra task | **yousirjuan** | `ledger/LEDGER-NNNN-*/` |
 | Agent retrieve / RAG | **nephew** | MCP `nephew_corpus_retrieve` · domains `["vault"]` |

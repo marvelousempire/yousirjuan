@@ -36,6 +36,10 @@ Update this file in the same PR as any status change. Reference the [LEDGER entr
 | **`.claude/rules/` discipline** | ✅ | [`.claude/rules/`](../.claude/rules/) | dev-discipline, changelog-and-versioning, go-live-path, parallel-surfaces-from-day-one, ledger-discipline, cli-snippet-formatting. |
 | **`Bishop` agent factory consolidation** (merge `bishop-factory` → `bishop`) | 🔜 | external repos (`marvelousempire/bishop`, `marvelousempire/bishop-factory`) | Two repos are byte-identical duplicates. Plan documented at [`~/.claude/plans/what-is-the-best-curious-willow.md`](~/.claude/plans/what-is-the-best-curious-willow.md) §"Part 2". |
 | **`Nephew` orchestration agent** | (not in this repo) | external `marvelousempire/nephew` | yousirjuan is infrastructure-only per REPOS-CONTRACT.md. Nephew is the user-facing orchestrator. |
+| **Family SSO operator docs** (door-ticket, hub sign-in) | ✅ | [ch. 26](../docs/setup/26-family-sso-and-door-tickets.md), [LEDGER-0035](../ledger/LEDGER-0035-family-sso-infra-receipt/), agent paste | Implementation in nephew; YSJ documents verify + recovery. Synced 2026-06-16. |
+| **Bishop-optional sovereign boot** (Nephew 0195) | ✅ | [ch. 17](../docs/setup/17-agents-fleet-bishop-cloak.md) | Documented; code in nephew `tower-traffic-control.sh`. |
+| **Bishop factory player console** (Nephew 0198) | ✅ | [ch. 17](../docs/setup/17-agents-fleet-bishop-cloak.md), ch. 08 `make bishop` | Hosted factory cassettes + `make bishop`; code in nephew. |
+| **agent-comms / nephew relay** | 🔜 | nephew plans 0175–0178 | Not yet in setup docs — track in plans/0005. |
 
 ## Operator-facing apps
 

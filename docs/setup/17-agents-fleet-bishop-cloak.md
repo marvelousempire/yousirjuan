@@ -102,6 +102,28 @@ Repo: `marvelousempire/bishop` · Passport: `registries/passports/repos/bishop.p
 
 Console door: `make bishop` boots Pockit gateway + Bishop console door.
 
+### Bishop boot modes (Nephew Plan 0195)
+
+| Mode | When | Command / env |
+|---|---|---|
+| **Sovereign default** | Family boot, Pockit, most operator work | `make pockit` — no Bishop checkout required; tower-api owns `/api/v1/*` |
+| **Opt-in Bishop API** | Legacy factory FastAPI, OIDC dev, catch-all `/api/` on Bishop port | `NEPHEW_WITH_BISHOP=1 make ui` |
+
+`~/.nephew/run/tower-ports.json` records `bishop_skipped: true` when the sovereign path is active.
+
+### Bishop factory player (Nephew Plan 0198)
+
+Bishop is also a **Pockit console** — backstage operator surface, not family-facing chat.
+
+| Surface | How to open |
+|---|---|
+| **Factory root (Intention)** | `make bishop` → `http://bishop.localhost/` |
+| **Hosted tapes** | `http://bishop-kingdom-hotel.localhost/`, `http://bishop-registry.localhost/`, … |
+| **Settings** | `http://settings.localhost/?console=bishop` |
+| **Play profile** | `bishop-factory` — catalogue-backed tape rail |
+
+Hosted factory cassettes include: intention, birth canal (registry), Kingdom Hotel, wants desk, route desk, staff roster, kingdom workspace (`ext-bishop`). Implementation lives in **nephew** — this chapter documents routing only.
+
 ---
 
 ## Associate Agents & family personas
@@ -205,6 +227,7 @@ Binder read order: `AI_AGENT_RULES/manifest.json` → `README.md` → commandmen
 
 - [05-nephew-orchestration.md](./05-nephew-orchestration.md) — summary chapter
 - [15-doors-cassettes-pockit-navigation.md](./15-doors-cassettes-pockit-navigation.md) — Pockit + doors
+- [26-family-sso-and-door-tickets.md](./26-family-sso-and-door-tickets.md) — hub sign-in + door tickets
 - [16-knowledge-fabric-rag-quantization.md](./16-knowledge-fabric-rag-quantization.md) — retrieve before work
 - [04-repo-ecosystem.md](./04-repo-ecosystem.md) — repo boundaries
 - Nephew: `CLAUDE.md`, `AGENTS.md`, `docs/how-nephew-functions.md`

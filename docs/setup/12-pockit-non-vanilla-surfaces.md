@@ -30,7 +30,36 @@ Hosted pads: voice-pad.js, embed iframes, native CT routes
 Suite bar: pockit-suite.js (Family Office app strip)
 ```
 
-Boot: `make pockit` from nephew repo on operator Mac.
+Boot: `make pockit` from nephew repo on operator Mac.  
+Aliases: `make pad`, `make pocket` (same target).
+
+---
+
+## Living re-skin (catalogue → chrome)
+
+Pockit is a **living interface** — not a static page per app:
+
+```text
+cassettes/product/*.json + data/cassette-catalogue.json
+        ↓ discover / build
+data/tape-door-registry.json  →  http://<id>.localhost/
+        ↓ gateway Host routing
+PlayerShell + PlayerTapeRail + CassetteFrame
+        ↓ reads hosted_cassette_ids, nav, glyphs
+Operator says: make bishop · make clinic · http://hello.localhost/
+```
+
+| Layer | What weaves in |
+|---|---|
+| **Catalogue** | `hosted_cassette_ids`, settings tabs, parent_console |
+| **Door registry** | One hostname per cassette — operators never type ports |
+| **Player shell** | Tape rail, overview grid, factory chrome (e.g. Bishop intention) |
+| **Manifests** | `pockit-surface.json`, family-hub-cards — version badge + suite bar |
+
+New cassettes **magnet onto the rail** when registered — no hand-wired button per tape.  
+Operator command: **`make up <id>`** or console shorthand **`make bishop`**, not raw Vite URLs.
+
+Plan 0196 (universal HUD / `pockit_hud=1` embed) extends this — see nephew `plans/0196-pockit-universal-hud-shell.md`.
 
 ---
 

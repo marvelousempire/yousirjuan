@@ -9,3 +9,4 @@ Tracked implementation plans for substantive changes. Plans are immutable once w
 | [0003](0003-border-control-wg.md) | proposed | Border control WireGuard egress customs |
 | [0004](0004-domain-agnostic-framework-tld.md) | Phase 1 shipped | Domain-agnostic framework TLD |
 | [0005](0005-cassette-factory-platform-bridge.md) | shipped | Cassette Factory + sovereign stack YSJ bridge |
+| [0006](0006-nephew-platform-sync-receipt.md) | living | Nephew platform sync receipt (YSJ doc updates) |

@@ -62,7 +62,7 @@ Full detail: [23-forge-sync-automation.md](./23-forge-sync-automation.md)
 | 28 | [28-voice-containers-whisper-fish-speech.md](./28-voice-containers-whisper-fish-speech.md) | **DGX voice containers** — Whisper, Fish Speech vs M5 Holler/Parakeet |
 | 29 | [29-sovereign-egress-default-deny.md](./29-sovereign-egress-default-deny.md) | **Default deny egress** — no cloud LLM phoning home (Plan 0231) |
 
-**Last updated:** 2026-06-16 (ch. 27–29 factory/voice/egress + Nephew 0231)
+**Last updated:** 2026-06-17 (ch. 26 SSO receipt + LEDGER-0035 · ch. 27–29 factory/voice/egress)
 
 ---
 
@@ -86,6 +86,7 @@ The operator runs a **sovereign Family Office stack** on owned hardware: a **DGX
 | Ledger runbooks (may contain live wiring) | `ledger/LEDGER-*` |
 | Nephew product vocabulary | `marvelousempire/nephew` → `docs/product-stack-glossary.md` |
 | **Agent paste (infrastructure)** | `docs/agent-pastes/infrastructure-operator-context.md` |
+| **Agent paste (family SSO)** | `docs/agent-pastes/family-sso-operator-context.md` |
 | **Agent paste (cassettes/voice)** | `marvelousempire/nephew` → `docs/agent-pastes/cassette-update-context.md` |
 | Sovereign operating principle | `marvelousempire/nephew` → `docs/sovereign.md` |
 | Live fleet ground truth (operator-only) | `marvelousempire/nephew` → `docs/infrastructure/dgx-rag-and-fleet-state.md` |
@@ -146,6 +147,9 @@ The operator runs a **sovereign Family Office stack** on owned hardware: a **DGX
 | Redis short-term memory | **Documented** ch. 21 + `infrastructure/redis/` — **not yet deployed** on DGX fleet |
 | Zero-trust Caddy mTLS doors | **Documented** ch. 19 — planning; differs from live `make doors` gateway today |
 | Open WebUI health | Deployed but unhealthy on DGX — needs heal |
+| **Family SSO door-ticket + hub sign-in** | **Documented** ch. 26 + LEDGER-0035 — implementation in nephew |
+| **Bishop-optional boot (0195) + factory player (0198)** | **Documented** ch. 17 — implementation in nephew |
+| **agent-comms / nephew relay** | Nephew plans 0175–0178 — not duplicated here yet |
 | LiveSync CouchDB edge | Wizard pending — registry notes in Jarvis hub audit |
 | MLX / ANE distilled edge models on M5 | ch. 24 stub — Holler path shipped first |
 
