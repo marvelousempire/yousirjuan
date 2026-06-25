@@ -18,10 +18,11 @@ For the rule that makes adding to the ledger the default closing ritual, see [`.
 
 Counter is the source of truth for the next `LEDGER-NNNN`. Bump it when you open a new entry.
 
-**Next number:** `LEDGER-0036`
+**Next number:** `LEDGER-0037`
 
 | ID | Title | Status | Opened | Closed | Replay |
 |---|---|---|---|---|---|
+| [`LEDGER-0036`](LEDGER-0036-mac-fleet-bonjour-file-sharing/) | Mac fleet Bonjour file sharing — nephew-spark SMB + admin-only LAN mounts | `shipped` | 2026-06-25 | 2026-06-25 | `bash ledger/LEDGER-0036-mac-fleet-bonjour-file-sharing/playbooks/install-from-fivemac.sh` |
 | [`LEDGER-0035`](LEDGER-0035-family-sso-infra-receipt/) | Family SSO infra receipt — verify stack, recover hub sign-in | `shipped` | 2026-06-16 | 2026-06-16 | `bash ledger/LEDGER-0035-family-sso-infra-receipt/playbooks/sso-smoke.sh` |
 | [`LEDGER-0001`](LEDGER-0001-imac-mcp-setup/) | iMac MCP development stack | `shipped` | 2026-05-19 | 2026-05-19 | `make -C ledger/LEDGER-0001-imac-mcp-setup/playbooks install` |
 | [`LEDGER-0002`](LEDGER-0002-workflow-debugger-agent/) | workflow-debugger agent (YAML / Bash / JS / Python / Excel) | `shipped` | 2026-05-20 | 2026-05-20 | already loaded at `.claude/agents/workflow-debugger.md`; promote to user scope via `bash ledger/LEDGER-0002-workflow-debugger-agent/playbooks/install-user-scope.sh` |

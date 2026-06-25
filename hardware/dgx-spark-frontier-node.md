@@ -155,3 +155,17 @@ DGX Spark transforms the ecosystem from:
 into:
 
 > full frontier AI infrastructure.
+
+---
+
+# House LAN operator access (fivemac mesh)
+
+On the Family Office `192.168.10.0/24` mesh the DGX is tagged **nephew-spark** (`192.168.10.205`, Bonjour `nephew-spark.local`).
+
+| Access | How |
+|--------|-----|
+| SSH | `ssh nephew-spark` (user `abrownsanta`) |
+| SMB | `smb://abrownsanta@nephew-spark.local/Developer` |
+| SFTP | `sftp://abrownsanta@nephew-spark.local` |
+
+**mDNS hardening required** when Docker is heavy — see [LEDGER-0036](../ledger/LEDGER-0036-mac-fleet-bonjour-file-sharing/) and PAIN-0012. Mount by **hostname**, not raw IP, so Finder Network shows `nephew-spark.local` not `192.168.10.205`.

@@ -16,6 +16,24 @@ Eastern time stamped to the second using `TZ=America/New_York date '+%Y-%m-%d %H
 
 ---
 
+## [0.7.16] — 2026-06-25 11:09:38 Eastern · *Mac fleet Bonjour file sharing — LEDGER-0036*
+
+### Added
+- `ledger/LEDGER-0036-mac-fleet-bonjour-file-sharing/` — full session journal, 6 runbooks, 7 playbooks
+  (nephew-spark mDNS fix, admin-only SMB, hostname mounts, onemac/twomac bootstrap).
+- `pain-journal/PAIN-0011-finder-shows-ip-not-bonjour-name.md` — IP vs Bonjour duplicate rows in Finder Network.
+- `pain-journal/PAIN-0012-dgx-docker-pollutes-mdns.md` — Docker bridges breaking `nephew-spark.local`.
+
+### Changed
+- `ledger/README.md` — index row + next number `LEDGER-0037`.
+- `docs/Feature Ledger.md` — platform row for fleet LAN file sharing.
+- `HANDOFF.md` — Day entry for 2026-06-25 fivemac mesh session.
+
+> **What to look for:** `bash ledger/LEDGER-0036-mac-fleet-bonjour-file-sharing/playbooks/install-from-fivemac.sh`
+> then `mount | grep nephew-spark.local` (no `@192.168.10.205` in mount URLs).
+
+---
+
 ## [0.7.15] — 2026-06-17 13:50:00 Eastern · *Family SSO receipt + LEDGER-0035 (merge PR #1)*
 
 ### Added

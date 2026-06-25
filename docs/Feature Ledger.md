@@ -37,6 +37,7 @@ Update this file in the same PR as any status change. Reference the [LEDGER entr
 | **`Bishop` agent factory consolidation** (merge `bishop-factory` → `bishop`) | 🔜 | external repos (`marvelousempire/bishop`, `marvelousempire/bishop-factory`) | Two repos are byte-identical duplicates. Plan documented at [`~/.claude/plans/what-is-the-best-curious-willow.md`](~/.claude/plans/what-is-the-best-curious-willow.md) §"Part 2". |
 | **`Nephew` orchestration agent** | (not in this repo) | external `marvelousempire/nephew` | yousirjuan is infrastructure-only per REPOS-CONTRACT.md. Nephew is the user-facing orchestrator. |
 | **Family SSO operator docs** (door-ticket, hub sign-in) | ✅ | [ch. 26](../docs/setup/26-family-sso-and-door-tickets.md), [LEDGER-0035](../ledger/LEDGER-0035-family-sso-infra-receipt/), agent paste | Implementation in nephew; YSJ documents verify + recovery. Synced 2026-06-16. |
+| **Mac fleet Bonjour file sharing** (fivemac / onemac / twomac / nephew-spark) | ✔️ | [LEDGER-0036](../ledger/LEDGER-0036-mac-fleet-bonjour-file-sharing/) | Shipped on fivemac + DGX; onemac/twomac need one-time `bootstrap-mac-fleet-ssh.sh`. PAIN-0011, PAIN-0012. |
 | **Bishop-optional sovereign boot** (Nephew 0195) | ✅ | [ch. 17](../docs/setup/17-agents-fleet-bishop-cloak.md) | Documented; code in nephew `tower-traffic-control.sh`. |
 | **Bishop factory player console** (Nephew 0198) | ✅ | [ch. 17](../docs/setup/17-agents-fleet-bishop-cloak.md), ch. 08 `make bishop` | Hosted factory cassettes + `make bishop`; code in nephew. |
 | **agent-comms / nephew relay** | 🔜 | nephew plans 0175–0178 | Not yet in setup docs — track in plans/0005. |
@@ -61,6 +62,8 @@ Tracked in [`pain-journal/`](../pain-journal/). PAIN entries pointing at a yousi
 | `PAIN-0008` Copilot Chat paywall | ✅ resolved by LEDGER-0001 | Cline + OpenRouter free tier path |
 | `PAIN-0009` MCP config fragmented across clients | ✔️ partially resolved | Both client configs written in lockstep by `make install`. Long-term fix: yousirjuan MCP registry (🔜) |
 | `PAIN-0010` Intel CPU no GPU | ✔️ partially resolved | Documented recommendation. Long-term fix: inference router (🔜) |
+| `PAIN-0011` Finder shows IP not Bonjour name | ✅ resolved by LEDGER-0036 | Hostname-only mount playbooks + runbook 01 |
+| `PAIN-0012` DGX Docker pollutes mDNS | ✅ resolved by LEDGER-0036 | `fix-nephew-spark-mdns.sh` avahi allow/deny |
 
 ## Open follow-ups (🔜 with owners or RFCs)
 
