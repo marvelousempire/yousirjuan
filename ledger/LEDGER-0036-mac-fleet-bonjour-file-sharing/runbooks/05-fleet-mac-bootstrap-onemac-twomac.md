@@ -6,15 +6,23 @@ fivemac cannot SSH to onemac (`192.168.10.159`) or twomac (`192.168.10.166`) —
 
 ## One-time fix (run ON each peer Mac)
 
-### 1. Copy bootstrap script
+### 1. Get bootstrap kit
 
-From fivemac Terminal:
+**Easiest (onemac):** fivemac auto-drops the kit when SeverD is mounted:
+
+```bash
+# on fivemac:
+bash ledger/LEDGER-0036-mac-fleet-bonjour-file-sharing/playbooks/drop-bootstrap-to-fleet.sh
+
+# on onemac:
+cd /Volumes/SeverD/FleetBootstrap-LEDGER-0036
+```
+
+Or copy manually:
 
 ```bash
 scp fivemac.local:Sites/yousirjuan/ledger/LEDGER-0036-mac-fleet-bonjour-file-sharing/playbooks/bootstrap-mac-fleet-ssh.sh ~/
 ```
-
-Or AirDrop the file from `Sites/yousirjuan/ledger/LEDGER-0036-.../playbooks/`.
 
 ### 2. Run bootstrap
 
