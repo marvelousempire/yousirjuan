@@ -46,7 +46,7 @@ async function checkNoSecrets() {
 }
 
 async function main() {
-  await mustExist('.gitea/workflows/verify.yml');
+  await mustExist('.gitea/workflows/verify.yaml');
   await mustExist('scripts/forge-sync.sh');
   await mustExist('scripts/forge-push.sh');
   await mustExist('scripts/forge-sync-core.sh');

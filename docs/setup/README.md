@@ -61,8 +61,9 @@ Full detail: [23-forge-sync-automation.md](./23-forge-sync-automation.md)
 | 27 | [27-cassette-factory-and-brain-proxy.md](./27-cassette-factory-and-brain-proxy.md) | **Cassette Factory** — one-tap GitHub ingest, `NEPHEW_BRAIN_PROXY`, brain merge |
 | 28 | [28-voice-containers-whisper-fish-speech.md](./28-voice-containers-whisper-fish-speech.md) | **DGX voice containers** — Whisper, Fish Speech vs M5 Holler/Parakeet |
 | 29 | [29-sovereign-egress-default-deny.md](./29-sovereign-egress-default-deny.md) | **Default deny egress** — no cloud LLM phoning home (Plan 0231) |
+| 30 | [30-voice-stack-full-undressing.md](./30-voice-stack-full-undressing.md) | **Super Rick full undressing** — every service, model, port, tweak, covenant (June 2026) |
 
-**Last updated:** 2026-06-17 (ch. 26 SSO receipt + LEDGER-0035 · ch. 27–29 factory/voice/egress)
+**Last updated:** 2026-06-26 (ch. 30 voice full undressing + Presence orb era)
 
 ---
 

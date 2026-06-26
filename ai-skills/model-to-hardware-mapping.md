@@ -1,5 +1,7 @@
 # Model-to-Hardware Mapping
 
+> **Live voice deployment:** Super Rick model names, ports, and routing are documented in [`docs/setup/30-voice-stack-full-undressing.md`](../docs/setup/30-voice-stack-full-undressing.md). This page is the general hardware mesh map.
+
 ## Purpose
 
 This document explains which AI models and workloads belong on which hardware inside the You-Sir Juan infrastructure stack.

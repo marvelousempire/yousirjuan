@@ -1,5 +1,7 @@
 # TTS & Speech Systems
 
+> **Live Family Office stack (June 2026):** For the deployed Super Rick configuration — every engine, model, port, and tweak — read [`docs/setup/30-voice-stack-full-undressing.md`](../docs/setup/30-voice-stack-full-undressing.md) and the canonical mirror in `marvelousempire/voice-stack` → `understandings/FULL-STACK-UNDRESSING.md`. This page remains the platform philosophy; that pair is the operational truth.
+
 ## Purpose
 
 This document defines the text-to-speech, speech-to-text, voice assistant, transcription, and audio intelligence layer for You-Sir Juan.

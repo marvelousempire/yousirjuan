@@ -16,6 +16,12 @@ Eastern time stamped to the second using `TZ=America/New_York date '+%Y-%m-%d %H
 
 ---
 
+## [0.7.17] — 2026-06-26 09:30:00 Eastern · *Super Rick voice stack full undressing (ch. 30)*
+
+### Added
+- `docs/setup/30-voice-stack-full-undressing.md` — complete Family Office voice configuration: services, models, ports, tweaks, Presence orb stack.
+- Setup index row for chapter 30; cross-links from `ai-skills/tts-and-speech-systems.md` and `model-to-hardware-mapping.md`.
+
 ## [0.7.16] — 2026-06-25 11:09:38 Eastern · *Mac fleet Bonjour file sharing — LEDGER-0036*
 
 ### Added

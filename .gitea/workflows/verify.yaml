@@ -1,11 +1,10 @@
-# Verify workflow template — copy to `<repo>/.gitea/workflows/verify.yaml`
-# Host runner: native git checkout (actions/checkout needs node on act host jobs).
+# Gitea Verify — posts nephew-verify ship gate for forge-merge (native checkout on Spark)
 
 name: Verify
 
 on:
   push:
-    branches: [main, 'feature/**']
+    branches: [main, "docs/**", "feature/**"]
   pull_request:
   workflow_dispatch:
 
@@ -13,24 +12,36 @@ jobs:
   nephew-verify:
     name: nephew-verify ship gate
     runs-on: nephew-spark
-    timeout-minutes: 45
+    timeout-minutes: 15
     steps:
       - name: Checkout (git)
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
           cd "${GITHUB_WORKSPACE}"
           git config --global --add safe.directory "${GITHUB_WORKSPACE}"
+          git config --global http.lowSpeedLimit 1000
+          git config --global http.lowSpeedTime 60
+          export GIT_TERMINAL_PROMPT=0
+          if [ -z "${GITHUB_TOKEN:-}" ]; then echo "::error::GITHUB_TOKEN is empty"; exit 1; fi
+          AUTHED="$(printf '%s' "${GITHUB_SERVER_URL}" | sed -E "s#^(https?)://#\\1://oauth2:${GITHUB_TOKEN}@#")/${GITHUB_REPOSITORY}.git"
           if ! git rev-parse HEAD >/dev/null 2>&1; then
             git init .
-            git remote add origin "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}.git"
+            git remote add origin "${AUTHED}"
           fi
-          git fetch --depth=1 origin "${GITHUB_SHA}"
+          ok=0
+          for attempt in 1 2 3; do
+            if timeout 180 git fetch --depth=1 origin "${GITHUB_SHA}"; then ok=1; break; fi
+            echo "::warning::git fetch attempt ${attempt} timed out; retrying"
+            sleep 5
+          done
+          [ "$ok" = "1" ] || { echo "::error::checkout failed after 3 attempts"; exit 1; }
           git checkout -f FETCH_HEAD
 
-      - name: make nephew-verify
+      - name: yousirjuan verify gate
         run: |
           set -euo pipefail
           cd "${GITHUB_WORKSPACE}"
           export PATH="/home/abrownsanta/.nvm/versions/node/v22.22.3/bin:/usr/local/bin:/usr/bin:${PATH}"
-          pnpm install --ignore-workspace --frozen-lockfile
-          make nephew-verify || make test || npm test
+          node scripts/yousirjuan-verify.mjs
