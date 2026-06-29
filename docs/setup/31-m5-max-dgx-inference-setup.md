@@ -104,6 +104,24 @@ Model/quant choices are measured, not guessed (Super Rick: *Configuration Rigor*
 
 ---
 
+## 8. NAS model cache — pull once, sync forever (never re-download)
+
+Models are a Family Office asset. A model the family already owns on its own hardware is **synced over the LAN, never re-downloaded from the internet** (`family-model-cache-no-redownload`, RL-MODELCACHE-001).
+
+- **The vault:** the NAS holds the family model registry at `<nas>/ai-models/` — `ollama/` (Ollama store shape: `manifests/` + `blobs/`) and `huggingface/`. As of June 2026 it carries the whole fleet (`qwen3-coder:30b`, `qwen2.5:*`, `nephew:*`, `llama3.3:70b`, …). Addressing is in [Chapter 18](./18-wireguard-matrix-nas-gitea-why.md); on the Mac it mounts under the `media` share.
+- **The lookup order (every acquisition):** local → **NAS** → peer node (DGX) → internet (**last resort, then back-populate the NAS**). Run `make model-ensure MODEL=<m>`, never a bare `ollama pull`.
+- **The guardrail:** inference **never** runs off NAS-mounted weights (a multi-GB model over SMB crawls). The NAS is a cache you **sync *from*** onto fast local storage; Ollama serves from local. Never point `OLLAMA_MODELS` at the NAS.
+- **Per node:** each machine mounts the vault and `model-ensure` rsyncs only the blobs it's missing — so a new node gets a 30 GB model from the NAS over the LAN in minutes, not from the registry.
+
+| Piece | Where |
+|-------|-------|
+| Rule | `nephew/.claude/rules/family-model-cache-no-redownload.md` |
+| Tool | `nephew/scripts/ollama-model-cache.sh` (`ensure`/`push`/`pull-nas`/`list-nas`/`status`) · `make model-ensure` |
+| Mac mount | `nephew/data/nas-mac-mounts.json` (`media` share → vault under `ai-models/`) |
+| Vault pin | `NEPHEW_MODEL_CACHE_NAS=<mount>/ai-models/ollama` |
+
+---
+
 ## Related
 
 - [Chapter 10 — M5 Max sovereign edge](./10-m5-max-sovereign-edge.md) · [Chapter 16 — RAG & quantization](./16-knowledge-fabric-rag-quantization.md) · [Chapter 18 — WireGuard matrix](./18-wireguard-matrix-nas-gitea-why.md) · [Chapter 30 — Voice full undressing](./30-voice-stack-full-undressing.md)
