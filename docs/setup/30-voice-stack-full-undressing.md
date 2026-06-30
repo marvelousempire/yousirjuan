@@ -5,6 +5,8 @@
 **Canonical technical copy (mirrored):** `marvelousempire/standard-voice-stack` → `understandings/FULL-STACK-UNDRESSING.md`  
 **Runtime owner:** `marvelousempire/nephew` → `data/voice-config.json`, `src/voice/`, tower-api
 
+**Last verified:** Tuesday, June 30, 2026 · Nephew Pockit **v1.91.48** · SVS `main` @ `0ae48eb`
+
 Complements [Chapter 11 — Parakeet premium](./11-voice-parakeet-premium-stack.md) and [Chapter 28 — Voice containers](./28-voice-containers-whisper-fish-speech.md) with the **June 2026** Presence-orb era truth.
 
 ---
@@ -30,6 +32,8 @@ This chapter is the **operator undressing** — not marketing copy.
 | **The Presence** (default voice door) | http://voice.localhost/ |
 | Pockit voice cassette (iframe orb) | http://pockit.localhost/#/c/voice-cassette |
 | Super Rick status LEDs | http://voice.localhost/super-rick |
+| **Knowledge pad** (Brain A reindex UI) | http://pockit.localhost/#/c/knowledge |
+| Family corpus search (SME) | http://search.localhost/ |
 | Voice API (JSON only) | http://127.0.0.1:8088/api/v1/voice/* |
 
 Run `make doors` once per Mac (sudo) so `.localhost` URLs need no port.
@@ -60,8 +64,8 @@ Run `make doors` once per Mac (sudo) so `.localhost` URLs need no port.
 | F5-TTS | 7860 | Voice clone |
 | NeMo Riva | 9001 | DGX emotional primary |
 | Kokoro / Fish | 7851 | **Fallback / ops only** |
-| Higgs Audio V2 | 8095 | Scaffold (Plan 0452) |
-| Qdrant + embed + reranker | 6333 / 9200 / 9201 | Grounded RAG |
+| Higgs Audio V2 | 8095 | **Live** — Plan 0452 Ph 3–4 wired (`higgs-tts` on voice-config) |
+| Qdrant + embed + reranker | 6333 / 9200 / 9201 | Grounded RAG · full reindex via Knowledge pad **`memory-fabric`** scope |
 
 ---
 
@@ -126,7 +130,7 @@ Mic → Whisper STT → VAD/turn-taking → semantic cache lookup → corpus ret
 - **Voice:** `use-presence-turn-cycle.ts` → tower-api
 - **Ops:** always start via `scripts/run-super-rick-presence.sh` (copies Next static assets)
 
-HUD fix (Nephew Pockit v1.90.65): persistent top bar; orb scaled to 0.72 so "Listening" / "Calm" stay readable.
+HUD fix (Nephew Pockit v1.90.65+): persistent top bar; orb scaled to 0.72 so "Listening" / "Calm" stay readable.
 
 ---
 
@@ -145,12 +149,14 @@ Operator ritual: `make ensure-voice` or `make nephew` on a fresh Mac voice day.
 ## 8. Make targets (Nephew repo)
 
 ```bash
-make ensure-voice          # full edge bootstrap
-make ensure-m5-voice       # M5 Holler + STT
-make ensure-dgx-voice      # DGX probes + heal
-make smoke-voice-latency   # receipt JSON
+make ensure-voice              # full edge bootstrap
+make ensure-m5-voice           # M5 Holler + STT
+make ensure-dgx-voice          # DGX probes + heal
+make ensure-voice-submodule    # standard-voice-stack via gitea-dgx (Spark-safe)
+make memory-fabric-reindex     # full Brain A + vault (DGX; or Knowledge pad UI)
+make smoke-voice-latency       # receipt JSON
 make cassette-line CHECK=voice
-make install-voice-app     # Desktop Voice.app
+make install-voice-app         # Desktop Voice.app
 ```
 
 ---
@@ -172,17 +178,17 @@ Receipt: voice-stack `receipts/2026-06-25-voice-latency-smoke.json`
 
 | Repo | What to read |
 |------|--------------|
-| **standard-voice-stack** | `understandings/FULL-STACK-UNDRESSING.md` (this chapter's twin) |
-| **nephew** | `docs/pockit/help/voice/*`, `data/voice-config.json` |
+| **standard-voice-stack** | `understandings/FULL-STACK-UNDRESSING.md` (this chapter's twin) · `status/voice/2026-06-29-memory-fabric-reindex-knowledge-pad.md` |
+| **nephew** | `docs/pockit/help/voice/*`, `data/voice-config.json`, Knowledge pad `knowledge-hud.js` |
+| **search-my-engine** | `docs/family-corpus.md` — SME door `http://search.localhost/` |
 | **intent-quality-super-rick** | Orb design standards |
 | **yousirjuan** | This file + Chapters 11, 28 |
 
-Refresh standard-voice-stack mirror from Nephew (honest copy — no bootstrap script yet):
+**Sync discipline:** Author voice understandings in **standard-voice-stack** first; mirror this chapter from `understandings/FULL-STACK-UNDRESSING.md` after each SVS merge (platform-safe framing only — no runtime secrets).
 
 ```bash
-cp ~/Developer/nephew/docs/pockit/Parakeet-Voice-Cassette-Vanilla.md \
-   ~/Developer/voice-stack/understandings/ 2>/dev/null || true
-cd ~/Developer/voice-stack && git pull --ff-only gitea main
+cd ~/Developer/standard-voice-stack && git pull --ff-only origin main
+# Then diff/update this chapter from understandings/FULL-STACK-UNDRESSING.md
 ```
 
 ---
