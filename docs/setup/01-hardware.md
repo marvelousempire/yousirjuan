@@ -99,15 +99,6 @@ Detail: [`hardware/dgx-spark-official-spec.md`](../hardware/dgx-spark-official-s
 
 ---
 
-### Mac mini M4 Pro — persistent orchestration node · ⚪ offline
-
-| Attribute | Value |
-|---|---|
-| **Spec** | 48 GB unified / 4 TB SSD / 10 GbE *(per spec)* |
-| **Status** | **Not on the network** 2026-07-01 (no mDNS). Role when deployed: always-on light services, Open WebUI, queue workers |
-
----
-
 ### UGREEN DXP6800 Pro — network storage tier · ✅ verified (UGOS)
 
 | Attribute | Value (from UGOS 2026-07-01) |
@@ -174,7 +165,7 @@ Full cabling: [13-physical-topology-protectli.md](./13-physical-topology-protect
 | Git forge compute | DGX Spark |
 | Git object durability / backups / model-cache | NAS (SSD Pool 1 for cache, HDD Pool 2 for bulk) |
 | Public HTTPS edge · Clinic | VPS |
-| Light always-on APIs | Mac mini (when deployed) or iMac |
+| Light always-on APIs | twomac (iMac 2017, 64 GB) |
 
 ---
 

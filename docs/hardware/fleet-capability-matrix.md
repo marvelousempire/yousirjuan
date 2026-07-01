@@ -15,10 +15,9 @@ The trustworthy "what can each box actually do" sheet — **every device, every 
 |---|---|---|---|---|---|---|
 | 1 | **DGX Spark** | NVIDIA GB10 Blackwell + Grace | 20 (ARM) + GPU | **128 GB** unified | Frontier AI runtime | ✅ verified |
 | 2 | **fivemac** | Apple **M5 Max** (Mac17,6) | 18 CPU + 40-GPU | **128 GB** · 8 TB · TB5 120Gb | Primary workstation / control node | ✅ verified |
-| 3 | **Mac mini M4 Pro** | Apple M4 Pro | — | 48 GB | Always-on light services | ⚪ offline |
-| 4 | **twomac** (= iMac 2017) | Intel **i5-7500** (iMac18,2, 2017) | 4 | **64 GB** · macOS 15.7 (OCLP) | Light x86 backend (real RAM) | ✅ verified |
-| 6 | **onemac** | Apple **M1** | 8 (4P+4E) | **8 GB** | Small edge (embed/STT) | ✅ verified |
-| 7 | **bigmac** | Intel **i7-3770** (2012) | 4 | **8 GB** | Legacy x86 (light) | ✅ verified |
+| 3 | **twomac** (= iMac 2017) | Intel **i5-7500** (iMac18,2, 2017) | 4 | **64 GB** · macOS 15.7 (OCLP) | Light x86 backend (real RAM) | ✅ verified |
+| 4 | **onemac** | Apple **M1** | 8 (4P+4E) | **8 GB** | Small edge (embed/STT) | ✅ verified |
+| 5 | **bigmac** | Intel **i7-3770** (2012) | 4 | **8 GB** | Legacy x86 (light) | ✅ verified |
 | — | **NAS DXP6800 Pro** | (storage) | — | — | Durable storage tier | ✅ verified |
 | — | **VPS** | 4 vCPU x86_64 | 4 | 7 GB | Public edge / Clinic | ✅ verified |
 
@@ -95,7 +94,6 @@ The trustworthy "what can each box actually do" sheet — **every device, every 
 
 | Node | Blocker | Unblock |
 |---|---|---|
-| **Mac mini M4 Pro** | powered off / off-network | power on → probe |
 | **zeromac** | not on the network | connect + register |
 
 *(fivemac ✅ verified 2026-07-01 — it's the control node; agents run on it locally, no SSH needed. Mac17,6 M5 Max · 18C/40G · 128 GB · 8 TB · TB5 120 Gb/s · 990 Pro 2 TB.)*
