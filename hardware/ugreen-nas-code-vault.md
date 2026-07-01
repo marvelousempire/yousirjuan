@@ -1,6 +1,9 @@
 # UGREEN NAS — Code Vault + Builds + Model Storage
 
-Planned hardware (not yet ordered). Locked here so when it arrives we know exactly where things go.
+**Live hardware:** **UGREEN NASync DXP6800 Pro** (`nasa.local` / `192.168.10.119`) — UGOS Pro.  
+**Canonical specs:** [`docs/setup/32-hardware-full-spec-sheet.md`](../docs/setup/32-hardware-full-spec-sheet.md) · [`hardware/ugreen-dxp6800-pro-spec.md`](./ugreen-dxp6800-pro-spec.md)
+
+This file retains the **original vault layout plan** (written when a 4-bay DXP4800 was under consideration). The installed chassis is the **6-bay DXP6800 Pro** — treat pool/bay numbers in ch. 32 as authoritative for what is in the rack today.
 
 ---
 

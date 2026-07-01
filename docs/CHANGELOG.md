@@ -16,6 +16,18 @@ Eastern time stamped to the second using `TZ=America/New_York date '+%Y-%m-%d %H
 
 ---
 
+## [0.7.18] — 2026-07-01 14:00:00 Eastern · *Full hardware spec sheet (ch. 32)*
+
+### Added
+- `docs/setup/32-hardware-full-spec-sheet.md` — ports, link speeds, drives, cables, docks, network gear (UGREEN DXP6800 Pro vendor + installed pools, DGX live probe, Mac fleet, cable matrix).
+- `hardware/ugreen-dxp6800-pro-spec.md` — NAS-only deep dive (UGOS, not Synology).
+- `data/hardware-spec-registry.json` — machine-readable companion registry.
+
+### Changed
+- `docs/setup/01-hardware.md` — link to ch. 32; DGX↔NAS **10 GbE storage path live** (reconcile vs 1 GbE USB Trusted LAN leg).
+- `docs/setup/README.md` — chapter 32 index row.
+- `hardware/ugreen-nas-code-vault.md` — header points at live DXP6800 Pro + ch. 32 (vault plan text retained).
+
 ## [0.7.17] — 2026-06-26 09:30:00 Eastern · *Super Rick voice stack full undressing (ch. 30)*
 
 ### Added

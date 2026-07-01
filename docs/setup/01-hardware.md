@@ -3,7 +3,8 @@
 **Status:** living · **Last verified:** 2026-07-01 full live audit (each node probed)
 **Physical wiring & Protectli:** see [13-physical-topology-protectli.md](./13-physical-topology-protectli.md)
 **Historia / vault memory:** see [14-historia-and-operator-memory.md](./14-historia-and-operator-memory.md)
-**Every port / disk / speed / mod, power-ranked:** see [`hardware/fleet-capability-matrix.md`](../hardware/fleet-capability-matrix.md)
+**Every port / disk / speed / mod, power-ranked:** see [`hardware/fleet-capability-matrix.md`](../hardware/fleet-capability-matrix.md)  
+**Full spec sheet (ports, link speeds, drives, cables, docks):** [32-hardware-full-spec-sheet.md](./32-hardware-full-spec-sheet.md) · [`data/hardware-spec-registry.json`](../../data/hardware-spec-registry.json)
 
 > **Verification legend** — every row below carries a live-probe status, not marketing:
 > ✅ **verified** (probed 2026-07-01) · ⚠️ **reachable but not fully verified** (SSH/creds blocked) ·
@@ -37,7 +38,7 @@ Different hardware **specializes**. The stack avoids running heavy inference on 
 | **Memory** | **121 GB unified** LPDDR5X (one pool shared by GPU + CPU) |
 | **Storage** | **3.7 TB internal NVMe** (Samsung MZALC4T0HBL1) **+ 2 empty internal M.2 Gen5 ×4 slots** (spare hot tier — a Gen4 NVMe here runs ~7 GB/s) |
 | **OS** | Ubuntu LTS (aarch64) |
-| **Network** | **1× 10 GbE RJ45** (Realtek 8127) — currently on a **dead point-to-point link** `10.77.0.2/30`, **NOT cabled to the NAS**; LAN + NAS run over a **1 GbE USB ethernet dongle** (`.205`) — the real bottleneck; WiFi (MediaTek 7925); WG mesh `10.1.0.5`; Comet KVM console. **No Thunderbolt** (USB-C = USB 3.2 Gen 2×2 / 20 Gbps); **no ConnectX/QSFP** present |
+| **Network** | **10 GbE** `enP7s7` (Realtek 8127) — **live 10 Gb/s full duplex** direct **storage path to NAS** (point-to-point `10.77.0.2/30`); **1 GbE** USB dongle `enx…96c6` (Realtek 8153) — **Trusted LAN** `.205` + internet; Wi-Fi (MediaTek 7925); WG mesh `10.1.0.5`; Comet KVM. **No Thunderbolt** (USB-C = USB 3.2 Gen 2×2 / 20 Gbps); **no ConnectX/QSFP** |
 | **Best for** | Large-model serving (vLLM), embeddings + reranking, container orchestration, git forge |
 | **Not for** | Creative edit station; portable work |
 
@@ -107,9 +108,9 @@ Detail: [`hardware/dgx-spark-frontier-node.md`](../hardware/dgx-spark-frontier-n
 | **Pool 1 (fast)** | **2× 1.8 TB M.2 SSD, RAID 1 → 1.8 TB** (nearly empty — the right home for the **family model cache**) |
 | **Pool 2 (bulk)** | **4× 3.6 TB HDD, RAID 5 → 10.8 TB** + **2 empty HDD bays** |
 | **LAN** | `192.168.10.119` (`nasa.local`); has a **10 GbE RJ45 port**; SSH via UGOS |
-| **Link to DGX** | **Current: 1 GbE** (DGX reaches it over its USB dongle, ~125 MB/s). **Plan: direct 10 GbE cable** DGX `enP7s7` ↔ NAS 10 GbE (`/30`) → ~1.25 GB/s (10×). *DGX has only one 10 GbE port.* |
+| **Link to DGX** | **Storage: 10 GbE** direct DGX `enP7s7` ↔ NAS 10GbE — **~1.25 GB/s** live (2026-07-01 `ethtool`). **LAN/management:** 1 GbE via DGX USB dongle `.205`. *DGX has one built-in 10 GbE port — bulk NFS should use the direct leg.* |
 
-Notes: [`hardware/ugreen-nas-code-vault.md`](../hardware/ugreen-nas-code-vault.md)
+Notes: [`hardware/ugreen-dxp6800-pro-spec.md`](../hardware/ugreen-dxp6800-pro-spec.md) · legacy vault plan: [`hardware/ugreen-nas-code-vault.md`](../hardware/ugreen-nas-code-vault.md)
 
 ---
 
@@ -178,7 +179,8 @@ Full cabling: [13-physical-topology-protectli.md](./13-physical-topology-protect
 MacBooks (active projects, dev trees, 990 Pro TB5 fast local tiers on onemac/fivemac)
     |  git push
 DGX Spark (runtime, models, vLLM serving — 3.7TB NVMe hot tier + 2 empty M.2)
-    ↕ 1 GbE now (USB dongle)  ->  PLAN: direct 10 GbE cable
+    ↕ 10 GbE direct (enP7s7 ↔ NAS) — bulk storage/NFS
+    ↕ 1 GbE USB dongle — Trusted LAN .205
 NAS DXP6800 Pro (SSD Pool 1 = model cache · HDD Pool 2 = git objects/media/backups)
 ```
 
@@ -186,7 +188,7 @@ NAS DXP6800 Pro (SSD Pool 1 = model cache · HDD Pool 2 = git objects/media/back
 
 ## Open action items (from the 2026-07-01 audit)
 
-1. **Cable DGX 10 GbE (`enP7s7`) ↔ NAS 10 GbE** → 10× NAS throughput (currently 1 GbE via USB dongle).
+1. **Confirm NFS/SMB mounts bind to the 10 GbE path** — `enP7s7` is live at 10 Gb/s; verify bulk I/O does not accidentally route over the 1 GbE USB leg.
 2. **Authorize the fleet SSH key on `fivemac`** (publickey denied) — the primary workstation is unreachable to agents.
 3. **Bring `twomac` / `bigmac` / `zeromac` onto the mesh** (WG + keys) — three Mac nodes currently unreachable.
 4. **Populate a DGX internal M.2 slot** (or use a 990 Pro) as a dedicated model-weights hot tier.
@@ -195,6 +197,7 @@ NAS DXP6800 Pro (SSD Pool 1 = model cache · HDD Pool 2 = git objects/media/back
 
 ## Related
 
+- [32-hardware-full-spec-sheet.md](./32-hardware-full-spec-sheet.md) — every port, link speed, drive, cable, dock
 - [02-network-security.md](./02-network-security.md) — how machines connect
 - [03-software-services.md](./03-software-services.md) — what runs on each node
 - [`hardware/dgx-spark-frontier-node.md`](../hardware/dgx-spark-frontier-node.md) — DGX detail

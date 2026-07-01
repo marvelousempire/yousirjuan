@@ -1,0 +1,129 @@
+{
+  "$schema_comment": "You-Sir Juan hardware spec registry — canonical machine-readable companion to docs/setup/32-hardware-full-spec-sheet.md. yousirjuan wins on conflict with Nephew mirrors.",
+  "schema_version": 1,
+  "last_verified": "2026-07-01",
+  "sources": [
+    "docs/setup/32-hardware-full-spec-sheet.md",
+    "https://nas.ugreen.com/products/ugreen-nasync-dxp6800-pro-nas-storage",
+    "DGX live probe nephew-spark"
+  ],
+  "devices": {
+    "ugreen-dxp6800-pro": {
+      "id": "nas-dxp6800",
+      "vendor": "UGREEN",
+      "model": "NASync DXP6800 Pro",
+      "hostname": "nasa.local",
+      "lan_ipv4": "192.168.10.119",
+      "os": "UGOS Pro",
+      "cpu": { "model": "Intel Core i5-1235U", "cores": 10, "threads": 12 },
+      "ram_gb": { "installed": 8, "type": "DDR5-4800", "max": 64 },
+      "ports": {
+        "rj45_10gbe": 2,
+        "thunderbolt4_40gbps": 2,
+        "usb_a_3_2": 2,
+        "usb_a_2_0": 2,
+        "hdmi_8k": 1,
+        "sd_4_0": 1,
+        "pcie_x4": 1
+      },
+      "bays": { "sata": 6, "m2_nvme": 2, "sata_empty": 2 },
+      "pools": [
+        {
+          "id": "pool1-fast",
+          "raid": "raid1",
+          "drives": "2x_m2_ssd_1.8tb",
+          "usable_tb": 1.8,
+          "role": "family_model_cache_target"
+        },
+        {
+          "id": "pool2-bulk",
+          "raid": "raid5",
+          "drives": "4x_hdd_3.6tb",
+          "usable_tb": 10.8,
+          "role": "media_historia_git"
+        }
+      ],
+      "drive_models_confirm_in_ugos": true
+    },
+    "dgx-spark": {
+      "id": "dgx-spark",
+      "vendor": "NVIDIA",
+      "model": "DGX Spark",
+      "hostname": "nephew-spark",
+      "lan_ipv4": "192.168.10.205",
+      "wg_ipv4": "10.1.0.5",
+      "cpu": { "model": "NVIDIA Grace ARM", "cores": 20 },
+      "gpu": { "model": "GB10 Grace Blackwell" },
+      "ram_gb": { "unified": 122, "type": "LPDDR5X" },
+      "storage": [
+        {
+          "slot": "nvme0",
+          "model": "SAMSUNG MZALC4T0HBL1-00B07",
+          "size_tb": 4,
+          "usable_tb": 3.7,
+          "bus": "nvme"
+        }
+      ],
+      "m2_empty_pcie_gen5_x4": 2,
+      "nics": [
+        {
+          "iface": "enP7s7",
+          "chip": "Realtek 8127",
+          "nominal": "10GbE",
+          "negotiated_mbps": 10000,
+          "verified": "2026-07-01"
+        },
+        {
+          "iface": "enx6c6e072c96c6",
+          "chip": "Realtek 8153 USB",
+          "nominal": "1GbE",
+          "negotiated_mbps": 1000,
+          "role": "primary_lan",
+          "verified": "2026-07-01"
+        }
+      ]
+    },
+    "macbook-pro-m5-max": {
+      "id": "fivemac",
+      "chip": "Apple M5 Max",
+      "cpu_cores": 18,
+      "gpu_cores": 40,
+      "ane_cores": 16,
+      "ram_gb": 128,
+      "ssd_tb": 4,
+      "thunderbolt5_ports": 3,
+      "dock": "HyperDrive Next TB5 #2"
+    },
+    "macbook-pro-m1": {
+      "id": "onemac-2",
+      "chip": "Apple M1",
+      "dock": "HyperDrive Next TB5 #1",
+      "dock_nvme": "Samsung 990 Pro",
+      "dock_ethernet": "2.5GbE"
+    },
+    "gl-mt6000": {
+      "id": "flint-2",
+      "model": "GL-MT6000",
+      "ports": { "rj45_2_5g": 2, "rj45_1g": 4 },
+      "wifi": "Wi-Fi 6 AX6000",
+      "lan_gateway": "192.168.10.1"
+    }
+  },
+  "links": [
+    {
+      "from": "dgx-spark.enP7s7",
+      "to": "nas-dxp6800.rj45_10gbe_1",
+      "design_gbps": 10,
+      "live_gbps": 10,
+      "verified": "2026-07-01"
+    },
+    {
+      "from": "dgx-spark.enx_usb_1g",
+      "to": "gl-mt6000.lan",
+      "design_gbps": 1,
+      "live_gbps": 1,
+      "verified": "2026-07-01",
+      "note": "LAN management path — not preferred for bulk NFS"
+    }
+  ]
+}
