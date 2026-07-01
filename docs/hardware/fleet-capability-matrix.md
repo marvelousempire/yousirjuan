@@ -114,9 +114,21 @@ Full specs for these land in a follow-up PR once reachable (per the "ship reacha
 
 ---
 
-## Benchmark log (measured MB/s — appended as run)
+## Benchmark log (measured — appended as run)
 
-*(none yet — run `make storage-bench MOUNT=<path>` per disk and record here: DGX NVMe, onemac 990 Pro, bigmac HDD, NAS SSD/HDD pools.)*
+### DGX ↔ NAS over the direct 10 GbE link (`dd`, 2026-07-01)
+
+| Config | Write | Read (cache-cleared) | Read (O_DIRECT) |
+|---|---|---|---|
+| MTU 1500 | 1.0 GB/s | 809 MB/s | 631 MB/s |
+| **MTU 9000 (jumbo)** | **1.1 GB/s** | **~1.2 GB/s** | — |
+| *(old path — NAS via DGX USB-2.0 dongle)* | ~40 MB/s | — | — |
+
+Jumbo ping `ping -M do -s 8972 10.77.0.1` → 0% loss, 0.4 ms. Net result: **~20–30× the old NAS path**, at 10 GbE line rate. Setup + persistence: [`../runbooks/dgx-nas-10gbe-direct-link.md`](../runbooks/dgx-nas-10gbe-direct-link.md).
+
+> **NAS MTU:** only **LAN2** (the direct 10 GbE link to the DGX) is MTU 9000. **LAN1** (the 2.5 GbE LAN/router port) stays **1500** to match the LAN.
+
+*Still to record: DGX internal NVMe, onemac 990 Pro, bigmac HDD, NAS pools direct (`make storage-bench MOUNT=<path>`).*
 
 ---
 

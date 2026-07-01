@@ -76,7 +76,15 @@ sudo rm -f /mnt/nas-docker/.b
 ## Rollback
 `sudo cp /etc/fstab.bak-* /etc/fstab` then remount, or edit the two lines back to `192.168.10.119`. The LAN path (LAN1 / the USB dongle) is untouched.
 
+## Jumbo frames (MTU 9000) — DONE 2026-07-01
+
+Applied and persistent. **Only LAN2 (the direct link) is 9000; LAN1 stays 1500** (it faces the 1500-MTU LAN/router — jumbo there breaks normal LAN access to the NAS).
+
+- **NAS:** UGOS → Network → **LAN2** → MTU 9000 (LAN1 remains 1500).
+- **DGX:** `enP7s7` MTU 9000, persisted in `/etc/netplan/99-nas-10gbe.yaml` (IP + MTU together).
+- **Verify:** `ping -M do -s 8972 -c3 10.77.0.1` → 0% loss.
+- **Result:** read 809 MB/s → **~1.2 GB/s**, write 1.0 → **1.1 GB/s** (10 GbE line rate).
+
 ## Optional next
-- **MTU 9000 (jumbo frames)** on both `enP7s7` and NAS LAN2 for a bit more throughput (both ends must match).
 - Move the DGX's 1 GbE dongle off its **USB 2.0** port onto a **20 Gb/s USB-C** port for faster LAN/internet.
 - Dedicated `ai-models` share on the NAS **SSD pool (Pool 1)** for the family model cache.
