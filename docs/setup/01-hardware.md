@@ -48,15 +48,17 @@ Detail: [`hardware/dgx-spark-official-spec.md`](../hardware/dgx-spark-official-s
 
 ---
 
-### MacBook Pro M5 Max (`fivemac`) — primary operator workstation · ⚠️ reachable, SSH not authorized
+### MacBook Pro M5 Max (`fivemac`) — primary operator workstation · ✅ verified (local, 2026-07-01)
 
-| Attribute | Value |
+| Attribute | Value (probed on-host) |
 |---|---|
-| **Role** | Creative workstation, Cursor/Claude Code orchestration, Pockit gateway, M5 Holler voice edge, Obsidian host |
-| **CPU / GPU / ANE** | M5 Max — high-core CPU, 40-core GPU, 16-core Neural Engine *(per spec — not re-probed 2026-07-01: SSH publickey denied)* |
-| **Memory / Storage** | 128 GB unified / 4 TB SSD *(per spec)* |
-| **Attached fast storage** | **Hyper Next Thunderbolt 5 enclosure + Samsung 990 Pro** (TB-native here → ~5–6 GB/s) |
-| **Action item** | **SSH access is locked (publickey denied)** — authorize the fleet key so agent-comms + capability-offload can reach the primary workstation |
+| **Role** | Creative workstation, Cursor/Claude Code orchestration (this is the control node), Pockit gateway, M5 Holler voice edge, Obsidian host |
+| **Model / chip** | **Mac17,6 — Apple M5 Max**, macOS 26.5.1 |
+| **CPU / GPU** | **18-core CPU · 40-core GPU** (Metal 4) + Neural Engine |
+| **Memory / Storage** | **128 GB** unified / **8 TB internal SSD** *(corrected — not 4 TB)* |
+| **Thunderbolt** | **TB5 — up to 120 Gb/s** (2 ports) |
+| **Attached fast storage** | **Samsung 990 Pro 2 TB** in a Hyper Next TB5 enclosure — **TB5 runs it at the drive's full ~7 GB/s** (unlike onemac's TB3 cap) |
+| **Note** | Agents run **on** this host (local exec) — no SSH needed here. Authorize the fleet key only if a *remote* node (DGX / another Mac) must reach it for offload. |
 
 ---
 

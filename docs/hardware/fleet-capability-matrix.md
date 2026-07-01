@@ -14,7 +14,7 @@ The trustworthy "what can each box actually do" sheet — **every device, every 
 | # | Node | Chip | Cores | RAM | Class | Status |
 |---|---|---|---|---|---|---|
 | 1 | **DGX Spark** | NVIDIA GB10 Blackwell + Grace | 20 (ARM) + GPU | **128 GB** unified | Frontier AI runtime | ✅ verified |
-| 2 | **fivemac** | Apple **M5 Max** | CPU + 40-GPU + 16-ANE | **128 GB** | Primary workstation / voice edge | ⚠️ SSH-locked |
+| 2 | **fivemac** | Apple **M5 Max** (Mac17,6) | 18 CPU + 40-GPU | **128 GB** · 8 TB · TB5 120Gb | Primary workstation / control node | ✅ verified |
 | 3 | **Mac mini M4 Pro** | Apple M4 Pro | — | 48 GB | Always-on light services | ⚪ offline |
 | 4 | **twomac** | *TBD* | — | *TBD* | Mac fleet (OCLP'd) | 🔴 key-pending |
 | 5 | **iMac 2017** | Intel | — | 64 GB | Legacy x86 backend | ⚪ offline |
@@ -96,9 +96,10 @@ The trustworthy "what can each box actually do" sheet — **every device, every 
 
 | Node | Blocker | Unblock |
 |---|---|---|
-| **fivemac** (M5 Max) | SSH publickey denied | authorize the fleet SSH key → I probe all ports/disks/mods |
-| **twomac** | no key authorized (LAN `192.168.10.166`) | add `id_ed25519_twomac.pub` to `~/.ssh/authorized_keys` → repoint alias to LAN, probe |
+| **twomac** | no key authorized (LAN `192.168.10.166`, reachable) | from fivemac: `ssh-copy-id -i ~/.ssh/id_ed25519_twomac.pub averygoodman@192.168.10.166` → then probe |
 | **Mac mini M4 Pro / iMac 2017** | powered off / off-network | power on → probe |
+
+*(fivemac ✅ verified 2026-07-01 — it's the control node; agents run on it locally, no SSH needed. Mac17,6 M5 Max · 18C/40G · 128 GB · 8 TB · TB5 120 Gb/s · 990 Pro 2 TB.)*
 
 Full specs for these land in a follow-up PR once reachable (per the "ship reachable now, append later" plan).
 
