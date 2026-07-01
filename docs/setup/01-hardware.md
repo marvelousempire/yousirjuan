@@ -80,12 +80,16 @@ Detail: [`hardware/dgx-spark-official-spec.md`](../hardware/dgx-spark-official-s
 | **Address** | LAN `192.168.10.182` · SSH `bigmac-claude` (user `abrownsanta`, key `id_ed25519_bigmac`) |
 | **Spec** | **iMac13,2 — Intel i7-3770 quad @ 3.4 GHz, 8 GB RAM, GTX 675MX 1 GB, 1 TB 7200 HDD (SATA-II)**, macOS Catalina 10.15.8. *Legacy/weak — light x86 tasks only, not an offload powerhouse. Needs OCLP for a newer OS; internal SSD is the real upgrade.* No WireGuard needed — LAN + key |
 
-### `twomac` — Mac fleet node · 🔴 on LAN, key-pending
+### `twomac` — iMac18,2 (2017, OCLP'd) · ✅ verified (2026-07-01) · **= the "iMac 2017" node**
 
-| Attribute | Value |
+| Attribute | Value (probed 2026-07-01) |
 |---|---|
-| **Address** | **LAN `192.168.10.166`** (its `twomac`/`twomac-claude` alias wrongly points at dead WG `10.1.0.6` — repoint to LAN) |
-| **Status** | Reachable on the LAN; **no SSH key authorized yet** — add `id_ed25519_twomac.pub` to `~/.ssh/authorized_keys`, then probe. OCLP'd per operator. **No WireGuard needed** — LAN + key |
+| **Address** | **LAN `192.168.10.166`** (`id_ed25519_twomac` key). *Repoint the `twomac`/`twomac-claude` SSH alias off dead WG `10.1.0.6` → this LAN IP.* No WireGuard needed |
+| **Model / CPU** | **iMac18,2 — 27″ Retina 5K iMac (2017)** · Intel **i5-7500** quad @ 3.4 GHz · **AMD Radeon Polaris 4 GB** |
+| **Memory / Storage** | **64 GB RAM** (most of any Intel Mac here) · ~1 TB internal |
+| **Thunderbolt** | TB3 (40 Gb/s) + **Sonnet Echo 11 TB4 dock** |
+| **OS / mod** | **macOS 15.7.7 Sequoia via OpenCore Legacy Patcher** (Dortania present — OCLP running; 2017 iMac can't run 15.7 natively) |
+| **Best for** | Light x86 node with real RAM — Docker services, CPU tasks, always-on background (64 GB ≫ bigmac's 8 GB) |
 
 ### `zeromac` — Mac fleet node · 🔴 unreachable now
 
@@ -128,12 +132,9 @@ Notes: [`hardware/ugreen-dxp6800-pro-spec.md`](../hardware/ugreen-dxp6800-pro-sp
 
 ---
 
-### iMac 2017 (Intel, 64 GB) — legacy x86 node · ⚪ offline
+### iMac 2017 (Intel, 64 GB) — **= `twomac`** (see above)
 
-| Attribute | Value |
-|---|---|
-| **Role** | Optional always-on x86 backend (Postgres, Redis, Qdrant, nginx, light Ollama) |
-| **Status** | **Not on the network** 2026-07-01. CPU-only — small models only |
+The "iMac 2017 · 64 GB" node **is the same physical machine as `twomac`** (iMac18,2, probed 2026-07-01). Not a separate box — this entry was double-counted. See the **`twomac`** row for verified specs. Role: light always-on x86 backend (Docker services, Postgres/Redis/Qdrant, CPU tasks) — now on **macOS 15.7 via OCLP** and reachable on the LAN.
 
 Notes: [`docs/hardware/imac-2017-intel-i5.md`](../hardware/imac-2017-intel-i5.md)
 
