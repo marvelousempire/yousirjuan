@@ -16,6 +16,16 @@ Eastern time stamped to the second using `TZ=America/New_York date '+%Y-%m-%d %H
 
 ---
 
+## [0.7.20] — 2026-07-01 08:58:07 Eastern · *NVIDIA DGX Spark official vendor spec sheet*
+
+### Added
+- `hardware/dgx-spark-official-spec.md` — full NVIDIA product-page + GTC25 datasheet table (SKU 940-54242-0000, acoustics, power) with live `nephew-spark` reconciliation.
+
+### Changed
+- `docs/setup/32-hardware-full-spec-sheet.md` — §2.0 official vendor specs; §2.1–2.4 reconcile vendor vs live (ConnectX-7 vs Realtek, 128 vs ~122 GB).
+- `data/hardware-spec-registry.json` — `vendor_official` + `vendor_urls` on `dgx-spark`.
+- `docs/hardware/dgx-spark-frontier-node.md` · `docs/setup/01-hardware.md` — link vendor deep dive.
+
 ## [0.7.19] — 2026-07-01 08:49:05 Eastern · *SME purchase proof wired into hardware registry*
 
 ### Added

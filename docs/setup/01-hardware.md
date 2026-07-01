@@ -43,7 +43,7 @@ Different hardware **specializes**. The stack avoids running heavy inference on 
 | **Best for** | Large-model serving (vLLM), embeddings + reranking, container orchestration, git forge |
 | **Not for** | Creative edit station; portable work |
 
-Detail: [`hardware/dgx-spark-frontier-node.md`](../hardware/dgx-spark-frontier-node.md)
+Detail: [`hardware/dgx-spark-official-spec.md`](../hardware/dgx-spark-official-spec.md) (NVIDIA vendor table) · [`hardware/dgx-spark-frontier-node.md`](../hardware/dgx-spark-frontier-node.md) (live fleet)
 
 ---
 

@@ -5,6 +5,9 @@
   "sources": [
     "docs/setup/32-hardware-full-spec-sheet.md",
     "https://nas.ugreen.com/products/ugreen-nasync-dxp6800-pro-nas-storage",
+    "https://www.nvidia.com/en-us/products/workstations/dgx-spark/",
+    "https://nvdam.widen.net/s/tlzm8smqjx/workstation-datasheet-dgx-spark-gtc25-spring-nvidia-us-3716899-web",
+    "hardware/dgx-spark-official-spec.md",
     "DGX live probe nephew-spark",
     "search-my-engine commerce (Amazon orders, source=amazon)"
   ],
@@ -82,12 +85,40 @@
       "id": "dgx-spark",
       "vendor": "NVIDIA",
       "model": "DGX Spark",
+      "sku": "940-54242-0000",
       "hostname": "nephew-spark",
       "lan_ipv4": "192.168.10.205",
       "wg_ipv4": "10.1.0.5",
-      "cpu": { "model": "NVIDIA Grace ARM", "cores": 20 },
+      "vendor_urls": {
+        "product_page": "https://www.nvidia.com/en-us/products/workstations/dgx-spark/",
+        "datasheet_pdf": "https://nvdam.widen.net/s/tlzm8smqjx/workstation-datasheet-dgx-spark-gtc25-spring-nvidia-us-3716899-web"
+      },
+      "vendor_official": {
+        "architecture": "NVIDIA Grace Blackwell",
+        "cpu": "20-core Arm: 10 Cortex-X925 + 10 Cortex-A725",
+        "gpu": "Blackwell Architecture",
+        "tensor_cores": "5th Generation",
+        "rt_cores": "4th Generation",
+        "tensor_performance_fp4_pflop": 1,
+        "ram_gb": 128,
+        "ram_type": "LPDDR5x",
+        "memory_interface_bits": 256,
+        "memory_bandwidth_gbps": 273,
+        "storage_tb_nvme": 4,
+        "ethernet": "1x RJ-45 10GbE",
+        "nic_connectx7_gbps": 200,
+        "usb_type_c": 4,
+        "wifi": "Wi-Fi 7",
+        "bluetooth": "5.4",
+        "power_supply_w": 240,
+        "gb10_tdp_w": 140,
+        "dimensions_mm": "150x150x50.5",
+        "weight_kg": 1.2,
+        "os": "NVIDIA DGX OS"
+      },
+      "cpu": { "model": "NVIDIA Grace ARM", "cores": 20, "cores_detail": "10 Cortex-X925 + 10 Cortex-A725" },
       "gpu": { "model": "GB10 Grace Blackwell" },
-      "ram_gb": { "unified": 122, "type": "LPDDR5X" },
+      "ram_gb": { "vendor": 128, "unified_live": 122, "type": "LPDDR5X", "bandwidth_gbps": 273 },
       "storage": [
         {
           "slot": "nvme0",

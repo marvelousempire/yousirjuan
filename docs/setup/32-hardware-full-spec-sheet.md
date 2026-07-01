@@ -79,14 +79,43 @@ Agents cite hardware **here and in yousirjuan `docs/setup/` first** — not Syno
 
 ## 2. NVIDIA DGX Spark (`nephew-spark` / `192.168.10.205`)
 
-### 2.1 Compute & memory
+**Vendor deep dive:** [`hardware/dgx-spark-official-spec.md`](../../hardware/dgx-spark-official-spec.md)  
+**Product page:** https://www.nvidia.com/en-us/products/workstations/dgx-spark/  
+**Datasheet:** https://nvdam.widen.net/s/tlzm8smqjx/workstation-datasheet-dgx-spark-gtc25-spring-nvidia-us-3716899-web  
+**SKU:** `940-54242-0000`
+
+### 2.0 Official NVIDIA specifications (vendor datasheet)
+
+| Field | Spec |
+|-------|------|
+| **Architecture** | NVIDIA Grace Blackwell |
+| **GPU** | Blackwell Architecture |
+| **CPU** | **20-core Arm** — 10 **Cortex-X925** + 10 **Cortex-A725** |
+| **Tensor / RT** | 5th-gen Tensor · 4th-gen RT |
+| **Tensor performance**¹ | Up to **1 PFLOP FP4** |
+| **System memory** | **128 GB LPDDR5x** unified · **256-bit** · **273 GB/s** |
+| **Storage** | **4 TB NVMe M.2** (self-encryption) |
+| **Ethernet** | **1× RJ-45 10 GbE** |
+| **NIC (vendor)** | **ConnectX-7 @ 200 Gbps** |
+| **USB** | **4× USB Type-C** |
+| **Display** | **1× HDMI 2.1a** · up to **3× DP** over USB-C Alt Mode |
+| **Wi-Fi / BT** | **Wi-Fi 7** · **BT 5.4** |
+| **NVENC / NVDEC** | **1× / 1×** |
+| **Power** | **240 W** PSU · **GB10 TDP 140 W**² |
+| **Dimensions / weight** | **150 × 150 × 50.5 mm** · **1.2 kg** |
+| **OS** | **NVIDIA DGX™ OS** |
+
+¹ Theoretical FP4 with sparsity. ² GB10 superchip TDP (CPU + GPU).
+
+### 2.1 Compute & memory (family unit — live)
 
 | Field | Spec | Source |
 |-------|------|--------|
-| **Platform** | NVIDIA DGX Spark — Grace **Blackwell GB10** | 📄 |
-| **CPU** | NVIDIA **Grace** ARM — **20 cores** (perf + efficiency) | ✅ live `nproc` |
+| **Platform** | NVIDIA DGX Spark — Grace **Blackwell GB10** | 📄 vendor |
+| **CPU** | **20 cores** Arm (vendor: X925 + A725) | ✅ live `nproc` |
 | **GPU** | **GB10** Grace Blackwell unified | 📄 · PCI `10de:2e12` |
-| **Unified memory** | **~122 GB** LPDDR5X (**127,600,524 kB** MemTotal) | ✅ live |
+| **Unified memory** | Vendor **128 GB** · live **~122 GB** (**127,600,524 kB** MemTotal) | 📄 + ✅ live |
+| **Memory bandwidth** | **273 GB/s** (vendor — bandwidth-bound inference) | 📄 |
 | **Architecture** | **aarch64** · Ubuntu 24.04 LTS | ✅ live |
 
 ### 2.2 Internal storage (✅ live 2026-07-01)
@@ -108,15 +137,16 @@ Vendor note: internal M.2 slots are **PCIe Gen5 ×4** — Gen4 NVMe here can exc
 | **wlP9s9** | MediaTek **7925** | Wi-Fi 6/7 class | Down when wired | Backup wireless |
 | **wg0** | WireGuard | — | Up | Mesh **10.1.0.5** |
 
-**Correction vs older docs:** USB-C ports are **USB 3.2 Gen 2×2 (20 Gb/s)** — **not Thunderbolt**. No ConnectX/QSFP NIC appeared in live `lspci` on this unit.
+**Reconcile vendor vs live:** Datasheet lists **ConnectX-7 @ 200 Gbps** — this unit's `lspci` shows **Realtek 8127 10 GbE** + **USB 1 GbE** dongle instead (operator path). USB-C is **USB 3.2 Gen 2×2 (20 Gb/s)** per live audit — **not Thunderbolt**.
 
-### 2.4 Other ports (📄 NVIDIA / operator rack)
+### 2.4 Other ports & acoustics (📄 NVIDIA + operator)
 
-| Port | Spec |
-|------|------|
-| **USB4 / USB-C** | **4×** — 40 Gb/s class (device-dependent) |
-| **HDMI** | **2.1a** |
-| **Display** | Headless primary — **Comet KVM** for physical console |
+| Port / metric | Vendor spec | Family install |
+|---------------|-------------|----------------|
+| **USB Type-C** | **4×** | USB 3.2 Gen 2×2 (20 Gb/s) — DP Alt Mode per datasheet |
+| **HDMI** | **2.1a** | Headless — **Comet GL-RM10RC KVM** for physical console |
+| **DisplayPort** | Up to **3×** over USB-C | — |
+| **Noise (ECMA-109)** | Op **35 dB** L<sub>WA,m</sub> · Idle **19 dB** | — |
 
 ---
 
@@ -387,5 +417,6 @@ ip -br link
 - [13-physical-topology-protectli.md](./13-physical-topology-protectli.md) — cabling ASCII
 - [31-m5-max-dgx-inference-setup.md](./31-m5-max-dgx-inference-setup.md) — inference floor
 - [`hardware/ugreen-dxp6800-pro-spec.md`](../../hardware/ugreen-dxp6800-pro-spec.md) — NAS-only deep dive
+- [`hardware/dgx-spark-official-spec.md`](../../hardware/dgx-spark-official-spec.md) — DGX Spark NVIDIA vendor table + live reconcile
 - Nephew `docs/hardware-dgx-ground-truth.md` — agent coordination index
 - **SME** `http://search.localhost/orders` — Family Inventory purchase proof (§13)

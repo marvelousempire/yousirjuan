@@ -1,7 +1,7 @@
 # DGX Spark (`nephew-spark`) — frontier compute node
 
 **Status:** ✅ live-audited 2026-07-01 · The family's core AI runtime — "Nephew's body."
-Parent: [`setup/01-hardware.md`](../setup/01-hardware.md) · Inference floor: [`setup/31-m5-max-dgx-inference-setup.md`](../setup/31-m5-max-dgx-inference-setup.md)
+Parent: [`setup/01-hardware.md`](../setup/01-hardware.md) · **Vendor spec:** [`../hardware/dgx-spark-official-spec.md`](../hardware/dgx-spark-official-spec.md) · Inference floor: [`setup/31-m5-max-dgx-inference-setup.md`](../setup/31-m5-max-dgx-inference-setup.md)
 
 ---
 
@@ -9,8 +9,8 @@ Parent: [`setup/01-hardware.md`](../setup/01-hardware.md) · Inference floor: [`
 
 | Attribute | Verified value (2026-07-01) |
 |---|---|
-| **SoC** | NVIDIA **GB10 Grace Blackwell** superchip |
-| **CPU** | **Grace ARM, 20 cores** (`aarch64`, Ubuntu LTS) |
+| **SoC** | NVIDIA **GB10 Grace Blackwell** superchip (SKU **940-54242-0000**) |
+| **CPU** | **20-core Arm** — 10 **Cortex-X925** + 10 **Cortex-A725** (`aarch64`, Ubuntu LTS) |
 | **GPU** | Blackwell (CUDA-native, `sm_121`) |
 | **Memory** | **121 GB unified LPDDR5X** — one pool shared by CPU + GPU |
 | **Memory bandwidth** | ~**273 GB/s** — the decisive fact: decode is **bandwidth-bound**, so a **MoE model (few active params) is far faster than a dense model** of the same total size (e.g. a 30B-A3B MoE ≫ a 32B dense) |
