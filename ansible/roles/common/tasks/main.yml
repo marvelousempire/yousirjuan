@@ -1,0 +1,15 @@
+# common — baseline facts + sanity every host should satisfy.
+---
+- name: Report identity (helps confirm inventory ↔ real host)
+  ansible.builtin.debug:
+    msg: >-
+      {{ inventory_hostname }} — {{ ansible_facts.system | default('?') }}
+      {{ ansible_facts.architecture | default('') }} · role={{ node_role | default('unset') }}
+  tags: [always]
+
+- name: Ensure ~/.ssh exists with correct perms (fleet key hygiene)
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.ssh"
+    state: directory
+    mode: "0700"
+  tags: [ssh]

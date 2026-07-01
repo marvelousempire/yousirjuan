@@ -1,0 +1,36 @@
+# mac_dev — baseline dev/edge setup for the Mac fleet (Apple Silicon + legacy).
+# Minimal + safe; grow as we standardize the Macs. Homebrew tasks require the
+# 'community.general' collection (ansible-galaxy collection install community.general).
+---
+- name: Detect Apple Silicon vs Intel
+  ansible.builtin.set_fact:
+    is_apple_silicon: "{{ ansible_facts.architecture == 'arm64' }}"
+
+- name: Locate Homebrew (arm64 → /opt/homebrew, intel → /usr/local)
+  ansible.builtin.stat:
+    path: "{{ '/opt/homebrew/bin/brew' if is_apple_silicon else '/usr/local/bin/brew' }}"
+  register: brew_bin
+
+- name: Warn if Homebrew is missing (install is an operator step — not scripted here)
+  ansible.builtin.debug:
+    msg: "Homebrew not found on {{ inventory_hostname }} — install from https://brew.sh, then re-run."
+  when: not brew_bin.stat.exists
+
+- name: Baseline CLI tools via Homebrew (Apple Silicon nodes)
+  community.general.homebrew:
+    name: [git, ollama, jq, wget, coreutils]
+    state: present
+  when: brew_bin.stat.exists and is_apple_silicon
+  tags: [brew]
+
+- name: Ensure the family model-cache dir exists (LAN model cache target)
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.ollama/models"
+    state: directory
+    mode: "0755"
+  when: is_apple_silicon
+  tags: [model-cache]
+
+# Legacy Intel Macs (e.g. bigmac 2012 iMac) are light x86 nodes — no heavy
+# inference. OCLP (OpenCore Legacy Patcher) to modernize the OS is a physical
+# operator step, tracked in docs/runbooks/, not automated here.

@@ -1,0 +1,57 @@
+# nas_10gbe_mount — codifies docs/runbooks/dgx-nas-10gbe-direct-link.md (DGX side).
+# Assigns the 10 GbE interface IP (persistent via netplan) and mounts the NAS
+# shares over the direct 10.77.0.0/30 link. Idempotent.
+#
+# Prereqs done on the NAS (UGOS, one-time Boss Moves — see the runbook):
+#   - LAN2 (10 GbE) static IP 10.77.0.1/30
+#   - NFS export ACL includes 10.77.0.0/24 Read/Write
+---
+- name: Netplan drop-in for the 10 GbE interface (persistent static IP)
+  ansible.builtin.copy:
+    dest: "/etc/netplan/99-nas-10gbe.yaml"
+    mode: "0600"
+    content: |
+      # Managed by Ansible (nas_10gbe_mount). Direct DGX↔NAS 10 GbE link.
+      network:
+        version: 2
+        ethernets:
+          {{ nas_10gbe.iface }}:
+            addresses: [{{ nas_10gbe.dgx_ip }}]
+            mtu: {{ nas_10gbe.mtu | default(1500) }}
+            dhcp4: false
+            # no gateway/routes: point-to-point storage link only
+  register: netplan_file
+
+- name: Apply netplan when the drop-in changed
+  ansible.builtin.command: netplan apply
+  when: netplan_file is changed
+  changed_when: netplan_file is changed
+
+- name: Wait for the NAS peer to answer over 10 GbE
+  ansible.builtin.command: "ping -c2 -W2 {{ nas_10gbe.nas_peer }}"
+  register: nas_ping
+  changed_when: false
+  failed_when: nas_ping.rc != 0
+  retries: 3
+  delay: 2
+  until: nas_ping.rc == 0
+
+- name: Mount NAS shares over the 10 GbE link (fstab + mounted, idempotent)
+  ansible.posix.mount:
+    src: "{{ item.src }}"
+    path: "{{ item.path }}"
+    fstype: nfs
+    opts: "{{ nas_10gbe.mount_opts }}"
+    state: mounted
+  loop: "{{ nas_10gbe.mounts }}"
+  loop_control:
+    label: "{{ item.path }} ← {{ item.src }}"
+
+- name: Verify the 10 GbE link speed (report only)
+  ansible.builtin.shell: "ethtool {{ nas_10gbe.iface }} | awk -F': ' '/Speed/{print $2}'"
+  register: link_speed
+  changed_when: false
+
+- name: Show link speed
+  ansible.builtin.debug:
+    msg: "{{ nas_10gbe.iface }} link: {{ link_speed.stdout }} (expect 10000Mb/s)"

@@ -1,0 +1,17 @@
+# Mac fleet — dev/edge build + configs (Apple Silicon + legacy Intel).
+# Only touches reachable hosts; skips ones pending SSH access.
+# Run: ansible-playbook playbooks/mac-fleet.yml --check --diff
+---
+- name: Mac fleet — dev build + configs
+  hosts: macs
+  gather_facts: true
+  # Macs: privileged tasks need become; run with --ask-become-pass or configure sudoers.
+
+  pre_tasks:
+    - name: Skip hosts not yet reachable (SSH key/mesh pending)
+      ansible.builtin.meta: end_host
+      when: not (reachable | default(true))
+
+  roles:
+    - role: common
+    - role: mac_dev

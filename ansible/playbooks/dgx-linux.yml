@@ -1,0 +1,27 @@
+# DGX Spark (Ubuntu / DGX OS, aarch64) — build + configs.
+# Run: ansible-playbook playbooks/dgx-linux.yml --check --diff   (dry run first)
+---
+- name: DGX Spark — Linux build + configs
+  hosts: linux
+  become: true
+  gather_facts: true
+
+  roles:
+    - role: common
+    - role: nas_10gbe_mount
+      when: nas_10gbe.enabled | default(false)
+
+  tasks:
+    - name: Baseline packages present
+      ansible.builtin.package:
+        name:
+          - nfs-common      # NFS client for the NAS mounts
+          - ethtool         # link-speed checks
+          - curl
+          - git
+        state: present
+      tags: [packages]
+
+    # Docker + the AI runtime (Ollama/vLLM containers) are managed by the Nephew
+    # repo's own compose/deploy tooling — this playbook owns the OS + storage layer,
+    # not the app fleet. Keep that boundary clean.

@@ -1,0 +1,5 @@
+# Top-level — configure the whole fleet by group.
+# Prefer running the per-group playbooks; this ties them together.
+---
+- import_playbook: playbooks/dgx-linux.yml
+- import_playbook: playbooks/mac-fleet.yml

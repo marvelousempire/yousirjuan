@@ -1,0 +1,10 @@
+# Defaults for the direct 10 GbE NAS link. Override per-host in inventory (see dgx).
+---
+nas_10gbe:
+  enabled: false
+  iface: enP7s7             # DGX built-in 10 GbE RJ-45
+  dgx_ip: 10.77.0.2/30      # DGX end of the point-to-point /30
+  nas_peer: 10.77.0.1       # NAS LAN2 (10 GbE) end
+  mtu: 1500                 # bump to 9000 for jumbo frames (NAS LAN2 must match)
+  mount_opts: "vers=3,nolock,rw,nofail,_netdev"
+  mounts: []               # [{ src: "10.77.0.1:/volume2/media", path: /mnt/nas-media }]
