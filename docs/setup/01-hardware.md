@@ -29,9 +29,9 @@ Different hardware **specializes**. The stack avoids running heavy inference on 
 | **CPU** | NVIDIA Grace ARM (20 cores: performance + efficiency) |
 | **GPU** | NVIDIA GB10 Grace Blackwell (CUDA-native) |
 | **Memory** | ~122 GB unified LPDDR5X |
-| **Storage** | Multi-TB NVMe (models, containers, hot indexes) |
+| **Storage** | 3.7 TB internal NVMe (Samsung, models/containers/hot indexes) **+ 2 empty internal M.2 NVMe slots (PCIe Gen5 ×4)** — spare hot-tier expansion (a Gen4 NVMe here runs ~7 GB/s, faster than any external enclosure) |
 | **OS** | Ubuntu LTS (aarch64) |
-| **Network** | Wired `.205` on Trusted LAN; **10GbE direct** to NAS `.119`; WG mesh `10.1.0.5`; Comet KVM for headless console |
+| **Network (measured 2026-07-01)** | **1× 10 GbE RJ45** (Realtek 8127) — currently on a **dead point-to-point link** `10.77.0.2/30`, **NOT** cabled to the NAS; **LAN + NAS reached over a 1 GbE USB ethernet dongle** (`.205`, Realtek 8153) — the real current bottleneck; WiFi (MediaTek 7925); WG mesh `10.1.0.5`; Comet KVM. **No Thunderbolt** (USB-C ports are USB 3.2 Gen 2×2 / 20 Gbps); **no ConnectX/QSFP** present. *Correction: earlier "10GbE direct to NAS" was aspirational — see the 10 GbE plan under NAS.* |
 | **Best for** | Large-model serving, embeddings + reranking on GPU, fine-tuning, concurrent family workloads, container orchestration |
 | **Not for** | Final Cut / DaVinci primary edit station; portable operator work |
 
@@ -81,8 +81,9 @@ Detailed product notes: [`hardware/dgx-spark-frontier-node.md`](../../hardware/d
 |---|---|
 | **Role** | Durable storage — git object store, Historia/sovereign vault, media, **target** for Matrix + heavy Docker |
 | **LAN** | `192.168.10.119` (`nasa.local`); SSH often non-default port on UGOS |
-| **Link to DGX** | **10GbE port #1 ↔ DGX** — primary fast path for NFS/git/backup |
-| **Stores** | Gitea repositories (objects on NAS, metadata DB stays on compute node), Qdrant snapshots, raw-docs archives, family media |
+| **Model / disks (measured 2026-07-01)** | UGREEN **DXP6800 Pro** — **Pool 1: 2× 1.8 TB M.2 SSD, RAID 1 → 1.8 TB fast tier** (nearly empty — the right home for the family model cache); **Pool 2: 4× 3.6 TB HDD, RAID 5 → 10.8 TB bulk**; **+ 2 empty HDD bays**. Has a 10 GbE RJ45 port. |
+| **Link to DGX (current vs. plan)** | **Current: 1 GbE** — the DGX reaches the NAS over its **USB gigabit dongle** (~125 MB/s). **Plan: direct 10 GbE** — cable the DGX's single 10 GbE RJ45 ↔ the NAS 10 GbE port (point-to-point `/30`), remount NFS over it for ~1.25 GB/s (10×). The DGX has only **one** 10 GbE port (no "#1/#2"). |
+| **Stores** | Gitea repositories (objects on NAS, metadata DB stays on compute node), Qdrant snapshots, raw-docs archives, family media; **family model cache belongs on the SSD Pool 1**, not the HDD pool |
 | **Best for** | Anything that must survive a compute-node rebuild |
 | **Not for** | Primary GPU inference or live vector index hot path (kept on DGX for latency today) |
 
