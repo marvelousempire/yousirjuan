@@ -52,8 +52,19 @@
 
 ---
 
+## Purchases (SME Amazon — 2026-07-01 sync)
+
+| Ordered | Item | ASIN | Notes |
+|---------|------|------|-------|
+| 2026-06-02 | DXP6800 Pro chassis (diskless) | B0D22HN6PT | Live NAS in rack |
+| 2026-05-30 | IronWolf Pro 4TB **4-pack** | B0F1QYWPJK | **ST4000NT001** → Pool 2 |
+| 2026-06-01 | UGREEN NAS UPS | B0DDC9ZK8R | US3000 |
+
+Source: Search My Engine `/orders` · [`data/hardware-spec-registry.json`](../data/hardware-spec-registry.json)
+
 ## Open items
 
-- [ ] Record exact HDD + M.2 **model numbers** from UGOS Storage Manager → `data/hardware-spec-registry.json`
+- [x] HDD model — **ST4000NT001** via SME Amazon (2026-07-01)
+- [ ] M.2 **model numbers** for Pool 1 — UGOS Storage Manager (not in SME export)
 - [ ] Document 10GbE **port #1 vs #2** assignment + LACP if enabled
-- [ ] Cable type/length for DGX↔NAS 10GBase-T run
+- [ ] Cable type/length for DGX↔NAS 10GBase-T run (Cat 8 UGREEN — SME §13)

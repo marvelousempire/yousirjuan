@@ -1,12 +1,22 @@
 {
   "$schema_comment": "You-Sir Juan hardware spec registry — canonical machine-readable companion to docs/setup/32-hardware-full-spec-sheet.md. yousirjuan wins on conflict with Nephew mirrors.",
-  "schema_version": 1,
+  "schema_version": 2,
   "last_verified": "2026-07-01",
   "sources": [
     "docs/setup/32-hardware-full-spec-sheet.md",
     "https://nas.ugreen.com/products/ugreen-nasync-dxp6800-pro-nas-storage",
-    "DGX live probe nephew-spark"
+    "DGX live probe nephew-spark",
+    "search-my-engine commerce (Amazon orders, source=amazon)"
   ],
+  "commerce_provenance": {
+    "system": "search-my-engine",
+    "door": "http://search.localhost/",
+    "surfaces": ["/orders", "/catalog", "/money"],
+    "amazon_orders_imported": 863,
+    "ebay_orders_imported": 0,
+    "refresh_query": "messages WHERE source IN ('amazon','ebay') — see docs/setup/32-hardware-full-spec-sheet.md §13",
+    "last_synced": "2026-07-01"
+  },
   "devices": {
     "ugreen-dxp6800-pro": {
       "id": "nas-dxp6800",
@@ -33,17 +43,40 @@
           "raid": "raid1",
           "drives": "2x_m2_ssd_1.8tb",
           "usable_tb": 1.8,
-          "role": "family_model_cache_target"
+          "role": "family_model_cache_target",
+          "drive_model": null,
+          "drive_model_note": "M.2 SKU not in SME Amazon export — confirm in UGOS Storage Manager"
         },
         {
           "id": "pool2-bulk",
           "raid": "raid5",
-          "drives": "4x_hdd_3.6tb",
+          "drives": "4x_hdd_4tb",
           "usable_tb": 10.8,
-          "role": "media_historia_git"
+          "role": "media_historia_git",
+          "drive_model": "Seagate IronWolf Pro ST4000NT001",
+          "drive_size_tb": 4,
+          "drive_qty": 4
         }
       ],
-      "drive_models_confirm_in_ugos": true
+      "purchases": [
+        {
+          "merchant": "amazon",
+          "asin": "B0D22HN6PT",
+          "model": "DXP6800 Pro 6-Bay (Diskless)",
+          "ordered": "2026-06-02",
+          "total_usd": 1099.95,
+          "sme_source": "amazon"
+        },
+        {
+          "merchant": "amazon",
+          "asin": "B0DDC9ZK8R",
+          "model": "US3000",
+          "name": "UGREEN NAS UPS 120W",
+          "ordered": "2026-06-01",
+          "total_usd": 113.41,
+          "sme_source": "amazon"
+        }
+      ]
     },
     "dgx-spark": {
       "id": "dgx-spark",
@@ -61,7 +94,8 @@
           "model": "SAMSUNG MZALC4T0HBL1-00B07",
           "size_tb": 4,
           "usable_tb": 3.7,
-          "bus": "nvme"
+          "bus": "nvme",
+          "provenance": "DGX live probe 2026-07-01"
         }
       ],
       "m2_empty_pcie_gen5_x4": 2,
@@ -81,6 +115,16 @@
           "role": "primary_lan",
           "verified": "2026-07-01"
         }
+      ],
+      "purchases": [
+        {
+          "merchant": "amazon",
+          "asin": "B0FWJ16CCH",
+          "model": "DGX Spark",
+          "ordered": "2026-05-24",
+          "total_usd": 5006.53,
+          "sme_source": "amazon"
+        }
       ]
     },
     "macbook-pro-m5-max": {
@@ -98,7 +142,13 @@
       "id": "onemac-2",
       "chip": "Apple M1",
       "dock": "HyperDrive Next TB5 #1",
-      "dock_nvme": "Samsung 990 Pro",
+      "dock_nvme": {
+        "model": "Samsung 990 PRO",
+        "sku": "MZ-V9P2T0B/AM",
+        "size_tb": 2,
+        "interface": "PCIe 4.0 x4",
+        "seq_read_mbps": 7450
+      },
       "dock_ethernet": "2.5GbE"
     },
     "gl-mt6000": {
@@ -106,7 +156,126 @@
       "model": "GL-MT6000",
       "ports": { "rj45_2_5g": 2, "rj45_1g": 4 },
       "wifi": "Wi-Fi 6 AX6000",
-      "lan_gateway": "192.168.10.1"
+      "lan_gateway": "192.168.10.1",
+      "purchases": [
+        {
+          "merchant": "amazon",
+          "asin": "B0CP7S3117",
+          "model": "GL-MT6000",
+          "ordered": "2025-01-01",
+          "total_usd": 167.99,
+          "sme_source": "amazon"
+        }
+      ]
+    },
+    "gl-mt5000": {
+      "id": "brume-3",
+      "model": "GL-MT5000",
+      "ports": { "rj45_2_5g": 3 },
+      "role": "2.5G switch on MT6000 LAN",
+      "purchases": [
+        {
+          "merchant": "amazon",
+          "asin": "B0GGMTNG4S",
+          "model": "GL-MT5000",
+          "ordered": "2026-06-01",
+          "total_usd": 128.38,
+          "sme_source": "amazon"
+        }
+      ]
+    },
+    "comet-kvm": {
+      "id": "comet-gl-rm10rc",
+      "model": "GL-RM10RC",
+      "role": "KVM to DGX only",
+      "purchases": [
+        {
+          "merchant": "amazon",
+          "asin": "B0GLFF94RC",
+          "model": "GL-RM10RC",
+          "ordered": "2026-06-01",
+          "total_usd": 320.98,
+          "sme_source": "amazon"
+        }
+      ]
+    },
+    "hyperdrive-tb5": {
+      "id": "hyperdrive-next-tb5",
+      "model": "HyperDrive Next Thunderbolt 5 Dock",
+      "ethernet": "2.5GbE",
+      "m2_slot": "PCIe Gen4 NVMe",
+      "qty_owned": 1,
+      "purchases": [
+        {
+          "merchant": "amazon",
+          "asin": "B0GR6SQYNS",
+          "ordered": "2026-05-30",
+          "total_usd": 427.95,
+          "sme_source": "amazon"
+        }
+      ]
+    },
+    "samsung-990-pro": {
+      "id": "990-pro-2tb",
+      "model": "Samsung 990 PRO",
+      "sku": "MZ-V9P2T0B/AM",
+      "size_tb": 2,
+      "qty_purchased": 3,
+      "purchases": [
+        { "merchant": "amazon", "asin": "B0BHJJ9Y77", "ordered": "2026-06-01", "total_usd": 417.29 },
+        { "merchant": "amazon", "asin": "B0BHJJ9Y77", "ordered": "2026-05-24", "total_usd": 417.29 },
+        { "merchant": "amazon", "asin": "B0BHJJ9Y77", "ordered": "2026-05-23", "total_usd": 458.88 }
+      ]
+    },
+    "seagate-ironwolf-pro": {
+      "id": "ironwolf-pro-4tb-pack",
+      "model": "Seagate IronWolf Pro",
+      "sku": "ST4000NT001",
+      "size_tb": 4,
+      "qty_per_pack": 4,
+      "rpm": 7200,
+      "installed_in": "nas-dxp6800.pool2-bulk",
+      "purchases": [
+        {
+          "merchant": "amazon",
+          "asin": "B0F1QYWPJK",
+          "ordered": "2026-05-30",
+          "total_usd": 954.39,
+          "sme_source": "amazon"
+        }
+      ]
+    },
+    "sonnet-echo-11": {
+      "id": "echo-dk11-t4",
+      "model": "Sonnet Echo 11 Thunderbolt 4 Dock",
+      "sku": "ECHO-DK11-T4",
+      "qty_owned": 2,
+      "purchases": [
+        { "merchant": "amazon", "asin": "B08WYCY2FS", "ordered": "2026-05-30", "total_usd": 203.29 },
+        { "merchant": "amazon", "asin": "B08WYCY2FS", "ordered": "2021-11-11", "total_usd": 342.39 }
+      ]
+    },
+    "anker-prime-14": {
+      "id": "anker-prime-dock",
+      "model": "Anker Prime Docking Station 14-Port",
+      "sku": "A83B6",
+      "ethernet": "1GbE",
+      "usb": "10Gbps",
+      "qty_owned": 2,
+      "purchases": [
+        { "merchant": "amazon", "asin": "B0CW9249DK", "ordered": "2026-05-23", "total_usd": 288.88 },
+        { "merchant": "amazon", "asin": "B0CW9249DK", "ordered": "2025-06-08", "total_usd": 203.29 }
+      ]
+    },
+    "ugreen-cat8-cables": {
+      "id": "ugreen-cat8",
+      "rated": "Cat 8 40Gbps 2000MHz",
+      "lengths_ft": [1.5, 6, 10],
+      "purchases": [
+        { "merchant": "amazon", "asin": "B0D6B9LQRV", "length_ft": 1.5, "qty": 4, "ordered": "2026-05-24" },
+        { "merchant": "amazon", "asin": "B0875VL1CJ", "length_ft": 6, "qty": 4, "ordered": "2026-05-24" },
+        { "merchant": "amazon", "asin": "B0875SPZC8", "length_ft": 10, "qty": 4, "ordered": "2026-05-24" }
+      ]
     }
   },
   "links": [
@@ -115,7 +284,8 @@
       "to": "nas-dxp6800.rj45_10gbe_1",
       "design_gbps": 10,
       "live_gbps": 10,
-      "verified": "2026-07-01"
+      "verified": "2026-07-01",
+      "cable": "UGREEN Cat 8 (see ugreen-cat8-cables)"
     },
     {
       "from": "dgx-spark.enx_usb_1g",

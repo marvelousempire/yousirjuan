@@ -4,7 +4,8 @@
 **Physical wiring & Protectli:** see [13-physical-topology-protectli.md](./13-physical-topology-protectli.md)
 **Historia / vault memory:** see [14-historia-and-operator-memory.md](./14-historia-and-operator-memory.md)
 **Every port / disk / speed / mod, power-ranked:** see [`hardware/fleet-capability-matrix.md`](../hardware/fleet-capability-matrix.md)  
-**Full spec sheet (ports, link speeds, drives, cables, docks):** [32-hardware-full-spec-sheet.md](./32-hardware-full-spec-sheet.md) · [`data/hardware-spec-registry.json`](../../data/hardware-spec-registry.json)
+**Full spec sheet (ports, link speeds, drives, cables, docks):** [32-hardware-full-spec-sheet.md](./32-hardware-full-spec-sheet.md) · [`data/hardware-spec-registry.json`](../../data/hardware-spec-registry.json)  
+**Purchase proof (Amazon orders):** SME Family Inventory `http://search.localhost/orders` · ch. 32 §13
 
 > **Verification legend** — every row below carries a live-probe status, not marketing:
 > ✅ **verified** (probed 2026-07-01) · ⚠️ **reachable but not fully verified** (SSH/creds blocked) ·

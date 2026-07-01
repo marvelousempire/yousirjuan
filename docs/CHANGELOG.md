@@ -16,6 +16,16 @@ Eastern time stamped to the second using `TZ=America/New_York date '+%Y-%m-%d %H
 
 ---
 
+## [0.7.19] — 2026-07-01 08:49:05 Eastern · *SME purchase proof wired into hardware registry*
+
+### Added
+- `data/hardware-spec-registry.json` **schema v2** — `commerce_provenance` (SME Amazon 863 / eBay 0) + per-device `purchases[]` (ASIN, order date, USD).
+- `docs/setup/32-hardware-full-spec-sheet.md` **§13** — SME Family Inventory purchase table + refresh SQL; §10 drive table provenance column.
+
+### Changed
+- `hardware/ugreen-dxp6800-pro-spec.md` — purchases table; Pool 2 HDD confirmed **IronWolf Pro ST4000NT001** via SME.
+- `docs/setup/01-hardware.md` — link SME `/orders` + ch. 32 §13.
+
 ## [0.7.18] — 2026-07-01 14:00:00 Eastern · *Full hardware spec sheet (ch. 32)*
 
 ### Added

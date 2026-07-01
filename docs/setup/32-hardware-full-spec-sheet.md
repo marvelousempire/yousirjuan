@@ -61,7 +61,8 @@ Agents cite hardware **here and in yousirjuan `docs/setup/` first** — not Syno
 | **Pool 2 (bulk)** | **4× ~3.6 TB HDD** | **RAID 5** | **~10.8 TB** | Media, Historia, git objects, backups |
 | **Empty** | **2× HDD bays** | — | — | Expansion ready |
 
-**⚠️ confirm:** exact HDD/SSD **model numbers** (IronWolf vs Red Plus, M.2 SKU) in **UGOS → Storage Manager** — update [`data/hardware-spec-registry.json`](../../data/hardware-spec-registry.json) when read.
+**HDD model (✅ SME Amazon):** **Seagate IronWolf Pro ST4000NT001** · 4 TB · 4-pack (ASIN `B0F1QYWPJK`, ordered 2026-05-30) → Pool 2 RAID5.  
+**M.2 model (⚠️ UGOS):** Pool 1 shows **2× ~1.8 TB** — no separate M.2 line item in SME Amazon export; confirm SKU in **UGOS → Storage Manager**.
 
 ### 1.4 Family mounts from DGX (📦)
 
@@ -299,14 +300,15 @@ Detail: [`docs/hardware/imac-2017-intel-i5.md`](../hardware/imac-2017-intel-i5.m
 
 ## 10. Installed drives quick reference
 
-| Host | Bay | Model (⚠️ = confirm in UI) | Size | Type | Pool / role |
-|------|-----|------------------------------|------|------|-------------|
-| **DGX Spark** | NVMe0 | **SAMSUNG MZALC4T0HBL1-00B07** ✅ | 4 TB | NVMe | OS + hot data |
-| **DGX Spark** | M.2 #2–3 | (empty) | — | PCIe Gen5 | Expansion |
-| **NAS** | M.2 ×2 | ⚠️ SKU TBD | ~1.8 TB each | SSD | Pool 1 RAID1 |
-| **NAS** | SATA ×4 | ⚠️ SKU TBD (~3.6 TB) | ~3.6 TB each | HDD | Pool 2 RAID5 |
-| **NAS** | SATA ×2 | (empty) | — | — | Ready |
-| **HyperDrive #1** | M.2 | **Samsung 990 Pro** ⚠️ size | TBD | NVMe | Mac external fast tier |
+| Host | Bay | Model | Size | Type | Pool / role | Provenance |
+|------|-----|-------|------|------|-------------|------------|
+| **DGX Spark** | NVMe0 | **SAMSUNG MZALC4T0HBL1-00B07** | 4 TB | NVMe | OS + hot data | ✅ DGX live probe |
+| **DGX Spark** | M.2 #2–3 | (empty) | — | PCIe Gen5 | Expansion | — |
+| **NAS** | M.2 ×2 | ⚠️ SKU TBD | ~1.8 TB each | SSD | Pool 1 RAID1 | UGOS only (not in SME) |
+| **NAS** | SATA ×4 | **Seagate IronWolf Pro ST4000NT001** | 4 TB each | HDD | Pool 2 RAID5 | ✅ SME Amazon `B0F1QYWPJK` |
+| **NAS** | SATA ×2 | (empty) | — | — | Ready | — |
+| **HyperDrive #1** | M.2 | **Samsung 990 PRO MZ-V9P2T0B/AM** | **2 TB** | NVMe | Mac fast tier | ✅ SME Amazon ×3 orders |
+| **HyperDrive TB5** | M.2 bay | (enclosure — assign 990 Pro) | 2 TB | NVMe | Dock #1 / #2 | ✅ SME `B0GR6SQYNS` dock |
 
 ---
 
@@ -320,14 +322,53 @@ Detail: [`docs/hardware/imac-2017-intel-i5.md`](../hardware/imac-2017-intel-i5.m
 
 ---
 
+## 13. SME Family Inventory — purchase proof (Amazon / eBay)
+
+**System:** Search My Engine (`search-my-engine`) · door **`http://search.localhost/`**  
+**Surfaces:** `/orders` · `/catalog/[uuid]` · `/money` · agent tool `lookup_inventory`
+
+| Merchant | Imported in SME | Use for hardware sheet |
+|----------|-----------------|------------------------|
+| **Amazon** | **863 line items** ✅ | ASIN, model, order date, price — backs §10 drive SKUs |
+| **eBay** | **0 orders** (importer live; no CSV/ZIP dropped yet) | Drop eBay purchase-history export in SME upload zone |
+
+### Key hardware purchases (SME `source=amazon`, synced 2026-07-01)
+
+| Ordered | Item | ASIN | Model / SKU | Total USD |
+|---------|------|------|-------------|-----------|
+| 2026-06-02 | **UGREEN DXP6800 Pro** (diskless) | B0D22HN6PT | DXP6800 Pro 6-Bay | 1099.95 |
+| 2026-05-30 | **Seagate IronWolf Pro 4TB ×4** | B0F1QYWPJK | ST4000NT001 | 954.39 |
+| 2026-05-30 | **HyperDrive Next TB5 dock** | B0GR6SQYNS | — | 427.95 |
+| 2026-05-30 | **Sonnet Echo 11 TB4 dock** | B08WYCY2FS | ECHO-DK11-T4 | 203.29 |
+| 2026-05-24 | **NVIDIA DGX Spark** | B0FWJ16CCH | DGX Spark | 5006.53 |
+| 2026-06-01 / 05-24 / 05-23 | **Samsung 990 PRO 2TB** (×3 orders) | B0BHJJ9Y77 | MZ-V9P2T0B/AM | 417–459 each |
+| 2026-06-01 | **GL.iNet Comet KVM** | B0GLFF94RC | GL-RM10RC | 320.98 |
+| 2026-06-01 | **GL.iNet Brume 3** | B0GGMTNG4S | GL-MT5000 | 128.38 |
+| 2025-01-01 | **GL.iNet Flint 2** | B0CP7S3117 | GL-MT6000 | 167.99 |
+| 2026-05-24 | **UGREEN Cat 8** 1.5 / 6 / 10 ft (×4 each) | B0D6B9LQRV / B0875VL1CJ / B0875SPZC8 | 40Gbps | 25–35 per pack |
+| 2026-05-23 | **Anker Prime 14-in-1 dock** | B0CW9249DK | A83B6 | 288.88 |
+
+Machine-readable mirror: [`data/hardware-spec-registry.json`](../../data/hardware-spec-registry.json) → `commerce_provenance` + per-device `purchases[]`.
+
+**Refresh from SME (on DGX or Mac with SME Postgres):**
+
+```bash
+docker exec search-my-engine-db-1 psql -U claude -d claude_archive -c \
+  "SELECT content::json->>'asin', content::json->>'model', left(content::json->>'name',60)
+   FROM messages WHERE source='amazon' AND content::text ILIKE '%<keyword>%';"
+```
+
+---
+
 ## 12. Maintenance ritual
 
 When hardware changes:
 
 1. Update this chapter + [`data/hardware-spec-registry.json`](../../data/hardware-spec-registry.json).
-2. Bump [`docs/CHANGELOG.md`](../CHANGELOG.md).
-3. Mirror one-line truth into Nephew `data/hardware-inventory.json` (not the other way around).
-4. Run live probes: DGX `ethtool`, `lsblk`, `nvme list`; NAS UGOS Storage Manager export.
+2. **Reconcile purchases** from SME `/orders` or the query in §13 (Amazon/eBay importers).
+3. Bump [`docs/CHANGELOG.md`](../CHANGELOG.md).
+4. Mirror one-line truth into Nephew `data/hardware-inventory.json` (not the other way around).
+5. Run live probes: DGX `ethtool`, `lsblk`, `nvme list`; NAS UGOS Storage Manager for M.2 SKUs SME lacks.
 
 **Verify commands (DGX):**
 
@@ -347,3 +388,4 @@ ip -br link
 - [31-m5-max-dgx-inference-setup.md](./31-m5-max-dgx-inference-setup.md) — inference floor
 - [`hardware/ugreen-dxp6800-pro-spec.md`](../../hardware/ugreen-dxp6800-pro-spec.md) — NAS-only deep dive
 - Nephew `docs/hardware-dgx-ground-truth.md` — agent coordination index
+- **SME** `http://search.localhost/orders` — Family Inventory purchase proof (§13)

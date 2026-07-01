@@ -1,6 +1,6 @@
 {
   "name": "yousirjuan-platform",
-  "version": "0.7.18",
+  "version": "0.7.19",
   "private": true,
   "description": "Full AI relationship-memory platform runtime scaffold.",
   "scripts": {
