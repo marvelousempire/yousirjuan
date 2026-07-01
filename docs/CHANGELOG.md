@@ -26,6 +26,14 @@ Eastern time stamped to the second using `TZ=America/New_York date '+%Y-%m-%d %H
 
 ---
 
+## [0.7.20] — 2026-07-01 07:35:56 Eastern · *DGX stop ledger — ch.31 §10 (PAIN-0015)*
+
+### Added
+- **`docs/setup/31-m5-max-dgx-inference-setup.md` §10** — RL-DGX-LEDGER-001: never `docker stop` without WHY; ReadyPlay needs `readyplay-prime` lane.
+- **`pain-journal/PAIN-0015-dgx-lane-clobber-without-stop-ledger.md`**
+
+---
+
 ## [0.7.18] — 2026-07-01 07:16:48 Eastern · *DGX unified memory budget — ch.31 §9 (PAIN-0013)*
 
 ### Added

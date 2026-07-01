@@ -199,6 +199,24 @@ See [Chapter 16](./16-knowledge-fabric-rag-quantization.md) (RAG sidecars) · [C
 
 ---
 
+## 10. Stop ledger — never `docker stop` without WHY (ReadyPlay vs Nephew)
+
+**vLLM `vllm-qwen3-prime` is required for ReadyPlay** (backend pins `:8003`). Nephew daily driver uses **Ollama `nephew:fast`**. Agents that `docker stop` one stack for memory relief without logging **why** cause the next agent to clobber the other product.
+
+**Standing rule (RL-DGX-LEDGER-001):** every stop/start goes through the ledger:
+
+```bash
+make dgx-lanes-status
+make dgx-lane-switch LANE=readyplay-prime REASON="ReadyPlay counsel session"
+make dgx-lane-switch LANE=daily REASON="return to Nephew default"
+```
+
+Ledger: `~/.nephew/run/dgx-service-ledger.jsonl` · manifest: `nephew/data/dgx-runtime-lanes.json` · runbook: `nephew/docs/runbooks/dgx-runtime-lanes-and-stop-ledger.md`
+
+**Forbidden:** bare `docker stop vllm-qwen3-prime` without `--reason` in the ledger tooling.
+
+---
+
 ## Related
 
 - [Chapter 10 — M5 Max sovereign edge](./10-m5-max-sovereign-edge.md) · [Chapter 16 — RAG & quantization](./16-knowledge-fabric-rag-quantization.md) · [Chapter 18 — WireGuard matrix](./18-wireguard-matrix-nas-gitea-why.md) · [Chapter 28 — Voice containers](./28-voice-containers-whisper-fish-speech.md) · [Chapter 30 — Voice full undressing](./30-voice-stack-full-undressing.md)
