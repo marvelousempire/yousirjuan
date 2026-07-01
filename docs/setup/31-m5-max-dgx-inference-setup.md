@@ -122,7 +122,84 @@ Models are a Family Office asset. A model the family already owns on its own har
 
 ---
 
+## 9. DGX unified memory budget — one big LLM + sidecars (never triple-stack)
+
+The GB10 has **one 121 GiB unified pool** shared by every GPU process — Ollama, vLLM, fleet embed/rerank containers, heavy voice cassettes, and ComfyUI. It is **not** three separate banks. Running two big LLMs plus a heavy TTS stack pins the pool, fills swap, and silently evicts the reranker (RAG retrieve timeouts follow).
+
+**Incident of record (2026-07-01):** DGX at **~95% RAM / 100% swap** with three zombie children. Root cause was **triple-stack**, not permissions:
+
+| Consumer | ~GPU RAM | Lane |
+|----------|----------|------|
+| vLLM `nephew:prime` (`vllm-qwen3-prime`) | ~50 GB | **On-demand escalation** — should be off during daily driver |
+| Ollama `nephew:fast` | ~20 GB | **Daily driver** — tower-api pins here today |
+| Higgs TTS (`nephew-fleet-higgs-tts-1`, sgl-omni) | ~26 GB | **Heavy cassette** — mutually exclusive with big LLMs |
+| bge-m3 embed `:9200` + reranker `:9201` | ~11 GB | **Always-on RAG sidecars** |
+
+**Standing rule:** at most **one big LLM hot** on the DGX, plus the embed/rerank sidecars. Heavy GPU voice (Higgs, ComfyUI) boots only after evicting the big LLM — same contract as `fleet/heavy-mode.sh` in the Nephew repo.
+
+### Configuration of record (Nephew repo — apply on DGX)
+
+| Layer | File / env | What it governs |
+|-------|------------|-----------------|
+| **Ollama systemd drop-in** | `nephew/deploy/dgx/ollama/memory.conf` → `/etc/systemd/system/ollama.service.d/memory.conf` | `OLLAMA_MAX_LOADED_MODELS=1` (one big Ollama model) · `OLLAMA_FLASH_ATTENTION=1` · `OLLAMA_KV_CACHE_TYPE=q8_0` · `OLLAMA_CONTEXT_LENGTH=65536` (stops a 30B loading at 262K → ~33 GB) |
+| **Apply script** | `nephew/deploy/dgx/ollama/install.sh` | `sudo systemctl daemon-reload && sudo systemctl restart ollama` after git pull |
+| **tower-api (DGX)** | `NEPHEW_INFERENCE_BACKEND=dgx-ollama` · `NEPHEW_HERMES_MODEL=nephew:fast` · `NEPHEW_HERMES_DIRECT_URL=http://127.0.0.1:11434/v1/chat/completions` | Daily chat/voice LLM path → **Ollama only** |
+| **Prime escalation** | `vllm-qwen3-prime` container · mesh `:8003` | **On-demand** for voice audit / Ready Play — start only when needed |
+| **70B escalation** | `nephew/scripts/dgx-big-llm-lane.sh {on\|off\|status}` | Evicts daily driver, loads `nephew:big` — free-room first |
+| **Heavy TTS** | `docker compose --profile heavy` · `nephew-fleet-higgs-tts-1` | Stop before loading a second big LLM |
+
+**Never stack:** `nephew:fast` (Ollama) **and** `nephew:prime` (vLLM) **and** Higgs TTS at the same time. Pick one brain lane + sidecars, or use heavy-mode to swap.
+
+### Operator lanes (pick one brain)
+
+| Lane | What stays hot | When |
+|------|----------------|------|
+| **Daily (default)** | Ollama `nephew:fast` + embed + reranker | tower-api, Hermes chat, voice draft |
+| **Prime audit** | vLLM `nephew:prime` + embed + reranker | Double-pass voice audit, Ready Play recaps — **stop Ollama fast first** |
+| **Heavy TTS** | Higgs + embed (no big LLM) | Emotional TTS eval — **stop both LLM stacks first** |
+| **70B escalation** | `nephew:big` only | `dgx-big-llm-lane on` — evicts fast, quiesces warmer |
+
+### Heal when the box runs hot (30-second diagnose)
+
+```bash
+# On nephew-spark
+free -h
+nvidia-smi --query-compute-apps=pid,process_name,used_gpu_memory --format=csv
+ollama ps
+docker stats --no-stream --format 'table {{.Name}}\t{{.MemPerc}}' | head -20
+ps -eo pid,stat,cmd | awk '$2 ~ /Z/'   # zombies — vLLM restart clears its children
+```
+
+**Safe relief (daily lane):**
+
+```bash
+docker stop vllm-qwen3-prime          # ~50 GB — prime is on-demand
+docker stop nephew-fleet-higgs-tts-1  # ~26 GB — heavy cassette off
+curl -sf -X POST http://127.0.0.1:11434/api/generate \
+  -d '{"model":"nephew:fast","keep_alive":0}' >/dev/null  # only if switching AWAY from Ollama
+```
+
+**Bring back when needed:**
+
+```bash
+docker start vllm-qwen3-prime    # allow ~4 min load; mesh :8003
+docker start nephew-fleet-higgs-tts-1
+```
+
+### Symptoms when misconfigured
+
+| Symptom | Likely cause |
+|---------|----------------|
+| Swap at 100%, `available` &lt; 5 GiB | Two big LLMs + heavy voice pinned |
+| `/api/v1/retrieve` 502 / 15s timeout | Reranker evicted off GPU under memory pressure |
+| `ollama ps` shows model `Stopping…` forever | Stuck unload — `sudo systemctl restart ollama` |
+| Zombies under vLLM parent PID | `docker restart vllm-qwen3-prime` after freeing headroom |
+
+See [Chapter 16](./16-knowledge-fabric-rag-quantization.md) (RAG sidecars) · [Chapter 28](./28-voice-containers-whisper-fish-speech.md) (voice containers) · pain journal **PAIN-0013** · Nephew `deploy/dgx/ollama/memory.conf` comments for full root-cause narrative.
+
+---
+
 ## Related
 
-- [Chapter 10 — M5 Max sovereign edge](./10-m5-max-sovereign-edge.md) · [Chapter 16 — RAG & quantization](./16-knowledge-fabric-rag-quantization.md) · [Chapter 18 — WireGuard matrix](./18-wireguard-matrix-nas-gitea-why.md) · [Chapter 30 — Voice full undressing](./30-voice-stack-full-undressing.md)
+- [Chapter 10 — M5 Max sovereign edge](./10-m5-max-sovereign-edge.md) · [Chapter 16 — RAG & quantization](./16-knowledge-fabric-rag-quantization.md) · [Chapter 18 — WireGuard matrix](./18-wireguard-matrix-nas-gitea-why.md) · [Chapter 28 — Voice containers](./28-voice-containers-whisper-fish-speech.md) · [Chapter 30 — Voice full undressing](./30-voice-stack-full-undressing.md)
 - Canonical: `marvelousempire/standard-voice-stack` → `understandings/M5-MAX-DGX-INFERENCE-SETUP.md`

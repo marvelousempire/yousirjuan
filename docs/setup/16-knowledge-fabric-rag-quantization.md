@@ -96,6 +96,8 @@ Population state varies — verify live collections before assuming full coverag
 
 **Why not one giant unquantized model:** contention — voice + RAG + chat + index jobs share one GPU. Quantization + warm-set discipline is the structural answer, not "buy more cloud."
 
+**DGX memory stacking (2026-07-01):** the GB10 unified pool is **121 GiB total** — embed + reranker (~11 GB) plus **at most one** big LLM (Ollama `nephew:fast` *or* vLLM `nephew:prime`, not both) plus heavy voice only via heavy-mode. Triple-stack pins swap and evicts the reranker → retrieve timeouts. Operator detail: [Chapter 31 §9](./31-m5-max-dgx-inference-setup.md#9-dgx-unified-memory-budget--one-big-llm--sidecars-never-triple-stack).
+
 Mac M5 edge: optional light local index (recent 30–90 day cassettes) for disconnected Jarvis; backfill to central Qdrant on reconnect.
 
 ---

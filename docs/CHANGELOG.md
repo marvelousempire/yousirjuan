@@ -16,6 +16,18 @@ Eastern time stamped to the second using `TZ=America/New_York date '+%Y-%m-%d %H
 
 ---
 
+## [0.7.18] — 2026-07-01 07:16:48 Eastern · *DGX unified memory budget — ch.31 §9 (PAIN-0013)*
+
+### Added
+- **`docs/setup/31-m5-max-dgx-inference-setup.md` §9** — GB10 unified pool governance: one big LLM + RAG sidecars, never triple-stack; Ollama `memory.conf`, tower-api env, operator heal commands.
+- **`pain-journal/PAIN-0013-dgx-unified-memory-triple-stack.md`** — 2026-07-01 incident record.
+
+### Changed
+- **`docs/setup/16-knowledge-fabric-rag-quantization.md`** — cross-link to ch.31 §9 (reranker eviction under memory pressure).
+- **`docs/setup/README.md`** — ch.31 blurb + last-updated stamp.
+
+---
+
 ## [0.7.17] — 2026-06-26 09:30:00 Eastern · *Super Rick voice stack full undressing (ch. 30)*
 
 ### Added

@@ -62,9 +62,9 @@ Full detail: [23-forge-sync-automation.md](./23-forge-sync-automation.md)
 | 28 | [28-voice-containers-whisper-fish-speech.md](./28-voice-containers-whisper-fish-speech.md) | **DGX voice containers** — Whisper, Fish Speech vs M5 Holler/Parakeet |
 | 29 | [29-sovereign-egress-default-deny.md](./29-sovereign-egress-default-deny.md) | **Default deny egress** — no cloud LLM phoning home (Plan 0231) |
 | 30 | [30-voice-stack-full-undressing.md](./30-voice-stack-full-undressing.md) | **Super Rick full undressing** — every service, model, port, tweak, covenant (June 2026) |
-| 31 | [31-m5-max-dgx-inference-setup.md](./31-m5-max-dgx-inference-setup.md) | **Inference floor** — M5 Max & DGX specs, Ollama/vLLM/MLX, quantization-per-hardware, Mac-first routing, weigh-and-measure |
+| 31 | [31-m5-max-dgx-inference-setup.md](./31-m5-max-dgx-inference-setup.md) | **Inference floor** — M5 Max & DGX specs, Ollama/vLLM/MLX, quantization, Mac-first routing, **§9 unified memory budget** |
 
-**Last updated:** 2026-06-28 (ch. 31 M5 Max + DGX inference floor)
+**Last updated:** 2026-07-01 (ch. 31 §9 DGX memory governance · PAIN-0013)
 
 ---
 
