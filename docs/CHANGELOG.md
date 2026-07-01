@@ -16,6 +16,16 @@ Eastern time stamped to the second using `TZ=America/New_York date '+%Y-%m-%d %H
 
 ---
 
+## [0.7.19] — 2026-07-01 07:30:56 Eastern · *Gitea NFS storage incident — PAIN-0014*
+
+### Added
+- **`pain-journal/PAIN-0014-gitea-nfs-storage-layer-degradation.md`** — active NFSv3 export/client incident on Gitea git store; chmod/perm-guard is symptom-only.
+
+### Changed
+- **`pain-journal/PAIN-0013-dgx-unified-memory-triple-stack.md`** — notes compounding factor for PAIN-0014.
+
+---
+
 ## [0.7.18] — 2026-07-01 07:16:48 Eastern · *DGX unified memory budget — ch.31 §9 (PAIN-0013)*
 
 ### Added

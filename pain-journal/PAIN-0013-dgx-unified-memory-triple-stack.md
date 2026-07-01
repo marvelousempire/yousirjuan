@@ -1,7 +1,7 @@
 # PAIN-0013 — DGX unified memory triple-stack (swap pegged, RAG slows)
 
 **First seen:** 2026-07-01  
-**Status:** resolved (operator handbook + config pointers shipped)
+**Status:** monitored — handbook shipped; **also compounding factor** for NFS git-store failures (PAIN-0014)
 
 ---
 
