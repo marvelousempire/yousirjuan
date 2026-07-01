@@ -13,7 +13,7 @@ The trustworthy "what can each box actually do" sheet — **every device, every 
 
 | # | Node | Chip | Cores | RAM | Class | Status |
 |---|---|---|---|---|---|---|
-| 1 | **DGX Spark** | NVIDIA GB10 Blackwell + Grace | 20 (ARM) + GPU | **121 GB** unified | Frontier AI runtime | ✅ verified |
+| 1 | **DGX Spark** | NVIDIA GB10 Blackwell + Grace | 20 (ARM) + GPU | **128 GB** unified | Frontier AI runtime | ✅ verified |
 | 2 | **fivemac** | Apple **M5 Max** | CPU + 40-GPU + 16-ANE | **128 GB** | Primary workstation / voice edge | ⚠️ SSH-locked |
 | 3 | **Mac mini M4 Pro** | Apple M4 Pro | — | 48 GB | Always-on light services | ⚪ offline |
 | 4 | **twomac** | *TBD* | — | *TBD* | Mac fleet (OCLP'd) | 🔴 key-pending |
@@ -31,12 +31,12 @@ The trustworthy "what can each box actually do" sheet — **every device, every 
 
 | Layer | Detail (verified 2026-07-01) |
 |---|---|
-| **Compute** | NVIDIA **GB10 Grace Blackwell**; Grace **ARM 20-core** (aarch64); GPU mem-bandwidth ~273 GB/s (bandwidth-bound → MoE ≫ dense) |
-| **Memory** | **121 GB unified LPDDR5X** (shared CPU+GPU) |
-| **Internal storage** | **4.1 TB NVMe** (Samsung MZALC4T0HBL1, ~5 GB/s) — 1.06 TB used |
-| **Storage expansion** | **2 empty internal M.2 Gen5 ×4 slots** — best unused resource; a Gen4 NVMe here ≈ 7 GB/s |
-| **USB ports** | **4× USB 3.2 Gen 2×2 @ 20 Gb/s** (root hubs report `20000M/x2`) + several USB 2.0 (480 Mb/s). **No Thunderbolt** (USB-C are USB, not TB) |
-| **Network** | **1× 10 GbE RJ45** (Realtek 8127) on a dead `/30` link (free); **1 GbE USB dongle** carries LAN+NAS; WiFi (MediaTek 7925); WG `10.1.0.5` |
+| **Compute** | **GB10 Grace Blackwell**; **20-core Arm** (10× Cortex-X925 + 10× Cortex-A725); Blackwell GPU (5th-gen Tensor, up to **1 PFLOP FP4**); bandwidth **273 GB/s** (bandwidth-bound → MoE ≫ dense) |
+| **Memory** | **128 GB LPDDR5x** unified, 256-bit @ 4266 MHz (**121 GB usable**) |
+| **Internal storage** | **4 TB NVMe M.2** self-encrypting (~3.7 TB usable, ~5 GB/s) — **single M.2 slot, no spare** |
+| **USB-C ports** | **4× USB-C**: 1× **240 W power**, 3× **20 Gb/s data** (USB 3.2 Gen2×2 + DisplayPort-alt). **No Thunderbolt** |
+| **Other ports** | **HDMI 2.1a**; **1× 10 GbE RJ-45**; **2× QSFP = ConnectX-7 @ 200 Gb/s** (Spark-clustering only — QSFP, not for the NAS); **WiFi 7 + BT 5.4** |
+| **Network (live)** | **10 GbE `enP7s7`** cabled direct to NAS (`10.77.0.2/30`, NAS IP pending); **1 GbE USB dongle** (Anker dock, on USB 2.0) = LAN+internet; WG `10.1.0.5` |
 | **⚠️ Port defect** | The **1 GbE dongle is plugged into a USB 2.0 (480 Mb/s) port** → NAS capped at **~40 MB/s**. Move it to a 20 Gb/s port → full gigabit today |
 | **Mods** | none required; arm64-native Docker fleet |
 | **Best for** | vLLM serving, RAG embed/rerank, forge, containers |
@@ -109,7 +109,7 @@ Full specs for these land in a follow-up PR once reachable (per the "ship reacha
 1. **Move the DGX 1 GbE dongle off its USB 2.0 port** → a 20 Gb/s USB port = ~3× NAS throughput *today* (before the 10 GbE cable).
 2. **Cable DGX 10 GbE (`enP7s7`) ↔ NAS 10 GbE** → ~1.25 GB/s NAS.
 3. **bigmac: internal SSD swap** (the SATA-II 7200 HDD is the bottleneck) **+ OCLP** to modernize the OS.
-4. **Populate a DGX internal M.2 slot** (or a 990 Pro) as a dedicated model-weights hot tier.
+4. **990 Pros stay in the Mac TB enclosures** — the DGX has one (occupied) M.2 slot; no internal expansion.
 5. **Authorize SSH on fivemac + twomac** to complete this matrix.
 
 ---

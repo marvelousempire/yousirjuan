@@ -7,13 +7,16 @@ Parent: [`setup/01-hardware.md`](../setup/01-hardware.md) · **Vendor spec:** [`
 
 ## Compute
 
-| Attribute | Verified value (2026-07-01) |
+| Attribute | Official spec (NVIDIA datasheet) + live probe |
 |---|---|
-| **SoC** | NVIDIA **GB10 Grace Blackwell** superchip (SKU **940-54242-0000**) |
-| **CPU** | **20-core Arm** — 10 **Cortex-X925** + 10 **Cortex-A725** (`aarch64`, Ubuntu LTS) |
-| **GPU** | Blackwell (CUDA-native, `sm_121`) |
-| **Memory** | **121 GB unified LPDDR5X** — one pool shared by CPU + GPU |
-| **Memory bandwidth** | ~**273 GB/s** — the decisive fact: decode is **bandwidth-bound**, so a **MoE model (few active params) is far faster than a dense model** of the same total size (e.g. a 30B-A3B MoE ≫ a 32B dense) |
+| **SoC** | NVIDIA **GB10 Grace Blackwell** superchip (product `940-54242-0000`) |
+| **CPU** | **20-core Arm — 10× Cortex-X925 + 10× Cortex-A725** (`aarch64`) |
+| **GPU** | **Blackwell** (CUDA-native, `sm_121`) — 5th-gen Tensor Cores, 4th-gen RT Cores; **up to 1 PFLOP FP4** (sparsity); 1× NVENC / 1× NVDEC |
+| **Memory** | **128 GB LPDDR5x** unified, coherent, **256-bit** @ 4266 MHz (**121 GB usable** in the OS) |
+| **Memory bandwidth** | **273 GB/s** — the decisive fact: decode is **bandwidth-bound**, so a **MoE model (few active params) is far faster than a dense model** of the same total size (e.g. a 30B-A3B MoE ≫ a 32B dense) |
+| **Power / TDP** | 240 W PSU (USB-C PD 48V/5A); GB10 chip TDP 140 W |
+| **Size / weight** | 150 × 150 × 50.5 mm · 1.2 kg |
+| **OS** | NVIDIA DGX OS (Ubuntu-based, aarch64) |
 
 ### What the bandwidth ceiling means for model choice
 - **Prefer MoE / low-active-param** models for the daily driver (fast decode).
@@ -26,24 +29,33 @@ Parent: [`setup/01-hardware.md`](../setup/01-hardware.md) · **Vendor spec:** [`
 
 | Attribute | Value |
 |---|---|
-| **Internal NVMe** | **3.7 TB** (Samsung MZALC4T0HBL1) — models, containers, hot Qdrant, gitea-data |
-| **Expansion** | **2 empty internal M.2 Gen5 ×4 slots** (`0000:00`, `0002:00` — Presence-Detect negative). A Gen4 NVMe (e.g. a 990 Pro) here runs ~7 GB/s — **the fastest unused resource on the box** and the ideal model-weights hot tier |
+| **Internal NVMe** | **4 TB NVMe M.2, self-encrypting** (spec) — the OS reports ~3.7 TB usable (Samsung MZALC4T0HBL1); holds models, containers, hot Qdrant, gitea-data |
+| **Expansion** | **None documented** — the single M.2 slot holds the 4 TB drive; NVIDIA lists **no spare M.2 / storage-expansion slot**. *(Correction: an earlier draft wrongly read two idle internal PCIe root ports as "empty M.2 slots" — they are not user-accessible storage slots. The 990 Pros stay in the Mac Thunderbolt enclosures.)* |
 | **Free** | ~2.6 TB free on `/` (2026-07-01) |
 
 ---
 
-## Networking (the reality — corrects the old "2× 10GbE / 10GbE-to-NAS" claim)
+## Rear panel — the full port map (NVIDIA datasheet)
+
+| Port | Spec |
+|---|---|
+| **4× USB Type-C** | Leftmost = **power in, 240 W PD** (48V/5A). The other **3 = 20 Gb/s data** (USB 3.2 Gen2×2) **+ DisplayPort alt-mode → up to 3× DP displays**. **Not Thunderbolt** — the DGX has no TB controller |
+| **1× HDMI 2.1a** | Display out + HDMI multichannel audio |
+| **1× RJ-45, 10 GbE** | The general ethernet port (`enP7s7`) — this is what cables to the NAS |
+| **2× QSFP — ConnectX-7 NIC @ 200 Gbps** | High-speed networking for **Spark-to-Spark clustering** ("Spark stacking" → up to a 405B-param model across two Sparks). `mlx5` driver is loaded on the box. **QSFP, not RJ-45 — cannot connect to the NAS** (which is RJ-45 10 GbE) |
+| **WiFi 7 + Bluetooth 5.4** | MediaTek 7925 (`wlP9s9`) |
+
+### Live wiring (2026-07-01)
 
 | Interface | What it is | State |
 |---|---|---|
-| `enP7s7` | **1× 10 GbE RJ45** (Realtek 8127) | UP, but on a **dead point-to-point link** `10.77.0.2/30` (peer absent) — **effectively free** |
-| `enx6c6e…` | **USB 1 GbE dongle** (Realtek 8153) | Carries the **LAN + NAS** traffic (`192.168.10.205`) — **the current bottleneck (~125 MB/s)** |
-| `wlP9s9` | MediaTek 7925 WiFi | down |
+| `enP7s7` | the **10 GbE RJ-45** | UP 10 Gb/s — **cabled directly to the NAS** (`10.77.0.2/30`); waiting on the NAS side to get IP `10.77.0.1` |
+| `enx6c6e…` | **USB gigabit dongle** (Realtek 8153, in the Anker dock) on a **USB 2.0 port** | carries LAN+internet (`192.168.10.205`) — capped ~40–125 MB/s |
+| ConnectX-7 QSFP ×2 | 200 Gb/s cluster ports | uncabled (no 2nd Spark) |
 | WG | WireGuard mesh | `10.1.0.5` |
 
-- **No Thunderbolt** — USB-C ports are **USB 3.2 Gen 2×2 (20 Gbps)**. TB devices don't tunnel PCIe here.
-- **No ConnectX / QSFP** — `lspci` shows zero Mellanox/NVIDIA network devices; the box has a single RJ45 10 GbE, not the dual-QSFP ConnectX some DGX Spark configs ship.
-- **10 GbE plan:** cable `enP7s7` directly to the NAS's 10 GbE RJ45 (point-to-point `/30`), remount NFS over it → ~1.25 GB/s (10× today). Only one 10 GbE port, so it's NAS-direct or a 10 GbE switch — not both plus another link.
+- **No Thunderbolt** — the 4 USB-C ports are USB 3.2 Gen2×2 (20 Gb/s) + DP-alt, not TB. A TB cable into the DGX runs as USB.
+- **10 GbE → NAS is the storage path** (already cabled): set the NAS 10 GbE port to `10.77.0.1/255.255.255.252`, remount NFS → ~1.25 GB/s. The QSFP ports don't help the NAS (wrong connector); they're for a second Spark.
 
 ---
 

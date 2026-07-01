@@ -34,12 +34,13 @@ Different hardware **specializes**. The stack avoids running heavy inference on 
 | Attribute | Value (probed 2026-07-01) |
 |---|---|
 | **Role** | Nephew's **body** — production inference, RAG, Docker fleet, git forge, Matrix, voice servers |
-| **CPU** | NVIDIA **Grace ARM, 20 cores** (aarch64) |
-| **GPU** | NVIDIA **GB10 Grace Blackwell** (CUDA-native) — memory-bandwidth ~273 GB/s (bandwidth-bound: MoE ≫ dense) |
-| **Memory** | **121 GB unified** LPDDR5X (one pool shared by GPU + CPU) |
-| **Storage** | **3.7 TB internal NVMe** (Samsung MZALC4T0HBL1) **+ 2 empty internal M.2 Gen5 ×4 slots** (spare hot tier — a Gen4 NVMe here runs ~7 GB/s) |
-| **OS** | Ubuntu LTS (aarch64) |
-| **Network** | **10 GbE** `enP7s7` (Realtek 8127) — **live 10 Gb/s full duplex** direct **storage path to NAS** (point-to-point `10.77.0.2/30`); **1 GbE** USB dongle `enx…96c6` (Realtek 8153) — **Trusted LAN** `.205` + internet; Wi-Fi (MediaTek 7925); WG mesh `10.1.0.5`; Comet KVM. **No Thunderbolt** (USB-C = USB 3.2 Gen 2×2 / 20 Gbps); **no ConnectX/QSFP** |
+| **CPU** | NVIDIA **20-core Arm — 10× Cortex-X925 + 10× Cortex-A725** (aarch64) |
+| **GPU** | **GB10 Grace Blackwell** — 5th-gen Tensor, 4th-gen RT; up to **1 PFLOP FP4** (sparsity); bandwidth **273 GB/s** (bandwidth-bound: MoE ≫ dense) |
+| **Memory** | **128 GB LPDDR5x** unified, 256-bit @ 4266 MHz (**121 GB usable** in OS) |
+| **Storage** | **4 TB NVMe M.2** self-encrypting (~3.7 TB usable; Samsung MZALC4T0HBL1) — **single M.2 slot, no spare** |
+| **OS** | NVIDIA DGX OS (Ubuntu-based, aarch64) |
+| **Ports** | **4× USB-C** (1× 240 W power + 3× 20 Gb/s data w/ DisplayPort-alt → up to 3× DP); **HDMI 2.1a**; **1× 10 GbE RJ-45**; **2× QSFP — ConnectX-7 @ 200 Gb/s** (for **Spark-to-Spark clustering**, not the NAS); **WiFi 7 + BT 5.4**. **No Thunderbolt** (USB-C = USB 3.2 Gen2×2) |
+| **Network (live)** | **10 GbE** `enP7s7` — direct cable to NAS (`10.77.0.2/30`, NAS side IP pending); **1 GbE** USB dongle `enx…96c6` (in the Anker dock, on a USB 2.0 port) = LAN `.205` + internet; WG `10.1.0.5`; Comet KVM |
 | **Best for** | Large-model serving (vLLM), embeddings + reranking, container orchestration, git forge |
 | **Not for** | Creative edit station; portable work |
 
@@ -70,19 +71,19 @@ Detail: [`hardware/dgx-spark-official-spec.md`](../hardware/dgx-spark-official-s
 
 ---
 
-### `bigmac` — Mac fleet node · 🔴 unreachable now
+### `bigmac` — Late-2012 iMac (legacy x86) · ✅ reachable via LAN
+
+| Attribute | Value (probed 2026-07-01) |
+|---|---|
+| **Address** | LAN `192.168.10.182` · SSH `bigmac-claude` (user `abrownsanta`, key `id_ed25519_bigmac`) |
+| **Spec** | **iMac13,2 — Intel i7-3770 quad @ 3.4 GHz, 8 GB RAM, GTX 675MX 1 GB, 1 TB 7200 HDD (SATA-II)**, macOS Catalina 10.15.8. *Legacy/weak — light x86 tasks only, not an offload powerhouse. Needs OCLP for a newer OS; internal SSD is the real upgrade.* No WireGuard needed — LAN + key |
+
+### `twomac` — Mac fleet node · 🔴 on LAN, key-pending
 
 | Attribute | Value |
 |---|---|
-| **Address** | `192.168.10.182` · SSH alias `bigmac-claude` |
-| **Status** | **Host down / timeout** on 2026-07-01 probe. Strongest Mac offload candidate when up — verify specs + provision on next contact |
-
-### `twomac` — Mac fleet node · 🔴 unreachable now (access exists)
-
-| Attribute | Value |
-|---|---|
-| **Address** | WG `10.1.0.6` · SSH alias `twomac-claude` |
-| **Status** | **WG down + host key changed** (reimaged?). Operator has access — needs mesh/key re-establishment to bring online |
+| **Address** | **LAN `192.168.10.166`** (its `twomac`/`twomac-claude` alias wrongly points at dead WG `10.1.0.6` — repoint to LAN) |
+| **Status** | Reachable on the LAN; **no SSH key authorized yet** — add `id_ed25519_twomac.pub` to `~/.ssh/authorized_keys`, then probe. OCLP'd per operator. **No WireGuard needed** — LAN + key |
 
 ### `zeromac` — Mac fleet node · 🔴 unreachable now
 
@@ -179,7 +180,7 @@ Full cabling: [13-physical-topology-protectli.md](./13-physical-topology-protect
 ```text
 MacBooks (active projects, dev trees, 990 Pro TB5 fast local tiers on onemac/fivemac)
     |  git push
-DGX Spark (runtime, models, vLLM serving — 3.7TB NVMe hot tier + 2 empty M.2)
+DGX Spark (runtime, models, vLLM serving — 4TB NVMe M.2 hot tier)
     ↕ 10 GbE direct (enP7s7 ↔ NAS) — bulk storage/NFS
     ↕ 1 GbE USB dongle — Trusted LAN .205
 NAS DXP6800 Pro (SSD Pool 1 = model cache · HDD Pool 2 = git objects/media/backups)
@@ -192,7 +193,7 @@ NAS DXP6800 Pro (SSD Pool 1 = model cache · HDD Pool 2 = git objects/media/back
 1. **Confirm NFS/SMB mounts bind to the 10 GbE path** — `enP7s7` is live at 10 Gb/s; verify bulk I/O does not accidentally route over the 1 GbE USB leg.
 2. **Authorize the fleet SSH key on `fivemac`** (publickey denied) — the primary workstation is unreachable to agents.
 3. **Bring `twomac` / `bigmac` / `zeromac` onto the mesh** (WG + keys) — three Mac nodes currently unreachable.
-4. **Populate a DGX internal M.2 slot** (or use a 990 Pro) as a dedicated model-weights hot tier.
+4. **990 Pros stay in the Mac TB enclosures** — the DGX has one M.2 slot (occupied); no internal storage expansion.
 
 ---
 
