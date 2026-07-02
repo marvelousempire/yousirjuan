@@ -32,6 +32,19 @@ rather than replacing them.
 
 ---
 
+# Network access (fivemac — until further notice)
+
+| Path | Alias / URL | Notes |
+|------|-------------|-------|
+| **Home LAN SSH** | `ssh nephew-spark-lan` → `192.168.10.205` | **Primary** while WG is down |
+| **WireGuard SSH** | `ssh nephew-spark` → `10.1.0.5` | Remote mesh; down from fivemac 2026-07-02 |
+| **Gitea git (LAN)** | `git@gitea-spark-lan:marvelousempire/<repo>.git` | Proxy to Spark `127.0.0.1:2424` |
+| **Gitea HTTP** | `http://192.168.10.205:3300` | API probe; WG `:3300` down from fivemac |
+
+Canonical runbook: [`ledger/LEDGER-0037-spark-lan-gitea-wiring/`](../ledger/LEDGER-0037-spark-lan-gitea-wiring/README.md).
+
+---
+
 # DGX Spark Role
 
 DGX Spark is not treated as:
