@@ -39,6 +39,8 @@
 | **Voice sounds robotic / Holler down** | Nephew | `make voice-launchagent` · health curl |
 | **Forge / GitHub mirror drift** | yousirjuan | `make forge-push` · ch. 23 |
 | **Explain stack to family** | yousirjuan | `docs/setup/README.md` chapters 1–5 |
+| **Scaffold Super Rick understandings** | Nephew (wrapper) | `node scripts/scaffold-super-rick-understanding.mjs --bundle --domain <d>` · doctrine `intent-quality-super-rick/schema-library/super-rick/doctrine.md` |
+| **Mirror hub undressing to YSJ** | hub repo first | diff `FULL-STACK-UNDRESSING.md` → `docs/setup/30-*` (voice) per `intent-quality-super-rick/schema-library/super-rick/registry/ysj-mirror.registry.json` |
 | **Enterprise agent on GitHub only** | GitHub `main` → Gitea sync | ch. 23 timer |
 
 ---

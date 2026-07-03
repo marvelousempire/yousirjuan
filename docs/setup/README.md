@@ -65,7 +65,7 @@ Full detail: [23-forge-sync-automation.md](./23-forge-sync-automation.md)
 | 31 | [31-m5-max-dgx-inference-setup.md](./31-m5-max-dgx-inference-setup.md) | **Inference floor** — M5 Max & DGX specs, Ollama/vLLM/MLX, quantization-per-hardware, Mac-first routing, weigh-and-measure |
 | 32 | [32-hardware-full-spec-sheet.md](./32-hardware-full-spec-sheet.md) | **Full hardware spec sheet** — UGREEN NAS, DGX, Macs, network gear, docks, cables, port/link speeds, drives |
 
-**Last updated:** 2026-07-01 (ch. 32 full hardware spec sheet)
+**Last updated:** 2026-07-03 (Super Rick understandings YSJ mirror registry + ch. 25 bridge)
 
 ---
 
