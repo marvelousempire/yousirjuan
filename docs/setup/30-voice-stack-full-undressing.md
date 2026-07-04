@@ -7,6 +7,13 @@
 
 **Last verified:** Tuesday, June 30, 2026 · Nephew Pockit **v1.91.48** · SVS `main` @ `0ae48eb`
 
+> ⚠️ **2026-07-04 de-stale (INT-0045 `#believed-vs-actual`):** this chapter lags the canonical SVS
+> undressing (Pockit is in the **1.92.9x** era; Presence **v0.4.3**). Corrections measured live:
+> **Higgs is v3** (not V2); **NeMo Riva and F5-TTS are DOWN** (containers Exited 3–8 days —
+> revive-or-retire pending), so Riva is **not** the DGX emotional primary today (M5 Holler carries
+> emotional turns; Higgs v3 for max-emotion when the GB10 frees). Read the SVS
+> `FULL-STACK-UNDRESSING.md` for live truth; this chapter is the public-safe mirror.
+
 Complements [Chapter 11 — Parakeet premium](./11-voice-parakeet-premium-stack.md) and [Chapter 28 — Voice containers](./28-voice-containers-whisper-fish-speech.md) with the **June 2026** Presence-orb era truth.
 
 ---
@@ -61,10 +68,10 @@ Run `make doors` once per Mac (sudo) so `.localhost` URLs need no port.
 | Ollama `nephew:fast` | 11434 | Draft + swarmer models |
 | vLLM Qwen3-32B-FP8 `nephew:prime` | 8003 | Double-pass audit |
 | Whisper container | 8767 | STT when route=dgx |
-| F5-TTS | 7860 | Voice clone |
-| NeMo Riva | 9001 | DGX emotional primary |
+| F5-TTS | 7860 | Voice clone — **❌ down (2026-07-04); `roadmap`, no refs** |
+| NeMo Riva | 9001 | **❌ down (2026-07-04); `scaffold` — was falsely claimed live** |
 | Kokoro / Fish | 7851 | **Fallback / ops only** |
-| Higgs Audio V2 | 8095 | **Live** — Plan 0452 Ph 3–4 wired (`higgs-tts` on voice-config) |
+| Higgs Audio **v3** | 8095 | **Live** — Plan 0452 Ph 3–4 wired (`higgs-tts` on voice-config) |
 | Qdrant + embed + reranker | 6333 / 9200 / 9201 | Grounded RAG · full reindex via Knowledge pad **`memory-fabric`** scope |
 
 ---
