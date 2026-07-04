@@ -64,6 +64,7 @@ Full detail: [23-forge-sync-automation.md](./23-forge-sync-automation.md)
 | 30 | [30-voice-stack-full-undressing.md](./30-voice-stack-full-undressing.md) | **Super Rick full undressing** — every service, model, port, tweak, covenant (June 2026) |
 | 31 | [31-m5-max-dgx-inference-setup.md](./31-m5-max-dgx-inference-setup.md) | **Inference floor** — M5 Max & DGX specs, Ollama/vLLM/MLX, quantization-per-hardware, Mac-first routing, weigh-and-measure |
 | 32 | [32-hardware-full-spec-sheet.md](./32-hardware-full-spec-sheet.md) | **Full hardware spec sheet** — UGREEN NAS, DGX, Macs, network gear, docks, cables, port/link speeds, drives |
+| 33 | [33-video-stack-generative-rendering.md](./33-video-stack-generative-rendering.md) | **Video stack** — ComfyUI render server, proven engines w/ receipts, heavy-window law, identity (face-consistency) path, weights discipline |
 
 **Last updated:** 2026-07-03 (Super Rick understandings YSJ mirror registry + ch. 25 bridge)
 
