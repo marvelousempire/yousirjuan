@@ -316,6 +316,50 @@
         { "merchant": "amazon", "asin": "B0DH7VN49M", "length_ft": 0.98, "qty": 6, "total_usd": 96.24, "ordered": "2026-05-24" }
       ],
       "note": "Only the 0.3m/short cable is confirmed via SME Amazon order history (order 111-3241992-3391448, part of the DGX Spark bundle). A longer TB5 cable was mentioned by the operator but has not been found in indexed purchase data — add its purchase row here once located, do not assume a length."
+    },
+    "owc-express-1m2": {
+      "id": "owc-express-1m2",
+      "model": "OWC Express 1M2 NVMe SSD Enclosure",
+      "interface": "USB4 / Thunderbolt",
+      "qty_owned": 4,
+      "purchases": [
+        { "merchant": "amazon", "asin": "B0FKPGF3BH", "qty": 1, "total_usd": 187.24, "ordered": "2026-05-23", "sme_source": "amazon" },
+        { "merchant": "amazon", "asin": "B0FKPGF3BH", "qty": 2, "total_usd": 374.48, "ordered": "2026-05-24", "sme_source": "amazon" },
+        { "merchant": "amazon", "asin": "B0FKPGF3BH", "qty": 1, "total_usd": 0.00, "ordered": "2026-05-25", "sme_source": "amazon", "note": "$0.00 line item — likely a replacement/warranty unit, not confirmed" }
+      ],
+      "note": "Found via full SME Amazon purchase audit (2026-07-08), not previously tracked. Per-order qty split above is best-effort from SME's indexed text — verify against actual packing slips if precision matters."
+    },
+    "sabrent-4bay-dock": {
+      "id": "sabrent-ds-u3b4",
+      "model": "SABRENT 4-Bay USB 3.0 SATA Docking Station",
+      "sku": "DS-U3B4",
+      "interface": "USB 3.0",
+      "qty_owned": 2,
+      "purchases": [
+        { "merchant": "amazon", "asin": "B07H11KXCL", "qty": 2, "total_usd": 182.94, "ordered": "2025-06-23", "sme_source": "amazon" }
+      ],
+      "note": "Found via full SME Amazon purchase audit (2026-07-08), not previously tracked."
+    },
+    "glinet-slate-ax": {
+      "id": "gl-axt1800",
+      "model": "GL.iNet GL-AXT1800 \"Slate AX\" travel router",
+      "role": "travel router",
+      "qty_owned": 1,
+      "purchases": [
+        { "merchant": "amazon", "asin": "B0B2J7WSDK", "qty": 1, "total_usd": 122.20, "ordered": "2024-01-16", "sme_source": "amazon" }
+      ],
+      "note": "Named in REPOS-CONTRACT.md's hardware table (network hardware: Flint 2 + Slate AX) but had no purchase record until the full SME Amazon purchase audit (2026-07-08)."
+    },
+    "misc-cables-adapters": {
+      "id": "misc-cables-adapters",
+      "note": "Lower-priority items found via the full SME Amazon purchase audit (2026-07-08) — grouped here rather than given individual entries since each is a single low-cost unit, not a tracked system component.",
+      "purchases": [
+        { "merchant": "amazon", "asin": "B0BHT7JDF9", "item": "Rixmie USB4/TB4 cable (short)", "total_usd": 37.53, "sme_source": "amazon" },
+        { "merchant": "amazon", "asin": "B09YM3V7NX", "item": "Anker 515 USB4 cable", "total_usd": 74.86, "sme_source": "amazon" },
+        { "merchant": "amazon", "asin": "B0FNCRMCP6", "item": "UGREEN 40Gbps right-angle USB-C adapter", "total_usd": 9.62, "sme_source": "amazon" },
+        { "merchant": "amazon", "asin": "B07YYL3RYJ", "item": "D-Link USB WiFi adapter", "total_usd": 19.25, "sme_source": "amazon" },
+        { "merchant": "amazon", "asin": "B0D9MMFQNL", "item": "Apple USB-C AV Multiport Adapter", "total_usd": 73.81, "sme_source": "amazon" }
+      ]
     }
   },
   "links": [

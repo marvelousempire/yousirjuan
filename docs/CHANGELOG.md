@@ -16,6 +16,23 @@ Eastern time stamped to the second using `TZ=America/New_York date '+%Y-%m-%d %H
 
 ---
 
+## [0.7.22] — 2026-07-08 11:34:42 Eastern · *Full SME Amazon purchase audit — untracked hardware*
+
+### Added
+- `data/hardware-spec-registry.json` — four new entries found via a full cross-check of all
+  863 SME-indexed Amazon-sourced messages against the registry (not just the prior
+  Thunderbolt-scoped check): `owc-express-1m2` (OWC Express 1M2 NVMe enclosure, ×4),
+  `sabrent-4bay-dock` (SABRENT DS-U3B4 4-bay USB dock, ×2), `glinet-slate-ax` (the travel
+  router already named in `REPOS-CONTRACT.md`'s hardware table but never given a purchase
+  record), and `misc-cables-adapters` (five low-cost cable/adapter line items).
+- Confirmed with the operator that three other NAS units found in the same purchase window
+  (UGREEN DH4300 Plus, DXP4800 Plus, DXP4800 Pro ×2 orders) were **returned** — only the
+  already-tracked DXP6800 Pro was kept, so those three are intentionally **not** added here.
+
+### Verified
+- Every ASIN already in the registry's `purchases[]` arrays was cross-checked against SME's
+  Amazon data and confirmed proof-backed — no orphan/unconfirmed registry entries found.
+
 ## [0.7.21] — 2026-07-08 11:03:59 Eastern · *OWC TB5 cable purchase record + benchmark-cassette plan*
 
 ### Added
