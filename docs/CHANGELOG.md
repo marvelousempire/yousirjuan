@@ -16,6 +16,19 @@ Eastern time stamped to the second using `TZ=America/New_York date '+%Y-%m-%d %H
 
 ---
 
+## [0.7.21] — 2026-07-08 11:03:59 Eastern · *OWC TB5 cable purchase record + benchmark-cassette plan*
+
+### Added
+- `data/hardware-spec-registry.json` — `owc-tb5-cables` entry: OWC 0.3m Thunderbolt 5 cable
+  (80/120Gb/s, 240W), qty 6, ASIN `B0DH7VN49M`, confirmed via SME Amazon order history
+  (order `111-3241992-3391448`, part of the DGX Spark bundle). A second/"long" TB5 cable
+  the operator recalled buying was **not found** in indexed purchase data — noted explicitly
+  in the entry rather than guessed.
+- `plans/0007-benchmark-cassettes-hardware-console.md` — proposes extending the You-Sir Juan
+  Hardware Console's existing receipt-backed benchmark model (`yousirjuan-console` cassette)
+  with new categories (cable throughput, drive speed, network link) so physical hardware like
+  the TB5 cable above can carry a measured-performance receipt, not just a purchase record.
+
 ## [0.7.20] — 2026-07-01 08:58:07 Eastern · *NVIDIA DGX Spark official vendor spec sheet*
 
 ### Added

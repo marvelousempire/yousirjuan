@@ -307,6 +307,15 @@
         { "merchant": "amazon", "asin": "B0875VL1CJ", "length_ft": 6, "qty": 4, "ordered": "2026-05-24" },
         { "merchant": "amazon", "asin": "B0875SPZC8", "length_ft": 10, "qty": 4, "ordered": "2026-05-24" }
       ]
+    },
+    "owc-tb5-cables": {
+      "id": "owc-tb5",
+      "rated": "Thunderbolt 5, 80/120Gb/s, 240W",
+      "lengths_ft": [0.98],
+      "purchases": [
+        { "merchant": "amazon", "asin": "B0DH7VN49M", "length_ft": 0.98, "qty": 6, "total_usd": 96.24, "ordered": "2026-05-24" }
+      ],
+      "note": "Only the 0.3m/short cable is confirmed via SME Amazon order history (order 111-3241992-3391448, part of the DGX Spark bundle). A longer TB5 cable was mentioned by the operator but has not been found in indexed purchase data — add its purchase row here once located, do not assume a length."
     }
   },
   "links": [
