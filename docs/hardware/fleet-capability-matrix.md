@@ -9,6 +9,8 @@ The trustworthy "what can each box actually do" sheet — **every device, every 
 
 ---
 
+> **⚠ TRUTH BANNER (2026-07-15):** There is **NO Mac mini M4 Max / M4 Pro** in this fleet — it was **never purchased** (verified against Bank Reader statements + SME; zero hits). Some whitepaper/PRD/roadmap docs still reference it as "Node B / persistent orchestration server" — that is **planning fiction, not deployed hardware**. This matrix (live-probed) is the authoritative list of what exists. Do **not** plan offload duties onto a Mac mini. (Also corrected: **bigmac is the *weakest* node** — a 2012 iMac — not "strongest".)
+
 ## Power ranking (compute → usability)
 
 | # | Node | Chip | Cores | RAM | Class | Status |
