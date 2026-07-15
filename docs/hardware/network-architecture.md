@@ -29,7 +29,7 @@ Internet (ISP / Verizon 5G Business Internet Gateway (6-antenna) 5G)
 │  VLAN 10 — AI / Compute (TRUSTED)                           │
 │  ├── DGX Spark (wired ethernet, 2.5 Gbps)                  │
 │  ├── MacBook Pro M5 Max (Wi-Fi 6 or wired)                 │
-│  ├── Mac mini M4 Max (wired)                                │
+│  ├── [REMOVED] Mac mini M4 Max — never purchased, does not exist │
 │  ├── iPhone / iPad (Wi-Fi)                                  │
 │  ├── iMac 2017 (wired)                                      │
 │  └── WireGuard peers (remote access)                        │

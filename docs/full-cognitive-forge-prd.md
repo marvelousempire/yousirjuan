@@ -560,7 +560,7 @@ Provide Claude/Codex-class operational workflows locally through orchestration o
 | Node | Hardware | Role |
 |---|---|---|
 | Node A | MacBook Pro M5 Max, 128GB unified memory, 4TB SSD | main inference workstation |
-| Node B | Mac mini M4 Max, 40-core GPU, 2TB SSD | persistent orchestration server |
+| ~~Node B~~ | ~~Mac mini M4 Max~~ **— DOES NOT EXIST (never purchased; see fleet-capability-matrix TRUTH BANNER 2026-07-15)** | ~~persistent orchestration server~~ role runs on the DGX / M5 Max instead |
 | Node C | Jetson Thor | edge inference and automation node |
 
 ---
