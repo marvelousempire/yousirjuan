@@ -34,5 +34,9 @@ EOF
 launchctl bootout "gui/$(id -u)/com.yousirjuan.forge-sync" 2>/dev/null || true
 launchctl bootstrap "gui/$(id -u)" "$PLIST"
 launchctl enable "gui/$(id -u)/com.yousirjuan.forge-sync"
+
+# System Settings must show the real name, never "bash" (nephew RL-LAUNCHER-NAME-001 / INT-0095).
+NEPHEW_WRAP="${NEPHEW_ROOT:-$HOME/Developer/nephew}/scripts/apple/make-named-launchers.sh"
+if [ -f "$NEPHEW_WRAP" ]; then NAMED_LAUNCHER_ONLY="com.yousirjuan.forge-sync" bash "$NEPHEW_WRAP" || true; fi
 echo "✓ LaunchAgent com.yousirjuan.forge-sync active (every 5 min)"
 echo "  log: $LOG"

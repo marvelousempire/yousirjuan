@@ -3,6 +3,15 @@
 All notable changes to **yousirjuan** ship here. Format follows the convention in [`.claude/rules/changelog-and-versioning.md`](../.claude/rules/changelog-and-versioning.md):
 
 ```
+## Wednesday, July 15, 2026 · *forge-sync LaunchAgent shows its real name in System Settings*
+
+- **`scripts/install-mac-forge-sync-timer.sh`** — after bootstrapping
+  `com.yousirjuan.forge-sync`, the installer re-wraps the plist through nephew's
+  named-launcher bundle (`NAMED_LAUNCHER_ONLY` scoped mode, nephew PR #1532), so
+  System Settings shows **YouSirJuan Sync Forge** instead of "bash — Item from
+  unidentified developer". Closes the yousirjuan half of Clinic **UNATT-0056**
+  (RL-LAUNCHER-NAME-001 / INT-0095). — Wednesday, July 15, 2026 at 8:12:48 PM Eastern
+
 ## [0.x.y] — YYYY-MM-DD HH:MM:SS Eastern · *short tagline*
 ```
 
