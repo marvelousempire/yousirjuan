@@ -84,12 +84,12 @@ Detail: [`hardware/dgx-spark-official-spec.md`](../hardware/dgx-spark-official-s
 
 | Attribute | Value (probed 2026-07-01) |
 |---|---|
-| **Address** | **LAN `192.168.10.166`** (`id_ed25519_twomac` key). *Repoint the `twomac`/`twomac-claude` SSH alias off dead WG `10.1.0.6` → this LAN IP.* No WireGuard needed |
+| **Address** | **WG `10.1.0.6` (LIVE — rejoined the mesh; this is the crowned Qdrant endpoint)** · LAN `192.168.10.166` fallback (`id_ed25519_twomac` key). *(2026-07-21: the earlier "dead WG" note is history.)* |
 | **Model / CPU** | **iMac18,2 — 27″ Retina 5K iMac (2017)** · Intel **i5-7500** quad @ 3.4 GHz · **AMD Radeon Polaris 4 GB** |
 | **Memory / Storage** | **64 GB RAM** (most of any Intel Mac here) · ~1 TB internal |
 | **Thunderbolt** | TB3 (40 Gb/s) + **Sonnet Echo 11 TB4 dock** |
 | **OS / mod** | **macOS 15.7.7 Sequoia via OpenCore Legacy Patcher** (Dortania present — OCLP running; 2017 iMac can't run 15.7 natively) |
-| **Best for** | Light x86 node with real RAM — Docker services, CPU tasks, always-on background (64 GB ≫ bigmac's 8 GB) |
+| **Best for** | **EMPLOYED (2026-07-21): Qdrant live authority for the whole family RAG** (`http://10.1.0.6:6333`, native, `ai.nephew.twomac-qdrant` KeepAlive). Why: Qdrant is CPU/RAM/disk work — no GPU ever — and this box's 64 GB + idle CPU beat the contended DGX on search p50 (7.2 ms vs 9.8 ms) while freeing the DGX unified pool for models. See ch. 34 (Fleet Employment Ledger) + receipt `nephew/data/receipts/qdrant-cutover-twomac-2026-07-21.json` |
 
 ### `zeromac` — Mac fleet node · 🔴 unreachable now
 

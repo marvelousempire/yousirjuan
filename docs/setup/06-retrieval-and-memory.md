@@ -12,7 +12,7 @@
 |---|---|
 | **Retrieve before invent** | `nephew_corpus_retrieve` grounds agents in rules/plans |
 | **Central bge-m3** | One embed model — identical vectors Mac + DGX |
-| **Qdrant on DGX** | Hot index near GPU; NAS holds lake + snapshots |
+| **Qdrant on twomac** (2026-07-21 ruling) | Vector search is CPU/RAM work — no GPU benefit; twomac serves it faster than the contended DGX and the DGX keeps its unified pool for models. DGX holds the mirror; NAS holds lake + snapshots |
 | **Brain A default** | `nephew-*` collections for agent MCP path |
 | **KB cassettes** | Chunks carry provenance — auditable knowledge |
 | **Vault + Qdrant pair** | Human wiki + machine index — both sovereign |
@@ -120,7 +120,7 @@ Guides: `marvelousempire/nephew` → `docs/family-guides/obsidian-sync.md`, `doc
 ## Historia & NAS backups
 
 - NAS holds Historia agent-memory sources and Qdrant snapshot backups
-- Hot Qdrant storage remains on DGX for IO/GPU locality (NAS migration = planned)
+- Hot Qdrant lives on **twomac** (live authority, `10.1.0.6:6333`); the DGX keeps the mirror. The old "near GPU" rationale was never real — Qdrant uses no GPU. Consumers resolve via `nephew/data/service-authority-registry.json` (registry-first — never hand-pin). (NAS snapshot lake unchanged; migration of cold storage = planned)
 - Encrypted backup scripts in search-my-engine / fleet refresh tooling
 
 ---

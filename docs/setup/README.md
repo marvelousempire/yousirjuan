@@ -65,6 +65,7 @@ Full detail: [23-forge-sync-automation.md](./23-forge-sync-automation.md)
 | 31 | [31-m5-max-dgx-inference-setup.md](./31-m5-max-dgx-inference-setup.md) | **Inference floor** — M5 Max & DGX specs, Ollama/vLLM/MLX, quantization-per-hardware, Mac-first routing, weigh-and-measure |
 | 32 | [32-hardware-full-spec-sheet.md](./32-hardware-full-spec-sheet.md) | **Full hardware spec sheet** — UGREEN NAS, DGX, Macs, network gear, docks, cables, port/link speeds, drives |
 | 33 | [33-video-stack-generative-rendering.md](./33-video-stack-generative-rendering.md) | **Video stack** — ComfyUI render server, proven engines w/ receipts, heavy-window law, identity (face-consistency) path, weights discipline |
+| 34 | [34-fleet-employment-ledger.md](./34-fleet-employment-ledger.md) | **Fleet Employment Ledger** — who runs what, end-to-end wiring, and WHY (placement rulings w/ receipts: twomac=Qdrant authority, DGX=GPU brain, registry-first crown law) |
 
 **Last updated:** 2026-07-03 (Super Rick understandings YSJ mirror registry + ch. 25 bridge)
 
