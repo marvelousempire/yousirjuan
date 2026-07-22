@@ -1,0 +1,13 @@
+{
+  "schema": "yousirjuan.benchmark-projection/v1",
+  "campaign_id": "fleet-ci-git-expanded-2026-07-22",
+  "evidence_repository": "marvelousempire/standard-benchmark-stack",
+  "evidence_git_sha": "223d46ee2bc64ef215b44ee473123a70e38d7db3",
+  "authoritative_samples": { "passed": 200, "failed": 0 },
+  "winner": "nephew-spark",
+  "preferred_mac_ci": "onemac",
+  "twomac_role": "memory-resident-services-and-background-isolation",
+  "git_authority": "nephew-spark",
+  "unreachable": ["zeromac"],
+  "decision": "review-required"
+}

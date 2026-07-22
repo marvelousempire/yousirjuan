@@ -1,6 +1,6 @@
 # Fleet Capability Matrix
 
-**Status:** living · **Last verified:** 2026-07-01 (deep per-node port/disk probe)
+**Status:** living · **Last verified:** 2026-07-22 (unified CI/Git fleet campaign)
 Parent roster: [`setup/01-hardware.md`](../setup/01-hardware.md) · DGX detail: [`dgx-spark-frontier-node.md`](./dgx-spark-frontier-node.md)
 
 The trustworthy "what can each box actually do" sheet — **every device, every port, every disk, real speeds, and the mods applied.** Ordered by compute power. Rows are ✅ **live-verified**, ⚠️ **reachable-but-locked**, 🔴 **unreachable**, ⚪ **offline**.
@@ -115,6 +115,24 @@ Full specs for these land in a follow-up PR once reachable (per the "ship reacha
 ---
 
 ## Benchmark log (measured — appended as run)
+
+### Unified CI/Git workload (`ci.git.fleet` 1.1.0, 2026-07-22)
+
+All reachable Macs and Spark ran Benchlab 0.3.0 at identical Git SHA `223d46e` with Node 22.23.1.
+The workload covers local clone/fetch/push/checkout, dependency installation, test, build, durable
+write, queue delay, service health, and simulated failure recovery. All 200 authoritative samples
+passed. Zeromac remained unreachable and was not assigned synthetic results.
+
+| Node | Cold overall p95 | Warm overall p95 | Warm durable write | Placement finding |
+|---|---:|---:|---:|---|
+| Spark | 615.79 ms | 610.06 ms | 24.02 ms | Keep forge authority; fastest baseline |
+| onemac | 991.95 ms | 978.43 ms | 21.87 ms | Best Mac CI worker; concurrency 1 |
+| bigmac | 2110.12 ms | 2075.10 ms | 405.56 ms | Light warm-cache jobs only |
+| twomac | 2331.05 ms | 2434.99 ms | 398.42 ms | Memory-resident services/background isolation |
+| zeromac | — | — | — | Register and provision before testing |
+
+Canonical evidence: `marvelousempire/standard-benchmark-stack`, campaign
+`fleet-ci-git-expanded-2026-07-22`.
 
 ### DGX ↔ NAS over the direct 10 GbE link (`dd`, 2026-07-01)
 
