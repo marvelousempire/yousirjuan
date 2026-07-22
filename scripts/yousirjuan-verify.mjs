@@ -45,6 +45,14 @@ async function checkNoSecrets() {
   }
 }
 
+async function checkFleetTransportAuthority() {
+  const inventory = await readFile(join(ROOT, 'ansible/inventory/hosts.yml'), 'utf8');
+  const twomac = /\n\s+twomac:\n\s+ansible_host:\s+([^\s#]+)/.exec(inventory)?.[1];
+  if (twomac !== '10.1.0.6') {
+    FAIL.push(`twomac inventory must use canonical WireGuard 10.1.0.6, found ${twomac || 'nothing'}`);
+  }
+}
+
 async function main() {
   await mustExist('.gitea/workflows/verify.yaml');
   await mustExist('scripts/forge-sync.sh');
@@ -55,6 +63,7 @@ async function main() {
   await mustExist('Makefile');
   await checkSetupIndex();
   await checkNoSecrets();
+  await checkFleetTransportAuthority();
 
   if (FAIL.length) {
     console.error('yousirjuan-verify FAILED:');
