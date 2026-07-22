@@ -18,10 +18,11 @@ For the rule that makes adding to the ledger the default closing ritual, see [`.
 
 Counter is the source of truth for the next `LEDGER-NNNN`. Bump it when you open a new entry.
 
-**Next number:** `LEDGER-0039`
+**Next number:** `LEDGER-0040`
 
 | ID | Title | Status | Opened | Closed | Replay |
 |---|---|---|---|---|---|
+| [`LEDGER-0039`](LEDGER-0039-infrastructure-benchmark-steward/) | Infrastructure Benchmark Steward + DustPan Benchmark Laboratory intent | `shipped` | 2026-07-22 | 2026-07-22 | `bash ledger/LEDGER-0039-infrastructure-benchmark-steward/playbooks/verify.sh` |
 | [`LEDGER-0038`](LEDGER-0038-unified-fleet-benchmark-campaign/) | Unified fleet CI/Git benchmark — Spark, Onemac, Bigmac, Twomac, Zeromac discovery | `shipped` | 2026-07-22 | 2026-07-22 | `bash ledger/LEDGER-0038-unified-fleet-benchmark-campaign/playbooks/verify-record.sh` |
 | [`LEDGER-0036`](LEDGER-0036-mac-fleet-bonjour-file-sharing/) | Mac fleet Bonjour file sharing — nephew-spark SMB + admin-only LAN mounts | `shipped` | 2026-06-25 | 2026-06-25 | `bash ledger/LEDGER-0036-mac-fleet-bonjour-file-sharing/playbooks/install-from-fivemac.sh` |
 | [`LEDGER-0035`](LEDGER-0035-family-sso-infra-receipt/) | Family SSO infra receipt — verify stack, recover hub sign-in | `shipped` | 2026-06-16 | 2026-06-16 | `bash ledger/LEDGER-0035-family-sso-infra-receipt/playbooks/sso-smoke.sh` |

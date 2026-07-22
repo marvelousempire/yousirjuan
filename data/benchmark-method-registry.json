@@ -1,0 +1,11 @@
+{
+  "schema": "yousirjuan.benchmark-method-registry/v1",
+  "canonical_engine": "standard-benchmark-stack/benchlab",
+  "methods": [
+    { "id": "benchlab", "modality": "infrastructure-workload", "comparison_key": ["tool_version", "tool_git_sha", "suite_id", "suite_version", "manifest_sha256", "target_posture"] },
+    { "id": "speedtest", "modality": "wan-network", "status": "adapter-planned", "comparison_key": ["client_version", "server_id", "interface", "route", "time_window"] },
+    { "id": "geekbench", "modality": "synthetic-cpu-gpu", "status": "adapter-planned", "comparison_key": ["major_version", "workload", "power_posture"] },
+    { "id": "dustbench", "modality": "local-smoke", "status": "legacy", "certification": false },
+    { "id": "disk-drill", "modality": "recovery-health", "status": "not-a-speed-benchmark", "certification": false }
+  ]
+}

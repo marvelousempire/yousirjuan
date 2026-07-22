@@ -96,7 +96,7 @@ The trustworthy "what can each box actually do" sheet — **every device, every 
 
 | Node | Blocker | Unblock |
 |---|---|---|
-| **zeromac** | not on the network | connect + register |
+| **zeromac** | online at `192.168.10.161`; SSH/SMB/screen sharing respond, fleet keys denied | authorize fleet key, then run identical Benchlab campaign |
 
 *(fivemac ✅ verified 2026-07-01 — it's the control node; agents run on it locally, no SSH needed. Mac17,6 M5 Max · 18C/40G · 128 GB · 8 TB · TB5 120 Gb/s · 990 Pro 2 TB.)*
 
@@ -133,6 +133,17 @@ passed. Zeromac remained unreachable and was not assigned synthetic results.
 
 Canonical evidence: `marvelousempire/standard-benchmark-stack`, campaign
 `fleet-ci-git-expanded-2026-07-22`.
+
+### DXP6800 Pro mounted-path storage (`storage.fleet` 1.1.0, 2026-07-22)
+
+| Client path | Write p50 | fsync p95 | Interpretation |
+|---|---:|---:|---|
+| Direct 10GbE NFS media pool | 854.58 MiB/s | 56.69 ms | Bulk media, datasets, model cache, artifacts |
+| Direct 10GbE NFS SSD/docker pool | 820.21 MiB/s | 55.31 ms | Git mirrors/backups, artifacts, conditional persistent data |
+| LAN SMB Historia | 41.08 MiB/s | 1534.67 ms | Document convenience only; avoid CI/database journals |
+
+Warm reads were cache affected and are not raw-media claims. Evidence campaign:
+`dxp6800-storage-2026-07-22` in `standard-benchmark-stack`.
 
 ### DGX ↔ NAS over the direct 10 GbE link (`dd`, 2026-07-01)
 
