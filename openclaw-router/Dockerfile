@@ -6,7 +6,7 @@
 #
 # What this container CAN do:
 #   • Receive messages from OpenClaw channels (Telegram, Discord, Slack, etc.)
-#   • Call Ollama / cloud LLMs over the network (tailnet IP or HTTPS)
+#   • Call Family Office models over canonical WireGuard addresses (or governed HTTPS)
 #   • Reply to messages
 #   • Run OpenClaw's built-in plugins that don't need host filesystem
 #

@@ -11,6 +11,8 @@ triggers: [manual]
 
 # LEDGER-0026 — Add clinic-vps to the family WireGuard mesh
 
+> **HISTORICAL ADDRESSING — DO NOT REPLAY.** The live mesh is `10.1.0.0/24` with VPS `10.1.0.2` and DGX `10.1.0.5`. Any `10.0.0.x` examples below document the original migration only.
+
 ## Ask
 
 Operator's verbatim 2026-05-29:

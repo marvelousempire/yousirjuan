@@ -25,7 +25,7 @@ The goal is to organize isolated tools into one unified cognitive operating ecos
 | Motion Systems | Framer Motion |
 | Containerization | Docker |
 | Edge AI | Jetson Thor |
-| Networking | Tailscale, WireGuard |
+| Networking | WireGuard only (Tailscale forbidden by RL-WIREGUARD-ONLY-001) |
 
 ---
 

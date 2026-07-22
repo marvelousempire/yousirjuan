@@ -1,7 +1,7 @@
 ---
 ledgerId: LEDGER-0018
 title: Tailscale → WireGuard migration plan (GL.iNet AX1800 + AX600 + VPS-anchored mesh)
-status: planning
+status: superseded-by-live-wireguard
 opened: 2026-05-21
 closed: null
 related-tickets: [LEDGER-0006, LEDGER-0008, LEDGER-0012]
@@ -10,6 +10,8 @@ triggers:
 ---
 
 # LEDGER-0018 — Tailscale → WireGuard migration
+
+> **Historical migration record.** The permanent current law is WireGuard only; Tailscale is forbidden. The live mesh is `10.1.0.0/24` (VPS `.2`, DGX `.5`). Do not execute the parallel-Tailscale phases below; they document the earlier migration thinking and are retained as evidence.
 
 ## Ask
 

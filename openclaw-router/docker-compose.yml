@@ -35,11 +35,11 @@ services:
       # Optional: SSH key for broker access (must be generated separately)
       - ${BROKER_SSH_KEY:-./.ssh-broker-key}:/home/claw/.ssh/id_ed25519:ro
 
-    # Tailnet network only — service joins host's tailnet via tailscale serve
-    # (or use the official Tailscale sidecar pattern — see docs)
+    # WireGuard-only network law: keep the gateway on loopback and publish it
+    # through the governed Family Office edge; never add an overlay sidecar.
     network_mode: bridge
     ports:
-      - "127.0.0.1:18789:18789"   # gateway only on loopback; expose via SSH/tailnet
+      - "127.0.0.1:18789:18789"   # gateway only on loopback; edge access travels over WireGuard
 
     environment:
       # Where to find Ollama (set in .env)

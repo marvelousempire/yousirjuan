@@ -1,0 +1,8 @@
+---
+description: Permanent Family Office network law — use WireGuard only; never Tailscale.
+alwaysApply: true
+---
+
+# WireGuard only — never Tailscale
+
+Private links between operator-owned machines use self-controlled WireGuard. Never propose, install, enable, depend on, or repair Tailscale, Tailnet, MagicDNS, Funnel, or DERP. Historical Tailscale files are evidence, not permission. Read `.claude/rules/wireguard-only-no-tailscale.md` before any remote-access, VPN, DNS, SSH, proxy, CI runner, or fleet-routing work.

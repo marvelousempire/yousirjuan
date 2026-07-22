@@ -22,7 +22,7 @@ This document tracks approved tools, integrations, and ecosystem modules.
 | GWS | Productivity | Google workspace integration | approved |
 | Open WebUI | UI | full AI interface | approved |
 | Framer Motion | Motion | frontend animations | approved |
-| Tailscale | Networking | full remote networking | approved |
+| Tailscale | Networking | historical transport; superseded by RL-WIREGUARD-ONLY-001 | **forbidden / remove drift** |
 | WireGuard | Networking | encrypted tunnels | approved |
 | Jetson Thor | Edge AI | edge inference and robotics | approved |
 

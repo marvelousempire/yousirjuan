@@ -80,6 +80,7 @@ Carelessness is, definitionally, stupidity. Stupid is the opposite of good. So w
 8. **Contract-enforcement CI blocks PRs** that contain persona / interface-UX / onboarding / meta-library content unless the file is allowlisted in [`.github/workflows/contract-enforcement-no-persona.yml`](.github/workflows/contract-enforcement-no-persona.yml). Adding to that allowlist requires explaining why in the workflow file's header comment.
 9. **Prudence is required.** See the operating philosophy above. If a planned action can't be defended as careful, it doesn't get taken.
 10. **Always `make forge-push` before reporting done** on substantive changes. Gitea `marvelousempire/*` is master; GitHub mirrors. See [`.cursor/rules/forge-push-always.mdc`](.cursor/rules/forge-push-always.mdc) and [`docs/setup/23-forge-sync-automation.md`](docs/setup/23-forge-sync-automation.md). Operator standing order — agents run this; do not delegate sync to the human.
+11. **WireGuard only; never Tailscale (RL-WIREGUARD-ONLY-001).** Private operator-machine links use the self-controlled WireGuard mesh. Never suggest or restore Tailscale/Tailnet/MagicDNS/Funnel. Historical references are superseded evidence. Read [`.claude/rules/wireguard-only-no-tailscale.md`](.claude/rules/wireguard-only-no-tailscale.md) before network work.
 
 ---
 

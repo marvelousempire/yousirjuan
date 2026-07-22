@@ -14,6 +14,8 @@ triggers:
 
 # LEDGER-0006 — GitLab CE warm-standby on the iMac
 
+> **SUPERSEDED — DO NOT REPLAY.** This GitLab/Tailscale standby design is retained as historical evidence. DGX Gitea is the canonical Family Forge and private transport is WireGuard only under RL-WIREGUARD-ONLY-001.
+
 ## Ask
 
 > "is it possible to host the Gitlab from this computer instead of that VPS and still reach it remotely? Can I do that via the Settings panel in the Nephew Control Panel UI?"
