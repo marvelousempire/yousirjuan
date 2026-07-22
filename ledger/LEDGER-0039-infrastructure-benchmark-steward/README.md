@@ -24,6 +24,10 @@ The Infrastructure Benchmark Steward and method registry now codify evidence ide
 compatibility, per-workload placement, external-tool boundaries, and promotion gates. DustPan owns
 the read-only console; Benchlab remains the canonical engine and evidence store. DXP6800 storage
 paths and Zeromac's current access posture are recorded without synthetic claims.
+The hardware source now also covers every benchmarked fleet node with compute, memory, storage,
+power envelope, port counts and rated speeds, attached peripherals, roles, and legacy limits so
+DustPan can project capability beside measured performance. Service evidence must state whether it
+is a health probe, a workload benchmark, or a certification campaign.
 
 ## Runbooks
 
@@ -41,8 +45,9 @@ bash ledger/LEDGER-0039-infrastructure-benchmark-steward/playbooks/verify.sh
 
 ## Verification
 
-The playbook requires a canonical Benchlab method, rejects Disk Drill as a speed benchmark, and
-requires the installed steward agent.
+The playbook requires a canonical Benchlab method, rejects Disk Drill as a speed benchmark,
+requires the installed steward agent, and validates hardware coverage for Spark, Fivemac, Onemac,
+Twomac, Bigmac, Zeromac, and DXP6800.
 
 ## Undo
 

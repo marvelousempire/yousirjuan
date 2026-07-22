@@ -39,6 +39,10 @@
         "sd_4_0": 1,
         "pcie_x4": 1
       },
+      "power": {"drive_access_w": 43.07, "hibernation_w": 24.91, "ups": "UGREEN US3000 120 W"},
+      "peripherals": {"ups": "UGREEN US3000 120 W", "direct_link": "Cat 8 to DGX 10 GbE"},
+      "roles": ["bulk media", "datasets", "model cache", "CI artifacts", "Git mirrors and backups", "Historia document vault"],
+      "limits": ["SMB management path measured ~41 MiB/s with 1534.7 ms fsync p95", "warm reads are cache affected", "not a GPU inference node"],
       "bays": { "sata": 6, "m2_nvme": 2, "sata_empty": 2 },
       "pools": [
         {
@@ -147,6 +151,11 @@
           "verified": "2026-07-01"
         }
       ],
+      "power": {"power_supply_w": 240, "gb10_tdp_w": 140},
+      "ports": {"usb_c_20gbps": 4, "usb_c_power_input_w": 240, "rj45_10gbe": 1, "qsfp_connectx7_200gbps": 2, "hdmi_2_1a": 1, "displayport_over_usb_c": 3, "wifi": "Wi-Fi 7", "bluetooth": "5.4"},
+      "peripherals": {"kvm": "Comet GL-RM10RC", "lan_adapter": "Realtek 8153 USB 1 GbE", "nas_link": "10 GbE direct to DXP6800"},
+      "roles": ["frontier LLM inference", "CUDA and vLLM", "Gitea authority", "RAG embeddings", "Qdrant retrieval", "container services"],
+      "limits": ["primary LAN adapter negotiates 1 GbE", "QSFP ports are reserved for Spark clustering", "140 W TDP is not measured wall draw"],
       "purchases": [
         {
           "merchant": "amazon",
@@ -160,18 +169,33 @@
     },
     "macbook-pro-m5-max": {
       "id": "fivemac",
+      "vendor": "Apple",
+      "model": "MacBook Pro 16-inch (Mac17,6)",
       "chip": "Apple M5 Max",
       "cpu_cores": 18,
       "gpu_cores": 40,
       "ane_cores": 16,
       "ram_gb": 128,
       "ssd_tb": 4,
-      "thunderbolt5_ports": 3,
-      "dock": "HyperDrive Next TB5 #2"
+      "verification_status": "verified; internal 4 TB, broader 8 TB fleet claim requires storage topology reconciliation",
+      "power": {"adapter_w": 140, "source": "Apple configuration"},
+      "ports": {"thunderbolt5_80gbps": 3, "thunderbolt5_boost_gbps": 120, "magsafe3": 1, "hdmi": 1, "sdxc": 1, "headphone_3_5mm": 1},
+      "peripherals": {"dock": "HyperDrive Next TB5 #2", "dock_ethernet": "2.5GbE", "dock_nvme_bay": "PCIe Gen4 NVMe"},
+      "roles": ["primary operator workstation", "Pockit gateway", "M5 voice", "MLX/Ollama inference", "RAG edge reranker"],
+      "limits": ["not remotely benchmarked in the 2026-07-22 CI campaign; local LLM receipts exist"]
     },
     "macbook-pro-m1": {
-      "id": "onemac-2",
+      "id": "onemac",
+      "vendor": "Apple",
+      "model": "MacBook Pro 13-inch (MacBookPro17,1, 2020)",
       "chip": "Apple M1",
+      "cpu_cores": 8,
+      "gpu_cores": 8,
+      "ane_cores": 16,
+      "ram_gb": 8,
+      "storage": {"internal": "256 GB APPLE SSD AP0256Q", "attached": "2 TB Samsung 990 Pro"},
+      "power": {"adapter_w": 61},
+      "ports": {"thunderbolt_usb4_40gbps": 2, "headphone_3_5mm": 1},
       "dock": "HyperDrive Next TB5 #1",
       "dock_nvme": {
         "model": "Samsung 990 PRO",
@@ -180,7 +204,51 @@
         "interface": "PCIe 4.0 x4",
         "seq_read_mbps": 7450
       },
-      "dock_ethernet": "2.5GbE"
+      "dock_ethernet": "2.5GbE",
+      "roles": ["lightweight CI", "query embedding", "WhisperKit STT", "small edge services"],
+      "limits": ["8 GB unified memory", "TB5 dock negotiates at the M1's 40 Gb/s ceiling"]
+    },
+    "imac-2017": {
+      "id": "twomac",
+      "vendor": "Apple",
+      "model": "iMac 21.5-inch Retina 4K (iMac18,2, 2017)",
+      "verification_status": "live verified 2026-07-01",
+      "compute": {"cpu": "Intel Core i5-7500 3.4 GHz", "cpu_cores": 4, "gpu": "AMD Radeon Pro 560 4 GB"},
+      "memory": {"installed_gb": 64, "type": "DDR4"},
+      "storage": {"class": "legacy SATA; exact installed device needs refreshed system_profiler"},
+      "power": {"maximum_continuous_w": 161, "source": "Apple chassis specification; wall draw not measured"},
+      "ports": {"thunderbolt3_usb_c_40gbps": 2, "usb_a_3_0_5gbps": 4, "gigabit_ethernet": 1, "sdxc": 1, "headphone_3_5mm": 1},
+      "peripherals": {},
+      "roles": ["memory-resident x86 services", "Qdrant historical authority", "isolated background work"],
+      "limits": ["4-core legacy Intel", "OCLP macOS", "not fastest CI worker"]
+    },
+    "imac-2012": {
+      "id": "bigmac",
+      "vendor": "Apple",
+      "model": "iMac 27-inch (iMac13,2, Late 2012)",
+      "verification_status": "live verified 2026-07-01",
+      "compute": {"cpu": "Intel Core i7-3770 3.4 GHz", "cpu_cores": 4, "gpu": "NVIDIA GeForce GTX 675MX 1 GB"},
+      "memory": {"installed_gb": 8, "max_gb": 32, "type": "DDR3"},
+      "storage": {"internal": "1 TB 7200-RPM HDD", "bus": "SATA-II negotiated 3 Gb/s", "observed_class": "~120 MB/s"},
+      "power": {"maximum_continuous_w": 310, "source": "Apple chassis specification; wall draw not measured"},
+      "ports": {"thunderbolt1_10gbps": 2, "usb_a_3_0_5gbps": 4, "gigabit_ethernet": 1, "sdxc": 1, "headphone_3_5mm": 1},
+      "peripherals": {},
+      "roles": ["legacy warm-cache background work", "light x86 compatibility"],
+      "limits": ["HDD-bound", "8 GB RAM", "Catalina/OCLP transition", "no useful modern AI acceleration"]
+    },
+    "zeromac": {
+      "id": "zeromac",
+      "vendor": "Apple",
+      "model": "unregistered Mac",
+      "verification_status": "reachable at 192.168.10.161; hardware inventory pending fleet-key authorization",
+      "compute": {},
+      "memory": null,
+      "storage": null,
+      "power": null,
+      "ports": {"network_observed": ["SSH 22", "SMB 445", "VNC 5900"]},
+      "peripherals": {},
+      "roles": [],
+      "limits": ["do not claim hardware specifications until authenticated probe completes"]
     },
     "gl-mt6000": {
       "id": "flint-2",

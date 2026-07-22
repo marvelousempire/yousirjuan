@@ -19,6 +19,19 @@ Eastern time stamped to the second using `TZ=America/New_York date '+%Y-%m-%d %H
 
 ---
 
+## [0.7.23] — 2026-07-22 06:30:53 Eastern · *Fleet hardware truth for the Benchmark Laboratory*
+
+### Added
+- `data/hardware-spec-registry.json` now gives Spark, Fivemac, Onemac, Twomac, Bigmac,
+  Zeromac, and DXP6800 a consistent GUI-ready inventory: compute, memory, storage, power,
+  port counts and rated speeds, attached peripherals, intended roles, and legacy limits.
+- Fivemac's internal 4 TB vs broader 8 TB topology conflict is named instead of silently
+  choosing one claim; Zeromac remains inventory-pending until authenticated probing is possible.
+
+### Changed
+- `LEDGER-0039` verification now requires complete fleet hardware coverage and checks key
+  power/port facts used by DustPan's Benchmark Laboratory.
+
 ---
 
 ---
